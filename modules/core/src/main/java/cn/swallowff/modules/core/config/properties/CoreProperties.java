@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 //@ConfigurationProperties(prefix = "core")
-@PropertySource(value = "classpath:config/core.properties")
+@PropertySource(value = "classpath:config/swear-core.properties")
 public class CoreProperties {
     private String adminPath;
     private String fileUploadPath;

@@ -3,22 +3,19 @@ package cn.swallowff.modules.core.config.web;
 import cn.swallowff.modules.core.config.properties.CoreProperties;
 import cn.swallowff.modules.core.filter.SystemUserFilter;
 import cn.swallowff.modules.core.shiro.ShiroDBRealm;
-import org.apache.shiro.cache.CacheManager;
+import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.codec.Base64;
-import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,42 +24,48 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//@Configuration
-public class ShiroConfig {
+/**
+ * @author shenyu
+ * @create 19-5-30
+ */
+@Configuration
+public class ShiroConfig2 {
 
     @Bean
-    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, EhCacheManager ehCacheManager, SessionManager sessionManager){
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRememberMeManager(rememberMeManager);
+    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    public DefaultWebSecurityManager securityManager(EhCacheManager ehCacheManager,DefaultWebSessionManager sessionManager){
+        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+        //设置realm.
+        securityManager.setRealm(shiroDBRealm());
+        // 自定义缓存实现 使用redis
         securityManager.setCacheManager(ehCacheManager);
-        securityManager.setRealm(this.shiroDBRealm());
         securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
 
-//    /**
-//     * session管理器-多机环境
-//     * @return
-//     */
-//    @Bean
-//    @ConditionalOnProperty(prefix = "swallow", name = "spring-session-open", havingValue = "true")
-//    public ServletContainerSessionManager servletContainerSessionManager() {
-//        return new ServletContainerSessionManager();
-//    }
-
+    @Bean
+    public EhCacheManager ehCacheManager() {
+        EhCacheManager em = new EhCacheManager();
+        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
+        em.setCacheManager(new CacheManager());
+        em.setCacheManagerConfigFile("classpath:config/ehcache.xml");
+        return em;
+    }
     /**
-     * session管理器-单机环境
-     * @param cacheShiroManager
-     * @param coreProperties
-     * @return
+     * shiro session的管理
      */
     @Bean
     @ConditionalOnProperty(prefix = "swear", name = "spring-session-open", havingValue = "false")
-    public DefaultWebSessionManager defaultWebSessionManager(CacheManager cacheShiroManager, CoreProperties coreProperties) {
+    public DefaultWebSessionManager sessionManager(CoreProperties coreProperties) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setCacheManager(cacheShiroManager);
         sessionManager.setSessionValidationInterval(coreProperties.getSessionValidationInterval() * 1000);
         sessionManager.setGlobalSessionTimeout(coreProperties.getSessionInvalidateTime() * 1000);
+        //设置sessionDao对session查询，在查询在线用户service中用到了
+        sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
         Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
@@ -73,23 +76,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CacheManager cacheShiroManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean){
-        EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManager(ehCacheManagerFactoryBean.getObject());
-        return ehCacheManager;
-    }
-
-    @Bean
-    public CookieRememberMeManager rememberMeManager(SimpleCookie cookie){
-        CookieRememberMeManager manager = new CookieRememberMeManager();
-        manager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
-        manager.setCookie(cookie);
-        return manager;
-    }
-
-    @Bean
-    public ShiroDBRealm shiroDBRealm(){
-        return new ShiroDBRealm();
+    public SessionDAO sessionDAO(){
+        return new MemorySessionDAO();
     }
 
     @Bean
@@ -98,6 +86,24 @@ public class ShiroConfig {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(7 * 24 * 60 * 60);
         return cookie;
+    }
+
+    @Bean
+    public ShiroDBRealm shiroDBRealm(){
+        return new ShiroDBRealm();
+    }
+
+    /**
+     *  开启shiro aop注解支持.
+     *  使用代理方式;所以需要开启代码支持;
+     * @param securityManager
+     * @return
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
     }
 
     @Bean
@@ -152,42 +158,12 @@ public class ShiroConfig {
         hashMap.put("/webjars/springfox-swagger-ui/**","anon");
 
         hashMap.put("/global/**", "anon");
-        hashMap.put("/kaptcha", "anon");
+        hashMap.put("/a/kaptcha", "anon");
         hashMap.put("/a/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
     }
 
-    /**
-     * 在方法中 注入 securityManager,进行代理控制
-     */
-    @Bean
-    public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
-        MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
-        bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-        bean.setArguments(new Object[]{securityManager});
-        return bean;
-    }
 
-    /**
-     * Shiro生命周期处理器:
-     * 用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调(例如:UserRealm)
-     * 在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调(例如:DefaultSecurityManager)
-     */
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
-
-    /**
-     * 启用shrio授权注解拦截方式，AOP式方法级权限检查
-     */
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor =
-                new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-        return authorizationAttributeSourceAdvisor;
-    }
 
 }

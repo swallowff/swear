@@ -52,7 +52,7 @@ public class PropertiesUtils {
 		public static void releadInstance(){
 			// 获取平台及模块相关的配置文件
 			Set<String> configSet = SetUtils.newLinkedHashSet();
-			Resource[] resources = ResourceUtils.getResources("classpath*:/config/jeesite-*.*");
+			Resource[] resources = ResourceUtils.getResources("classpath*:/config/swear-*.*");
 			for(Resource resource : resources){
 				configSet.add("classpath:config/"+resource.getFilename());
 			}
@@ -95,7 +95,7 @@ public class PropertiesUtils {
 				}
 			}
 			configFiles = configSet.toArray(new String[configSet.size()]);
-			logger.debug("Loading jeesite config: {}", (Object)configFiles);
+			logger.debug("Loading swear config: {}", (Object)configFiles);
 			INSTANCE = new PropertiesUtils(configFiles);
 		}
 	}

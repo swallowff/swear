@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
  * @create 2019/3/15
  */
 @Configuration
-@PropertySource({"classpath:/config/core.properties"})
+@PropertySource({"classpath:/config/swear-core.properties"})
 public class PropertiesAutoConfiguration {
     public PropertiesAutoConfiguration() {
     }

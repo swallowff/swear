@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @DependsOn("springContextHolder")
 public class UserAuthServiceImpl implements UserAuthService {
-//    @Autowired
+    @Autowired
     private UserService userService;
 
     @Override
