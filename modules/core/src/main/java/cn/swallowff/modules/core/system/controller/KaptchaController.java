@@ -23,7 +23,7 @@ import java.io.IOException;
  * @create 2019/3/15
  */
 @Controller
-@RequestMapping("/a/kaptcha")
+@RequestMapping("${swear.path.admin}/kaptcha")
 public class KaptchaController {
 
     @Autowired
@@ -105,7 +105,7 @@ public class KaptchaController {
         } catch (Exception e) {
             //如果找不到图片就返回一个默认图片
             try {
-                response.sendRedirect("/static/img/girl.gif");
+                response.sendRedirect("/static/images/girl.gif");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }

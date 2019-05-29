@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+swear:
+  muti-datasource:
+    open: false
+  kaptcha-open: false
+  spring-session-open: false
+  path:
+    admin: /a
+    api: /api
+
+logging:
+  config: classpath:logback.xml
+
+spring:
+  mvc:
+    view:
+      prefix: view
+      suffix: .html
+    static-path-pattern: /static/**
+  datasource-master:
+    url: jdbc:mysql://localhost:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    db-name: swallow_master
+    username: root
+    password: yanni623..
+    filters: wall,mergeStat
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  datasource-slave:
+      url: jdbc:mysql://localhost:3306/swallow_slave?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+      db-name: swallow_slave
+      username: root
+      password: yanni623..
+      filters: wall,mergeStat
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  type-aliases-package: cn.swallowff.modules.**.entity
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true

@@ -283,11 +283,4 @@
         </where>
     </update>
 
-    <delete id="deleteForce">
-        DELETE FROM sys_user a
-        <where>
-          a.id = #{id}
-        </where>
-    </delete>
-
 </mapper>

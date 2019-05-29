@@ -1,6 +1,5 @@
 package cn.swallowff.modules.core.config.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -8,13 +7,9 @@ import org.springframework.stereotype.Component;
 //@ConfigurationProperties(prefix = "core")
 @PropertySource(value = "classpath:config/core.properties")
 public class CoreProperties {
-
     private String adminPath;
-
     private String fileUploadPath;
-
     private Boolean kaptchaOpen = false;
-
     private Boolean swaggerOpen = false;
 
 

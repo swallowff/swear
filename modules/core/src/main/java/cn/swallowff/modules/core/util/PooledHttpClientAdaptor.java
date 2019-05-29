@@ -1,5 +1,6 @@
 package cn.swallowff.modules.core.util;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -14,6 +15,7 @@ import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -21,7 +23,9 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -202,6 +206,64 @@ public class PooledHttpClientAdaptor {
         }
         return null;
 
+    }
+
+    public String doPostBase64(String apiUrl, Map<String, String> headers, String reqParams){
+        HttpPost httpPost = new HttpPost(apiUrl);
+
+        // *) 配置请求headers
+        if ( headers != null && headers.size() > 0 ) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                httpPost.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+
+        // *) 配置请求参数
+//        if ( params != null && params.size() > 0 ) {
+        HttpEntity httpEntity = new StringEntity(reqParams,Charset.forName("UTF-8"));
+//            HttpEntity entityReq = getUrlEncodedFormEntity(params);
+        httpPost.setEntity(httpEntity);
+//        }
+
+
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(httpPost);
+            if (response == null || response.getStatusLine() == null) {
+                return null;
+            }
+
+            int statusCode = response.getStatusLine().getStatusCode();
+//            logger.info("--http-response--响应状态码statusCode:"+statusCode);
+
+            if ( statusCode == HttpStatus.SC_OK ) {
+                HttpEntity entityRes = response.getEntity();
+                if ( entityRes != null ) {
+//                    String result = EntityUtils.toString(entityRes, "UTF-8");
+                    InputStream inputStream = entityRes.getContent();
+                    ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+                    byte[] buff = new byte[128]; //buff用于存放循环读取的临时数据
+                    int rc = 0;
+                    while ((rc = inputStream.read(buff, 0, 100)) > 0) {
+                        swapStream.write(buff, 0, rc);
+                    }
+                    byte[] rbyte = swapStream.toByteArray();
+                    String r = Base64.encodeBase64String(rbyte);
+//                    logger.info("--http-response--响应内容: \n"+r);
+                    return r;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+        } finally {
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return null;
     }
 
     private HttpEntity getUrlEncodedFormEntity(Map<String, Object> params) {

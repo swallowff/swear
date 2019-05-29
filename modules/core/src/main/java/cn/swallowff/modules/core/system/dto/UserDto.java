@@ -19,7 +19,7 @@ public class UserDto implements Serializable {
     private Integer sex;    //性别
     private String email;   //电子邮箱
     private String phone;   //手机号
-    private String roleId; //角色id
+    private String roleId;  //角色id
     private Integer deptId; //部门id
 
     public String getAvatar() {

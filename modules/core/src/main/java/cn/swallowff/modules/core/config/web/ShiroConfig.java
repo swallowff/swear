@@ -31,10 +31,10 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, CacheManager cacheManager, SessionManager sessionManager){
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, CacheManager cacheShiroManager, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRememberMeManager(rememberMeManager);
-        securityManager.setCacheManager(cacheManager);
+        securityManager.setCacheManager(cacheShiroManager);
         securityManager.setRealm(this.shiroDBRealm());
         securityManager.setSessionManager(sessionManager);
         return securityManager;
@@ -73,9 +73,9 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CacheManager cacheManager(EhCacheManagerFactoryBean ehcacheFactoryBean){
+    public CacheManager cacheShiroManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean){
         EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManager(ehcacheFactoryBean.getObject());
+        ehCacheManager.setCacheManager(ehCacheManagerFactoryBean.getObject());
         return ehCacheManager;
     }
 

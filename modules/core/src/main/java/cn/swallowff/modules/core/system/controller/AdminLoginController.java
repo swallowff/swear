@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/a")
+@RequestMapping("${swear.path.admin}")
 public class AdminLoginController extends BaseController {
 
     /**
