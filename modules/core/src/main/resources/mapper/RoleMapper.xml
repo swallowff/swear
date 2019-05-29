@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.system.dao.RoleDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.sort AS sort,
+        a.name AS name,
+        a.pid AS pid,
+        a.dept_id AS deptId,
+        a.tips AS tips,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.Role">
+      SELECT
+      <include refid="baseColumns"/>
+      FROM sys_user a
+      <where>
+          a.id = #{id}
+      </where>
+    </select>
+
+    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.Role">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role a
+        <where>
+            <if test="pid != null and pid != ''">
+              AND a.pid = #{pid}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_role(
+          sort,
+          name,
+          pid,
+          dept_id,
+          tips,
+          update_time,
+          create_time
+        ) VALUES (
+          #{sort},
+          #{name},
+          #{pid},
+          #{deptId},
+          #{tips},
+          #{updateTime},
+          #{createTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user SET
+          sort = #{sort},
+          name = #{name},
+          pid = #{pid},
+          dept_id = #{deptId},
+          tips = #{tips},
+          update_time = #{updateTime}
+          <where>
+              id = #{id}
+          </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_user
+        <set>
+            <if test="sort != null and sort != ''">
+                sort = #{sort}
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+            <if test="pid != null and pid != ''">
+                pid = #{pid}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id = #{deptId}
+            </if>
+            <if test="tips != null and tips != ''">
+                tips = #{tips}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM sys_user a
+        <where>
+          a.id = #{id}
+        </where>
+    </delete>
+
+</mapper>

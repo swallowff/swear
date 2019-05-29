@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.system.dao.DeptDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.sort AS sort,
+        a.pid AS pid,
+        a.pids AS pids,
+        a.simple_name AS simpleName,
+        a.full_name AS fullName,
+        a.tips AS tips,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.Dept">
+      SELECT
+      <include refid="baseColumns"/>
+      FROM sys_user a
+      <where>
+          a.id = #{id}
+      </where>
+    </select>
+
+    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.Dept">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user a
+        <where>
+            <if test="pid != null and pid != ''">
+              AND a.pid = #{pid}
+            </if>
+            <if test="simpleName != null and simpleName != ''">
+                AND a.simple_name = #{simpleName}
+            </if>
+            <if test="fullName != null and fullName != ''">
+                AND a.full_name = #{fullName}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_user(
+          avatar,
+          account,
+          password,
+          salt,
+          name,
+          birthday,
+          sex,
+          email,
+          phone,
+          role_id,
+          dept_id,
+          status,
+          update_time,
+          create_time
+        ) VALUES (
+          #{avatar},
+          #{account},
+          #{password},
+          #{salt},
+          #{name},
+          #{birthday},
+          #{sex},
+          #{email},
+          #{phone},
+          #{roleId},
+          #{deptId},
+          #{status},
+          #{updateTime},
+          #{createTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user SET
+          avatar = #{avatar},
+          account = #{account},
+          password = #{password},
+          salt = #{salt},
+          name = #{name},
+          birthday = #{birthday},
+          sex = #{sex},
+          email = #{email},
+          phone = #{phone},
+          role_id = #{roleId},
+          dept_id = #{deptId},
+          status = #{status},
+          update_time = #{updateTime},
+          create_time = #{createTime}
+          <where>
+              id = #{id}
+          </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_user
+        <set>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar}
+            </if>
+            <if test="account != null and account != ''">
+                account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password}
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt}
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday = #{birthday}
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex}
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email}
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id = #{deptId}
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status}
+            </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time = #{createTime}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        DELETE FROM sys_user a
+        <where>
+          a.id = #{id}
+        </where>
+    </delete>
+
+</mapper>
