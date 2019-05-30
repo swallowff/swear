@@ -5,11 +5,13 @@ import cn.swallowff.modules.core.filter.SystemUserFilter;
 import cn.swallowff.modules.core.shiro.ShiroDBRealm;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
@@ -37,14 +39,23 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(EhCacheManager ehCacheManager,DefaultWebSessionManager sessionManager){
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager,EhCacheManager ehCacheManager, DefaultWebSessionManager sessionManager){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+        securityManager.setRememberMeManager(rememberMeManager);
         //设置realm.
         securityManager.setRealm(shiroDBRealm());
         // 自定义缓存实现 使用redis
         securityManager.setCacheManager(ehCacheManager);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
+    }
+
+    @Bean
+    public CookieRememberMeManager rememberMeManager(SimpleCookie cookie){
+        CookieRememberMeManager manager = new CookieRememberMeManager();
+        manager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
+        manager.setCookie(cookie);
+        return manager;
     }
 
     @Bean
