@@ -1,5 +1,6 @@
 package cn.swallowff.modules.core.util;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -21,14 +23,14 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import javax.net.ssl.SSLContext;
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -108,6 +110,61 @@ public class PooledHttpClientAdaptor {
         idleThread = new IdleConnectionMonitorThread(this.gcm);
         idleThread.start();
 
+    }
+
+    //自定义证书
+    public PooledHttpClientAdaptor(File certFile, String passwd) {
+        SSLConnectionSocketFactory sslfactory = null;
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(certFile);
+            KeyStore keyStore = KeyStore.getInstance("PKCS12");
+            keyStore.load(inputStream,passwd.toCharArray());
+            SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(keyStore,passwd.toCharArray()).build();
+            sslfactory = new SSLConnectionSocketFactory(sslContext,new String[]{"TLSv1"},null, new DefaultHostnameVerifier());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != inputStream){
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        this.maxTotal = DEFAULT_POOL_MAX_TOTAL;
+        this.maxPerRoute = DEFAULT_POOL_MAX_PER_ROUTE;
+        this.connectTimeout = DEFAULT_CONNECT_TIMEOUT;
+        this.connectRequestTimeout = DEFAULT_CONNECT_REQUEST_TIMEOUT;
+        this.socketTimeout = DEFAULT_SOCKET_TIMEOUT;
+
+        RegistryBuilder<ConnectionSocketFactory> registryBuilder = RegistryBuilder.create();
+        registryBuilder.register("http", PlainConnectionSocketFactory.getSocketFactory());
+        if (null != sslfactory){
+            registryBuilder.register("https",sslfactory);
+        }
+        Registry<ConnectionSocketFactory> registry = registryBuilder.build();
+
+        this.gcm = new PoolingHttpClientConnectionManager(registry);
+        this.gcm.setMaxTotal(this.maxTotal);
+        this.gcm.setDefaultMaxPerRoute(this.maxPerRoute);
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(this.connectTimeout)                     // 设置连接超时
+                .setSocketTimeout(this.socketTimeout)                       // 设置读取超时
+                .setConnectionRequestTimeout(this.connectRequestTimeout)    // 设置从连接池获取连接实例的超时
+                .build();
+
+        HttpClientBuilder httpClientBuilder = HttpClients.custom();
+        httpClient = httpClientBuilder
+                .setConnectionManager(this.gcm)
+                .setDefaultRequestConfig(requestConfig)
+                .build();
+
+        idleThread = new IdleConnectionMonitorThread(this.gcm);
+        idleThread.start();
     }
 
     public String doGet(String url) {
