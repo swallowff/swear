@@ -43,8 +43,8 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
         String staticPath = PropertiesUtils.getInstance().getProperty("swear-path-static");
         String ctxf = contextPath + adminPath;
         //最终路径
-        sharedVars.put("ctxPath", ctxf);
-        sharedVars.put("staticCtx",staticPath);
+        sharedVars.put("adminPath", ctxf);
+        sharedVars.put("staticCtx",contextPath + staticPath);
         groupTemplate.setSharedVars(sharedVars);
 
         groupTemplate.registerFunctionPackage("shiro", new ShiroExt());
