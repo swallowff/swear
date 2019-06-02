@@ -13,12 +13,17 @@ public class TestController {
 
     @RequestMapping(value = "index")
     public String index(){
-        return "admin/pages/index2";
+        return "admin/pages/index";
     }
 
     @RequestMapping(value = "home/console")
     public String home(){
         return "admin/pages/home/console";
+    }
+
+    @RequestMapping(value = "login")
+    public String login(){
+        return "admin/pages/login";
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -19,7 +20,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author shenyu
  * @create 2019/4/4
  */
-@Configuration
+@Component
 @ConfigurationProperties(prefix = RedisConfig.REDISCONF_PREFIX)
 public class RedisConfig {
     public static final String REDISCONF_PREFIX = "spring.redis";
