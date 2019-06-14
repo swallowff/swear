@@ -30,7 +30,7 @@ public abstract class BaseDataWrapper<T> {
     public <R> List<R> wrapEntityList() {
         if (CollectionUtils.isNotEmpty(sourceList)) {
             Iterator<T> iterator = sourceList.iterator();
-            List<R> resList = new ArrayList<>();
+            List<R> resList = new LinkedList<>();
             while (iterator.hasNext()) {
                 resList.add(wrapToEntity(t));
             }
@@ -47,7 +47,7 @@ public abstract class BaseDataWrapper<T> {
     public List<Map<String,Object>> wrapMapList(){
         if (CollectionUtils.isNotEmpty(sourceList)){
             Iterator<T> iterator = sourceList.iterator();
-            List<Map<String,Object>> resList = new ArrayList<>();
+            List<Map<String,Object>> resList = new LinkedList<>();
             while (iterator.hasNext()) {
                 resList.add(wrapToMap(t));
             }
