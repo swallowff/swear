@@ -4,6 +4,7 @@ import cn.swallowff.common.collect.ListUtils;
 import cn.swallowff.modules.core.cmomon.service.CrudService;
 import cn.swallowff.modules.core.system.dao.UserDao;
 import cn.swallowff.modules.core.system.entity.User;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,10 @@ public class UserService extends CrudService<UserDao, User> {
         user.setAccount(account);
         List<User> results = super.findList(user);
         return ListUtils.isEmpty(results) ? null : results.get(0);
+    }
+
+    public Integer test(){
+        return crudDao.test();
     }
 
 

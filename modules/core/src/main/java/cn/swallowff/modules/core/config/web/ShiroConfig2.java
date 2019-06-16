@@ -2,6 +2,7 @@ package cn.swallowff.modules.core.config.web;
 
 import cn.swallowff.modules.core.config.properties.CoreProperties;
 import cn.swallowff.modules.core.filter.SystemUserFilter;
+import cn.swallowff.modules.core.shiro.MySessionManager;
 import cn.swallowff.modules.core.shiro.ShiroDBRealm;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -72,7 +73,8 @@ public class ShiroConfig2 {
     @Bean
     @ConditionalOnProperty(prefix = "swear", name = "spring-session-open", havingValue = "false")
     public DefaultWebSessionManager sessionManager(CoreProperties coreProperties) {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+//        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        MySessionManager sessionManager = new MySessionManager();
         sessionManager.setSessionValidationInterval(coreProperties.getSessionValidationInterval() * 1000);
         sessionManager.setGlobalSessionTimeout(coreProperties.getSessionInvalidateTime() * 1000);
         //设置sessionDao对session查询，在查询在线用户service中用到了
@@ -160,7 +162,7 @@ public class ShiroConfig2 {
         hashMap.put("/a/test/**","anon");
 //        hashMap.put("/blog","blog");
         hashMap.put("/openApi/**", "anon");
-        hashMap.put("/a/login", "anon");
+        hashMap.put("/a/login/**", "anon");
         hashMap.put("/a/swaggerApi/**","anon");
         //放行swagger2
         hashMap.put("/swagger-ui.html","anon");

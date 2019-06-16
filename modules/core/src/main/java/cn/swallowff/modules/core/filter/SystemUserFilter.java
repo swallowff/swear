@@ -3,6 +3,7 @@ package cn.swallowff.modules.core.filter;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 
 import javax.servlet.ServletRequest;
@@ -49,6 +50,7 @@ public class SystemUserFilter extends AccessControlFilter {
         if (httpServletRequest.getHeader("x-requested-with") != null
                 && httpServletRequest.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
             httpServletResponse.setHeader("sessionstatus", "timeout");
+            //可以返回BaseResp格式错误信息
             return false;
         } else {
 
@@ -65,7 +67,7 @@ public class SystemUserFilter extends AccessControlFilter {
                  */
                 if (ShiroKit.getSession().getAttribute("sessionFlag") == null) {
                     httpServletRequest.setAttribute("tips", "session超时");
-                    httpServletRequest.getRequestDispatcher("/login").forward(request, response);
+                    httpServletRequest.getRequestDispatcher("/a/login/login").forward(request, response);
                     return false;
                 } else {
                     saveRequestAndRedirectToLogin(request, response);
