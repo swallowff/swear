@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class Dept extends BaseEntity<Dept> implements Serializable {
     private Integer sort;   //排序
-    private Integer pid;    //父级id
+    private String pid;    //父级id
     private String pids;    //所有父级id
     private String simpleName;  //简称
     private String fullName;    //全称
@@ -23,11 +23,11 @@ public class Dept extends BaseEntity<Dept> implements Serializable {
         this.sort = sort;
     }
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 

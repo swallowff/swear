@@ -35,8 +35,8 @@ public class KaptchaController {
     /**
      * 生成验证码
      */
-    @RequestMapping("")
-    public void index(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping("getCode")
+    public void getCode(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
         response.setDateHeader("Expires", 0);

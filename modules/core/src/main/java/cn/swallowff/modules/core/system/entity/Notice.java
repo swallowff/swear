@@ -10,8 +10,8 @@ public class Notice extends BaseEntity<Notice> {
     private String tittle;
     private Integer type;
     private String content;
-    private Integer creator;
-    private Long toUser;
+    private String creator;
+    private String toUser;
 
     public String getTittle() {
         return tittle;
@@ -37,19 +37,19 @@ public class Notice extends BaseEntity<Notice> {
         this.content = content;
     }
 
-    public Integer getCreator() {
+    public String getCreator() {
         return creator;
     }
 
-    public void setCreator(Integer creator) {
+    public void setCreator(String creator) {
         this.creator = creator;
     }
 
-    public Long getToUser() {
+    public String getToUser() {
         return toUser;
     }
 
-    public void setToUser(Long toUser) {
+    public void setToUser(String toUser) {
         this.toUser = toUser;
     }
 }

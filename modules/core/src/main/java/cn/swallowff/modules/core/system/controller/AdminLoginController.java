@@ -3,6 +3,7 @@ package cn.swallowff.modules.core.system.controller;
 import cn.swallowff.common.lang.StringUtils;
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
+import cn.swallowff.modules.core.cmomon.validator.Validator;
 import cn.swallowff.modules.core.excepiton.InvalidKaptchaException;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.util.KaptchaUtil;
@@ -40,11 +41,7 @@ public class AdminLoginController extends BaseController {
     public String doLogin(@RequestParam(value = "account") String account,
                           @RequestParam(value = "password") String password, Boolean rememberme, String kaptcha, RedirectAttributes redirectAttributes, Model model){
         if (KaptchaUtil.getKaptchaOnOff()) {
-            kaptcha = kaptcha.trim();
-            String code = (String) super.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-            if (StringUtils.isBlank(kaptcha) || !kaptcha.equalsIgnoreCase(code)) {
-                throw new InvalidKaptchaException();
-            }
+            Validator.kaptcha(kaptcha);
         }
         Subject subject = ShiroKit.getSubject();
         subject.login(new UsernamePasswordToken(account.trim(),password.trim(),rememberme == null ? false : rememberme));
@@ -54,16 +51,12 @@ public class AdminLoginController extends BaseController {
     @RequestMapping(value = "ajaxLogin",method = RequestMethod.POST)
     @ResponseBody
     public BaseResp ajaxLogin(@RequestParam(value = "account") String account,
-                              @RequestParam(value = "password") String password, Boolean rememberme, String kaptcha, RedirectAttributes redirectAttributes, Model model){
+                              @RequestParam(value = "password") String password, String kaptcha){
         if (KaptchaUtil.getKaptchaOnOff()) {
-            kaptcha = kaptcha.trim();
-            String code = (String) super.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-            if (StringUtils.isBlank(kaptcha) || !kaptcha.equalsIgnoreCase(code)) {
-                throw new InvalidKaptchaException();
-            }
+            Validator.kaptcha(kaptcha);
         }
         Subject subject = ShiroKit.getSubject();
-        subject.login(new UsernamePasswordToken(account.trim(),password.trim(),rememberme == null ? false : rememberme));
+        subject.login(new UsernamePasswordToken(account.trim(),password.trim()));
         HashMap<String,Object> respMap = new HashMap<>();
         respMap.put("access_token",getSession().getId());
         return BaseResp.newSuccess().setData(respMap);

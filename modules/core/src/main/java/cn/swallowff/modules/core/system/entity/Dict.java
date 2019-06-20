@@ -3,26 +3,26 @@ package cn.swallowff.modules.core.system.entity;
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 
 public class Dict extends BaseEntity<Dict> {
-    private Integer pid;    //父级id
-    private String type;    //字典类型
+    private String pid;    //父级id
+    private Integer type;    //字典类型
     private String name;    //字典名
     private Integer val;    //字典值
     private Integer sort;   //排序
     private String tips;    //提示
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

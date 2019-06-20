@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @author shenyu
  * @create 2019/4/12
  */
-//@Mapper
+@Mapper
 public interface NoticeDao extends CrudDao<Notice> {
 
 }
