@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String unAuth(AuthenticationException e) {
         log.error("用户未登陆：", e);
-        return "/admin/login";
+        return "admin/pages/login";
     }
 
     /**
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "账户未知", HttpContext.getIp()));
             model.addAttribute("tips", "账户未知");
         }
-        return "/admin/login";
+        return "admin/pages/login";
     }
 
 
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "密码错误", HttpContext.getIp()));
             model.addAttribute("tips", "密码错误");
         }
-        return "/admin/login";
+        return "admin/pages/login";
     }
 
     /**
@@ -101,7 +101,7 @@ public class GlobalExceptionHandler {
         String account = HttpContext.getRequest().getParameter("account");
         LogManager.me().executeLog(LogTaskFactory.loginLog(account, "验证码错误", HttpContext.getIp()));
         model.addAttribute("tips", "验证码错误");
-        return "/admin/login";
+        return "admin/pages/login";
     }
 
     /**

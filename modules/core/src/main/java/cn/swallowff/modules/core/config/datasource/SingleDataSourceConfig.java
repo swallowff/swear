@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class SingleDataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource-master")
+    @ConfigurationProperties(prefix = "spring.datasource-default")
     public DruidProperties druidProperties() {
         return new DruidProperties();
     }

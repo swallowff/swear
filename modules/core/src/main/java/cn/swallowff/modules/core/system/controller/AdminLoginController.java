@@ -58,7 +58,7 @@ public class AdminLoginController extends BaseController {
         Subject subject = ShiroKit.getSubject();
         subject.login(new UsernamePasswordToken(account.trim(),password.trim()));
         HashMap<String,Object> respMap = new HashMap<>();
-        respMap.put("access_token",getSession().getId());
+        respMap.put("accessToken",getSession().getId());
         return BaseResp.newSuccess().setData(respMap);
     }
 

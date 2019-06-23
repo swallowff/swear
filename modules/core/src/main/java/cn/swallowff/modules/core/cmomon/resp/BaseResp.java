@@ -35,11 +35,11 @@ public class BaseResp implements Serializable {
         return putState(ResponseState.EMPTY_DATA);
     }
 
-    public BaseResp error(){
+    public BaseResp putError(){
         return putState(ResponseState.SYSTEM_ERROR);
     }
 
-    public BaseResp success(){
+    public BaseResp putSuccess(){
         return putState(ResponseState.SUCCESS);
     }
 
@@ -47,7 +47,7 @@ public class BaseResp implements Serializable {
         return new BaseResp(ResponseState.SUCCESS);
     }
 
-    public boolean isSuccess(){
+    public boolean success(){
         return SUCCESS == this.getCode();
     }
 

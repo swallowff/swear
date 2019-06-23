@@ -22,28 +22,28 @@ import java.util.Map;
 /**
  * Druid读写分离数据源配置
  */
-//@Configuration
-//@EnableTransactionManagement
-//@ConditionalOnProperty(prefix = "swear.muti-datasource", name = "open", havingValue = "true")
-//@MapperScan(basePackages = {"cn.swallowff.modules.**.dao"})
+@Configuration
+@EnableTransactionManagement
+@ConditionalOnProperty(prefix = "swear.muti-datasource", name = "open", havingValue = "true")
+@MapperScan(basePackages = {"cn.swallowff.modules"})
 public class DynamicDataSourceConfig {
-    @Value("${spring.master-datasource.type}")
+    @Value("${spring.datasource-master.type}")
     private Class<? extends DataSource> dataSourceType;
     @Value("${mybatis.type-aliases-package}")
     private String typeAliasesPackage;
     @Value("${mybatis.mapper-locations}")
     private String mapperLocations;
 
-    //master数据源配置
-//    @Bean(name = "masterDruidProperties")
-//    @ConfigurationProperties(prefix = "spring.datasource-master")
+//    master数据源配置
+    @Bean(name = "masterDruidProperties")
+    @ConfigurationProperties(prefix = "spring.datasource-master")
     public DruidProperties druidProperties() {
         return new DruidProperties();
     }
 
     //slave数据源配置
-//    @Bean(name = "slaveDruidProperties")
-//    @ConfigurationProperties(prefix = "spring.datasource-slave")
+    @Bean(name = "slaveDruidProperties")
+    @ConfigurationProperties(prefix = "spring.datasource-slave")
     public DruidProperties slaveDruidProperties(){
         return new DruidProperties();
     }

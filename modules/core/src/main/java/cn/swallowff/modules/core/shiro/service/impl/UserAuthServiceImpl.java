@@ -46,6 +46,6 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     public static UserAuthService me(){
-        return SpringContextHolder.getBean(UserAuthService.class);
+        return SpringContextHolder.getBean(UserAuthServiceImpl.class);
     }
 }

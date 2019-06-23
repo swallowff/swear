@@ -30,7 +30,7 @@ import java.util.Map;
 //@Configuration
 public class ShiroConfig {
 
-    @Bean
+//    @Bean
     public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, EhCacheManager ehCacheManager, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRememberMeManager(rememberMeManager);
@@ -56,8 +56,8 @@ public class ShiroConfig {
      * @param coreProperties
      * @return
      */
-    @Bean
-    @ConditionalOnProperty(prefix = "swear", name = "spring-session-open", havingValue = "false")
+//    @Bean
+//    @ConditionalOnProperty(prefix = "swear", name = "spring-session-open", havingValue = "false")
     public DefaultWebSessionManager defaultWebSessionManager(CacheManager cacheShiroManager, CoreProperties coreProperties) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setCacheManager(cacheShiroManager);
@@ -72,14 +72,14 @@ public class ShiroConfig {
         return sessionManager;
     }
 
-    @Bean
+//    @Bean
     public CacheManager cacheShiroManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean){
         EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManager(ehCacheManagerFactoryBean.getObject());
         return ehCacheManager;
     }
 
-    @Bean
+//    @Bean
     public CookieRememberMeManager rememberMeManager(SimpleCookie cookie){
         CookieRememberMeManager manager = new CookieRememberMeManager();
         manager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
@@ -87,12 +87,12 @@ public class ShiroConfig {
         return manager;
     }
 
-    @Bean
+//    @Bean
     public ShiroDBRealm shiroDBRealm(){
         return new ShiroDBRealm();
     }
 
-    @Bean
+//    @Bean
     public SimpleCookie simpleCookie(){
         SimpleCookie cookie = new SimpleCookie("rememberme");
         cookie.setHttpOnly(true);
@@ -100,7 +100,7 @@ public class ShiroConfig {
         return cookie;
     }
 
-    @Bean
+//    @Bean
     public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
@@ -115,7 +115,7 @@ public class ShiroConfig {
         /**
          * 没有权限跳转的url
          */
-        shiroFilter.setUnauthorizedUrl("/global/error");
+        shiroFilter.setUnauthorizedUrl("/global/putError");
 
         /**
          * 覆盖默认的user拦截器(默认拦截器解决不了ajax请求 session超时的问题,若有更好的办法请及时反馈作者)
@@ -161,7 +161,7 @@ public class ShiroConfig {
     /**
      * 在方法中 注入 securityManager,进行代理控制
      */
-    @Bean
+//    @Bean
     public MethodInvokingFactoryBean methodInvokingFactoryBean(DefaultWebSecurityManager securityManager) {
         MethodInvokingFactoryBean bean = new MethodInvokingFactoryBean();
         bean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
@@ -174,7 +174,7 @@ public class ShiroConfig {
      * 用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调(例如:UserRealm)
      * 在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调(例如:DefaultSecurityManager)
      */
-    @Bean
+//    @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
@@ -182,7 +182,7 @@ public class ShiroConfig {
     /**
      * 启用shrio授权注解拦截方式，AOP式方法级权限检查
      */
-    @Bean
+//    @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor =
                 new AuthorizationAttributeSourceAdvisor();

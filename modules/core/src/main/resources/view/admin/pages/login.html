@@ -19,10 +19,11 @@
         <h2>swear</h2>
         <p>swear后台管理系统</p>
       </div>
-      <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+      <!--<div class="layadmin-user-login-box layadmin-user-login-body layui-form">-->
+      <form class="layui-form" action="/swear/a/login/login" method="post">
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-          <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+          <input type="text" name="account" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
         </div>
         <div class="layui-form-item">
           <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
@@ -32,7 +33,7 @@
           <div class="layui-row">
             <div class="layui-col-xs7">
               <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-              <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+              <input type="text" name="kaptcha" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
             </div>
             <div class="layui-col-xs5">
               <div style="margin-left: 10px;">
@@ -56,7 +57,8 @@
           
           <a href="reg.html" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
         </div>
-      </div>
+      </form>
+      <!--</div>-->
     </div>
     
     <div class="layui-trans layadmin-user-login-footer">
@@ -101,53 +103,40 @@
     setter.serverUrl = '${serverUrl}'
 
     form.render();
+
+    //ajax登录示例
+    // /*
     form.on('submit(LAY-user-login-submit)', function(obj){
-
-      //请求登入接口
-      admin.req({
-        url: setter.serverUrl + '/a/login' //实际使用请改成服务端真实接口
-        ,data: obj.field
-        ,done: function(res){
-
-          //请求成功后，写入 access_token
-          layui.data(setter.tableName, {
-            key: setter.request.tokenName,
-            value: res.data.access_token
-          });
-
-          //登入成功的提示与跳转
-          layer.msg('登入成功', {
-            offset: '15px'
-            ,icon: 1
-            ,time: 1000
-          }, function(){
-            location.href = '../index.html'; //后台主页
-          });
-        }
-      });
+      // $.ajax({
+      //   url: setter.serverUrl + '/a/login/ajaxLogin',
+      //   data: obj.field,
+      //   method: 'POST',
+      //   contentType: 'application/x-www-form-urlencoded',
+      //   success: function (res) {
+      //     console.log(res);
+      //     if (res.code == 200) {
+      //       layui.data(setter.tableName, {
+      //         key: setter.request.tokenName,
+      //         value: res.data.accessToken
+      //       });
+      //       //登入成功的提示与跳转
+      //       layer.msg('登入成功', {
+      //         offset: '15px'
+      //         ,icon: 1
+      //         ,time: 1000
+      //       }, function(){
+      //         location.href = '../index.html'; //后台主页
+      //       });
+      //     }else {
+      //       layer.msg(res.message);
+      //     }
+      //     console.log(layui.data(setter.tableName).accessToken)
+      //   }
+      // })
 
     });
-    
-    
-    // //实际使用时记得删除该代码
-    // layer.msg('为了方便演示，用户名密码可随意输入', {
-    //   offset: '15px'
-    //   ,icon: 1
-    // });
-    console.log(setter.serverUrl);
+    // */
 
-    $.ajax({
-      url: setter.serverUrl + '/a/login/ajaxLogin',
-      data: {
-        "account":"admin",
-        "password":"123456"
-      },
-      method: 'POST',
-      contentType: 'application/x-www-form-urlencoded',
-      success: function (res) {
-        console.log(res);
-      }
-    })
     
   });
   </script>

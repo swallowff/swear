@@ -49,7 +49,7 @@ public abstract class BaseController {
                 sb.append(error.getDefaultMessage());
                 sb.append(";");
             }
-            baseResp.error();
+            baseResp.putError();
             baseResp.setMessage(sb.toString());
             return false;
         }else return true;
