@@ -9,8 +9,8 @@ swear:
   kaptcha-open: false
   spring-session-open: true
   path:
-      admin: /a
-      api: /api
+    admin: /a
+    api: /api
 
 logging:
   config: classpath:logback.xml
@@ -27,23 +27,23 @@ spring:
     username: root
     password: yanni623..
     filters: wall,mergeStat
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   datasource-slave:
-      url: jdbc:mysql://120.79.225.48:3306/swallow_slave?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
-      db-name: swallow_slave
-      username: root
-      password: yanni623..
-      filters: wall,mergeStat
-      driver-class-name: com.mysql.jdbc.Driver
-      type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://120.79.225.48:3306/swallow_slave?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    db-name: swallow_slave
+    username: root
+    password: yanni623..
+    filters: wall,mergeStat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
   datasource-default:
     url: jdbc:mysql://120.79.225.48:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
     db-name: swallow_master
     username: root
     password: yanni623..
     filters: wall,mergeStat
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
 mybatis:

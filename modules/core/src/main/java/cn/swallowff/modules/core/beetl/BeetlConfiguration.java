@@ -37,16 +37,17 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
         }
         PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
         //通过读取配置文件获取项目根路径
-        String contextPath =  propertiesUtils.getProperty("swear-path-ctx");
-        String adminPath =  propertiesUtils.getProperty("swear-path-admin");
+        String ctx =  propertiesUtils.getProperty("swear-path-ctx");
+        String admin =  propertiesUtils.getProperty("swear-path-admin");
         //通过读取配置文件获取项目前端路径
 //        String frontPath = PropertiesUtils.getInstance().getProperty("swear-path-front");
         String staticPath = propertiesUtils.getProperty("swear-path-static");
         String serverUrl = propertiesUtils.getProperty("swear-path-server-url");
         //最终路径
-        sharedVars.put("adminPath", contextPath + adminPath);
-        sharedVars.put("staticPath",contextPath + staticPath);
-        sharedVars.put("serverUrl",serverUrl + contextPath);
+        sharedVars.put("admin", admin);
+        sharedVars.put("static",ctx + staticPath);
+        sharedVars.put("ctx",ctx);
+        sharedVars.put("serverUrl",serverUrl + ctx);
         groupTemplate.setSharedVars(sharedVars);
 
         groupTemplate.registerFunctionPackage("shiro", new ShiroExt());

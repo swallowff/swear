@@ -7,6 +7,7 @@ import cn.swallowff.modules.core.shiro.ShiroDBRealm;
 import net.sf.ehcache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -18,6 +19,7 @@ import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +42,7 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager,EhCacheManager ehCacheManager, DefaultWebSessionManager sessionManager){
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager,EhCacheManager ehCacheManager, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         securityManager.setRememberMeManager(rememberMeManager);
         //设置realm.
@@ -67,6 +69,13 @@ public class ShiroConfig2 {
         em.setCacheManagerConfigFile("classpath:config/ehcache.xml");
         return em;
     }
+
+    @Bean
+    @ConditionalOnProperty(prefix = "swear", name = "spring-session-open", havingValue = "true")
+    public ServletContainerSessionManager servletContainerSessionManager() {
+        return new ServletContainerSessionManager();
+    }
+
     /**
      * shiro session的管理
      */
@@ -126,11 +135,11 @@ public class ShiroConfig2 {
         /**
          * 默认的登陆访问url
          */
-        shiroFilter.setLoginUrl("/swear/a/login/login");
+        shiroFilter.setLoginUrl("/a/login/login");
         /**
          * 登陆成功后跳转的url
          */
-        shiroFilter.setSuccessUrl("/a");
+        shiroFilter.setSuccessUrl("/a/common/index");
         /**
          * 没有权限跳转的url
          */
