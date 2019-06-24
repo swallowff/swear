@@ -20,4 +20,9 @@ public class CommonController {
         return "admin/pages/index";
     }
 
+    @RequestMapping("welcome")
+    public String welcome(HttpServletRequest request, HttpServletResponse response){
+        return "admin/pages/welcome";
+    }
+
 }
