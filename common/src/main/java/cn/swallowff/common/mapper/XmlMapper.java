@@ -84,6 +84,23 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	public static String toXml(Object object){
 		return XmlMapper.getInstance().toXmlString(object);
 	}
+
+	/**
+	 * 可选择是否要去掉根节点
+	 * @param object
+	 * @param withRoot
+	 * @return
+	 */
+	public static String toXml(Object object,boolean withRoot){
+		if (withRoot){
+			return toXml(object);
+		}else {
+			String r = toXml(object);
+			int rFirst = r.indexOf(">");
+			int rLast = r.lastIndexOf("<");
+			return r.substring(rFirst+1,rLast);
+		}
+	}
 	
 	/**
 	 * XML字符串转换为对象
