@@ -90,8 +90,9 @@ public class ShiroConfig2 {
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
-        Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
-        cookie.setName("shiroCookie");
+//        Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+        Cookie cookie = new SimpleCookie("swearShiroCookie");
+        cookie.setName("swearShiroCookie");
         cookie.setHttpOnly(true);
         sessionManager.setSessionIdCookie(cookie);
         return sessionManager;
@@ -180,7 +181,7 @@ public class ShiroConfig2 {
         hashMap.put("/webjars/springfox-swagger-ui/**","anon");
 
         hashMap.put("/global/**", "anon");
-        hashMap.put("/a/kaptcha", "anon");
+        hashMap.put("/a/kaptcha/**", "anon");
         hashMap.put("/a/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;

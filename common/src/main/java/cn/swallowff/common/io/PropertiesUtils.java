@@ -191,6 +191,10 @@ public class PropertiesUtils {
 		return null;
 	}
 
+	public boolean getBooleanProperty(String key){
+		return "true".equalsIgnoreCase(getProperty(key)) ? true : false;
+	}
+
 	/**
 	 * 取出String类型的Property，但以System的Property优先，如果都为null则返回defaultValue值
 	 */

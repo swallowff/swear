@@ -10,7 +10,9 @@
   <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
   
   <script>
-
+    if (window.top !== window.self) {
+      window.top.location = window.location;
+    }
   </script>
 </head>
 <body class="layui-layout-body">
@@ -72,7 +74,7 @@
               <dd><a lay-href="set/user/info.html">基本资料</a></dd>
               <dd><a lay-href="set/user/password.html">修改密码</a></dd>
               <hr>
-              <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+              <dd style="text-align: center;" lay-href="${admin}/login/logout"><a>退出</a></dd>
             </dl>
           </li>
           
@@ -448,10 +450,23 @@
   <script src="${static}/layuiadmin/layui/layui.js"></script>
   <script>
   layui.config({
-    base: '../layuiadmin/' //静态资源所在路径
+    base: '${static}/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use('index');
+  }).use('index',function(){
+    var $ = layui.$
+    ,setter = layui.setter
+    ,admin = layui.admin
+    ,form = layui.form
+    ,router = layui.router()
+    ,search = router.search;
+
+
+
+  });
+
+
+
   </script>
 </body>
 </html>

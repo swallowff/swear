@@ -5,6 +5,7 @@ import cn.swallowff.common.io.PropertiesUtils;
 import cn.swallowff.modules.core.beetl.tag.DictSelectorTag;
 import cn.swallowff.modules.core.beetl.util.BeetlUtil;
 import cn.swallowff.modules.core.beetl.util.ShiroExt;
+import cn.swallowff.modules.core.config.properties.CoreProperties;
 import cn.swallowff.modules.core.util.KaptchaUtil;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
@@ -24,6 +25,9 @@ import java.util.Map;
  */
 public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
     @Autowired
+    private CoreProperties coreProperties;
+
+    @Autowired
     private Environment env;
 
     @Autowired
@@ -37,17 +41,17 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
         }
         PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
         //通过读取配置文件获取项目根路径
-        String ctx =  propertiesUtils.getProperty("swear-path-ctx");
-        String admin =  propertiesUtils.getProperty("swear-path-admin");
+        String ctx =  coreProperties.getCtx();
+        String admin =  coreProperties.getAdminPath();
         //通过读取配置文件获取项目前端路径
 //        String frontPath = PropertiesUtils.getInstance().getProperty("swear-path-front");
-        String staticPath = propertiesUtils.getProperty("swear-path-static");
-        String serverUrl = propertiesUtils.getProperty("swear-path-server-url");
+        String staticPath = coreProperties.getStaticPath();
+        String serverUrl = coreProperties.getServerUrl();
         //最终路径
-        sharedVars.put("admin", admin);
+        sharedVars.put("admin", ctx + admin);
         sharedVars.put("static",ctx + staticPath);
         sharedVars.put("ctx",ctx);
-        sharedVars.put("serverUrl",serverUrl + ctx);
+        sharedVars.put("serverUrl",serverUrl);
         groupTemplate.setSharedVars(sharedVars);
 
         groupTemplate.registerFunctionPackage("shiro", new ShiroExt());

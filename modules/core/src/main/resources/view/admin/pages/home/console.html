@@ -8,8 +8,8 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="${staticPath}/layuiadmin/layui/css/layui.css" media="all">
-  <link rel="stylesheet" href="${staticPath}/layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
 </head>
 <body>
   
@@ -315,10 +315,10 @@
     </div>
   </div>
 
-  <script src="${staticPath}/layuiadmin/layui/layui.js?t=1"></script>
+  <script src="${static}/layuiadmin/layui/layui.js?t=1"></script>
   <script>
   layui.config({
-    base: '../../layuiadmin/' //静态资源所在路径
+    base: '${static}/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
   }).use(['index', 'console']);

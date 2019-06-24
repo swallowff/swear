@@ -11,6 +11,6 @@ public class KaptchaUtil {
      * 获取验证码开关
      */
     public static Boolean getKaptchaOnOff() {
-        return SpringContextHolder.getBean(CoreProperties.class).getKaptchaOpen();
+        return SpringContextHolder.getBean(CoreProperties.class).isKaptchaOpen();
     }
 }

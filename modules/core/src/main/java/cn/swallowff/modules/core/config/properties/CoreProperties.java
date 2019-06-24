@@ -1,16 +1,26 @@
 package cn.swallowff.modules.core.config.properties;
 
+import cn.swallowff.common.io.PropertiesUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
-//@ConfigurationProperties(prefix = "core")
 @PropertySource(value = "classpath:config/swear-core.properties")
 public class CoreProperties {
-    private String adminPath;
-    private String fileUploadPath;
-    private Boolean kaptchaOpen = false;
-    private Boolean swaggerOpen = false;
+    private PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
+
+    private String serverUrl = propertiesUtils.getProperty("swear-path-server-url");
+    private String ctx = propertiesUtils.getProperty("swear-path-ctx");
+    private String adminPath = propertiesUtils.getProperty("swear-path-admin");
+    private String staticPath = propertiesUtils.getProperty("swear-path-static");
+    private String fileUploadPath = propertiesUtils.getProperty("swear-path-file-upload");
+    private boolean kaptchaOpen = propertiesUtils.getBooleanProperty("swear-core-kaptcha-open");
+    private boolean swaggerOpen = propertiesUtils.getBooleanProperty("swear-core-swagger-open");
 
 
     /**
@@ -55,19 +65,43 @@ public class CoreProperties {
         this.sessionValidationInterval = sessionValidationInterval;
     }
 
-    public Boolean getKaptchaOpen() {
+    public boolean isKaptchaOpen() {
         return kaptchaOpen;
     }
 
-    public void setKaptchaOpen(Boolean kaptchaOpen) {
+    public void setKaptchaOpen(boolean kaptchaOpen) {
         this.kaptchaOpen = kaptchaOpen;
     }
 
-    public Boolean getSwaggerOpen() {
+    public boolean isSwaggerOpen() {
         return swaggerOpen;
     }
 
-    public void setSwaggerOpen(Boolean swaggerOpen) {
+    public void setSwaggerOpen(boolean swaggerOpen) {
         this.swaggerOpen = swaggerOpen;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
+    }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
+    public String getCtx() {
+        return ctx;
+    }
+
+    public void setCtx(String ctx) {
+        this.ctx = ctx;
+    }
+
+    public String getStaticPath() {
+        return staticPath;
+    }
+
+    public void setStaticPath(String staticPath) {
+        this.staticPath = staticPath;
     }
 }

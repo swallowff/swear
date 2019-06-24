@@ -71,5 +71,12 @@ public class LoginController extends BaseController {
         return BaseResp.newSuccess().setData(respMap);
     }
 
+    @RequestMapping(value = "logout")
+    public String logout(){
+        Subject subject = ShiroKit.getSubject();
+        subject.logout();
+        return REDIRECT + "/a/login/login";
+    }
+
 
 }
