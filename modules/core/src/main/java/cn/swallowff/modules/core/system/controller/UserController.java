@@ -23,8 +23,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "listHtml")
-    public String listHtml(Model model){
-        List<User> userList = userService.findList(new User());
+    public String listHtml(User user,Model model){
+        List<User> userList = userService.findList(user);
         model.addAttribute("userList",userList);
         return "admin/pages/system/user-list";
     }

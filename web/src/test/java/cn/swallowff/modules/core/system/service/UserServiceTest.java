@@ -22,8 +22,4 @@ public class UserServiceTest {
     public void selectByAccount() {
     }
 
-    @Test
-    public void test(){
-        System.out.println(userService.test());
-    }
 }

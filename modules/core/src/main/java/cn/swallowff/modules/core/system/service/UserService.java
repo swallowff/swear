@@ -12,10 +12,6 @@ import java.util.List;
 @Service
 public class UserService extends CrudService<UserDao, User> {
 
-    public User selectById(String id){
-        return super.selectById(id);
-    }
-
     public User selectByAccount(String account){
         User user = new User();
         user.setAccount(account);
@@ -23,9 +19,6 @@ public class UserService extends CrudService<UserDao, User> {
         return ListUtils.isEmpty(results) ? null : results.get(0);
     }
 
-    public Integer test(){
-        return crudDao.test();
-    }
 
 
 }
