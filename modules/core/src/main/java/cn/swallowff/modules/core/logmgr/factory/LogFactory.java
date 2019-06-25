@@ -17,8 +17,8 @@ public class LogFactory {
      */
     public static OperationLog createOperationLog(LogType logType, String userId, String bussinessName, String clazzName, String methodName, String msg, LogSucceed succeed) {
         OperationLog operationLog = new OperationLog();
-        operationLog.setLogType(logType.getMessage());
-        operationLog.setLogname(bussinessName);
+        operationLog.setLogType(logType.getCode());
+        operationLog.setLogName(bussinessName);
         operationLog.setUserId(userId);
         operationLog.setClassName(clazzName);
         operationLog.setMethod(methodName);

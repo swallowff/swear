@@ -15,7 +15,7 @@
         a.version AS version
     </sql>
 
-    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.LoginLog">
+    <select id="selectById" resultType="LoginLog">
       SELECT
       <include refid="baseColumns"/>
       FROM sys_login_log a
@@ -24,7 +24,7 @@
       </where>
     </select>
 
-    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.LoginLog">
+    <select id="findList" resultType="LoginLog">
         SELECT
         <include refid="baseColumns"/>
         FROM sys_login_log a
@@ -35,7 +35,7 @@
             <if test="userId != null and userId != ''">
                 AND a.user_id = #{userId}
             </if>
-            <if test="succeed != null and succeed != ''">
+            <if test="succeed != null">
                 AND a.succeed = #{succeed}
             </if>
             <if test="ip != null and ip != ''">
@@ -54,6 +54,7 @@
 
     <insert id="insert">
         INSERT INTO sys_login_log(
+          id,
           log_name,
           user_id,
           succeed,
@@ -61,8 +62,10 @@
           ip,
           create_time,
           update_time,
-          version
+          version,
+          delflag
         ) VALUES (
+          #{id},
           #{logName},
           #{userId},
           #{succeed},
@@ -70,7 +73,8 @@
           #{ip},
           #{createTime},
           #{updateTime},
-          #{version}
+          #{version},
+          #{delfalg}
         )
     </insert>
 
@@ -98,7 +102,7 @@
             <if test="userId != null and userId != ''">
                 user_id = #{userId}
             </if>
-            <if test="succeed != null and succeed != ''">
+            <if test="succeed != null">
                 succeed = #{succeed}
             </if>
             <if test="message != null and message != ''">
@@ -107,13 +111,13 @@
             <if test="ip != null and ip != ''">
                 ip = #{ip}
             </if>
-            <if test="createTime != null and createTime != ''">
+            <if test="createTime != null">
                 create_time = #{createTime}
             </if>
-            <if test="updateTime != null and updateTime != ''">
+            <if test="updateTime != null">
                 update_time = #{updateTime}
             </if>
-            <if test="version != null and version != ''">
+            <if test="version != null">
                 version = #{version}
             </if>
         </set>
@@ -123,7 +127,8 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM sys_login_log a
+        UPDATE sys_login_log a
+        SET a.delflag = 1
         <where>
           a.id = #{id}
         </where>

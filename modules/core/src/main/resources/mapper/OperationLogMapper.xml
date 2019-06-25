@@ -15,7 +15,7 @@
         a.version AS version
     </sql>
 
-    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.OperationLog">
+    <select id="selectById" resultType="OperationLog">
       SELECT
       <include refid="baseColumns"/>
       FROM sys_operation_log a
@@ -24,7 +24,7 @@
       </where>
     </select>
 
-    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.OperationLog">
+    <select id="findList" resultType="OperationLog">
         SELECT
         <include refid="baseColumns"/>
         FROM sys_operation_log a
@@ -35,7 +35,7 @@
             <if test="userId != null and userId != ''">
                 AND a.user_id = #{userId}
             </if>
-            <if test="succeed != null and succeed != ''">
+            <if test="succeed != null">
                 AND a.succeed = #{succeed}
             </if>
         </where>
@@ -51,6 +51,7 @@
 
     <insert id="insert">
         INSERT INTO sys_operation_log(
+          id,
           log_name,
           log_type,
           user_id,
@@ -60,8 +61,10 @@
           message,
           create_time,
           update_time,
-          version
+          version,
+          delflag
         ) VALUES (
+          #{id},
           #{logName},
           #{logType},
           #{userId},
@@ -71,7 +74,8 @@
           #{message},
           #{createTime},
           #{updateTime},
-          #{version}
+          #{version},
+          #{delflag}
         )
     </insert>
 
@@ -84,7 +88,6 @@
           method = #{method},
           succeed = #{succeed},
           message = #{message},
-          create_time = #{createTime},
           update_time = #{updateTime},
           version = #{version}
           <where>
@@ -104,7 +107,7 @@
             <if test="userId != null and userId != ''">
                 user_id = #{userId}
             </if>
-            <if test="succeed != null and succeed != ''">
+            <if test="succeed != null">
                 succeed = #{succeed}
             </if>
             <if test="className != null and className != ''">
@@ -116,10 +119,7 @@
             <if test="message != null and message != ''">
                 message = #{message}
             </if>
-            <if test="createTime != null and createTime != ''">
-                create_time = #{createTime}
-            </if>
-            <if test="updateTime != null and updateTime != ''">
+            <if test="updateTime != null">
                 update_time = #{updateTime}
             </if>
             <if test="version != null and version != ''">
@@ -132,7 +132,8 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM sys_operation_log a
+        UPDATE sys_operation_log a
+        SET a.delflag = 1
         <where>
           a.id = #{id}
         </where>

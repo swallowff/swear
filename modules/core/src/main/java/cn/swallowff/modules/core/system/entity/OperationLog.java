@@ -7,49 +7,28 @@ import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
  * @create 2019/3/15
  */
 public class OperationLog extends BaseEntity<OperationLog> {
-    /**
-     * 日志类型
-     */
-    private String logType;
-    /**
-     * 日志名称
-     */
-    private String logname;
-    /**
-     * 用户id
-     */
-    private String userId;
-    /**
-     * 类名称
-     */
-    private String className;
-    /**
-     * 方法名称
-     */
-    private String method;
-    /**
-     * 是否成功
-     */
-    private Boolean succeed;
-    /**
-     * 备注
-     */
-    private String message;
+    private Integer logType;  //日志类型
+    private String logName;   //日志名称
+    private String userId;  //用户id
+    private String className;   //类名称
+    private String method;  //方法名称
+    private Boolean succeed;    //是否成功
+    private String message; //备注
 
-    public String getLogType() {
+    public Integer getLogType() {
         return logType;
     }
 
-    public void setLogType(String logType) {
+    public void setLogType(Integer logType) {
         this.logType = logType;
     }
 
-    public String getLogname() {
-        return logname;
+    public String getLogName() {
+        return logName;
     }
 
-    public void setLogname(String logname) {
-        this.logname = logname;
+    public void setLogName(String logName) {
+        this.logName = logName;
     }
 
     public String getUserId() {

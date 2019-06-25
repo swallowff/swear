@@ -4,24 +4,18 @@
 
     <sql id="baseColumns">
         a.id AS id,
-        a.avatar AS avatar,
-        a.account AS account,
-        a.password AS password,
-        a.salt AS salt,
+        a.type AS type,
         a.name AS name,
-        a.birthday AS birthday,
-        a.sex AS sex,
-        a.email AS email,
-        a.phone AS phone,
-        a.role_id AS roleId,
-        a.dept_id AS deptId,
-        a.status AS status,
+        a.password AS password,
+        a.val AS val,
+        a.sort AS sort,
+        a.tips AS tips,
         a.create_time AS createTime,
         a.update_time AS updateTime,
         a.version AS version
     </sql>
 
-    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.Dict">
+    <select id="selectById" resultType="Dict">
       SELECT
       <include refid="baseColumns"/>
       FROM sys_dict a
@@ -35,23 +29,14 @@
         <include refid="baseColumns"/>
         FROM sys_dict a
         <where>
-            <if test="account != null and account != ''">
-              AND a.account = #{account}
+            <if test="pid != null and pid != ''">
+              AND a.pid = #{pid}
+            </if>
+            <if test="type != null">
+                AND a.type = #{type}
             </if>
             <if test="name != null and name != ''">
                 AND a.name = #{name}
-            </if>
-            <if test="sex != null and sex != ''">
-                AND a.sex = #{sex}
-            </if>
-            <if test="email != null and email != ''">
-                AND a.email = #{email}
-            </if>
-            <if test="phone != null and phone != ''">
-                AND a.phone = #{phone}
-            </if>
-            <if test="status != null and status != ''">
-                AND a.status = #{status}
             </if>
         </where>
         <choose>
@@ -66,54 +51,40 @@
 
     <insert id="insert">
         INSERT INTO sys_dict(
-          avatar,
-          account,
-          password,
-          salt,
+          id,
+          pid,
+          type,
           name,
-          birthday,
-          sex,
-          email,
-          phone,
-          role_id,
-          dept_id,
-          status,
+          val,
+          sort,
+          tips,
           update_time,
-          create_time
+          create_time,
+          delflag
         ) VALUES (
-          #{avatar},
-          #{account},
-          #{password},
-          #{salt},
+          #{id},
+          #{pid},
+          #{type},
           #{name},
-          #{birthday},
-          #{sex},
-          #{email},
-          #{phone},
-          #{roleId},
-          #{deptId},
-          #{status},
+          #{val},
+          #{sort},
+          #{tips},
           #{updateTime},
-          #{createTime}
+          #{createTime},
+          #{delflag},
+          #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_dict SET
-          avatar = #{avatar},
-          account = #{account},
-          password = #{password},
-          salt = #{salt},
+          pid = #{pid},
+          type = #{type},
           name = #{name},
-          birthday = #{birthday},
-          sex = #{sex},
-          email = #{email},
-          phone = #{phone},
-          role_id = #{roleId},
-          dept_id = #{deptId},
-          status = #{status},
-          update_time = #{updateTime},
-          create_time = #{createTime}
+          val = #{val},
+          sort = #{sort},
+          tips = #{tips},
+          update_time = #{updateTime}
           <where>
               id = #{id}
           </where>
@@ -122,43 +93,28 @@
     <update id="updateSelective">
         UPDATE sys_dict
         <set>
-            <if test="avatar != null and avatar != ''">
-                avatar = #{avatar}
+            <if test="pid != null and pid != ''">
+                pid = #{pid}
             </if>
-            <if test="account != null and account != ''">
-                account = #{account}
-            </if>
-            <if test="password != null and password != ''">
-                password = #{password}
-            </if>
-            <if test="salt != null and salt != ''">
-                salt = #{salt}
+            <if test="type != null">
+                type = #{type}
             </if>
             <if test="name != null and name != ''">
                 name = #{name}
             </if>
-            <if test="birthday != null and birthday != ''">
-                birthday = #{birthday}
+            <if test="val != null">
+                val = #{val}
             </if>
-            <if test="sex != null and sex != ''">
-                sex = #{sex}
+            <if test="sort != null">
+                name = #{sort}
             </if>
-            <if test="email != null and email != ''">
-                email = #{email}
+            <if test="tips != null and tips != ''">
+                tips = #{tips}
             </if>
-            <if test="phone != null and phone != ''">
-                phone = #{phone}
-            </if>
-            <if test="deptId != null and deptId != ''">
-                dept_id = #{deptId}
-            </if>
-            <if test="status != null and status != ''">
-                status = #{status}
-            </if>
-            <if test="updateTime != null and updateTime != ''">
+            <if test="updateTime != null">
                 update_time = #{updateTime}
             </if>
-            <if test="createTime != null and createTime != ''">
+            <if test="createTime != null">
                 create_time = #{createTime}
             </if>
         </set>
@@ -168,7 +124,8 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM sys_dict a
+        UPDATE sys_dict a
+        SET a.delflag = 1
         <where>
           a.id = #{id}
         </where>

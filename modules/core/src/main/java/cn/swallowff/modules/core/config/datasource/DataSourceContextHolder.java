@@ -14,7 +14,7 @@ public class DataSourceContextHolder {
     private static final ThreadLocal<String> local = new ThreadLocal<String>(){
         @Override
         protected String initialValue() {
-            logger.info("初始化master数据源-----");
+            logger.info("初始化Write数据源-----");
             return DataSourceType.WRITE.getType();
         }
     };

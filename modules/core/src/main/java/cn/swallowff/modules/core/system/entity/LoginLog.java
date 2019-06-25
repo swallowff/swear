@@ -18,10 +18,6 @@ public class LoginLog extends BaseEntity<LoginLog> {
      */
     private String userId;
     /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
      * 是否执行成功
      */
     private Boolean succeed;
@@ -49,16 +45,6 @@ public class LoginLog extends BaseEntity<LoginLog> {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    @Override
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    @Override
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public Boolean getSucceed() {

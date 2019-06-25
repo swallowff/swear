@@ -15,19 +15,19 @@
         a.version AS version
     </sql>
 
-    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.Dept">
+    <select id="selectById" resultType="Dept">
       SELECT
       <include refid="baseColumns"/>
-      FROM sys_user a
+      FROM sys_dept a
       <where>
           a.id = #{id}
       </where>
     </select>
 
-    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.Dept">
+    <select id="findList" resultType="Dept">
         SELECT
         <include refid="baseColumns"/>
-        FROM sys_user a
+        FROM sys_dept a
         <where>
             <if test="pid != null and pid != ''">
               AND a.pid = #{pid}
@@ -50,101 +50,68 @@
     </select>
 
     <insert id="insert">
-        INSERT INTO sys_user(
-          avatar,
-          account,
-          password,
-          salt,
-          name,
-          birthday,
-          sex,
-          email,
-          phone,
-          role_id,
-          dept_id,
-          status,
+        INSERT INTO sys_dept(
+          id,
+          sort,
+          pid,
+          pids,
+          simple_name,
+          full_name,
+          tips,
           update_time,
-          create_time
+          create_time,
+          delflag
         ) VALUES (
-          #{avatar},
-          #{account},
-          #{password},
-          #{salt},
-          #{name},
-          #{birthday},
-          #{sex},
-          #{email},
-          #{phone},
-          #{roleId},
-          #{deptId},
-          #{status},
+          #{id},
+          #{sort},
+          #{pid},
+          #{pids},
+          #{simpleName},
+          #{fullName},
+          #{tips},
           #{updateTime},
-          #{createTime}
+          #{createTime},
+          #{delflag}
         )
     </insert>
 
     <update id="update">
-        UPDATE sys_user SET
-          avatar = #{avatar},
-          account = #{account},
-          password = #{password},
-          salt = #{salt},
-          name = #{name},
-          birthday = #{birthday},
-          sex = #{sex},
-          email = #{email},
-          phone = #{phone},
-          role_id = #{roleId},
-          dept_id = #{deptId},
-          status = #{status},
-          update_time = #{updateTime},
-          create_time = #{createTime}
-          <where>
-              id = #{id}
-          </where>
+        UPDATE sys_dept SET
+            sort = #{sort},
+            pid = #{pid},
+            pids = #{pids},
+            simple_name = #{simpleName},
+            full_name = #{fullName},
+            tips = #{tips},
+            update_time = #{updateTime}
+        <where>
+            id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">
-        UPDATE sys_user
+        UPDATE sys_dept
         <set>
-            <if test="avatar != null and avatar != ''">
-                avatar = #{avatar}
+            <if test="sort != null">
+                sort = #{sort}
             </if>
-            <if test="account != null and account != ''">
-                account = #{account}
+            <if test="pid != null and pid != ''">
+                pid = #{pid}
             </if>
-            <if test="password != null and password != ''">
-                password = #{password}
+            <if test="pids != null and pids != ''">
+                pids = #{pids}
             </if>
-            <if test="salt != null and salt != ''">
-                salt = #{salt}
+            <if test="simpleName != null and simpleName != ''">
+                simple_name = #{simpleName}
             </if>
-            <if test="name != null and name != ''">
-                name = #{name}
+            <if test="fullName != null and fullName != ''">
+                full_name = #{fullName}
             </if>
-            <if test="birthday != null and birthday != ''">
-                birthday = #{birthday}
+            <if test="tips != null and tips != ''">
+                tips = #{tips}
             </if>
-            <if test="sex != null and sex != ''">
-                sex = #{sex}
-            </if>
-            <if test="email != null and email != ''">
-                email = #{email}
-            </if>
-            <if test="phone != null and phone != ''">
-                phone = #{phone}
-            </if>
-            <if test="deptId != null and deptId != ''">
-                dept_id = #{deptId}
-            </if>
-            <if test="status != null and status != ''">
-                status = #{status}
-            </if>
-            <if test="updateTime != null and updateTime != ''">
+            <if test="updateTime != null">
                 update_time = #{updateTime}
-            </if>
-            <if test="createTime != null and createTime != ''">
-                create_time = #{createTime}
             </if>
         </set>
         <where>
@@ -153,7 +120,8 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM sys_user a
+        UPDATE sys_dept a
+        SET a.delflag = 1
         <where>
           a.id = #{id}
         </where>

@@ -14,22 +14,25 @@
         a.version AS version
     </sql>
 
-    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.Role">
+    <select id="selectById" resultType="Role">
       SELECT
       <include refid="baseColumns"/>
-      FROM sys_user a
+      FROM sys_role a
       <where>
           a.id = #{id}
       </where>
     </select>
 
-    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.Role">
+    <select id="findList" resultType="Role">
         SELECT
         <include refid="baseColumns"/>
         FROM sys_role a
         <where>
             <if test="pid != null and pid != ''">
               AND a.pid = #{pid}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
             </if>
         </where>
         <choose>
@@ -44,26 +47,90 @@
 
     <insert id="insert">
         INSERT INTO sys_role(
+          id,
           sort,
           name,
           pid,
           dept_id,
           tips,
           update_time,
-          create_time
+          create_time,
+          delflag
         ) VALUES (
+          #{id},
           #{sort},
           #{name},
           #{pid},
           #{deptId},
           #{tips},
           #{updateTime},
-          #{createTime}
+          #{createTime},
+          #{delflag}
         )
     </insert>
 
+    <insert id="insertSelective">
+        INSERT INTO sys_user(
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id,
+            </if>
+            <if test="tips != null and tips != ''">
+                tips,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="delflag != null">
+                delflag,
+            </if>
+        </trim>
+        VALUES
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="id != null and id != ''">
+                #{id},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="pid != null and pid != ''">
+                #{pid},
+            </if>
+            <if test="deptId != null and deptId != ''">
+                #{deptId},
+            </if>
+            <if test="tips != null and tips != ''">
+                #{tips},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="delflag != null">
+                #{delflag},
+            </if>
+        </trim>
+    </insert>
+
     <update id="update">
-        UPDATE sys_user SET
+        UPDATE sys_role SET
           sort = #{sort},
           name = #{name},
           pid = #{pid},
@@ -76,7 +143,7 @@
     </update>
 
     <update id="updateSelective">
-        UPDATE sys_user
+        UPDATE sys_role
         <set>
             <if test="sort != null and sort != ''">
                 sort = #{sort}
@@ -103,7 +170,8 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM sys_user a
+        UPDATE sys_role a
+        SET a.delflag = 1
         <where>
           a.id = #{id}
         </where>

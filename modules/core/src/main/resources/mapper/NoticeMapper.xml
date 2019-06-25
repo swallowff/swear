@@ -13,7 +13,7 @@
         a.creator AS creator
     </sql>
 
-    <select id="selectById" resultType="cn.swallowff.modules.core.system.entity.Notice">
+    <select id="selectById" resultType="Notice">
       SELECT
       <include refid="baseColumns"/>
       FROM sys_notice a
@@ -22,12 +22,12 @@
       </where>
     </select>
 
-    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.Notice">
+    <select id="findList" resultType="Notice">
         SELECT
         <include refid="baseColumns"/>
         FROM sys_notice a
         <where>
-            <if test="type != null and type != ''">
+            <if test="type != null">
               AND a.type = #{type}
             </if>
             <if test="tittle != null and tittle != ''">
@@ -53,6 +53,7 @@
 
     <insert id="insert">
         INSERT INTO sys_notice(
+          id,
           tittle,
           type,
           content,
@@ -60,8 +61,10 @@
           to_user,
           create_time,
           update_time,
-          version
+          version,
+          delflag
         ) VALUES (
+          #{id},
           #{tittle},
           #{type},
           #{content},
@@ -69,7 +72,8 @@
           #{toUser},
           #{createTime},
           #{updateTime},
-          #{version}
+          #{version},
+          #{delflag}
         )
     </insert>
 
@@ -80,7 +84,6 @@
           content = #{content},
           creator = #{creator},
           to_user = #{toUser},
-          create_time = #{createTime},
           update_time = #{updateTime},
           version = #{version}
           <where>
@@ -94,7 +97,7 @@
             <if test="tittle != null and tittle != ''">
                 tittle = #{tittle}
             </if>
-            <if test="type != null and type != ''">
+            <if test="type != null">
                 type = #{type}
             </if>
             <if test="creator != null and creator != ''">
@@ -106,6 +109,9 @@
             <if test="version != null and version != ''">
                 version = #{version}
             </if>
+            <if test="updateTime != null and updateTime != ''">
+                update_time = #{updateTime}
+            </if>
         </set>
         <where>
             id = #{id}
@@ -113,7 +119,8 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM sys_notice a
+        UPDATE sys_notice a
+        SET a.delflag = 1
         <where>
           a.id = #{id}
         </where>
