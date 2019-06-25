@@ -25,4 +25,24 @@ public class CommonController {
         return "admin/pages/welcome";
     }
 
+    @RequestMapping("welcome1")
+    public String welcome1(HttpServletRequest request, HttpServletResponse response){
+        return "admin/pages/welcome1";
+    }
+
+    @RequestMapping("member-list")
+    public String memberList(HttpServletRequest request, HttpServletResponse response){
+        return "admin/pages/member-list";
+    }
+
+    @RequestMapping("member-list1")
+    public String memberList1(HttpServletRequest request, HttpServletResponse response){
+        return "admin/pages/member-list1";
+    }
+
+    @RequestMapping("order-list")
+    public String orderList(HttpServletRequest request, HttpServletResponse response){
+        return "admin/pages/order-list";
+    }
+
 }

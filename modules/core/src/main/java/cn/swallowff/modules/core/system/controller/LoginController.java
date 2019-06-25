@@ -52,7 +52,7 @@ public class LoginController extends BaseController {
         }
         Subject subject = ShiroKit.getSubject();
         subject.login(new UsernamePasswordToken(account.trim(),password.trim(),rememberme == null ? false : rememberme));
-        return "admin/pages/index";
+        return REDIRECT + "/a/common/index";
     }
 
     /**
