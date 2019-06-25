@@ -232,43 +232,43 @@
         UPDATE sys_user
         <set>
             <if test="avatar != null and avatar != ''">
-                avatar = #{avatar}
+                avatar = #{avatar},
             </if>
             <if test="account != null and account != ''">
-                account = #{account}
+                account = #{account},
             </if>
             <if test="password != null and password != ''">
-                password = #{password}
+                password = #{password},
             </if>
             <if test="salt != null and salt != ''">
-                salt = #{salt}
+                salt = #{salt},
             </if>
             <if test="name != null and name != ''">
-                name = #{name}
+                name = #{name},
             </if>
             <if test="birthday != null and birthday != ''">
-                birthday = #{birthday}
+                birthday = #{birthday},
             </if>
-            <if test="sex != null and sex != ''">
-                sex = #{sex}
+            <if test="sex != null">
+                sex = #{sex},
             </if>
             <if test="email != null and email != ''">
-                email = #{email}
+                email = #{email},
             </if>
             <if test="phone != null and phone != ''">
-                phone = #{phone}
+                phone = #{phone},
             </if>
             <if test="deptId != null and deptId != ''">
-                dept_id = #{deptId}
+                dept_id = #{deptId},
             </if>
-            <if test="status != null and status != ''">
-                status = #{status}
+            <if test="status != null">
+                status = #{status},
             </if>
-            <if test="updateTime != null and updateTime != ''">
-                update_time = #{updateTime}
+            <if test="updateTime != null">
+                update_time = #{updateTime},
             </if>
-            <if test="createTime != null and createTime != ''">
-                create_time = #{createTime}
+            <if test="createTime != null">
+                create_time = #{createTime},
             </if>
         </set>
         <where>

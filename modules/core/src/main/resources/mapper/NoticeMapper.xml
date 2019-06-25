@@ -95,22 +95,22 @@
         UPDATE sys_notice
         <set>
             <if test="tittle != null and tittle != ''">
-                tittle = #{tittle}
+                tittle = #{tittle},
             </if>
             <if test="type != null">
-                type = #{type}
+                type = #{type},
             </if>
             <if test="creator != null and creator != ''">
-                creator = #{creator}
+                creator = #{creator},
             </if>
             <if test="toUser != null and toUser != ''">
-                to_user = #{toUser}
+                to_user = #{toUser},
             </if>
-            <if test="version != null and version != ''">
-                version = #{version}
+            <if test="version != null">
+                version = #{version},
             </if>
-            <if test="updateTime != null and updateTime != ''">
-                update_time = #{updateTime}
+            <if test="updateTime != null">
+                update_time = #{updateTime},
             </if>
         </set>
         <where>

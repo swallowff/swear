@@ -99,31 +99,31 @@
         UPDATE sys_operation_log
         <set>
             <if test="logType != null and logType != ''">
-                log_type = #{logType}
+                log_type = #{logType},
             </if>
             <if test="logName != null and logName != ''">
-                log_name = #{logName}
+                log_name = #{logName},
             </if>
             <if test="userId != null and userId != ''">
-                user_id = #{userId}
+                user_id = #{userId},
             </if>
             <if test="succeed != null">
-                succeed = #{succeed}
+                succeed = #{succeed},
             </if>
             <if test="className != null and className != ''">
-                class_name = #{className}
+                class_name = #{className},
             </if>
             <if test="method != null and method != ''">
-                method = #{method}
+                method = #{method},
             </if>
             <if test="message != null and message != ''">
-                message = #{message}
+                message = #{message},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime}
+                update_time = #{updateTime},
             </if>
             <if test="version != null and version != ''">
-                version = #{version}
+                version = #{version},
             </if>
         </set>
         <where>

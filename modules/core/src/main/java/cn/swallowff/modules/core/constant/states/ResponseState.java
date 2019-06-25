@@ -10,6 +10,7 @@ public enum ResponseState implements AbstractState {
     SYSTEM_ERROR(502,"系统错误"),
     UNKNOWN_ERROR(500,"未知的错误"),
     EMPTY_DATA(400,"数据为空"),
+    ILLEGAL_PARAMS(401,"参数错误"),
 
     ILLEGAL_FORMAT_EMAIL(1000,"邮箱格式不合法"),
     ILLEGAL_FORMAT_PHONE(1001,"手机号不合法"),

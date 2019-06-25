@@ -39,6 +39,10 @@ public class BaseResp implements Serializable {
         return putState(ResponseState.SYSTEM_ERROR);
     }
 
+    public BaseResp paramsError(){
+        return putState(ResponseState.SUCCESS);
+    }
+
     public BaseResp putSuccess(){
         return putState(ResponseState.SUCCESS);
     }

@@ -100,25 +100,22 @@
                 log_name = #{logName}
             </if>
             <if test="userId != null and userId != ''">
-                user_id = #{userId}
+                user_id = #{userId},
             </if>
             <if test="succeed != null">
-                succeed = #{succeed}
+                succeed = #{succeed},
             </if>
             <if test="message != null and message != ''">
-                message = #{message}
+                message = #{message},
             </if>
             <if test="ip != null and ip != ''">
-                ip = #{ip}
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime}
+                ip = #{ip},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime}
+                update_time = #{updateTime},
             </if>
             <if test="version != null">
-                version = #{version}
+                version = #{version},
             </if>
         </set>
         <where>

@@ -145,23 +145,23 @@
     <update id="updateSelective">
         UPDATE sys_role
         <set>
-            <if test="sort != null and sort != ''">
-                sort = #{sort}
+            <if test="sort != null">
+                sort = #{sort},
             </if>
             <if test="name != null and name != ''">
-                name = #{name}
+                name = #{name},
             </if>
             <if test="pid != null and pid != ''">
-                pid = #{pid}
+                pid = #{pid},
             </if>
             <if test="deptId != null and deptId != ''">
-                dept_id = #{deptId}
+                dept_id = #{deptId},
             </if>
             <if test="tips != null and tips != ''">
-                tips = #{tips}
+                tips = #{tips},
             </if>
-            <if test="updateTime != null and updateTime != ''">
-                update_time = #{updateTime}
+            <if test="updateTime != null">
+                update_time = #{updateTime},
             </if>
         </set>
         <where>

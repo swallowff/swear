@@ -93,25 +93,25 @@
         UPDATE sys_dept
         <set>
             <if test="sort != null">
-                sort = #{sort}
+                sort = #{sort},
             </if>
             <if test="pid != null and pid != ''">
-                pid = #{pid}
+                pid = #{pid},
             </if>
             <if test="pids != null and pids != ''">
-                pids = #{pids}
+                pids = #{pids},
             </if>
             <if test="simpleName != null and simpleName != ''">
-                simple_name = #{simpleName}
+                simple_name = #{simpleName},
             </if>
             <if test="fullName != null and fullName != ''">
-                full_name = #{fullName}
+                full_name = #{fullName},
             </if>
             <if test="tips != null and tips != ''">
-                tips = #{tips}
+                tips = #{tips},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime}
+                update_time = #{updateTime},
             </if>
         </set>
         <where>
