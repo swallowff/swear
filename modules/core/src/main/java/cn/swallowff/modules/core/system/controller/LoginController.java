@@ -28,7 +28,12 @@ public class LoginController extends BaseController {
      */
     @RequestMapping(value = "login",method = RequestMethod.GET)
     public String login(Model model, HttpServletRequest request){
-        return "admin/pages/login";
+        Subject subject = ShiroKit.getSubject();
+        if (subject.isAuthenticated()){
+            return REDIRECT + "/a/common/index";
+        }else {
+            return "admin/pages/login";
+        }
     }
 
     /**

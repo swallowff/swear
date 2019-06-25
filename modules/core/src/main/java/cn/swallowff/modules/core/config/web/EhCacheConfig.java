@@ -1,25 +1,28 @@
 package cn.swallowff.modules.core.config.web;
 
-import net.sf.ehcache.CacheManager;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-//@Configuration
+@Configuration
 //@EnableCaching
 public class EhCacheConfig {
 
 //    @Bean
-//    public EhCacheCacheManager ehCacheManager(CacheManager cacheManager) {
-//        return new EhCacheCacheManager(cacheManager);
+//    public CacheManager cacheManager(){
+//        return CacheManager.getInstance();
 //    }
 
 //    @Bean
+//    public EhCacheCacheManager ehCacheManager() {
+//        return new EhCacheCacheManager();
+//    }
+
+    @Bean
     public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
         EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
-        ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("/config/ehcache.xml"));
+        ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("/ehcache.xml"));
         return ehCacheManagerFactoryBean;
     }
 }

@@ -67,7 +67,7 @@
 <script>
     $(function () {
         $("#kaptcha").on('click', function () {
-            $("#kaptcha").attr('src', '${ctxPath}/kaptcha?' + Math.floor(Math.random() * 100)).fadeIn();
+            $("#kaptcha").attr('src', '${ctxPath}/kaptcha/getCode');
         });
     });
 </script>

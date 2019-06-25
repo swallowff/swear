@@ -115,7 +115,7 @@ public class ShiroConfig {
         /**
          * 没有权限跳转的url
          */
-        shiroFilter.setUnauthorizedUrl("/global/putError");
+        shiroFilter.setUnauthorizedUrl("/global/error/404");
 
         /**
          * 覆盖默认的user拦截器(默认拦截器解决不了ajax请求 session超时的问题,若有更好的办法请及时反馈作者)

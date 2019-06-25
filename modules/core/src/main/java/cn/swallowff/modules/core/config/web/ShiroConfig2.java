@@ -23,6 +23,7 @@ import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -42,15 +43,22 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager,EhCacheManager ehCacheManager, SessionManager sessionManager){
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager,EhCacheManager shiroEhCacheManager, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
         securityManager.setRememberMeManager(rememberMeManager);
         //设置realm.
         securityManager.setRealm(shiroDBRealm());
         // 自定义缓存实现 使用redis
-        securityManager.setCacheManager(ehCacheManager);
+        securityManager.setCacheManager(shiroEhCacheManager);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
+    }
+
+    @Bean
+    public EhCacheManager shiroEhCacheManager(CacheManager cacheManager){
+        EhCacheManager ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManager(cacheManager);
+        return ehCacheManager;
     }
 
     @Bean
@@ -61,14 +69,15 @@ public class ShiroConfig2 {
         return manager;
     }
 
-    @Bean
-    public EhCacheManager ehCacheManager() {
-        EhCacheManager em = new EhCacheManager();
-        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
-        em.setCacheManager(new CacheManager());
-        em.setCacheManagerConfigFile("classpath:config/ehcache.xml");
-        return em;
-    }
+//    @Bean
+//    @DependsOn("lifecycleBeanPostProcessor")
+//    public EhCacheManager ehCacheManager() {
+//        EhCacheManager em = new EhCacheManager();
+//        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
+//        em.setCacheManager(CacheManager.create());
+//        em.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        return em;
+//    }
 
     @Bean
     @ConditionalOnProperty(prefix = "swear", name = "spring-session-open", havingValue = "true")
@@ -144,7 +153,7 @@ public class ShiroConfig2 {
         /**
          * 没有权限跳转的url
          */
-        shiroFilter.setUnauthorizedUrl("/global/putError");
+        shiroFilter.setUnauthorizedUrl("/error/404");
 
         /**
          * 覆盖默认的user拦截器(默认拦截器解决不了ajax请求 session超时的问题,若有更好的办法请及时反馈作者)
@@ -155,25 +164,19 @@ public class ShiroConfig2 {
 
         /**
          * 配置shiro拦截器链
-         *
          * anon  不需要认证
          * authc 需要认证
          * user  验证通过或RememberMe登录的都可以
-         *
          * 当应用开启了rememberMe时,用户下次访问时可以是一个user,但不会是authc,因为authc是需要重新认证的
-         *
          * 顺序从上到下,优先级依次降低
-         *
          * openApi开头的接口，走rest api鉴权，不走shiro鉴权
          *
          */
         Map<String, String> hashMap = new LinkedHashMap<>();
         hashMap.put("/static/**", "anon");
         hashMap.put("/a/test/**","anon");
-//        hashMap.put("/blog","blog");
-        hashMap.put("/openApi/**", "anon");
+        hashMap.put("/api/**", "anon");
         hashMap.put("/a/login/**", "anon");
-        hashMap.put("/a/swaggerApi/**","anon");
         //放行swagger2
         hashMap.put("/swagger-ui.html","anon");
         hashMap.put("/swagger-resources","anon");
@@ -186,6 +189,7 @@ public class ShiroConfig2 {
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
     }
+
 
 
 

@@ -25,7 +25,7 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @ConditionalOnProperty(prefix = "swear.muti-datasource", name = "open", havingValue = "true")
-@MapperScan(basePackages = {"cn.swallowff.modules"})
+@MapperScan(basePackages = {"cn.swallowff.modules.**.dao"})
 public class DynamicDataSourceConfig {
     @Value("${spring.datasource-master.type}")
     private Class<? extends DataSource> dataSourceType;

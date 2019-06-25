@@ -68,6 +68,7 @@
         <eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
         <eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
 
+        <resource.delimiter>#</resource.delimiter>
     </properties>
 
     <dependencies>
@@ -89,6 +90,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+
     </build>
 
     <profiles>
@@ -108,8 +110,6 @@
             </properties>
         </profile>
     </profiles>
-
-
 
 
 </project>

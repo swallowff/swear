@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/global")
 public class GlobalController {
 
-    @RequestMapping("error/404")
-    public String error404(){
-        return "error/404";
-    }
-
-    @RequestMapping("error/500")
-    public String error500(){
-        return "error/500";
-    }
+//    @RequestMapping("error/404")
+//    public String error404(){
+//        return "error/404";
+//    }
+//
+//    @RequestMapping("error/500")
+//    public String error500(){
+//        return "error/500";
+//    }
 
 }

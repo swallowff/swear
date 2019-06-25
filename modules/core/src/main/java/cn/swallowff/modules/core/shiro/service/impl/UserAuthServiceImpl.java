@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@DependsOn("springContextHolder")
+@DependsOn({"springContextHolder","userService"})
 public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     private UserService userService;
