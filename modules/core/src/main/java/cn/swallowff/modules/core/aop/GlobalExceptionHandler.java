@@ -2,6 +2,7 @@ package cn.swallowff.modules.core.aop;
 
 import cn.swallowff.modules.core.constant.exceptionenum.BizExceptionEnum;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
+import cn.swallowff.modules.core.excepiton.BizException;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.excepiton.InvalidKaptchaException;
 import cn.swallowff.modules.core.excepiton.ServiceException;
@@ -37,10 +38,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public BaseResp bussiness(ServiceException e, HttpServletRequest request){
+    public BaseResp serviceException(ServiceException e, HttpServletRequest request){
         LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
         request.setAttribute("tip",e.getMessage());
         log.error("业务异常:",e);
+        return new BaseResp(e.getCode(),e.getErrorMessage());
+    }
+
+    /**
+     * 拦截抛出的正常业务异常
+     * @param e
+     * @param request
+     * @return
+     */
+    @ExceptionHandler(BizException.class)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public BaseResp bizException(ServiceException e, HttpServletRequest request){
+        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
+//        request.setAttribute("tip",e.getMessage());
+//        log.error("业务异常:",e);
         return new BaseResp(e.getCode(),e.getErrorMessage());
     }
 

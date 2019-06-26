@@ -1,6 +1,9 @@
 package cn.swallowff.modules.core.system.controller;
 
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
+import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.constant.states.ResponseState;
+import cn.swallowff.modules.core.excepiton.BizException;
 import cn.swallowff.modules.core.system.entity.User;
 import cn.swallowff.modules.core.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -9,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 /**
  * @author shenyu
@@ -24,9 +25,26 @@ public class UserController {
 
     @RequestMapping(value = "listHtml")
     public String listHtml(User user,Model model){
-        List<User> userList = userService.findList(user);
-        model.addAttribute("userList",userList);
+        PageResp<User> page = userService.findPage(user);
+        model.addAttribute("page",page);
         return "admin/pages/system/user-list";
+    }
+
+    @RequestMapping(value = "addHtml")
+    public String addHtml(){
+        return "admin/pages/system/user-add";
+    }
+
+    @RequestMapping(value = "add")
+    @ResponseBody
+    public BaseResp add(User user){
+        BaseResp baseResp = BaseResp.newSuccess();
+        User existUser = userService.selectByAccount(user.getAccount());
+        if (null != existUser){
+            throw new BizException(ResponseState.USER_ACCOUNT_EXISTS);
+        }
+        userService.save(user);
+        return baseResp;
     }
 
     @RequestMapping(value = "edit")

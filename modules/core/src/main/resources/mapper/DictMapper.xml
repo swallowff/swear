@@ -4,9 +4,8 @@
 
     <sql id="baseColumns">
         a.id AS id,
-        a.type AS type,
+        a.code AS code,
         a.name AS name,
-        a.password AS password,
         a.val AS val,
         a.sort AS sort,
         a.tips AS tips,
@@ -29,11 +28,11 @@
         <include refid="baseColumns"/>
         FROM sys_dict a
         <where>
-            <if test="pid != null and pid != ''">
-              AND a.pid = #{pid}
-            </if>
-            <if test="type != null">
-                AND a.type = #{type}
+            <!--<if test="pid != null and pid != ''">-->
+              <!--AND a.pid = #{pid}-->
+            <!--</if>-->
+            <if test="code != null and code != ''">
+                AND a.code = #{code}
             </if>
             <if test="name != null and name != ''">
                 AND a.name = #{name}
@@ -52,8 +51,8 @@
     <insert id="insert">
         INSERT INTO sys_dict(
           id,
-          pid,
-          type,
+--           pid,
+          code,
           name,
           val,
           sort,
@@ -63,8 +62,8 @@
           delflag
         ) VALUES (
           #{id},
-          #{pid},
-          #{type},
+--           #{pid},
+          #{code},
           #{name},
           #{val},
           #{sort},
@@ -78,8 +77,8 @@
 
     <update id="update">
         UPDATE sys_dict SET
-          pid = #{pid},
-          type = #{type},
+--           pid = #{pid},
+          code = #{code},
           name = #{name},
           val = #{val},
           sort = #{sort},
@@ -93,11 +92,11 @@
     <update id="updateSelective">
         UPDATE sys_dict
         <set>
-            <if test="pid != null and pid != ''">
-                pid = #{pid},
-            </if>
-            <if test="type != null">
-                type = #{type},
+            <!--<if test="pid != null and pid != ''">-->
+                <!--pid = #{pid},-->
+            <!--</if>-->
+            <if test="code != null">
+                code = #{code},
             </if>
             <if test="name != null and name != ''">
                 name = #{name},

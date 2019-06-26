@@ -2,6 +2,7 @@ package cn.swallowff.modules.core.cmomon.entity;
 
 import cn.swallowff.common.idgen.IdGenerate;
 import cn.swallowff.common.lang.StringUtils;
+import org.omg.CORBA.INTERNAL;
 
 import java.util.Date;
 
@@ -12,6 +13,9 @@ public class BaseEntity<E extends BaseEntity> {
     private Integer version;
     private String orderBy;
     private boolean delflag;
+
+    private Integer pageNum = 1;
+    private Integer pageSize = 20;
 
     private boolean isNewRecord;
 
@@ -61,6 +65,22 @@ public class BaseEntity<E extends BaseEntity> {
 
     public void setDelflag(boolean delflag) {
         this.delflag = delflag;
+    }
+
+    public Integer getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     /**

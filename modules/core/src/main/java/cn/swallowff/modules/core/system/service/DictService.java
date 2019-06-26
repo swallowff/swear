@@ -20,4 +20,10 @@ public class DictService extends CrudService<DictDao, Dict> {
     public List<Dict> selectByParentCode(String parentCode){
         return dictDao.selectByParentCode(parentCode);
     }
+
+    public List<Dict> selectByCode(String code) {
+        Dict dict = new Dict();
+        dict.setCode(code);
+        return super.findList(dict);
+    }
 }

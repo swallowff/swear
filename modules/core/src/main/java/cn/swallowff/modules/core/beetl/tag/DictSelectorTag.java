@@ -18,8 +18,8 @@ import java.util.Map;
 @Scope("prototype")
 public class DictSelectorTag extends Tag {
 
-//    @Autowired
-    DictService dictService;
+    @Autowired
+    private DictService dictService;
 
     @Override
     public void render() {
@@ -58,7 +58,7 @@ public class DictSelectorTag extends Tag {
         //searchnum 下拉选项数量达到多少启用搜索,默认10
         int searchnum = ObjectUtils.isNum(attrs.get("searchnum")) ? Integer.parseInt(attrs.get("searchnum").toString()) : 10;
         //根据code查询字典数据
-        List<Dict> list = dictService.selectByParentCode(code);
+        List<Dict> list = dictService.selectByCode(code);
 
         StringBuffer html = new StringBuffer();
         html.append("<div class=\"form-group\">\r\n");

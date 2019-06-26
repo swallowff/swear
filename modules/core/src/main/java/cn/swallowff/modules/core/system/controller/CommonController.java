@@ -35,6 +35,11 @@ public class CommonController {
         return "admin/pages/member-list";
     }
 
+    @RequestMapping("member-add")
+    public String memberAdd(HttpServletRequest request, HttpServletResponse response){
+        return "admin/pages/member-add";
+    }
+
     @RequestMapping("member-list1")
     public String memberList1(HttpServletRequest request, HttpServletResponse response){
         return "admin/pages/member-list1";
@@ -44,5 +49,7 @@ public class CommonController {
     public String orderList(HttpServletRequest request, HttpServletResponse response){
         return "admin/pages/order-list";
     }
+
+
 
 }

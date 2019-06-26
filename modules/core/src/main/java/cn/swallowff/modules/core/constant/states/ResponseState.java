@@ -1,8 +1,8 @@
 package cn.swallowff.modules.core.constant.states;
 
-import cn.swallowff.modules.core.state.AbstractState;
+import cn.swallowff.modules.core.excepiton.AbstractBaseExceptionEnum;
 
-public enum ResponseState implements AbstractState {
+public enum ResponseState implements AbstractBaseExceptionEnum {
     /**
      * 通用状态
      */
@@ -17,6 +17,7 @@ public enum ResponseState implements AbstractState {
     /**
      * 用户管理
      */
+    USER_ACCOUNT_EXISTS(1002,"用户名重复了哟，换一个试试吧"),
 
     ;
 

@@ -48,7 +48,7 @@
                         </div>
                         <div class="layui-card-header">
                             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                            <button class="layui-btn" onclick="xadmin.open('添加用户','${admin}/user/addHtml',600,400)"><i class="layui-icon"></i>添加</button>
                         </div>
                         <div class="layui-card-body layui-table-body layui-table-main">
                             <table class="layui-table layui-form">
@@ -66,10 +66,10 @@
                                     <th>操作</th></tr>
                                 </thead>
                                 <tbody>
-                                    @for(user in userList){
+                                    @for(user in page.dataList){
                                     <tr>
                                         <td>
-                                            <input type="checkbox" name="id" value="1" lay-skin="primary">
+                                            <input type="checkbox" name="id" value="${user.id}" lay-skin="primary">
                                         </td>
                                         <td>${user.id}</td>
                                         <td>${user.name}</td>
@@ -78,14 +78,14 @@
                                         <td>${user.account}</td>
                                         @if(user.status == 1){
                                         <td class="td-status">
-                                            <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
+                                            <span class="layui-btn layui-btn-normal layui-btn-mini" onclick="change_state(this,'${user.id}','${user.status}')">已启用</span></td>
                                         @}
-                                        @else if(user.status == 0){
+                                        @else{
                                         <td class="td-status">
-                                            <span class="layui-btn layui-btn-disabled layui-btn-mini">禁用</span></td>
+                                            <span class="layui-btn layui-btn-disabled layui-btn-mini" onclick="change_state(this,'${user.id}','${user.status}')">禁用</span></td>
                                         @}
                                         <td class="td-manage">
-                                            <a onclick="member_stop(this,${user.id})" href="javascript:;"  title="启用">
+                                            <a onclick="change_state(this,'${user.id}','${user.status}')" href="javascript:;"  title="变更状态">
                                                 <i class="layui-icon">&#xe601;</i>
                                             </a>
                                             <a title="编辑"  onclick="xadmin.open('编辑','member-edit.html',600,400)" href="javascript:;">
@@ -107,12 +107,16 @@
                         <div class="layui-card-body ">
                             <div class="page">
                                 <div>
-                                  <a class="prev" href="">&lt;&lt;</a>
-                                  <a class="num" href="">1</a>
-                                  <span class="current">2</span>
-                                  <a class="num" href="">3</a>
-                                  <a class="num" href="">489</a>
-                                  <a class="next" href="">&gt;&gt;</a>
+                                    @if(page.pageNum > 1){
+                                        <a class="prev" href="">&lt;&lt;</a>
+                                        <a class="num" href="">${page.pageNum - 1}</a>
+                                    @}
+                                  <span class="current">${page.pageNum}</span>
+                                    @if(page.totalPage > page.pageNum){
+                                        <a class="num" href="">${page.pageNum + 1}</a>
+                                        <a class="next" href="">&gt;&gt;</a>
+                                    @}
+                                  <a class="num" href="">共${page.totalPage}页</a>
                                 </div>
                             </div>
                         </div>
@@ -152,35 +156,83 @@
 
       });
 
-       /*用户-停用*/
-      function member_stop(obj,id){
-          layer.confirm('确认要停用吗？',function(index){
+      //  /*用户-停用*/
+      // function member_stop(obj,id){
+      //     layer.confirm('确认要停用吗？',function(index){
+      //         // console.log(obj)
+      //
+      //         if($(obj).attr('title')=='启用'){
+      //           $.post(
+      //               "${serverUrl}${admin}/user/edit"
+      //               ,{"id":id,"status":0}
+      //               ,function (res) {
+      //                   console.log(res)
+      //
+      //           })
+      //
+      //           //发异步把用户状态进行更改
+      //           $(obj).attr('title','停用')
+      //           $(obj).find('i').html('&#xe62f;');
+      //
+      //           $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+      //           layer.msg('已停用!',{icon: 5,time:1000});
+      //
+      //         }else{
+      //           $(obj).attr('title','启用')
+      //           $(obj).find('i').html('&#xe601;');
+      //
+      //           $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+      //           layer.msg('已启用!',{icon: 5,time:1000});
+      //         }
+      //
+      //     });
+      // }
+
+      function change_state(obj,id,state){
+          layer.confirm('确认要变更状态吗？',function(index){
               // console.log(obj)
 
-              if($(obj).attr('title')=='启用'){
-                $.post(
-                    "${serverUrl}${admin}/user/edit"
-                    ,{"id":id,"status":0}
-                    ,function (res) {
-                        console.log(res)
+              if(state == 0){
+                  $.post(
+                      "${serverUrl}${admin}/user/edit"
+                      ,{"id":id,"status":1}
+                      ,function (res) {
+                          console.log(res)
+                          if (res.code == 200) {
+                              // $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('启用');
+                              layer.msg('已启用!',{icon: 1,time:1000},function () {
+                                  location.reload()
+                              });
+                          }else {
+                              layer.msg(res.message,{icon:5,time:1000})
+                          }
+                      })
 
-                })
-
-                //发异步把用户状态进行更改
-                $(obj).attr('title','停用')
-                $(obj).find('i').html('&#xe62f;');
-
-                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-                layer.msg('已停用!',{icon: 5,time:1000});
+                  //发异步把用户状态进行更改
+                  // $(obj).attr('title','停用')
+                  // $(obj).find('i').html('&#xe62f;');
 
               }else{
-                $(obj).attr('title','启用')
-                $(obj).find('i').html('&#xe601;');
+                  $.post(
+                      "${serverUrl}${admin}/user/edit"
+                      ,{"id":id,"status":0}
+                      ,function (res) {
+                          console.log(res)
+                          if (res.code == 200) {
+                              // $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('禁用');
+                              layer.msg('已禁用!',{icon: 5,time:1000},function () {
+                                  location.reload()
+                              });
+                          }else {
+                              layer.msg(res.message,{icon:5,time:1000})
+                          }
 
-                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-                layer.msg('已启用!',{icon: 5,time:1000});
+                      })
+                  // $(obj).attr('title','启用')
+                  // $(obj).find('i').html('&#xe601;');
+
               }
-              
+
           });
       }
 
