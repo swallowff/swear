@@ -61,9 +61,9 @@ public class DictSelectorTag extends Tag {
         List<Dict> list = dictService.selectByCode(code);
 
         StringBuffer html = new StringBuffer();
-        html.append("<div class=\"form-group\">\r\n");
-        html.append("<label class=\"col-sm-3 control-label\">" + label + "</label>\r\n");
-        html.append("<div class=\"col-sm-9\">\r\n");
+        html.append("<div class=\"layui-form-item\">\r\n");
+        html.append("<label class=\"layui-form-label\">" + label + "</label>\r\n");
+        html.append("<div class=\"layui-input-inline\">\r\n");
 
         //单选按钮
         if ("radio".equals(type)) {
@@ -85,7 +85,7 @@ public class DictSelectorTag extends Tag {
                     html.append("checked ");
                 }
 
-                html.append("value=\"" + obj.getVal() + "\" >" + obj.getName() + "</label>\r\n");
+                html.append("value=\"" + obj.getVal() + "\" >" + obj.getLabel() + "</label>\r\n");
             });
 
             //多选按钮
@@ -107,7 +107,7 @@ public class DictSelectorTag extends Tag {
                     html.append("checked ");
                 }
 
-                html.append("value=\"" + obj.getVal() + "\" >" + obj.getName() + "</label>\r\n");
+                html.append("value=\"" + obj.getVal() + "\" >" + obj.getLabel() + "</label>\r\n");
             });
 
             //默认select
@@ -173,9 +173,9 @@ public class DictSelectorTag extends Tag {
             //将查询出来的数据添加到select中
             list.forEach(obj -> {
                 if (ObjectUtils.isNotEmpty(value) && value.equals(obj.getVal())) {
-                    html.append("<option selected value=\"" + obj.getVal() + "\">" + obj.getName() + "</option>\r\n");
+                    html.append("<option selected value=\"" + obj.getVal() + "\">" + obj.getLabel() + "</option>\r\n");
                 } else {
-                    html.append("<option value=\"" + obj.getVal() + "\">" + obj.getName() + "</option>\r\n");
+                    html.append("<option value=\"" + obj.getVal() + "\">" + obj.getLabel() + "</option>\r\n");
                 }
             });
             html.append("</select>\r\n");

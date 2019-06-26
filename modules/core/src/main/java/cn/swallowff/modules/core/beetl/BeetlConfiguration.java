@@ -11,7 +11,6 @@ import org.beetl.core.Context;
 import org.beetl.core.Function;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import java.io.UnsupportedEncodingException;

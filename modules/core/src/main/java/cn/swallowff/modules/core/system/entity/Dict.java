@@ -5,7 +5,7 @@ import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 public class Dict extends BaseEntity<Dict> {
 //    private String pid;    //父级id
     private String code;    //字典code
-    private String name;    //字典名
+    private String label;    //字典名
     private Integer val;    //字典值
     private Integer sort;   //排序
     private String tips;    //提示
@@ -27,12 +27,12 @@ public class Dict extends BaseEntity<Dict> {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getLabel() {
+        return label;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Integer getVal() {

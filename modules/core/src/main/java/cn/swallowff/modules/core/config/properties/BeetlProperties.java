@@ -28,6 +28,8 @@ public class BeetlProperties {
 
     private String resourceAutoCheck;
 
+    private String htmlTagFlag;
+
     @Value("${spring.mvc.view.prefix}")
     private String prefix;
 
@@ -53,6 +55,9 @@ public class BeetlProperties {
         }
         if (StringUtils.isNotEmpty(resourceAutoCheck)) {
             properties.setProperty("RESOURCE.autoCheck", resourceAutoCheck);
+        }
+        if (StringUtils.isNotEmpty(htmlTagFlag)){
+            properties.setProperty("HTML_TAG_FLAG",htmlTagFlag);
         }
 
         return properties;
@@ -106,4 +111,11 @@ public class BeetlProperties {
         this.resourceAutoCheck = resourceAutoCheck;
     }
 
+    public String getHtmlTagFlag() {
+        return htmlTagFlag;
+    }
+
+    public void setHtmlTagFlag(String htmlTagFlag) {
+        this.htmlTagFlag = htmlTagFlag;
+    }
 }
