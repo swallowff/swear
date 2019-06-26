@@ -1,5 +1,6 @@
 package cn.swallowff.modules.core.system.dao;
 
+import cn.swallowff.modules.core.cache.DictCache;
 import cn.swallowff.modules.core.cmomon.dao.CrudDao;
 import cn.swallowff.modules.core.system.entity.Dict;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,5 +15,6 @@ import java.util.List;
 @Repository
 @Mapper
 public interface DictDao extends CrudDao<Dict> {
-    List<Dict> selectByParentCode(String parentCode);
+    List<DictCache> getDictCacheList(String code);
+
 }

@@ -1,8 +1,12 @@
 package cn.swallowff.modules.core.system.service;
 
+import cn.swallowff.modules.core.cache.DictCache;
 import cn.swallowff.modules.core.cmomon.service.CrudService;
 import cn.swallowff.modules.core.system.dao.DictDao;
 import cn.swallowff.modules.core.system.entity.Dict;
+import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +18,27 @@ import java.util.List;
  */
 @Service
 public class DictService extends CrudService<DictDao, Dict> {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private DictDao dictDao;
-
-    public List<Dict> selectByParentCode(String parentCode){
-        return dictDao.selectByParentCode(parentCode);
-    }
 
     public List<Dict> selectByCode(String code) {
         Dict dict = new Dict();
         dict.setCode(code);
         return super.findList(dict);
+    }
+
+    public String getLabelName(String code,Integer val){
+        Dict dict = new Dict();
+        dict.setCode(code);
+        dict.setVal(val);
+        List<Dict> list = super.findList(dict);
+        return CollectionUtils.isEmpty(list) ? "未知的字典数据" : list.get(0).getLabel();
+    }
+
+    public List<DictCache> getDictCacheList(String code){
+        logger.info("初始化字典数据：code={}",code);
+        return dictDao.getDictCacheList(code);
     }
 }

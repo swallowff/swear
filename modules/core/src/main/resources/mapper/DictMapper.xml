@@ -23,7 +23,7 @@
       </where>
     </select>
 
-    <select id="findList" resultType="cn.swallowff.modules.core.system.entity.Dict">
+    <select id="findList" resultType="Dict">
         SELECT
         <include refid="baseColumns"/>
         FROM sys_dict a
@@ -37,6 +37,9 @@
             <if test="label != null and label != ''">
                 AND a.label = #{label}
             </if>
+            <if test="val != null">
+                AND a.val = #{val}
+            </if>
         </where>
         <choose>
             <when test="orderBy != null and orderBy != ''">
@@ -46,6 +49,16 @@
                 ORDER BY a.update_time DESC
             </otherwise>
         </choose>
+    </select>
+
+    <select id="getDictCacheList" resultType="cn.swallowff.modules.core.cache.DictCache">
+        SELECT
+          a.val AS val,
+          a.label AS label
+        FROM sys_dict a
+        WHERE
+          a.delflag = 0
+          AND a.code = #{0}
     </select>
 
     <insert id="insert">

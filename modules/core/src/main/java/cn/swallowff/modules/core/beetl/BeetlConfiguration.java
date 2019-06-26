@@ -6,6 +6,7 @@ import cn.swallowff.modules.core.beetl.tag.DictSelectorTag;
 import cn.swallowff.modules.core.beetl.util.BeetlUtil;
 import cn.swallowff.modules.core.beetl.util.ShiroExt;
 import cn.swallowff.modules.core.config.properties.CoreProperties;
+import cn.swallowff.modules.core.util.DictUtils;
 import cn.swallowff.modules.core.util.KaptchaUtil;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
@@ -56,6 +57,7 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
         groupTemplate.registerFunctionPackage("shiro", new ShiroExt());
         groupTemplate.registerFunctionPackage("tool", new BeetlUtil());
         groupTemplate.registerFunctionPackage("kaptcha", new KaptchaUtil());
+        groupTemplate.registerFunctionPackage("dictUtil",new DictUtils());
         groupTemplate.registerTagFactory("dictSelector", () -> dictSelectorTag);
 
         groupTemplate.registerFunction("env", new Function() {
