@@ -101,6 +101,33 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 			return r.substring(rFirst+1,rLast);
 		}
 	}
+
+    /**
+     * 替换根节点名称
+     * @param object
+     * @param replaceRoot
+     * @return
+     */
+    public static String toXml(Object object,String replaceRoot){
+        if (StringUtils.isNotBlank(replaceRoot)){
+            String r = toXml(object,false);
+            return insertRoot(r,replaceRoot);
+        }else {
+            return toXml(object);
+        }
+    }
+
+    /**
+     * 插入根节点
+     * @param xmlStr
+     * @param nodeName
+     * @return
+     */
+    private static String insertRoot(String xmlStr,String nodeName){
+        String start = "<"+nodeName+">";
+        String end = "</"+nodeName+">";
+        return start + xmlStr + end;
+    }
 	
 	/**
 	 * XML字符串转换为对象

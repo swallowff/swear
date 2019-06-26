@@ -1,6 +1,6 @@
 package cn.swallowff.modules.core.util;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
+import cn.swallowff.common.json.JacksonUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -25,6 +25,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
@@ -38,10 +40,12 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * httpClient连接池适配器
  * @author shenyu
  * @create 2019/5/9
  */
 public class PooledHttpClientAdaptor {
+    private final Logger logger = LoggerFactory.getLogger(PooledHttpClientAdaptor.class);
 
     private static final int DEFAULT_POOL_MAX_TOTAL = 200;
     private static final int DEFAULT_POOL_MAX_PER_ROUTE = 200;
@@ -70,11 +74,11 @@ public class PooledHttpClientAdaptor {
 
     public PooledHttpClientAdaptor() {
         this(
-                PooledHttpClientAdaptor.DEFAULT_POOL_MAX_TOTAL,
-                PooledHttpClientAdaptor.DEFAULT_POOL_MAX_PER_ROUTE,
-                PooledHttpClientAdaptor.DEFAULT_CONNECT_TIMEOUT,
-                PooledHttpClientAdaptor.DEFAULT_CONNECT_REQUEST_TIMEOUT,
-                PooledHttpClientAdaptor.DEFAULT_SOCKET_TIMEOUT
+            PooledHttpClientAdaptor.DEFAULT_POOL_MAX_TOTAL,
+            PooledHttpClientAdaptor.DEFAULT_POOL_MAX_PER_ROUTE,
+            PooledHttpClientAdaptor.DEFAULT_CONNECT_TIMEOUT,
+            PooledHttpClientAdaptor.DEFAULT_CONNECT_REQUEST_TIMEOUT,
+            PooledHttpClientAdaptor.DEFAULT_SOCKET_TIMEOUT
         );
     }
 
@@ -109,18 +113,25 @@ public class PooledHttpClientAdaptor {
 
         idleThread = new IdleConnectionMonitorThread(this.gcm);
         idleThread.start();
-
     }
 
-    //自定义证书
-    public PooledHttpClientAdaptor(File certFile, String passwd) {
+    /**
+     * 自定义加密httpClient构造方法
+     * @param certFile
+     * @param maxTotal
+     * @param maxPerRoute
+     * @param connectTimeout
+     * @param connectRequestTimeout
+     * @param socketTimeout
+     */
+    public PooledHttpClientAdaptor(File certFile,String password, int maxTotal, int maxPerRoute, int connectTimeout, int connectRequestTimeout, int socketTimeout) {
         SSLConnectionSocketFactory sslfactory = null;
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(certFile);
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            keyStore.load(inputStream,passwd.toCharArray());
-            SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(keyStore,passwd.toCharArray()).build();
+            keyStore.load(inputStream,password.toCharArray());
+            SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(keyStore,password.toCharArray()).build();
             sslfactory = new SSLConnectionSocketFactory(sslContext,new String[]{"TLSv1"},null, new DefaultHostnameVerifier());
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,11 +145,11 @@ public class PooledHttpClientAdaptor {
             }
         }
 
-        this.maxTotal = DEFAULT_POOL_MAX_TOTAL;
-        this.maxPerRoute = DEFAULT_POOL_MAX_PER_ROUTE;
-        this.connectTimeout = DEFAULT_CONNECT_TIMEOUT;
-        this.connectRequestTimeout = DEFAULT_CONNECT_REQUEST_TIMEOUT;
-        this.socketTimeout = DEFAULT_SOCKET_TIMEOUT;
+        this.maxTotal = maxTotal;
+        this.maxPerRoute = maxPerRoute;
+        this.connectTimeout = connectTimeout;
+        this.connectRequestTimeout = connectRequestTimeout;
+        this.socketTimeout = socketTimeout;
 
         RegistryBuilder<ConnectionSocketFactory> registryBuilder = RegistryBuilder.create();
         registryBuilder.register("http", PlainConnectionSocketFactory.getSocketFactory());
@@ -177,11 +188,15 @@ public class PooledHttpClientAdaptor {
 
     public String doGet(String url, Map<String, String> headers, Map<String, Object> params) {
 
-        // *) 构建GET请求头
+        // 构建GET请求头
         String apiUrl = getUrlWithParams(url, params);
+        StringBuilder logStr = new StringBuilder();
+        logStr.append("\n===HTTP请求===").append("\nMethod:").append("GET")
+                .append("\nURL:").append(apiUrl).append("\nHeaders:").append(JacksonUtil.toJson(headers));
+
         HttpGet httpGet = new HttpGet(apiUrl);
 
-        // *) 设置header信息
+        // 设置header信息
         if ( headers != null && headers.size() > 0 ) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpGet.addHeader(entry.getKey(), entry.getValue());
@@ -196,15 +211,23 @@ public class PooledHttpClientAdaptor {
             }
 
             int statusCode = response.getStatusLine().getStatusCode();
+            logStr.append("\n===HTTP响应===").append("\n状态码:").append(statusCode);
+
+//            logger.info("\n--http-response--响应状态码:"+statusCode);
+
             if ( statusCode == HttpStatus.SC_OK ) {
                 HttpEntity entityRes = response.getEntity();
                 if (entityRes != null) {
-                    return EntityUtils.toString(entityRes, "UTF-8");
+                    String result = EntityUtils.toString(entityRes, "UTF-8");
+                    logStr.append("\n响应内容: ").append(result);
+//                    logger.info("\n--http-response--响应内容:\n"+result);
+                    return result;
                 }
             }
             return null;
         } catch (IOException e) {
         } finally {
+            logger.info("HTTP log Messages:{}",logStr);
             if ( response != null ) {
                 try {
                     response.close();
@@ -219,18 +242,79 @@ public class PooledHttpClientAdaptor {
         return this.doPost(apiUrl, Collections.EMPTY_MAP, params);
     }
 
-    public String doPost(String apiUrl, Map<String, String> headers, Map<String, Object> params) {
+    public String doPost(String apiUrl, Map<String, String> headers, String reqParams){
+        StringBuilder logStr = new StringBuilder();
+        logStr.append("\n===HTTP请求===").append("\nMethod:").append("POST")
+                .append("\nURL:").append(apiUrl).append("\nHeaders:").append(JacksonUtil.toJson(headers))
+                .append("\nParams:").append(reqParams);
 
         HttpPost httpPost = new HttpPost(apiUrl);
 
-        // *) 配置请求headers
+        // 配置请求headers
         if ( headers != null && headers.size() > 0 ) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpPost.addHeader(entry.getKey(), entry.getValue());
             }
         }
 
-        // *) 配置请求参数
+        // 配置请求参数
+//        if ( params != null && params.size() > 0 ) {
+        HttpEntity httpEntity = new StringEntity(reqParams,Charset.forName("UTF-8"));
+//            HttpEntity entityReq = getUrlEncodedFormEntity(params);
+            httpPost.setEntity(httpEntity);
+//        }
+
+
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(httpPost);
+            if (response == null || response.getStatusLine() == null) {
+                return null;
+            }
+
+            int statusCode = response.getStatusLine().getStatusCode();
+            logStr.append("\n===HTTP响应===").append("\n状态码:").append(statusCode);
+//            logger.info("\n--http-response--响应状态码:"+statusCode);
+
+            if ( statusCode == HttpStatus.SC_OK ) {
+                HttpEntity entityRes = response.getEntity();
+                if ( entityRes != null ) {
+                    String result = EntityUtils.toString(entityRes, "UTF-8");
+//                    logger.info("\n--http-response--响应内容: \n"+result);
+                    logStr.append("\n响应内容:").append(result);
+                    return result;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+        } finally {
+            logger.info("HTTP log Messages:{}",logStr);
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return null;
+    }
+
+    public String doPost(String apiUrl, Map<String, String> headers, Map<String, Object> params) {
+        StringBuilder logStr = new StringBuilder();
+        logStr.append("\n===HTTP请求===").append("\nMethod:").append("POST")
+                .append("\nURL:").append(apiUrl).append("\nHeaders:").append(JacksonUtil.toJson(headers))
+                .append("\nParams:").append(JacksonUtil.toJson(params));
+
+        HttpPost httpPost = new HttpPost(apiUrl);
+
+        // 配置请求headers
+        if ( headers != null && headers.size() > 0 ) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                httpPost.addHeader(entry.getKey(), entry.getValue());
+            }
+        }
+
+        // 配置请求参数
         if ( params != null && params.size() > 0 ) {
             HttpEntity entityReq = getUrlEncodedFormEntity(params);
             httpPost.setEntity(entityReq);
@@ -245,15 +329,22 @@ public class PooledHttpClientAdaptor {
             }
 
             int statusCode = response.getStatusLine().getStatusCode();
+            logStr.append("\n===HTTP响应===").append("\n状态码:").append(statusCode);
+//            logger.info("\n--http-response--响应状态码:"+statusCode);
+
             if ( statusCode == HttpStatus.SC_OK ) {
                 HttpEntity entityRes = response.getEntity();
                 if ( entityRes != null ) {
-                    return EntityUtils.toString(entityRes, "UTF-8");
+                    String result = EntityUtils.toString(entityRes, "UTF-8");
+                    logStr.append("\n响应内容 :").append(result);
+//                    logger.info("\n--http-response--响应内容 :\n"+result);
+                    return result;
                 }
             }
             return null;
         } catch (IOException e) {
         } finally {
+            logger.info("HTTP log Messages:{}",logStr);
             if (response != null) {
                 try {
                     response.close();
@@ -268,20 +359,16 @@ public class PooledHttpClientAdaptor {
     public String doPostBase64(String apiUrl, Map<String, String> headers, String reqParams){
         HttpPost httpPost = new HttpPost(apiUrl);
 
-        // *) 配置请求headers
+        // 配置请求headers
         if ( headers != null && headers.size() > 0 ) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpPost.addHeader(entry.getKey(), entry.getValue());
             }
         }
 
-        // *) 配置请求参数
-//        if ( params != null && params.size() > 0 ) {
+        // 配置请求参数
         HttpEntity httpEntity = new StringEntity(reqParams,Charset.forName("UTF-8"));
-//            HttpEntity entityReq = getUrlEncodedFormEntity(params);
         httpPost.setEntity(httpEntity);
-//        }
-
 
         CloseableHttpResponse response = null;
         try {
@@ -291,7 +378,7 @@ public class PooledHttpClientAdaptor {
             }
 
             int statusCode = response.getStatusLine().getStatusCode();
-//            logger.info("--http-response--响应状态码statusCode:"+statusCode);
+//            logger.info("\n--http-response--响应状态码:"+statusCode);
 
             if ( statusCode == HttpStatus.SC_OK ) {
                 HttpEntity entityRes = response.getEntity();
@@ -352,7 +439,6 @@ public class PooledHttpClientAdaptor {
         return sb.toString();
     }
 
-
     public void shutdown() {
         idleThread.shutdown();
     }
@@ -393,5 +479,7 @@ public class PooledHttpClientAdaptor {
         }
 
     }
+
+
 
 }

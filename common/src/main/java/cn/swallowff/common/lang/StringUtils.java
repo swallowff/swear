@@ -246,7 +246,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 	}
 	
 	/**
-	 * 驼峰命名法工具
+	 * 驼峰命名法工具  下划线转驼峰
 	 * @return
 	 * 		camelCase("hello_world") == "helloWorld" 
 	 * 		capCamelCase("hello_world") == "HelloWorld"
@@ -275,7 +275,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-	 * 驼峰命名法工具
+	 * 驼峰命名法工具    首字母大写
 	 * @return
 	 * 		camelCase("hello_world") == "helloWorld" 
 	 * 		capCamelCase("hello_world") == "HelloWorld"
@@ -290,7 +290,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
     
     /**
-	 * 驼峰命名法工具
+	 * 驼峰命名法工具   驼峰转下划线
 	 * @return
 	 * 		camelCase("hello_world") == "helloWorld" 
 	 * 		capCamelCase("hello_world") == "HelloWorld"

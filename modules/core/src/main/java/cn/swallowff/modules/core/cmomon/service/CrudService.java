@@ -2,6 +2,8 @@ package cn.swallowff.modules.core.cmomon.service;
 
 import cn.swallowff.modules.core.cmomon.dao.CrudDao;
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
+import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -50,6 +52,16 @@ public abstract class CrudService<M extends CrudDao<E>,E extends BaseEntity<E>> 
 
     public int delete(String id){
         return crudDao.delete(id);
+    }
+
+    protected <T> PageResp<T> pageResp(PageInfo<T> pageInfo){
+        PageResp<T> pageResp = new PageResp<>();
+        pageResp.setDataList(pageInfo.getList());
+        pageResp.setPageNum(pageInfo.getPageNum());
+        pageResp.setPageSize(pageInfo.getPageSize());
+        pageResp.setTotalPage(pageInfo.getPages());
+        pageResp.setTotalRows(pageInfo.getTotal());
+        return pageResp;
     }
 
 
