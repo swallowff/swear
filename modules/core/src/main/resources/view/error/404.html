@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Swallow - 404 页面</title>
-    <link rel="shortcut icon" href="${ctxPath}/static/images/favicon.ico"> <link href="${ctxPath}/static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${ctxPath}/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${ctxPath}/static/css/style.css?v=4.1.0" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>404 页面不存在</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
 </head>
+<body>
 
-<body class="gray-bg">
 
-<div class="middle-box text-center">
-    <h1>404</h1>
-    <h3 class="font-bold">页面未找到！</h3>
-
-    <div class="error-desc">
-        抱歉，页面好像去火星了~
-        <form class="form-inline m-t" role="form">
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="请输入您需要查找的内容 …">
-            </div>
-            <button type="submit" class="btn btn-primary">搜索</button>
-        </form>
+<div class="layui-fluid">
+  <div class="layadmin-tips">
+    <i class="layui-icon" face>&#xe664;</i>
+    <div class="layui-text">
+      <h1>
+        <span class="layui-anim layui-anim-loop layui-anim-">4</span>
+        <span class="layui-anim layui-anim-loop layui-anim-rotate">0</span>
+        <span class="layui-anim layui-anim-loop layui-anim-">4</span>
+      </h1>
     </div>
+  </div>
 </div>
 
-<!-- 全局js -->
-<script src="${ctxPath}/static/js/jquery.min.js?v=2.1.4"></script>
-<script src="${ctxPath}/static/js/bootstrap.min.js?v=3.3.6"></script>
-
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '${static}/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index']);
+</script>
 </body>
-
 </html>

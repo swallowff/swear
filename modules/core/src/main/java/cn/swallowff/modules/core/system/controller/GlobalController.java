@@ -22,7 +22,7 @@ public class GlobalController extends BaseController {
 
     @RequestMapping("/a/index")
     public String index(){
-        return "admin/pages/index";
+        return "admin/pages2/index";
     }
 
 //    @RequestMapping("error/404")

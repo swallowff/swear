@@ -32,7 +32,7 @@ public class LoginController extends BaseController {
         if (subject.isAuthenticated()){
             return REDIRECT + "/a/common/index";
         }else {
-            return "admin/pages/login";
+            return "admin/pages2/login";
         }
     }
 

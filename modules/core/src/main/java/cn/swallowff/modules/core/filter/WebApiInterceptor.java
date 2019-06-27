@@ -60,6 +60,7 @@ public class WebApiInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
         if (modelAndView != null){
+            RequestModel.getRequestModel().setView(true);
             logger.info("ViewName: " + modelAndView.getViewName());
         }
     }
@@ -72,15 +73,17 @@ public class WebApiInterceptor implements HandlerInterceptor {
         try {
             RequestModel requestModel = RequestModel.getRequestModel();
             if (logger.isDebugEnabled() && requestModel != null) {
-                logger.debug("\n\n==START==\n接口请求\nURI:{}\nMethod:{}\nContentType:{}\nParam:{}\n",requestModel.getReqUri(),requestModel.getHttpMethod(),requestModel.getReqContentType(),requestModel.getReqParams());
-                if (response != null) {
-                    String responseContent = null;
-                    if (StringUtils.containsAny(response.getContentType(),MediaType.APPLICATION_XML_VALUE,MediaType.TEXT_XML_VALUE)){
-                        responseContent = XmlMapper.toXml(requestModel.getRespParams(),true);
-                    }else if(StringUtils.containsIgnoreCase(response.getContentType(),MediaType.APPLICATION_JSON_VALUE)){
-                        responseContent = JacksonUtil.toJson(requestModel.getRespParams());
+                if (!requestModel.isView()){  //页面请求不打印日志
+                    logger.debug("\n\n==START==\n接口请求\nURI:{}\nMethod:{}\nContentType:{}\nParam:{}\n",requestModel.getReqUri(),requestModel.getHttpMethod(),requestModel.getReqContentType(),requestModel.getReqParams());
+                    if (response != null) {
+                        String responseContent = null;
+                        if (StringUtils.containsAny(response.getContentType(),MediaType.APPLICATION_XML_VALUE,MediaType.TEXT_XML_VALUE)){
+                            responseContent = XmlMapper.toXml(requestModel.getRespParams(),true);
+                        }else if(StringUtils.containsIgnoreCase(response.getContentType(),MediaType.APPLICATION_JSON_VALUE)){
+                            responseContent = JacksonUtil.toJson(requestModel.getRespParams());
+                        }
+                        logger.debug("\n接口响应\nContentType:{}\nBody:{}\n==THE END==", response.getContentType(),responseContent);
                     }
-                    logger.debug("\n接口响应\nContentType:{}\nBody:{}\n==THE END==", response.getContentType(),responseContent);
                 }
                 long beginTime = startTimeThreadLocal.get(); //得到线程绑定的局部变量（开始时间）
                 long endTime = System.currentTimeMillis();    //结束时间

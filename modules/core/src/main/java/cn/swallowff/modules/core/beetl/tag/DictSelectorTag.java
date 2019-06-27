@@ -61,7 +61,9 @@ public class DictSelectorTag extends Tag {
         List<Dict> list = dictService.selectByCode(code);
 
         StringBuffer html = new StringBuffer();
-        html.append("<div class=\"layui-form-item\">\r\n");
+//        html.append("<div class=\"layui-form-item\">\r\n"); //x-admin版本
+        html.append("<div class=\"layui-inline\">\r\n");
+
         html.append("<label class=\"layui-form-label\">" + label + "</label>\r\n");
         html.append("<div class=\"layui-input-inline\">\r\n");
 

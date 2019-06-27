@@ -38,7 +38,7 @@ public class DictService extends CrudService<DictDao, Dict> {
     }
 
     public List<DictCache> getDictCacheList(String code){
-        logger.info("初始化字典数据：code={}",code);
+        logger.info("初始化字典数据：code[{}]",code);
         return dictDao.getDictCacheList(code);
     }
 }

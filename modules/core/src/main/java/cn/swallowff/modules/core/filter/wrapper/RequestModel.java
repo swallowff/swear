@@ -22,6 +22,7 @@ public class RequestModel {
     private String respContentType; //返回的contentType
     private String httpMethod;  //HTTP-POST
     private Date reqTime;       //请求时间
+    private boolean isView;     //是否是页面请求
 
     public String getPlatform() {
         return platform;
@@ -129,5 +130,13 @@ public class RequestModel {
 
     public void setRespContentType(String respContentType) {
         this.respContentType = respContentType;
+    }
+
+    public boolean isView() {
+        return isView;
+    }
+
+    public void setView(boolean view) {
+        isView = view;
     }
 }

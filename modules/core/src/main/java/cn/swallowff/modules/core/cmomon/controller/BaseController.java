@@ -1,6 +1,7 @@
 package cn.swallowff.modules.core.cmomon.controller;
 
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
+import cn.swallowff.modules.core.constant.states.ResponseState;
 import cn.swallowff.modules.core.util.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,8 +50,8 @@ public abstract class BaseController {
                 sb.append(error.getDefaultMessage());
                 sb.append(";");
             }
-            baseResp.putError();
-            baseResp.setMessage(sb.toString());
+            baseResp.putState(ResponseState.ILLEGAL_PARAMS);
+            baseResp.setMsg(sb.toString());
             return false;
         }else return true;
     }

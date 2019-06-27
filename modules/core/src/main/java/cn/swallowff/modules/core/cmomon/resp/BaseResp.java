@@ -11,23 +11,23 @@ public class BaseResp implements Serializable {
     private static final Integer SUCCESS = 200;
 
     private Integer code;
-    private String message;
+    private String msg;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Serializable data;
+    private Object data;
 
-    public BaseResp(Integer code, String message){
+    public BaseResp(Integer code, String msg){
         this.code = code;
-        this.message = message;
+        this.msg = msg;
     }
 
     public BaseResp(ResponseState respResponseState){
         this.code = respResponseState.getCode();
-        this.message = respResponseState.getMsg();
+        this.msg = respResponseState.getMsg();
     }
 
     public BaseResp putState(AbstractState respState){
         this.code = respState.getCode();
-        this.message = respState.getMsg();
+        this.msg = respState.getMsg();
         return this;
     }
 
@@ -67,19 +67,19 @@ public class BaseResp implements Serializable {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public Serializable getData() {
+    public Object getData() {
         return data;
     }
 
-    public BaseResp setData(Serializable data) {
+    public BaseResp setData(Object data) {
         this.data = data;
         return this;
     }

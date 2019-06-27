@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 100137
 File Encoding         : 65001
 
-Date: 2019-06-26 00:12:33
+Date: 2019-06-27 19:15:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,11 +44,11 @@ CREATE TABLE `sys_dept` (
 DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict` (
   `id` varchar(64) NOT NULL COMMENT '主键id',
-  `type` int(3) DEFAULT NULL COMMENT '排序',
-  `name` varchar(64) DEFAULT NULL COMMENT '父级字典',
-  `val` int(5) DEFAULT NULL COMMENT '名称',
+  `code` varchar(64) DEFAULT NULL COMMENT '字典code',
+  `label` varchar(64) DEFAULT NULL COMMENT '字典名称',
+  `val` int(5) DEFAULT NULL COMMENT '字典值',
   `tips` varchar(64) DEFAULT NULL COMMENT '提示',
-  `sort` int(5) DEFAULT NULL COMMENT '值',
+  `sort` int(5) DEFAULT NULL COMMENT '排序',
   `create_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `version` int(11) DEFAULT NULL,
@@ -59,6 +59,8 @@ CREATE TABLE `sys_dict` (
 -- ----------------------------
 -- Records of sys_dict
 -- ----------------------------
+INSERT INTO `sys_dict` VALUES ('1', 'sex', '男', '0', '性别', '10', '2019-06-26 23:20:35', '2019-06-26 23:20:35', null, '0');
+INSERT INTO `sys_dict` VALUES ('2', 'sex', '女', '1', '性别', '11', '2019-06-26 23:21:07', '2019-06-26 23:21:10', null, '0');
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -271,5 +273,9 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('54', null, 'admin', 'fa3b4fff6c2c5fe5d6b034e0e1254bfa', 'h3zpe', 'shenyu', '2019-03-15', null, null, '17320393360', null, null, '0', '2019-06-25 23:50:11', '2019-03-15 19:59:00', null, null);
-INSERT INTO `sys_user` VALUES ('55', null, 'shenyu', '1aa730e23bf07dc1660dcb1ee46b3f38', 'i3r7r', 'shenyu', '2019-03-15', null, null, '17320393360', null, null, '0', null, '2019-03-15 20:01:23', null, null);
+INSERT INTO `sys_user` VALUES ('1143873210717908992', null, 'admin1', '123', null, '123', null, '0', '123@qq.com', null, null, null, null, '2019-06-26 21:26:40', '2019-06-26 21:26:40', '0', null);
+INSERT INTO `sys_user` VALUES ('1143874274766696448', null, 'admin2', '123', null, 'admin2', null, '0', '123@153.com', null, null, null, '0', '2019-06-26 21:32:26', '2019-06-26 21:30:53', '0', null);
+INSERT INTO `sys_user` VALUES ('1143879991238336512', null, 'admina', '123', null, 'yu swallow', null, '0', '123@qq.com', '13647617481', null, null, null, '2019-06-26 21:53:36', '2019-06-26 21:53:36', '0', null);
+INSERT INTO `sys_user` VALUES ('1143880318071087104', null, 'admin_test', '123', null, 'yu swallow', null, '1', '123@qq.com', '13647617481', null, null, '1', '2019-06-27 00:32:21', '2019-06-26 21:54:54', '0', null);
+INSERT INTO `sys_user` VALUES ('54', null, 'admin', 'fa3b4fff6c2c5fe5d6b034e0e1254bfa', 'h3zpe', 'shenyu', '2019-03-15', '1', null, '17320393360', null, null, '1', '2019-06-26 19:59:06', '2019-03-15 19:59:00', null, null);
+INSERT INTO `sys_user` VALUES ('55', null, 'shenyu', '1aa730e23bf07dc1660dcb1ee46b3f38', 'i3r7r', 'shenyu', '2019-03-15', '1', null, '17320393360', null, null, '0', '2019-06-26 19:58:58', '2019-03-15 20:01:23', null, null);
