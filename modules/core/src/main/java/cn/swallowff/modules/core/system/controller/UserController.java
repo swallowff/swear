@@ -29,13 +29,11 @@ public class UserController {
 
     @RequestMapping(value = "list.html")
     public String listHtml(User user,Model model){
-//        PageResp<User> page = userService.findPage(user);
-//        model.addAttribute("page",page);
         return "admin/pages2/system/user-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String userAddHtml(User user,Model model){
+    public String addHtml(User user,Model model){
         PageResp<User> page = userService.findPage(user);
         model.addAttribute("page",page);
         return "admin/pages2/system/user-add";
