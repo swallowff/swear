@@ -21,6 +21,7 @@
         <jedis.version>2.9.0</jedis.version>
         <httpclient.version>4.5.3</httpclient.version>
         <pagehelper.version>1.2.3</pagehelper.version>
+        <swagger.version>2.9.2</swagger.version>
 
     </properties>
 
@@ -148,13 +149,13 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>${swagger.version}</version>
         </dependency>
         <!--swagger-ui-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
+            <version>${swagger.version}</version>
         </dependency>
 
 

@@ -149,7 +149,7 @@ public class ShiroConfig2 {
         /**
          * 登陆成功后跳转的url
          */
-        shiroFilter.setSuccessUrl("/a/common/index");
+        shiroFilter.setSuccessUrl("/a/index");
         /**
          * 没有权限跳转的url
          */
