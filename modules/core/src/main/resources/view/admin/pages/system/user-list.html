@@ -69,10 +69,8 @@
     base: '${static}/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'contlist', 'table','jquery'], function(){
-    var table = layui.table
-    ,form = layui.form
-    ,$ = layui.jquery;
+  }).use(['index', 'contlist', 'table','jquery','admin'], function(){
+    var table = layui.table,form = layui.form,$ = layui.jquery,admin = layui.admin;
 
     table.render({
       id:"userTable",//
@@ -149,22 +147,33 @@
     
     var $ = layui.$, active = {
       batchdel: function(){
-        var checkStatus = table.checkStatus('LAY-app-content-list')
+        var checkStatus = table.checkStatus('userTable')
         ,checkData = checkStatus.data; //得到选中的数据
-
+        console.log(checkData)
         if(checkData.length === 0){
           return layer.msg('请选择数据');
+        }
+
+        var idAry = new Array();
+        for (var i = 0; i < checkData.length;i ++){
+          idAry[i] = checkData[i].id
         }
       
         layer.confirm('确定删除吗？', function(index) {
           
           //执行 Ajax 后重载
-          /*
+
           admin.req({
-            url: 'xxx'
-            //,……
+            url: '${admin}/user/batchDel',
+            method: 'POST',
+            data: {
+              ids:idAry
+            },
+            success: function (res) {
+              console.log(res)
+            }
+
           });
-          */
           table.reload('LAY-app-content-list');
           layer.msg('已删除');
         });

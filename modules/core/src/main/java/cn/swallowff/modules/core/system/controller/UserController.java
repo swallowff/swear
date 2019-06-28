@@ -92,5 +92,21 @@ public class UserController {
         }else return baseResp.putError();
     }
 
+    @RequestMapping(value = "batchDel")
+    @ResponseBody
+    public BaseResp batchDel(String[] ids){
+        BaseResp baseResp = BaseResp.newSuccess();
+        int count = 0;
+        for (String id : ids){
+            int r = userService.delete(id);
+            if (r == 1){
+                count ++;
+            }
+        }
+        if (count == ids.length){
+            return baseResp;
+        }else return baseResp.putError();
+    }
+
 
 }
