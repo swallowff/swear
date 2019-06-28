@@ -15,6 +15,8 @@ public class DictUtils {
 
     private static DictService dictService = SpringContextHolder.getBean(DictService.class);
 
+    private static final String TIPS = "字典没有这个值噢";
+
     /**
      * 自定义字典缓存
      */
@@ -31,7 +33,7 @@ public class DictUtils {
                 return dictCache.getLabel();
             }
         }
-        return "未知的字典数据";
+        return TIPS;
     }
 
     /**

@@ -6,7 +6,7 @@ public enum ResponseState implements AbstractBaseExceptionEnum {
     /**
      * 通用状态
      */
-    SUCCESS(200,"操作成功"),
+    SUCCESS(0,"操作成功"),
     SYSTEM_ERROR(502,"系统错误"),
     UNKNOWN_ERROR(500,"未知的错误"),
     EMPTY_DATA(400,"数据为空"),

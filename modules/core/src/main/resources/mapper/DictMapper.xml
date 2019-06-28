@@ -58,6 +58,7 @@
         WHERE
           a.delflag = 0
           AND a.code = #{0}
+        ORDER BY a.sort DESC
     </select>
 
     <insert id="insert">

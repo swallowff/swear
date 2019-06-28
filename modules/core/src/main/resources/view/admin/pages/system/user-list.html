@@ -166,16 +166,18 @@
           admin.req({
             url: '${admin}/user/batchDel',
             method: 'POST',
+            traditional:true,   //指定参数序列化时，不做深度序列化
             data: {
               ids:idAry
             },
             success: function (res) {
-              console.log(res)
+              // console.log(res)
+              table.reload('userTable');
+              layer.msg('已删除');
             }
 
           });
-          table.reload('LAY-app-content-list');
-          layer.msg('已删除');
+
         });
       },
       add: function(){
@@ -218,7 +220,7 @@
         },
         success: function (res) {
           layer.msg(res.msg);
-          if (res.code == 200) {
+          if (res.code == 0) {
             layui.table.reload('userTable');
           }else {
 

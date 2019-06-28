@@ -4,6 +4,7 @@ import cn.swallowff.modules.core.cache.DictCache;
 import cn.swallowff.modules.core.cmomon.service.CrudService;
 import cn.swallowff.modules.core.system.dao.DictDao;
 import cn.swallowff.modules.core.system.entity.Dict;
+import cn.swallowff.modules.core.util.DictUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,5 +41,29 @@ public class DictService extends CrudService<DictDao, Dict> {
     public List<DictCache> getDictCacheList(String code){
         logger.info("初始化字典数据：code[{}]",code);
         return dictDao.getDictCacheList(code);
+    }
+
+    @Override
+    public void save(Dict entity) {
+        super.save(entity);
+        DictUtils.delKey(entity.getCode());
+    }
+
+    @Override
+    public int update(Dict entity) {
+        int r = super.update(entity);
+        if (r == 1){
+            DictUtils.delKey(entity.getCode());
+        }
+        return r;
+    }
+
+    @Override
+    public int updateSelective(Dict entity) {
+        int r = super.updateSelective(entity);
+        if (r == 1){
+            DictUtils.delKey(entity.getCode());
+        }
+        return r;
     }
 }

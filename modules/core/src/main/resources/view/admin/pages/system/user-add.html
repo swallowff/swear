@@ -75,12 +75,11 @@
             method: 'POST',
             success: function (res) {
                 // console.log(res);
-                if (res.code == 200) {
+                if (res.code == 0) {
                     parent.layer.msg(res.msg);
                     parent.layui.table.reload('userTable'); //重载表格
                     parent.layer.close(index); //再执行关闭
                 }else {
-                    console.log(400)
                     layer.msg(res.msg);
                 }
 
