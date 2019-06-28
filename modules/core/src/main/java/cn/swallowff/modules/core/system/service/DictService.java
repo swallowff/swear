@@ -44,9 +44,12 @@ public class DictService extends CrudService<DictDao, Dict> {
     }
 
     @Override
-    public void save(Dict entity) {
-        super.save(entity);
-        DictUtils.delKey(entity.getCode());
+    public int save(Dict entity) {
+        int r = super.save(entity);
+        if (r == 1){
+            DictUtils.delKey(entity.getCode());
+        }
+        return r;
     }
 
     @Override

@@ -20,13 +20,13 @@ public abstract class CrudService<M extends CrudDao<E>,E extends BaseEntity<E>> 
         return crudDao.findList(entity);
     }
 
-    public void save(E entity){
+    public int save(E entity){
         if (entity.getIsNewRecord()){
             entity.preInsert();
-            crudDao.insert(entity);
+            return crudDao.insert(entity);
         }else {
             entity.preUpdate();
-            crudDao.update(entity);
+            return crudDao.update(entity);
         }
     }
 
