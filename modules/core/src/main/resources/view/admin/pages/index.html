@@ -72,7 +72,7 @@
               <dd><a lay-href="set/user/info.html">基本资料</a></dd>
               <dd><a lay-href="set/user/password.html">修改密码</a></dd>
               <hr>
-              <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+              <dd lay-even="logout" style="text-align: center;"><a>退出</a></dd>
             </dl>
           </li>
           
@@ -100,7 +100,7 @@
               </a>
               <dl class="layui-nav-child">
                 <dd data-name="console" class="layui-this">
-                  <a lay-href="home/console.html">控制台</a>
+                  <a lay-href="home/console.html">用户管理</a>
                 </dd>
                 <dd data-name="console">
                   <a lay-href="home/homepage1.html">主页一</a>
@@ -451,7 +451,12 @@
     base: '${static}/layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use('index');
+  }).use('index','admin',function () {
+    var admin = layui.admin;
+    
+
+  });
+
   </script>
 </body>
 </html>

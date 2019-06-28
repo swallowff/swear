@@ -15,7 +15,7 @@ public class DictUtils {
 
     private static DictService dictService = SpringContextHolder.getBean(DictService.class);
 
-    private static final String TIPS = "字典没有这个值噢";
+    private static final String TIPS = "未知";
 
     /**
      * 自定义字典缓存
