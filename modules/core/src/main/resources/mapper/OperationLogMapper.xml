@@ -20,7 +20,8 @@
       <include refid="baseColumns"/>
       FROM sys_operation_log a
       <where>
-          a.id = #{id}
+          a.delflag = 0
+          AND a.id = #{id}
       </where>
     </select>
 
@@ -29,6 +30,7 @@
         <include refid="baseColumns"/>
         FROM sys_operation_log a
         <where>
+            a.delflag = 0
             <if test="logName != null and logName != ''">
               AND a.log_name = #{logName}
             </if>
@@ -91,7 +93,8 @@
           update_time = #{updateTime},
           version = #{version}
           <where>
-              id = #{id}
+              delflag = 0
+              AND id = #{id}
           </where>
     </update>
 
@@ -127,7 +130,8 @@
             </if>
         </set>
         <where>
-            id = #{id}
+            delflag = 0
+            AND id = #{id}
         </where>
     </update>
 
@@ -135,7 +139,8 @@
         UPDATE sys_operation_log a
         SET a.delflag = 1
         <where>
-          a.id = #{id}
+            a.delflag = 0
+            AND a.id = #{id}
         </where>
     </delete>
 

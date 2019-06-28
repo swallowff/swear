@@ -31,14 +31,12 @@ public class UserController {
 
     @RequestMapping(value = "list.html")
     public String listHtml(User user,Model model){
-        return "admin/pages2/system/user-list";
+        return "admin/pages/system/user-list";
     }
 
     @RequestMapping(value = "add.html")
     public String addHtml(User user,Model model){
-//        PageResp<User> page = userService.findPage(user);
-//        model.addAttribute("page",page);
-        return "admin/pages2/system/user-add";
+        return "admin/pages/system/user-add";
     }
 
     @RequestMapping(value = "userList.ajax")
@@ -48,7 +46,7 @@ public class UserController {
         Integer limit = Integer.valueOf(request.getParameter("limit"));
         User user = new User();
         user.setPageNum(page);
-        user.setPageSize(limit-8);
+        user.setPageSize(limit);
 //        List<User> list = userService.findList(user);
         PageResp<User> pageResp = userService.findPage(user);
         UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
@@ -59,12 +57,7 @@ public class UserController {
         return layPageResp;
     }
 
-    @RequestMapping(value = "addHtml")
-    public String addHtml(){
-        return "admin/pages/system/user-add";
-    }
-
-    @RequestMapping(value = "add")
+    @RequestMapping(value = "add.ajax")
     @ResponseBody
     public BaseResp add(User user){
         BaseResp baseResp = BaseResp.newSuccess();
@@ -76,7 +69,7 @@ public class UserController {
         return baseResp;
     }
 
-    @RequestMapping(value = "edit")
+    @RequestMapping(value = "edit.ajax")
     @ResponseBody
     public BaseResp edit(User user){
         BaseResp baseResp = BaseResp.newSuccess();
@@ -84,6 +77,16 @@ public class UserController {
             return baseResp.paramsError();
         }
         int r = userService.updateSelective(user);
+        if (r == 1){
+            return baseResp;
+        }else return baseResp.putError();
+    }
+
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public BaseResp delete(String id){
+        BaseResp baseResp = BaseResp.newSuccess();
+        int r = userService.delete(id);
         if (r == 1){
             return baseResp;
         }else return baseResp.putError();

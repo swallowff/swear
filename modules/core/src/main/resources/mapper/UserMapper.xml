@@ -26,7 +26,8 @@
       <include refid="baseColumns"/>
       FROM sys_user a
       <where>
-          a.id = #{id}
+          a.delflag = 0
+          AND a.id = #{id}
       </where>
     </select>
 
@@ -35,6 +36,7 @@
         <include refid="baseColumns"/>
         FROM sys_user a
         <where>
+            a.delflag = 0
             <if test="account != null and account != ''">
               AND a.account = #{account}
             </if>
@@ -224,7 +226,8 @@
           update_time = #{updateTime},
           create_time = #{createTime}
           <where>
-              id = #{id}
+              delflag = 0
+              AND id = #{id}
           </where>
     </update>
 
@@ -272,7 +275,8 @@
             </if>
         </set>
         <where>
-            id = #{id}
+            delflag = 0
+            AND id = #{id}
         </where>
     </update>
 
@@ -280,7 +284,8 @@
         UPDATE sys_user a
         SET a.delflag = 1
         <where>
-            a.id = #{id}
+            a.delflag = 0
+            AND a.id = #{id}
         </where>
     </update>
 

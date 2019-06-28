@@ -22,7 +22,7 @@ public class User extends BaseEntity<User> implements Serializable {
     private String phone;   //手机号
     private String roleId; //角色id
     private Integer deptId; //部门id
-    private Integer status; //状态    0:启用  1:停用  字典YesOrNo
+    private Integer status; //启用状态    1:启用  0:停用  字典YesOrNo
 
     public String getAvatar() {
         return avatar;

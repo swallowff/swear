@@ -19,7 +19,8 @@
       <include refid="baseColumns"/>
       FROM sys_dict a
       <where>
-          a.id = #{id}
+          a.delflag = 0
+          AND a.id = #{id}
       </where>
     </select>
 
@@ -28,9 +29,7 @@
         <include refid="baseColumns"/>
         FROM sys_dict a
         <where>
-            <!--<if test="pid != null and pid != ''">-->
-              <!--AND a.pid = #{pid}-->
-            <!--</if>-->
+            a.delflag = 0
             <if test="code != null and code != ''">
                 AND a.code = #{code}
             </if>
@@ -64,7 +63,6 @@
     <insert id="insert">
         INSERT INTO sys_dict(
           id,
---           pid,
           code,
           label,
           val,
@@ -75,7 +73,6 @@
           delflag
         ) VALUES (
           #{id},
---           #{pid},
           #{code},
           #{label},
           #{val},
@@ -90,7 +87,6 @@
 
     <update id="update">
         UPDATE sys_dict SET
---           pid = #{pid},
           code = #{code},
           label = #{label},
           val = #{val},
@@ -98,16 +94,14 @@
           tips = #{tips},
           update_time = #{updateTime}
           <where>
-              id = #{id}
+              delflag = 0
+              AND id = #{id}
           </where>
     </update>
 
     <update id="updateSelective">
         UPDATE sys_dict
         <set>
-            <!--<if test="pid != null and pid != ''">-->
-                <!--pid = #{pid},-->
-            <!--</if>-->
             <if test="code != null">
                 code = #{code},
             </if>
@@ -128,7 +122,8 @@
             </if>
         </set>
         <where>
-            id = #{id}
+            delflag = 0
+            AND id = #{id}
         </where>
     </update>
 
@@ -136,7 +131,8 @@
         UPDATE sys_dict a
         SET a.delflag = 1
         <where>
-          a.id = #{id}
+          a.delflag = 0
+          AND a.id = #{id}
         </where>
     </delete>
 

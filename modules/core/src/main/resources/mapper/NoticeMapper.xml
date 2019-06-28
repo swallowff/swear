@@ -18,7 +18,8 @@
       <include refid="baseColumns"/>
       FROM sys_notice a
       <where>
-          a.id = #{id}
+          a.delflag = 0
+          AND a.id = #{id}
       </where>
     </select>
 
@@ -27,6 +28,7 @@
         <include refid="baseColumns"/>
         FROM sys_notice a
         <where>
+            a.delflag = 0
             <if test="type != null">
               AND a.type = #{type}
             </if>
@@ -39,7 +41,6 @@
             <if test="toUser != null and toUser != ''">
                 AND a.to_user = #{toUser}
             </if>
-
         </where>
         <choose>
             <when test="orderBy != null and orderBy != ''">
@@ -87,7 +88,8 @@
           update_time = #{updateTime},
           version = #{version}
           <where>
-              id = #{id}
+              delflag = 0
+              AND id = #{id}
           </where>
     </update>
 
@@ -114,7 +116,8 @@
             </if>
         </set>
         <where>
-            id = #{id}
+            delflag = 0
+            AND id = #{id}
         </where>
     </update>
 
@@ -122,7 +125,8 @@
         UPDATE sys_notice a
         SET a.delflag = 1
         <where>
-          a.id = #{id}
+            a.delflag = 0
+            AND a.id = #{id}
         </where>
     </delete>
 

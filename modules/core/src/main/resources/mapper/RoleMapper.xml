@@ -19,7 +19,8 @@
       <include refid="baseColumns"/>
       FROM sys_role a
       <where>
-          a.id = #{id}
+          a.delflag = 0
+          AND a.id = #{id}
       </where>
     </select>
 
@@ -28,6 +29,7 @@
         <include refid="baseColumns"/>
         FROM sys_role a
         <where>
+            a.delflag = 0
             <if test="pid != null and pid != ''">
               AND a.pid = #{pid}
             </if>
@@ -138,7 +140,8 @@
           tips = #{tips},
           update_time = #{updateTime}
           <where>
-              id = #{id}
+              delflag = 0
+              AND id = #{id}
           </where>
     </update>
 
@@ -165,7 +168,8 @@
             </if>
         </set>
         <where>
-            id = #{id}
+            delflag = 0
+            AND id = #{id}
         </where>
     </update>
 
@@ -173,7 +177,8 @@
         UPDATE sys_role a
         SET a.delflag = 1
         <where>
-          a.id = #{id}
+            a.delflag = 0
+            AND a.id = #{id}
         </where>
     </delete>
 

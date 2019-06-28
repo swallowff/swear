@@ -145,7 +145,7 @@ public class ShiroConfig2 {
         /**
          * 默认的登陆访问url
          */
-        shiroFilter.setLoginUrl("/a/login/login");
+        shiroFilter.setLoginUrl("/a/login/login.html");
         /**
          * 登陆成功后跳转的url
          */
@@ -183,7 +183,7 @@ public class ShiroConfig2 {
         hashMap.put("/v2/api-docs","anon");
         hashMap.put("/webjars/springfox-swagger-ui/**","anon");
 
-        hashMap.put("/global/**", "anon");
+//        hashMap.put("/global/**", "anon");
         hashMap.put("/a/kaptcha/**", "anon");
         hashMap.put("/a/**", "user");
         shiroFilter.setFilterChainDefinitionMap(hashMap);

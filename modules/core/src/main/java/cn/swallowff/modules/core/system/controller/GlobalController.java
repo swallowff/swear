@@ -20,9 +20,12 @@ public class GlobalController extends BaseController {
         return REDIRECT + "/a/index";
     }
 
+    @RequestMapping("/a")
+    public String aPath(){return REDIRECT + "/a/index";}
+
     @RequestMapping("/a/index")
     public String index(){
-        return "admin/pages2/index";
+        return "admin/pages/index";
     }
 
 //    @RequestMapping("error/404")

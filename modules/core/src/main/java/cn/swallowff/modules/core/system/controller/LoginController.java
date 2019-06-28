@@ -26,13 +26,13 @@ public class LoginController extends BaseController {
      * 登录页面跳转
      * @return
      */
-    @RequestMapping(value = "login",method = RequestMethod.GET)
+    @RequestMapping(value = "login.html",method = RequestMethod.GET)
     public String login(Model model, HttpServletRequest request){
         Subject subject = ShiroKit.getSubject();
         if (subject.isAuthenticated()){
-            return REDIRECT + "/a/common/index";
+            return REDIRECT + "/a/index";
         }else {
-            return "admin/pages2/login";
+            return "admin/pages/login";
         }
     }
 
@@ -44,7 +44,7 @@ public class LoginController extends BaseController {
      * @param kaptcha
      * @return
      */
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "login.form",method = RequestMethod.POST)
     public String doLogin(@RequestParam(value = "account") String account,
                           @RequestParam(value = "password") String password, Boolean rememberme, String kaptcha, RedirectAttributes redirectAttributes, Model model){
         if (KaptchaUtil.getKaptchaOnOff()) {
@@ -52,7 +52,7 @@ public class LoginController extends BaseController {
         }
         Subject subject = ShiroKit.getSubject();
         subject.login(new UsernamePasswordToken(account.trim(),password.trim(),rememberme == null ? false : rememberme));
-        return REDIRECT + "/a/common/index";
+        return REDIRECT + "/a/index";
     }
 
     /**
@@ -62,7 +62,7 @@ public class LoginController extends BaseController {
      * @param kaptcha
      * @return
      */
-    @RequestMapping(value = "ajaxLogin",method = RequestMethod.POST)
+    @RequestMapping(value = "login.ajax",method = RequestMethod.POST)
     @ResponseBody
     public BaseResp ajaxLogin(@RequestParam(value = "account") String account,
                               @RequestParam(value = "password") String password, String kaptcha){
@@ -80,7 +80,7 @@ public class LoginController extends BaseController {
     public String logout(){
         Subject subject = ShiroKit.getSubject();
         subject.logout();
-        return REDIRECT + "/a/login/login";
+        return REDIRECT + "/a/login/login.html";
     }
 
 
