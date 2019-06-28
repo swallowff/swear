@@ -7,6 +7,7 @@ import cn.swallowff.modules.core.constant.states.ResponseState;
 import cn.swallowff.modules.core.excepiton.BizException;
 import cn.swallowff.modules.core.system.entity.User;
 import cn.swallowff.modules.core.system.service.UserService;
+import cn.swallowff.modules.core.system.wrapper.UserAjaxListDictWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shenyu
@@ -34,18 +36,26 @@ public class UserController {
 
     @RequestMapping(value = "add.html")
     public String addHtml(User user,Model model){
-        PageResp<User> page = userService.findPage(user);
-        model.addAttribute("page",page);
+//        PageResp<User> page = userService.findPage(user);
+//        model.addAttribute("page",page);
         return "admin/pages2/system/user-add";
     }
 
     @RequestMapping(value = "userList.ajax")
     @ResponseBody
     public Object userListAjax(HttpServletRequest request){
+        Integer page = Integer.valueOf(request.getParameter("page"));
+        Integer limit = Integer.valueOf(request.getParameter("limit"));
+        User user = new User();
+        user.setPageNum(page);
+        user.setPageSize(limit-8);
+//        List<User> list = userService.findList(user);
+        PageResp<User> pageResp = userService.findPage(user);
+        UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
+        List<Map<String,Object>> wrapList = wrapper.wrapList();
         LayPageResp layPageResp = LayPageResp.newSuccess();
-        List<User> list = userService.findList(new User());
-        layPageResp.setData(list);
-        layPageResp.setCount(list.size());
+        layPageResp.setData(wrapList);
+        layPageResp.setCount(wrapList.size());
         return layPageResp;
     }
 

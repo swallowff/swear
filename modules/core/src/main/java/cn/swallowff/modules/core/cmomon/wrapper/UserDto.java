@@ -7,7 +7,7 @@ package cn.swallowff.modules.core.cmomon.wrapper;
 public class UserDto {
     private String id;
     private String name;
-    private String age;
+    private String phone;
 
     public String getId() {
         return id;
@@ -25,11 +25,11 @@ public class UserDto {
         this.name = name;
     }
 
-    public String getAge() {
-        return age;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

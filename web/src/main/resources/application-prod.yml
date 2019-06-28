@@ -5,9 +5,9 @@ server:
 
 swear:
   muti-datasource:
-    open: true
+    open: false
   kaptcha-open: false
-  spring-session-open: true
+  spring-session-open: false
   path:
     admin: /a
     api: /api
@@ -46,7 +46,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
-  type-aliases-package: cn.swallowff.modules.**.entity
+  type-aliases-package: cn.swallowff.modules.core.system.entity
   mapper-locations: classpath:mapper/**/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true

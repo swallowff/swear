@@ -1,9 +1,9 @@
 package cn.swallowff.modules.core.cmomon.wrapper;
 
-import cn.swallowff.common.json.JacksonUtil;
+import cn.swallowff.common.mapper.BeanMapConvert;
 import cn.swallowff.modules.core.system.entity.User;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,43 +11,51 @@ import java.util.Map;
  * @author shenyu
  * @create 19-6-14
  */
-public class TestUserWrapper extends BaseDataWrapper<User> {
-
-    public TestUserWrapper(List<User> sourceList) {
-        super(sourceList);
-    }
+public class TestUserWrapper extends BaseWrapper<User> {
 
     public TestUserWrapper(User user) {
         super(user);
     }
 
-    @Override
-    protected <R> R wrapToEntity(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        return (R) userDto;
+    public TestUserWrapper(List<User> entityList) {
+        super(entityList);
     }
 
     @Override
-    protected Map<String, Object> wrapToMap(User user) {
-        Map<String,Object> rmap = new HashMap<>();
-        rmap.put("id2",user.getId());
-        rmap.put("name2",user.getName());
-        rmap.put("sex2",user.getSex());
-        return rmap;
+    protected <R> R wrapEntity(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setName("userDto");
+        userDto.setPhone(user.getPhone());
+        return (R) userDto;
     }
 
     public static void main(String[] args){
         User user = new User();
         user.setId("1");
         user.setName("user");
-        TestUserWrapper userWrapper = new TestUserWrapper(user);
-        UserDto userDto = userWrapper.wrapEntity();
-        Map<String,Object> umap = userWrapper.wrapMap();
-        System.out.println(JacksonUtil.toJson(user));
-        System.out.println(JacksonUtil.toJson(userDto));
-        System.out.println(JacksonUtil.toJson(umap));
+        user.setPhone("13647617481");
+        List<User> users = new ArrayList<>();
+        users.add(user);
+
+        Map<String,Object> sourceMap = BeanMapConvert.beanToMapObject(user);
+        List<Map<String,Object>> sourceMapList = new ArrayList<>();
+        sourceMapList.add(sourceMap);
+
+//        TestUserWrapper userWrapper = new TestUserWrapper(user);
+//        UserDto userDto = userWrapper.entityToEntity();
+//        Map<String,Object> umap = userWrapper.entityToMap();
+////        System.out.println(JacksonUtil.toJson(user));
+//        System.out.println(JacksonUtil.toJson(userDto));
+//        System.out.println(JacksonUtil.toJson(umap));
+
+//        TestUserWrapper userListWrapper = new TestUserWrapper(users);
+//        List<UserDto> userDtoList = userListWrapper.doWrapList();
+//        System.out.println(JacksonUtil.toJson(userDtoList));
+
+//        TestUserWrapper userListWrapper = new TestUserWrapper(sourceMapList);
 
     }
+
+
 }
