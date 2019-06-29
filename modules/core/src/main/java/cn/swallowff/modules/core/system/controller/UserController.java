@@ -41,19 +41,13 @@ public class UserController {
 
     @RequestMapping(value = "userList.ajax")
     @ResponseBody
-    public Object userListAjax(HttpServletRequest request){
-        Integer page = Integer.valueOf(request.getParameter("page"));
-        Integer limit = Integer.valueOf(request.getParameter("limit"));
-        User user = new User();
-        user.setPageNum(page);
-        user.setPageSize(limit);
-//        List<User> list = userService.findList(user);
+    public Object userListAjax(User user){
         PageResp<User> pageResp = userService.findPage(user);
         UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
         List<Map<String,Object>> wrapList = wrapper.wrapList();
         LayPageResp layPageResp = LayPageResp.newSuccess();
         layPageResp.setData(wrapList);
-        layPageResp.setCount(wrapList.size());
+        layPageResp.setCount(pageResp.getTotalRows());
         return layPageResp;
     }
 

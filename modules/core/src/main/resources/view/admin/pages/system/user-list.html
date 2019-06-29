@@ -22,7 +22,13 @@
             </div>
           </div>
           <div class="layui-inline">
-            <label class="layui-form-label">账户名</label>
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+              <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-label">账号</label>
             <div class="layui-input-inline">
               <input type="text" name="account" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
@@ -35,7 +41,7 @@
           </div>
           <#dictSelector name="sex" label="性别" code="sex" placeholder="请选择"></#dictSelector>
           <div class="layui-inline">
-            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-user-list-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
           </div>
@@ -73,8 +79,8 @@
     var table = layui.table,form = layui.form,$ = layui.jquery,admin = layui.admin;
 
     table.render({
-      id:"userTable",//
-      elem: '#LAY-app-user-list',//指定表格元素
+      id:"userTable", //table id
+      elem: '#LAY-app-user-list', //指定表格元素
       url: '${admin}/user/userList.ajax',  //请求路径
       cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
       ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
@@ -109,7 +115,7 @@
         {
           field: 'password',
           title: '密码',
-          sort: true
+          sort: false
         },
         {
           field: 'phone',
@@ -136,11 +142,10 @@
     });
     
     //监听搜索
-    form.on('submit(LAY-app-contlist-search)', function(data){
+    form.on('submit(LAY-user-list-search)', function(data){
       var field = data.field;
-      
       //执行重载
-      table.reload('LAY-app-content-list', {
+      table.reload('userTable', {
         where: field
       });
     });
@@ -162,7 +167,6 @@
         layer.confirm('确定删除吗？', function(index) {
           
           //执行 Ajax 后重载
-
           admin.req({
             url: '${admin}/user/batchDel',
             method: 'POST',

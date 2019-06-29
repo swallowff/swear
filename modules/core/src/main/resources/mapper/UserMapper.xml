@@ -37,6 +37,9 @@
         FROM sys_user a
         <where>
             a.delflag = 0
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
             <if test="account != null and account != ''">
               AND a.account = #{account}
             </if>

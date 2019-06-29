@@ -1,6 +1,7 @@
 package cn.swallowff.modules.core.system.service;
 
 import cn.swallowff.common.collect.ListUtils;
+import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
 import cn.swallowff.modules.core.cmomon.service.CrudService;
 import cn.swallowff.modules.core.system.dao.UserDao;
@@ -16,7 +17,7 @@ import java.util.List;
 public class UserService extends CrudService<UserDao, User> {
 
     public PageResp<User> findPage(User user){
-        PageHelper.startPage(user.getPageNum(),user.getPageSize());
+        PageHelper.startPage(user.getPage(),user.getLimit());
         List<User> list = super.findList(user);
         PageInfo<User> pageInfo = new PageInfo<>(list);
         return pageResp(pageInfo);

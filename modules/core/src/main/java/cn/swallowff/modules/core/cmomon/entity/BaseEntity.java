@@ -14,8 +14,8 @@ public class BaseEntity<E extends BaseEntity> {
     private String orderBy;
     private boolean delflag;
 
-    private Integer pageNum = 1;
-    private Integer pageSize = 20;
+    private Integer page = 1;
+    private Integer limit = 20;
 
     private boolean isNewRecord;
 
@@ -67,20 +67,20 @@ public class BaseEntity<E extends BaseEntity> {
         this.delflag = delflag;
     }
 
-    public Integer getPageNum() {
-        return pageNum;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
+    public void setPage(Integer page) {
+        this.page = page;
     }
 
-    public Integer getPageSize() {
-        return pageSize;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     /**

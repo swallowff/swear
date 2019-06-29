@@ -77,10 +77,12 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping(value = "logout")
-    public String logout(){
+    @ResponseBody
+    public BaseResp logout(){
         Subject subject = ShiroKit.getSubject();
         subject.logout();
-        return REDIRECT + "/a/login/login.html";
+        return BaseResp.newSuccess();
+//        return REDIRECT + "/a/login/login.html";
     }
 
 
