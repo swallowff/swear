@@ -18,7 +18,6 @@ public class Menu extends BaseEntity<Menu> {
     private Integer levels;  //级别
     private Boolean isMenu;  //是否是菜单
     private String tips;    //备注
-    private Boolean status; //状态 0:启用  2:停用
     private Boolean isOpen; //是否打开
 
     public String getCode() {
@@ -99,14 +98,6 @@ public class Menu extends BaseEntity<Menu> {
 
     public void setTips(String tips) {
         this.tips = tips;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     public Boolean getOpen() {

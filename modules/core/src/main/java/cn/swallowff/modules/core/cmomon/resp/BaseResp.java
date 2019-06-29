@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 
 public class BaseResp implements Serializable {
-    private static final Integer SUCCESS = 200;
+    private static final Integer SUCCESS = ResponseState.SUCCESS.getCode();
 
     private Integer code;
     private String msg;
@@ -40,7 +40,7 @@ public class BaseResp implements Serializable {
     }
 
     public BaseResp paramsError(){
-        return putState(ResponseState.SUCCESS);
+        return putState(ResponseState.ILLEGAL_PARAMS);
     }
 
     public BaseResp putSuccess(){

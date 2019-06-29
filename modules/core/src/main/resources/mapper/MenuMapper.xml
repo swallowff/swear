@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.system.dao.MenuDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.code AS code,
+        a.pcode AS pcode,
+        a.pcodes AS pcodes,
+        a.name AS name,
+        a.icon AS icon,
+        a.url AS url,
+        a.sort AS sort,
+        a.levels AS levels,
+        a.is_menu AS isMenu,
+        a.tips AS tips,
+        a.is_open AS isOpen,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="Menu">
+      SELECT
+      <include refid="baseColumns"/>
+      FROM sys_menu a
+      <where>
+          a.delflag = 0
+          AND a.id = #{id}
+      </where>
+    </select>
+
+    <select id="findList" resultType="Menu">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_menu a
+        <where>
+            a.delflag = 0
+            <if test="code != null and code != ''">
+              AND a.code = #{code}
+            </if>
+            <if test="pcode != null and pcode != ''">
+                AND a.pcode = #{pcode}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="levels != null">
+                AND a.levels = #{levels}
+            </if>
+            <if test="pcodes != null and pcodes != ''">
+                AND a.pcodes LIKE CONCAT('%',#{pcodes},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_menu(
+          id,
+          code,
+          pcode,
+          pcodes,
+          name,
+          icon,
+          url,
+          sort,
+          levels,
+          is_menu,
+          tips,
+          is_open,
+          update_time,
+          create_time,
+          delflag
+        ) VALUES (
+          #{id},
+          #{code},
+          #{pcode},
+          #{pcodes},
+          #{name},
+          #{icon},
+          #{url},
+          #{sort},
+          #{levels},
+          #{isMenu},
+          #{tips},
+          #{isOpen},
+          #{updateTime},
+          #{createTime},
+          #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_menu SET
+            code = #{code},
+            pcode = #{pcode},
+            pcodes = #{pcodes},
+            name = #{name},
+            icon = #{icon},
+            url = #{url},
+            sort = #{sort},
+            levels = #{levels},
+            is_menu = #{isMenu},
+            tips = #{tips},
+            is_open = #{isOpen},
+            update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_menu
+        <set>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="pcode != null and pcode != ''">
+                pcode = #{pcode},
+            </if>
+            <if test="pcodes != null and pcodes != ''">
+                pcodes = #{pcodes},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="icon != null and icon != ''">
+                icon = #{icon},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="levels != null">
+                levels = #{levels},
+            </if>
+            <if test="isMenu != null">
+                is_menu = #{isMenu},
+            </if>
+            <if test="tips != null and tips != ''">
+                tips = #{tips},
+            </if>
+            <if test="isOpen != null">
+                is_open = #{isOpen},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <delete id="delete">
+        UPDATE sys_menu a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </delete>
+
+</mapper>
