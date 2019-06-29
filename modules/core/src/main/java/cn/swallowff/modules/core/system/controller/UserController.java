@@ -31,12 +31,12 @@ public class UserController {
 
     @RequestMapping(value = "list.html")
     public String listHtml(User user,Model model){
-        return "admin/pages/system/user-list";
+        return "admin/pages/system/user/user-list";
     }
 
     @RequestMapping(value = "add.html")
     public String addHtml(User user,Model model){
-        return "admin/pages/system/user-add";
+        return "admin/pages/system/user/user-add";
     }
 
     @RequestMapping(value = "userList.ajax")

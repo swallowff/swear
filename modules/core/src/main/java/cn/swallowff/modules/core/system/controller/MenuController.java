@@ -16,8 +16,7 @@ public class MenuController extends BaseController {
 
     @RequestMapping(value = "list.html")
     public String listHtml(Menu menu){
-
-        return "";
+        return "/admin/pages/system/menu/menu-list";
     }
 
 }
