@@ -31,13 +31,8 @@ public class GlobalController extends BaseController {
     @RequestMapping("/a")
     public String aPath(){return REDIRECT + "/a/index";}
 
-    @RequestMapping("/a/index2")
-    public String index(){
-        return "admin/pages/index";
-    }
-
     @RequestMapping("/a/index")
-    public String index2(Model model){
+    public String index(Model model){
         List<Menu> list = menuService.findMenuTree();
         model.addAttribute("menuList",list);
         return "admin/pages/index";
