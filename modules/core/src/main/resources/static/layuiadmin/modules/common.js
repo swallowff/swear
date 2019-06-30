@@ -4,9 +4,9 @@
     i.events.logout = function () {
         // alert(1)
         i.req({
-            url: i.setter.ctxPath + "/login/logout", type: "get", data: {}, done: function (e) {
+            url: "/swear/a/login/logout", type: "get", data: {}, done: function (e) {
                 i.exit(function () {
-                    location.href = i.setter.ctxPath + "/login/login.html"
+                    location.href = "/swear/a/login/login.html"
                 })
             }
         })
