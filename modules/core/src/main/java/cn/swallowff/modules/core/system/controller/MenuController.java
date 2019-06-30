@@ -27,18 +27,20 @@ public class MenuController extends BaseController {
     private MenuService menuService;
 
     @RequestMapping(value = "list.html")
-    public String listHtml(Menu menu){
+    public String listHtml(){
         return "/admin/pages/system/menu/menu-list";
     }
 
-    @RequestMapping(value = "menuList.ajax")
+    @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object menuListAjax(Menu menu){
+    public Object ajaxList(Menu menu){
         PageResp<Menu> pageResp = menuService.findPage(menu);
 //        UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
 //        List<Map<String,Object>> wrapList = wrapper.wrapList();
         LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
         return layPageResp;
     }
+
+
 
 }

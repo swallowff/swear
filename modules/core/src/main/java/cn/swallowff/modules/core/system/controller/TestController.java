@@ -21,28 +21,6 @@ public class TestController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "index")
-    public String index(){
-        return "admin/pages/index";
-    }
-
-    @RequestMapping(value = "home/console")
-    public String home(){
-        return "admin/pages/home/console";
-    }
-
-    @RequestMapping(value = "login")
-    public String login(){
-        return "admin/pages/login";
-    }
-
-    @RequestMapping(value = "ajax")
-    @ResponseBody
-    public BaseResp ajax(){
-        return BaseResp.newSuccess();
-    }
-
-
 
     @RequestMapping("testOptional")
     @ResponseBody

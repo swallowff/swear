@@ -47,7 +47,7 @@ public class DictController extends BaseController {
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object listAjax(Dict dict){
+    public Object ajaxList(Dict dict){
         PageResp<Dict> pageResp = dictService.findPage(dict);
         LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
         return layPageResp;

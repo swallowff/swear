@@ -2,6 +2,8 @@ package cn.swallowff.modules.core.system.entity;
 
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 
+import java.util.List;
+
 /**
  * 菜单DO
  * @author shenyu
@@ -19,6 +21,17 @@ public class Menu extends BaseEntity<Menu> {
     private Boolean isMenu;  //是否是菜单
     private String tips;    //备注
     private Boolean isOpen; //是否打开
+
+    //子菜单列表
+    private List<Menu> subMenuList;
+
+    public List<Menu> getSubMenuList() {
+        return subMenuList;
+    }
+
+    public void setSubMenuList(List<Menu> subMenuList) {
+        this.subMenuList = subMenuList;
+    }
 
     public String getCode() {
         return code;

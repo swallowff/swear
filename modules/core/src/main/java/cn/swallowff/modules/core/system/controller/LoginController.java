@@ -32,7 +32,7 @@ public class LoginController extends BaseController {
      * @return
      */
     @RequestMapping(value = "login.html",method = RequestMethod.GET)
-    public String login(HttpServletRequest request){
+    public String loginHtml(HttpServletRequest request){
         Subject subject = ShiroKit.getSubject();
         if (subject.isAuthenticated()){
             return REDIRECT + "/a/index";
@@ -50,7 +50,7 @@ public class LoginController extends BaseController {
      * @return
      */
     @RequestMapping(value = "login.form",method = RequestMethod.POST)
-    public String doLogin(@RequestParam(value = "account") String account,
+    public String formLogin(@RequestParam(value = "account") String account,
                           @RequestParam(value = "password") String password, Boolean rememberme, String kaptcha, RedirectAttributes redirectAttributes, Model model){
         if (KaptchaUtil.getKaptchaOnOff()) {
             Validator.kaptcha(kaptcha);

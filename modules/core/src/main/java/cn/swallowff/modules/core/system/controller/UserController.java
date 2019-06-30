@@ -49,7 +49,7 @@ public class UserController {
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object listAjax(User user){
+    public Object ajaxList(User user){
         PageResp<User> pageResp = userService.findPage(user);
         UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
         List<Map<String,Object>> wrapList = wrapper.wrapList();
