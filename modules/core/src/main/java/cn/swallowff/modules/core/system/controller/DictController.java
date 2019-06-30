@@ -45,7 +45,7 @@ public class DictController extends BaseController {
         return "admin/pages/system/dict/dict-edit";
     }
 
-    @RequestMapping(value = "dictList.ajax")
+    @RequestMapping(value = "list.ajax")
     @ResponseBody
     public Object listAjax(Dict dict){
         PageResp<Dict> pageResp = dictService.findPage(dict);

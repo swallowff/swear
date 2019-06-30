@@ -50,7 +50,7 @@
           <a href="forget.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
         </div>
         <div class="layui-form-item">
-          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+          <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="Dict">登 入</button>
         </div>
 
       </div>
@@ -95,14 +95,17 @@
     ,router = layui.router()
     ,search = router.search;
 
+    setter.serverUrl = '${serverUrl}';
+    setter.ctxPath = '${admin}';
+
     form.render();
 
     //提交
-    form.on('submit(LAY-user-login-submit)', function(obj){
+    form.on('submit(Dict)', function(obj){
     
       //请求登入接口
       $.post({
-        url: '${admin}/login/login.ajax', //实际使用请改成服务端真实接口
+        url: setter.ctxPath + '/login/login.ajax', //实际使用请改成服务端真实接口
         method: 'POST',
         data: obj.field,
         success: function(res){
@@ -121,7 +124,7 @@
                     icon: 1,
                     time: 1000
                 }, function(){
-                    location.href = '${admin}/index'; //后台主页
+                    location.href = setter.ctxPath + '/index'; //后台主页
                 });
             }else {
                 layer.msg(res.msg,{
@@ -138,7 +141,7 @@
 
     $(function () {
         $("#kaptcha").on('click', function () {
-            $("#kaptcha").attr('src', '${admin}/kaptcha/getCode').fadeIn();
+            $("#kaptcha").attr('src', setter.ctxPath + '/kaptcha/getCode').fadeIn();
         });
     });
     

@@ -47,9 +47,9 @@ public class UserController {
         return "admin/pages/system/user/user-edit";
     }
 
-    @RequestMapping(value = "userList.ajax")
+    @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object userListAjax(User user){
+    public Object listAjax(User user){
         PageResp<User> pageResp = userService.findPage(user);
         UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
         List<Map<String,Object>> wrapList = wrapper.wrapList();

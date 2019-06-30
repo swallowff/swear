@@ -39,9 +39,9 @@
               <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
             </div>
           </div>
-          <#dictSelector name="sex" label="" code="sex" placeholder="请选择性别"></#dictSelector>
+          <#dictSelector name="sex" label="" code="sex" placeholder="请选择性别"/>
           <div class="layui-inline">
-            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-user-list-search">
+            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="sys-user-list-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
           </div>
@@ -76,12 +76,19 @@
       }).extend({
           index: 'lib/index' //主入口模块
       }).use(['index', 'contlist', 'table', 'jquery', 'admin'], function () {
-          var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin;
+          var table = layui.table,
+              form = layui.form,
+              $ = layui.jquery,
+              admin = layui.admin,
+              setter = layui.setter;
+
+          setter.serverUrl = '${serverUrl}';
+          setter.ctxPath = '${admin}';
 
           table.render({
               id: "userTable", //table id
               elem: '#LAY-app-user-list', //指定表格元素
-              url: '${admin}/user/userList.ajax',  //请求路径
+              url: setter.ctxPath + '/user/list.ajax',  //请求路径
               cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
               , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
               ,even: true    //隔行换色
@@ -142,7 +149,7 @@
           });
 
           //监听搜索
-          form.on('submit(LAY-user-list-search)', function (data) {
+          form.on('submit(sys-user-list-search)', function (data) {
               var field = data.field;
               //执行重载
               table.reload('userTable', {
@@ -155,7 +162,7 @@
                   var checkStatus = table.checkStatus('userTable')
                       , checkData = checkStatus.data; //得到选中的数据
                   console.log(checkData)
-                  if (checkData.length === 0) {
+                  if (checkData.length === setter.response.statusCode.ok) {
                       return layer.msg('请选择数据');
                   }
 
@@ -167,7 +174,7 @@
                   layer.confirm('确定删除吗？', function (index) {
                       //执行 Ajax 后重载
                       admin.req({
-                          url: '${admin}/user/batchDel',
+                          url: setter.ctxPath + '/user/batchDel',
                           method: 'POST',
                           traditional: true,   //指定参数序列化时，不做深度序列化
                           data: {
@@ -187,13 +194,13 @@
                   layer.open({
                       type: 2
                       , title: '添加用户'
-                      , content: '${admin}/user/add.html'
+                      , content: setter.ctxPath + '/user/add.html'
                       , maxmin: true
                       , area: ['550px', '550px']
                       , btn: ['确定', '取消']
                       , yes: function (index, layero) {
                           //点击确认触发 iframe 内容中的按钮提交
-                          var submit = layero.find('iframe').contents().find("#layuiadmin-user-add-submit");
+                          var submit = layero.find('iframe').contents().find("#sys-user-add-submit");
                           submit.click();
                       }
                   });
@@ -216,7 +223,7 @@
 
           window.deleteRow = function (id) {
               $.ajax({
-                  url: '${admin}/user/delete',
+                  url: setter.ctxPath + '/user/delete',
                   method: 'POST',
                   contentType: 'application/x-www-form-urlencoded',
                   data: {
@@ -224,7 +231,7 @@
                   },
                   success: function (res) {
                       layer.msg(res.msg);
-                      if (res.code == 0) {
+                      if (res.code == setter.response.statusCode.ok) {
                           layui.table.reload('userTable');
                       } else {
 
@@ -237,13 +244,13 @@
               layer.open({
                   type: 2
                   , title: '編輯用户'
-                  , content: '${admin}/user/edit.html?id=' + id
+                  , content: setter.ctxPath + '/user/edit.html?id=' + id
                   , maxmin: true
                   , area: ['550px', '550px']
                   , btn: ['确定', '取消']
                   , yes: function (index, layero) {
                       //点击确认触发 iframe 内容中的按钮提交
-                      var submit = layero.find('iframe').contents().find("#layuiadmin-user-edit-submit");
+                      var submit = layero.find('iframe').contents().find("#sys-user-edit-submit");
                       submit.click();
                   }
               });
