@@ -1,6 +1,7 @@
 package cn.swallowff.modules.core.beetl.tag;
 
 import cn.swallowff.common.lang.ObjectUtils;
+import cn.swallowff.common.lang.StringUtils;
 import cn.swallowff.modules.core.cache.DictCache;
 import cn.swallowff.modules.core.constant.exceptionenum.BizExceptionEnum;
 import cn.swallowff.modules.core.system.entity.Dict;
@@ -61,18 +62,18 @@ public class DictSelectorTag extends Tag {
         int searchnum = ObjectUtils.isNum(attrs.get("searchnum")) ? Integer.parseInt(attrs.get("searchnum").toString()) : 10;
         //根据code查询字典数据
 //        List<Dict> list = dictService.selectByCode(code);
-        List<DictCache> list = DictUtils.selectByCode(code);
+        List<DictCache> list = DictUtils.selectByCode(code);  //从字典缓存里读取字典数据
 
         StringBuffer html = new StringBuffer();
 //        html.append("<div class=\"layui-form-item\">\r\n"); //x-admin版本
         html.append("<div class=\"layui-inline\">\r\n");
-
-        html.append("<label class=\"layui-form-label\">" + label + "</label>\r\n");
+        if (StringUtils.isNotBlank(label)){
+            html.append("<label class=\"layui-form-label\">" + label + "</label>\r\n");
+        }
         html.append("<div class=\"layui-input-inline\">\r\n");
 
         //单选按钮
         if ("radio".equals(type)) {
-
             list.forEach(obj -> {
                 html.append("<label class=\"radio-inline i-checks\">\r\n<input type=\"radio\" ");
                 //判断控件是否禁用

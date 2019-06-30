@@ -30,6 +30,14 @@ public class DictService extends CrudService<DictDao, Dict> {
         return super.findList(dict);
     }
 
+    public Dict selectByCodeAndVal(String code,Integer val){
+        Dict dict = new Dict();
+        dict.setCode(code);
+        dict.setVal(val);
+        List<Dict> list = super.findList(dict);
+        return CollectionUtils.isEmpty(list) ? null : list.get(0);
+    }
+
     public String getLabelName(String code,Integer val){
         Dict dict = new Dict();
         dict.setCode(code);

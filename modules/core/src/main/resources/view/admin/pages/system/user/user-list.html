@@ -16,30 +16,30 @@
       <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
           <div class="layui-inline">
-            <label class="layui-form-label">用户ID</label>
+            <!--<label class="layui-form-label">用户ID</label>-->
             <div class="layui-input-inline">
-              <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+              <input type="text" name="id" placeholder="请输入用户ID" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-inline">
-            <label class="layui-form-label">用户名</label>
+            <!--<label class="layui-form-label">用户名</label>-->
             <div class="layui-input-inline">
-              <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+              <input type="text" name="name" placeholder="请输入用户名" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-inline">
-            <label class="layui-form-label">账号</label>
+            <!--<label class="layui-form-label">账号</label>-->
             <div class="layui-input-inline">
-              <input type="text" name="account" placeholder="请输入" autocomplete="off" class="layui-input">
+              <input type="text" name="account" placeholder="请输入登录账号" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-inline">
-            <label class="layui-form-label">邮箱</label>
+            <!--<label class="layui-form-label">邮箱</label>-->
             <div class="layui-input-inline">
-              <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
+              <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
             </div>
           </div>
-          <#dictSelector name="sex" label="性别" code="sex" placeholder="请选择"></#dictSelector>
+          <#dictSelector name="sex" label="" code="sex" placeholder="请选择性别"></#dictSelector>
           <div class="layui-inline">
             <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-user-list-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
@@ -209,12 +209,12 @@
           function operation(data) {
               var id = data.id;
               var btn = '';
-              btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="editUser(\'' + id + '\')"><i class="layui-icon">&#xe642;</i></button>'
-              btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteUser(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
+              btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="editRow(\'' + id + '\')"><i class="layui-icon">&#xe642;</i></button>'
+              btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
               return btn;
           };
 
-          window.deleteUser = function (id) {
+          window.deleteRow = function (id) {
               $.ajax({
                   url: '${admin}/user/delete',
                   method: 'POST',
@@ -233,7 +233,7 @@
               });
           };
 
-          window.editUser = function (id) {
+          window.editRow = function (id) {
               layer.open({
                   type: 2
                   , title: '編輯用户'

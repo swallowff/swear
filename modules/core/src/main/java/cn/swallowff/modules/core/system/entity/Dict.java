@@ -3,21 +3,12 @@ package cn.swallowff.modules.core.system.entity;
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 
 public class Dict extends BaseEntity<Dict> {
-//    private String pid;    //父级id
+    private String name;    //类型名称
     private String code;    //字典code
-    private String label;    //字典名
-    private Integer val;    //字典值
+    private String label;    //标签名
+    private Integer val;    //标签值
     private Integer sort;   //排序
     private String tips;    //提示
-
-//    public String getPid() {
-//        return pid;
-//    }
-//
-//    public void setPid(String pid) {
-//        this.pid = pid;
-//    }
-
 
     public String getCode() {
         return code;
@@ -57,5 +48,13 @@ public class Dict extends BaseEntity<Dict> {
 
     public void setTips(String tips) {
         this.tips = tips;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

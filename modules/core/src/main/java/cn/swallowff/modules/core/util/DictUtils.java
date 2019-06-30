@@ -5,12 +5,12 @@ import cn.swallowff.modules.core.system.service.DictService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.Assert;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
+ * @description 字典缓存工具
  * @author shenyu
  * @create 19-6-26
  */
@@ -20,18 +20,15 @@ public class DictUtils {
 
     private static final String TIPS = "未知";
 
-    /**
-     * 自定义字典缓存
-     */
-    private static final Map<String,List<DictCache>> dictCodeMap = new WeakHashMap<>();
+    private static final Map<String,List<DictCache>> dictCacheMap = new WeakHashMap<>();
 
     public static String getLabel(String code,Integer val){
-        List<DictCache> labelList = dictCodeMap.get(code);
+        List<DictCache> labelList = dictCacheMap.get(code);
         if (CollectionUtils.isEmpty(labelList)){
             Assert.notNull(dictService,"dictService must not be null");
             labelList = dictService.getDictCacheList(code);
             if (CollectionUtils.isNotEmpty(labelList)){
-                dictCodeMap.put(code,labelList);
+                dictCacheMap.put(code,labelList);
             }
         }
         for (DictCache dictCache : labelList){
@@ -43,23 +40,23 @@ public class DictUtils {
     }
 
     public static List<DictCache> selectByCode(String code){
-        List<DictCache> cacheList = dictCodeMap.get(code);
+        List<DictCache> cacheList = dictCacheMap.get(code);
         if (CollectionUtils.isEmpty(cacheList)){
-            Assert.notNull(dictService,"dictService must not be null");
+            Assert.notNull(dictService,"dictService must not be null ");
             cacheList = dictService.getDictCacheList(code);
             if (CollectionUtils.isNotEmpty(cacheList)){
-                dictCodeMap.put(code,cacheList);
+                dictCacheMap.put(code,cacheList);
             }
         }
         return cacheList;
     }
 
     /**
-     * 更新字典数据时需要更新缓存
+     * 更新字典数据时需要更新缓存 可使用aop处理
      * @param code
      */
     public static void delKey(String code){
-        dictCodeMap.remove(code);
+        dictCacheMap.remove(code);
     }
 
 

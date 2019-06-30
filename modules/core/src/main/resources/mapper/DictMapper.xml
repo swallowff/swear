@@ -4,6 +4,7 @@
 
     <sql id="baseColumns">
         a.id AS id,
+        a.name AS name,
         a.code AS code,
         a.label AS label,
         a.val AS val,
@@ -30,6 +31,9 @@
         FROM sys_dict a
         <where>
             a.delflag = 0
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
             <if test="code != null and code != ''">
                 AND a.code = #{code}
             </if>
@@ -57,13 +61,14 @@
         FROM sys_dict a
         WHERE
           a.delflag = 0
-          AND a.code = #{0}
-        ORDER BY a.sort DESC
+          AND a.code = #{arg0}
+        ORDER BY a.sort ASC
     </select>
 
     <insert id="insert">
         INSERT INTO sys_dict(
           id,
+          name,
           code,
           label,
           val,
@@ -74,6 +79,7 @@
           delflag
         ) VALUES (
           #{id},
+          #{name},
           #{code},
           #{label},
           #{val},
@@ -81,13 +87,13 @@
           #{tips},
           #{updateTime},
           #{createTime},
-          #{delflag},
           #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_dict SET
+          name = #{name},
           code = #{code},
           label = #{label},
           val = #{val},
@@ -103,7 +109,10 @@
     <update id="updateSelective">
         UPDATE sys_dict
         <set>
-            <if test="code != null">
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="code != null and code != ''">
                 code = #{code},
             </if>
             <if test="label != null and label != ''">
@@ -113,7 +122,7 @@
                 val = #{val},
             </if>
             <if test="sort != null">
-                label = #{sort},
+                sort = #{sort},
             </if>
             <if test="tips != null and tips != ''">
                 tips = #{tips},
