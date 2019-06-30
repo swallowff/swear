@@ -3,8 +3,12 @@ package cn.swallowff.modules.core.system.controller;
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.validator.Validator;
+import cn.swallowff.modules.core.constant.states.ResponseState;
+import cn.swallowff.modules.core.excepiton.InvalidKaptchaException;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.util.KaptchaUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("${swear.path.admin}/login")
@@ -27,7 +32,7 @@ public class LoginController extends BaseController {
      * @return
      */
     @RequestMapping(value = "login.html",method = RequestMethod.GET)
-    public String login(Model model, HttpServletRequest request){
+    public String login(HttpServletRequest request){
         Subject subject = ShiroKit.getSubject();
         if (subject.isAuthenticated()){
             return REDIRECT + "/a/index";
@@ -65,13 +70,22 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "login.ajax",method = RequestMethod.POST)
     @ResponseBody
     public BaseResp ajaxLogin(@RequestParam(value = "account") String account,
-                              @RequestParam(value = "password") String password, String kaptcha){
-        if (KaptchaUtil.getKaptchaOnOff()) {
-            Validator.kaptcha(kaptcha);
+                              @RequestParam(value = "password") String password, String kaptcha,boolean rememberme){
+        try {
+            if (KaptchaUtil.getKaptchaOnOff()) {
+                Validator.kaptcha(kaptcha);
+            }
+            Subject subject = ShiroKit.getSubject();
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account.trim(),password.trim(),rememberme);
+            subject.login(usernamePasswordToken);
+        } catch (AuthenticationException e) {
+//            e.printStackTrace();
+            return new BaseResp(ResponseState.INCORRECT_PASSWORD);
+        } catch (InvalidKaptchaException e2){
+//            e2.printStackTrace();
+            return new BaseResp(ResponseState.INVALID_KAPTCHA);
         }
-        Subject subject = ShiroKit.getSubject();
-        subject.login(new UsernamePasswordToken(account.trim(),password.trim()));
-        HashMap<String,Object> respMap = new HashMap<>();
+        Map<String,Object> respMap = new HashMap<>();
         respMap.put("accessToken",getSession().getId());
         return BaseResp.newSuccess().setData(respMap);
     }
@@ -82,7 +96,6 @@ public class LoginController extends BaseController {
         Subject subject = ShiroKit.getSubject();
         subject.logout();
         return BaseResp.newSuccess();
-//        return REDIRECT + "/a/login/login.html";
     }
 
 

@@ -10,7 +10,7 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
     ,serverUrl: '${serverUrl}'
     ,ctx: '${ctx}'
     ,adminPath: '${admin}'
-    ,requestUrl: '${serverUrl}${ctx}${admin}'
+    ,requestUrl: '${serverUrl}${admin}'
     ,views: layui.cache.base + 'tpl/' //动态模板所在目录
     ,entry: 'index' //默认视图文件名
     ,engine: '.html' //视图文件后缀名

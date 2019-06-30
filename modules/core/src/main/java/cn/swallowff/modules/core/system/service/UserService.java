@@ -16,13 +16,6 @@ import java.util.List;
 @Service
 public class UserService extends CrudService<UserDao, User> {
 
-    public PageResp<User> findPage(User user){
-        PageHelper.startPage(user.getPage(),user.getLimit());
-        List<User> list = super.findList(user);
-        PageInfo<User> pageInfo = new PageInfo<>(list);
-        return pageResp(pageInfo);
-    }
-
     public User selectByAccount(String account){
         User user = new User();
         user.setAccount(account);

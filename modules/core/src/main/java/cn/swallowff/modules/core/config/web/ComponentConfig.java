@@ -25,7 +25,7 @@ public class ComponentConfig {
         properties.put("kaptcha.textproducer.font.color", "green");
         properties.put("kaptcha.image.width", "125");
         properties.put("kaptcha.image.height", "60");
-        properties.put("kaptcha.textproducer.font.size", "45");
+        properties.put("kaptcha.textproducer.font.size", "40");
         properties.put("kaptcha.session.key", "code");
         properties.put("kaptcha.textproducer.char.length", "4");
         properties.put("kaptcha.textproducer.font.names", "宋体,楷体,微软雅黑");

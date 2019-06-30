@@ -1,7 +1,5 @@
 package cn.swallowff.common.mapper;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;

@@ -16,9 +16,9 @@
       <div class="layui-form layui-card-header layuiadmin-card-header-auto">
         <div class="layui-form-item">
           <div class="layui-inline">
-            <label class="layui-form-label">菜单code</label>
+            <label class="layui-form-label">菜单编号</label>
             <div class="layui-input-inline">
-              <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+              <input type="text" name="code" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-inline">
@@ -28,9 +28,9 @@
             </div>
           </div>
           <div class="layui-inline">
-            <label class="layui-form-label">父级菜单code</label>
+            <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-              <input type="text" name="account" placeholder="请输入" autocomplete="off" class="layui-input">
+              <input type="text" name="pcode" placeholder="请输入" autocomplete="off" class="layui-input">
             </div>
           </div>
           <!--<#dictSelector name="sex" label="性别" code="sex" placeholder="请选择"></#dictSelector>-->
@@ -67,7 +67,7 @@
       url: '${admin}/menu/menuList.ajax',  //请求路径
       cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
       ,skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-      //,even: true    //隔行换色
+      ,even: true    //隔行换色
       ,page: true  //开启分页
       ,limits: [10,20,50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
       ,limit: 10 //每页默认显示的数量
@@ -81,33 +81,38 @@
           sort: true  // 默认为 false,true为开启排序
         },
         {
-          field: 'account',
-          title: '账号',
+          field: 'code',
+          title: '菜单编号',
           sort: true
         },
         {
           field: 'name',
-          title: '用户名称',
+          title: '菜单名称',
           sort: true
         },
         {
-          field: 'email',
-          title: '邮箱',
+          field: 'pcode',
+          title: '父级菜单',
           sort: true
         },
         {
-          field: 'password',
-          title: '密码',
+          field: 'icon',
+          title: '图标',
           sort: false
         },
         {
-          field: 'phone',
-          title: '手机号',
+          field: 'url',
+          title: '跳转链接',
           sort: true
         },
         {
-          field: 'sex',
-          title: '性别',
+          field: 'sort',
+          title: '排序',
+          sort: true
+        },
+        {
+          field: 'levels',
+          title: '级别',
           sort: true
         },
         {
@@ -125,17 +130,17 @@
     });
     
     //监听搜索
-    form.on('submit(LAY-user-list-search)', function(data){
+    form.on('submit(LAY-menu-list-search)', function(data){
       var field = data.field;
       //执行重载
-      table.reload('userTable', {
+      table.reload('menuTable', {
         where: field
       });
     });
     
     var $ = layui.$, active = {
       batchdel: function(){
-        var checkStatus = table.checkStatus('userTable')
+        var checkStatus = table.checkStatus('menuTable')
         ,checkData = checkStatus.data; //得到选中的数据
         console.log(checkData)
         if(checkData.length === 0){
@@ -151,7 +156,7 @@
           
           //执行 Ajax 后重载
           admin.req({
-            url: '${admin}/user/batchDel',
+            url: '${admin}/menu/batchDel',
             method: 'POST',
             traditional:true,   //指定参数序列化时，不做深度序列化
             data: {
@@ -159,7 +164,7 @@
             },
             success: function (res) {
               // console.log(res)
-              table.reload('userTable');
+              table.reload('menuTable');
               layer.msg('已删除');
             }
 
@@ -170,14 +175,14 @@
       add: function(){
         layer.open({
           type: 2
-          ,title: '添加用户'
-          ,content: '${admin}/user/add.html'
+          ,title: '添加菜单'
+          ,content: '${admin}/menu/add.html'
           ,maxmin: true
           ,area: ['550px', '550px']
           ,btn: ['确定', '取消']
           ,yes: function(index, layero){
             //点击确认触发 iframe 内容中的按钮提交
-            var submit = layero.find('iframe').contents().find("#layuiadmin-user-form-submit");
+            var submit = layero.find('iframe').contents().find("#layuiadmin-menu-form-submit");
             submit.click();
           }
         }); 
@@ -193,13 +198,13 @@
       var id = data.id;
       var btn = '';
       btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="alert('+id+')"><i class="layui-icon">&#xe642;</i></button>'
-      btn += '<button id="swear-delete-user" type="button" class="layui-btn layui-btn-xs" onclick="deleteUser(\''+id+'\')"><i class="layui-icon">&#xe640;</i></button>'
+      btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\''+id+'\')"><i class="layui-icon">&#xe640;</i></button>'
       return btn;
     }
 
-    window.deleteUser = function(id) {
+    window.deleteRow = function(id) {
       $.ajax({
-        url: '${admin}/user/delete',
+        url: '${admin}/menu/delete',
         method: 'POST',
         contentType: 'application/x-www-form-urlencoded',
         data: {
@@ -208,7 +213,7 @@
         success: function (res) {
           layer.msg(res.msg);
           if (res.code == 0) {
-            layui.table.reload('userTable');
+            layui.table.reload('menuTable');
           }else {
 
           }

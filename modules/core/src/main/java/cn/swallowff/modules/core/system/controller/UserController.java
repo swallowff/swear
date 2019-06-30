@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,15 +40,20 @@ public class UserController {
         return "admin/pages/system/user/user-add";
     }
 
+    @RequestMapping(value = "edit.html")
+    public String editHtml(@RequestParam("id") String id, Model model){
+        User user = userService.selectById(id);
+        model.addAttribute("user",user);
+        return "admin/pages/system/user/user-edit";
+    }
+
     @RequestMapping(value = "userList.ajax")
     @ResponseBody
     public Object userListAjax(User user){
         PageResp<User> pageResp = userService.findPage(user);
         UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
         List<Map<String,Object>> wrapList = wrapper.wrapList();
-        LayPageResp layPageResp = LayPageResp.newSuccess();
-        layPageResp.setData(wrapList);
-        layPageResp.setCount(pageResp.getTotalRows());
+        LayPageResp layPageResp = new LayPageResp(wrapList,pageResp.getTotalRows());
         return layPageResp;
     }
 

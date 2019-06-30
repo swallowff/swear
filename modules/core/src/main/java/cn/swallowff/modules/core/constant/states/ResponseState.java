@@ -12,17 +12,32 @@ public enum ResponseState implements AbstractBaseExceptionEnum {
     EMPTY_DATA(400,"数据为空"),
     ILLEGAL_PARAMS(401,"参数错误"),
 
-    ILLEGAL_FORMAT_EMAIL(1000,"邮箱格式不合法"),
-    ILLEGAL_FORMAT_PHONE(1001,"手机号不合法"),
+    /**
+     * 权限认证
+     */
+    SESSION_TIME_OUT(1001,"会话状态已过期"),
+    INCORRECT_PASSWORD(1003,"密码错误"),
+    NO_PERMISSIONS(1004,"暂无权限"),
+    INVALID_KAPTCHA(1005,"验证码错误"),
+
+    /**
+     * 参数格式
+     */
+    ILLEGAL_FORMAT_EMAIL(1050,"邮箱格式不合法"),
+    ILLEGAL_FORMAT_PHONE(1051,"手机号不合法"),
+
     /**
      * 用户管理
      */
-    USER_ACCOUNT_EXISTS(1002,"用户名重复了哟，换一个试试吧"),
+    USER_ACCOUNT_EXISTS(1100,"用户名重复了哟，换一个试试吧"),
 
     /**
      * layui-table
      */
     LAYUI_TABLE_AJAX_SUCCESS(0,"操作成功"),
+
+
+
 
 
     ;

@@ -3,6 +3,8 @@ package cn.swallowff.modules.core.cmomon.service;
 import cn.swallowff.modules.core.cmomon.dao.CrudDao;
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.system.entity.User;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +16,13 @@ public abstract class CrudService<M extends CrudDao<E>,E extends BaseEntity<E>> 
 
     public E selectById(String id){
         return crudDao.selectById(id);
+    }
+
+    public PageResp<E> findPage(E entity){
+        PageHelper.startPage(entity.getPage(),entity.getLimit());
+        List<E> list = findList(entity);
+        PageInfo<E> pageInfo = new PageInfo<>(list);
+        return pageResp(pageInfo);
     }
 
     public List<E> findList(E entity){

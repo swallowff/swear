@@ -2,7 +2,10 @@ package cn.swallowff.modules.core.util;
 
 import cn.swallowff.modules.core.cache.DictCache;
 import cn.swallowff.modules.core.system.service.DictService;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.util.Assert;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -24,9 +27,12 @@ public class DictUtils {
 
     public static String getLabel(String code,Integer val){
         List<DictCache> labelList = dictCodeMap.get(code);
-        if (null == labelList){
+        if (CollectionUtils.isEmpty(labelList)){
+            Assert.notNull(dictService,"dictService must not be null");
             labelList = dictService.getDictCacheList(code);
-            dictCodeMap.put(code,labelList);
+            if (CollectionUtils.isNotEmpty(labelList)){
+                dictCodeMap.put(code,labelList);
+            }
         }
         for (DictCache dictCache : labelList){
             if (dictCache.getVal() == val){
@@ -34,6 +40,18 @@ public class DictUtils {
             }
         }
         return TIPS;
+    }
+
+    public static List<DictCache> selectByCode(String code){
+        List<DictCache> cacheList = dictCodeMap.get(code);
+        if (CollectionUtils.isEmpty(cacheList)){
+            Assert.notNull(dictService,"dictService must not be null");
+            cacheList = dictService.getDictCacheList(code);
+            if (CollectionUtils.isNotEmpty(cacheList)){
+                dictCodeMap.put(code,cacheList);
+            }
+        }
+        return cacheList;
     }
 
     /**

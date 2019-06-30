@@ -28,6 +28,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 //@Configuration
+@Deprecated
 public class ShiroConfig {
 
 //    @Bean
