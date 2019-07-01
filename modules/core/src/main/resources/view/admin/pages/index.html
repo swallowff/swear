@@ -99,13 +99,13 @@
                     lay-filter="layadmin-system-side-menu">
 
                     @for(menu in menuList){
-                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
+                        <li data-name="first-level-menu-${menuLP.index}" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="${menu.name}">
                                 @if(isNotEmpty(menu.icon)){
                                     <i class="layui-icon ${menu.icon}"></i>
                                 @}
                                 @else{
-                                    <i class="layui-icon layui-icon-component"></i>
+                                    <i class="layui-icon layui-icon-spread-left"></i>
                                 @}
                                 <cite>${menu.name}</cite>
                             </a>
@@ -113,8 +113,16 @@
                                 <dl class="layui-nav-child">
                             @}
                             @for(subMenu in menu.subMenuList){
-                                <dd data-name="second-level-menu-${subMenuLP.index}" class="layui-nav-item layui-nav-itemed">
-                                    <a href="${admin}${subMenu.url}">${subMenu.name}</a>
+                                <dd data-name="second-level-menu-${subMenuLP.index}">
+                                    <a lay-href="${admin}${subMenu.url}">
+                                        @if(isNotEmpty(subMenu.icon)){
+                                            <i class="layui-icon ${subMenu.icon}"></i>
+                                        @}
+                                        @else{
+                                            <i class="layui-icon layui-icon-link"></i>
+                                        @}
+                                        <cite>${subMenu.name}</cite>
+                                    </a>
                                 </dd>
                             @}
                             @if(isNotEmpty(menu.subMenuList)){

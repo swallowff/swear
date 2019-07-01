@@ -109,13 +109,13 @@
     <update id="updateSelective">
         UPDATE sys_dict
         <set>
-            <if test="name != null and name != ''">
+            <if test="name != null">
                 name = #{name},
             </if>
-            <if test="code != null and code != ''">
+            <if test="code != null">
                 code = #{code},
             </if>
-            <if test="label != null and label != ''">
+            <if test="label != null">
                 label = #{label},
             </if>
             <if test="val != null">
@@ -124,7 +124,7 @@
             <if test="sort != null">
                 sort = #{sort},
             </if>
-            <if test="tips != null and tips != ''">
+            <if test="tips != null">
                 tips = #{tips},
             </if>
             <if test="updateTime != null">

@@ -97,11 +97,11 @@ public class Menu extends BaseEntity<Menu> {
         this.levels = levels;
     }
 
-    public Boolean getMenu() {
+    public Boolean getIsMenu() {
         return isMenu;
     }
 
-    public void setMenu(Boolean menu) {
+    public void setIsMenu(Boolean menu) {
         isMenu = menu;
     }
 
@@ -113,11 +113,11 @@ public class Menu extends BaseEntity<Menu> {
         this.tips = tips;
     }
 
-    public Boolean getOpen() {
+    public Boolean getIsOpen() {
         return isOpen;
     }
 
-    public void setOpen(Boolean open) {
+    public void setIsOpen(Boolean open) {
         isOpen = open;
     }
 }

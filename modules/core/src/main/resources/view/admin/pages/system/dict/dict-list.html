@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="sys-dict-list-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-dict-list-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>
@@ -46,7 +46,7 @@
                 <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
             </div>
-            <table id="LAY-sys-dict-list" lay-filter="LAY-sys-dict-list"></table>
+            <table id="LAYF-list-table" lay-filter="LAYF-dict-list-table"></table>
         </div>
     </div>
 </div>
@@ -64,7 +64,7 @@
 
         table.render({
             id: "dictTable", //table id
-            elem: '#LAY-sys-dict-list', //指定表格元素
+            elem: '#LAYF-list-table', //指定表格元素
             url: setter.ctxPath + '/dict/list.ajax',  //请求路径
             cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
@@ -116,7 +116,7 @@
         });
 
         //监听搜索
-        form.on('submit(sys-dict-list-search)', function (data) {
+        form.on('submit(LAYF-dict-list-search)', function (data) {
             var field = data.field;
             //执行重载
             table.reload('dictTable', {
@@ -168,7 +168,7 @@
                     , btn: ['确定', '取消']
                     , yes: function (index, layero) {
                         //点击确认触发 iframe 内容中的按钮提交
-                        var submit = layero.find('iframe').contents().find("#sys-dict-add-submit");
+                        var submit = layero.find('iframe').contents().find("#LAYF-dict-form-add-submit");
                         submit.click();
                     }
                 });
@@ -217,7 +217,7 @@
                 , btn: ['确定', '取消']
                 , yes: function (index, layero) {
                     //点击确认触发 iframe 内容中的按钮提交
-                    var submit = layero.find('iframe').contents().find("#sys-dict-edit-submit");
+                    var submit = layero.find('iframe').contents().find("#LAYF-dict-form-edit-submit");
                     submit.click();
                 }
             });

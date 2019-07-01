@@ -17,27 +17,27 @@
                 <div class="layui-form layui-card-header layuiadmin-card-header-auto">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">菜单编号</label>
+                            <!--<label class="layui-form-label">菜单名称</label>-->
                             <div class="layui-input-inline">
-                                <input type="text" name="code" placeholder="请输入" autocomplete="off" class="layui-input">
+                                <input type="text" name="name" placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">菜单名称</label>
+                            <!--<label class="layui-form-label">菜单编号</label>-->
                             <div class="layui-input-inline">
-                                <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                                <input type="text" name="code" placeholder="请输入菜单编号" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <label class="layui-form-label">父级菜单</label>
+                            <!--<label class="layui-form-label">父级菜单</label>-->
                             <div class="layui-input-inline">
-                                <input type="text" name="pcode" placeholder="请输入" autocomplete="off"
+                                <input type="text" name="pcode" placeholder="请输入父级菜单编号" autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
                         <!--<#dictSelector name="sex" label="性别" code="sex" placeholder="请选择"></#dictSelector>-->
                         <div class="layui-inline">
-                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="sys-menu-list-search">
+                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-menu-list-search">
                                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                             </button>
                         </div>
@@ -49,7 +49,7 @@
                         <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
                         <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
                     </div>
-                    <table id="LAY-menu-list" lay-filter="LAY-menu-list"></table>
+                    <table id="LAYF-list-table" lay-filter="LAYF-menu-list-table"></table>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
 
                 table.render({
                     id: "menuTable", //table id
-                    elem: '#LAY-menu-list', //指定表格元素
+                    elem: '#LAYF-list-table', //指定表格元素
                     url: setter.ctxPath + '/menu/list.ajax',  //请求路径
                     cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                     , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
@@ -80,18 +80,13 @@
                         {type: 'checkbox'}, //开启多选框
                         {type: 'numbers', title: '序号'}, //序号
                         {
-                            field: 'id', //json对应的key
-                            title: 'ID',   //列名
-                            sort: true  // 默认为 false,true为开启排序
+                            field: 'name',
+                            title: '菜单名称',
+                            sort: true
                         },
                         {
                             field: 'code',
                             title: '菜单编号',
-                            sort: true
-                        },
-                        {
-                            field: 'name',
-                            title: '菜单名称',
                             sort: true
                         },
                         {
@@ -134,7 +129,7 @@
                 });
 
                 //监听搜索
-                form.on('submit(sys-menu-list-search)', function (data) {
+                form.on('submit(LAYF-menu-list-search)', function (data) {
                     var field = data.field;
                     //执行重载
                     table.reload('menuTable', {
@@ -186,7 +181,7 @@
                             , btn: ['确定', '取消']
                             , yes: function (index, layero) {
                                 //点击确认触发 iframe 内容中的按钮提交
-                                var submit = layero.find('iframe').contents().find("#layuiadmin-menu-add-submit");
+                                var submit = layero.find('iframe').contents().find("#LAYF-menu-form-add-submit");
                                 submit.click();
                             }
                         });
@@ -201,7 +196,7 @@
                 function operation(data) {
                     var id = data.id;
                     var btn = '';
-                    btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="alert(' + id + ')"><i class="layui-icon">&#xe642;</i></button>'
+                    btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="editRow(\'' + id + '\')"><i class="layui-icon">&#xe642;</i></button>'
                     btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
                     return btn;
                 }
@@ -223,7 +218,23 @@
                             }
                         }
                     })
-                }
+                };
+
+                window.editRow = function (id) {
+                    layer.open({
+                        type: 2
+                        , title: '編輯菜单'
+                        , content: setter.ctxPath + '/menu/edit.html?id=' + id
+                        , maxmin: true
+                        , area: ['550px', '550px']
+                        , btn: ['确定', '取消']
+                        , yes: function (index, layero) {
+                            //点击确认触发 iframe 内容中的按钮提交
+                            var submit = layero.find('iframe').contents().find("#LAYF-menu-form-edit-submit");
+                            submit.click();
+                        }
+                    });
+                };
 
             });
 

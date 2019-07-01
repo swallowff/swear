@@ -121,22 +121,22 @@
     <update id="updateSelective">
         UPDATE sys_menu
         <set>
-            <if test="code != null and code != ''">
+            <if test="code != null">
                 code = #{code},
             </if>
-            <if test="pcode != null and pcode != ''">
+            <if test="pcode != null">
                 pcode = #{pcode},
             </if>
-            <if test="pcodes != null and pcodes != ''">
+            <if test="pcodes != null">
                 pcodes = #{pcodes},
             </if>
-            <if test="name != null and name != ''">
+            <if test="name != null">
                 name = #{name},
             </if>
-            <if test="icon != null and icon != ''">
+            <if test="icon != null">
                 icon = #{icon},
             </if>
-            <if test="url != null and url != ''">
+            <if test="url != null">
                 url = #{url},
             </if>
             <if test="sort != null">
@@ -148,7 +148,7 @@
             <if test="isMenu != null">
                 is_menu = #{isMenu},
             </if>
-            <if test="tips != null and tips != ''">
+            <if test="tips != null">
                 tips = #{tips},
             </if>
             <if test="isOpen != null">

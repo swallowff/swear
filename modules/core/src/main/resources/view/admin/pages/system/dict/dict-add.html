@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
 </head>
 <body>
-<div class="layui-form" lay-filter="layuiadmin-user-add-form" id="layuiadmin-user-add-form"
+<div class="layui-form" lay-filter="LAYF-dict-form-add" id="LAYF-dict-form-add"
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item">
         <label class="layui-form-label">类型名称</label>
@@ -55,7 +55,7 @@
         </div>
     </div>
     <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="sys-dict-add-submit" id="sys-dict-add-submit"
+        <input type="button" lay-submit lay-filter="LAYF-dict-form-add-submit" id="LAYF-dict-form-add-submit"
                value="确认">
     </div>
 </div>
@@ -75,7 +75,7 @@
         setter.ctxPath = '${admin}';
 
         //监听提交
-        form.on('submit(sys-dict-add-submit)', function (data) {
+        form.on('submit(LAYF-dict-form-add-submit)', function (data) {
             var field = data.field; //获取提交的字段
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 

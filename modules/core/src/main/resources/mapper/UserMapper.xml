@@ -237,34 +237,34 @@
     <update id="updateSelective">
         UPDATE sys_user
         <set>
-            <if test="avatar != null and avatar != ''">
+            <if test="avatar != null">
                 avatar = #{avatar},
             </if>
-            <if test="account != null and account != ''">
+            <if test="account != null">
                 account = #{account},
             </if>
-            <if test="password != null and password != ''">
+            <if test="password != null">
                 password = #{password},
             </if>
-            <if test="salt != null and salt != ''">
+            <if test="salt != null">
                 salt = #{salt},
             </if>
-            <if test="name != null and name != ''">
+            <if test="name != null">
                 name = #{name},
             </if>
-            <if test="birthday != null and birthday != ''">
+            <if test="birthday != null">
                 birthday = #{birthday},
             </if>
             <if test="sex != null">
                 sex = #{sex},
             </if>
-            <if test="email != null and email != ''">
+            <if test="email != null">
                 email = #{email},
             </if>
-            <if test="phone != null and phone != ''">
+            <if test="phone != null">
                 phone = #{phone},
             </if>
-            <if test="deptId != null and deptId != ''">
+            <if test="deptId != null">
                 dept_id = #{deptId},
             </if>
             <if test="status != null">

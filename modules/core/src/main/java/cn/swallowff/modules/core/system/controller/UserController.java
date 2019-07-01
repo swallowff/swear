@@ -5,6 +5,7 @@ import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
 import cn.swallowff.modules.core.constant.states.ResponseState;
 import cn.swallowff.modules.core.excepiton.BizException;
+import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.system.entity.User;
 import cn.swallowff.modules.core.system.service.UserService;
 import cn.swallowff.modules.core.system.wrapper.UserAjaxListDictWrapper;
@@ -75,6 +76,11 @@ public class UserController {
         BaseResp baseResp = BaseResp.newSuccess();
         if (null == user || StringUtils.isBlank(user.getId())){
             return baseResp.paramsError();
+        }
+        if (StringUtils.isNotBlank(user.getPassword())){
+            String salt = ShiroKit.getRandomSalt(8);
+            user.setSalt(salt);
+            user.setPassword(ShiroKit.md5(user.getPassword(),salt));
         }
         int r = userService.updateSelective(user);
         if (r == 1){

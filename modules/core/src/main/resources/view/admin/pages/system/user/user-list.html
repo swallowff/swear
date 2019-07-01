@@ -41,7 +41,7 @@
           </div>
           <#dictSelector name="sex" label="" code="sex" placeholder="请选择性别"/>
           <div class="layui-inline">
-            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="sys-user-list-search">
+            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-user-list-search">
               <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
             </button>
           </div>
@@ -53,7 +53,7 @@
           <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
           <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
         </div>
-        <table id="LAY-app-user-list" lay-filter="LAY-app-user-list"></table>
+        <table id="LAYF-list-table" lay-filter="LAYF-user-list-table"></table>
         <script type="text/html" id="buttonTpl">
 
             <button class="layui-btn layui-btn-xs">已发布</button>
@@ -87,7 +87,7 @@
 
           table.render({
               id: "userTable", //table id
-              elem: '#LAY-app-user-list', //指定表格元素
+              elem: '#LAYF-list-table', //指定表格元素
               url: setter.ctxPath + '/user/list.ajax',  //请求路径
               cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
               , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
@@ -149,7 +149,7 @@
           });
 
           //监听搜索
-          form.on('submit(sys-user-list-search)', function (data) {
+          form.on('submit(LAYF-user-list-search)', function (data) {
               var field = data.field;
               //执行重载
               table.reload('userTable', {
@@ -200,7 +200,7 @@
                       , btn: ['确定', '取消']
                       , yes: function (index, layero) {
                           //点击确认触发 iframe 内容中的按钮提交
-                          var submit = layero.find('iframe').contents().find("#sys-user-add-submit");
+                          var submit = layero.find('iframe').contents().find("#LAYF-user-form-add-submit");
                           submit.click();
                       }
                   });
@@ -250,7 +250,7 @@
                   , btn: ['确定', '取消']
                   , yes: function (index, layero) {
                       //点击确认触发 iframe 内容中的按钮提交
-                      var submit = layero.find('iframe').contents().find("#sys-user-edit-submit");
+                      var submit = layero.find('iframe').contents().find("#LAYF-user-form-edit-submit");
                       submit.click();
                   }
               });
