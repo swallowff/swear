@@ -37,18 +37,20 @@ public class InterceptorConf extends WebMvcConfigurationSupport {
     /**
      * 表示这些配置的是静态文件所处路径， 不用拦截
      */
+    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
+        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+coreProperties.getFileUploadPath());
         if (coreProperties.isSwaggerOpen()) {
             registry.addResourceHandler("swagger-ui.html")
                     .addResourceLocations("classpath:/META-INF/resources/");
             registry.addResourceHandler("/webjars/**")
                     .addResourceLocations("classpath:/META-INF/resources/webjars/");
-            super.addResourceHandlers(registry);
         }
+        super.addResourceHandlers(registry);
     }
 
     @Override

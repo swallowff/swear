@@ -66,6 +66,11 @@ public class UserController {
         if (null != existUser){
             throw new BizException(ResponseState.USER_ACCOUNT_EXISTS);
         }
+        if (StringUtils.isNotBlank(user.getPassword())){
+            String salt = ShiroKit.getRandomSalt(8);
+            user.setSalt(salt);
+            user.setPassword(ShiroKit.md5(user.getPassword(),salt));
+        }
         userService.save(user);
         return baseResp;
     }

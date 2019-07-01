@@ -161,7 +161,7 @@
               batchdel: function () {
                   var checkStatus = table.checkStatus('userTable')
                       , checkData = checkStatus.data; //得到选中的数据
-                  console.log(checkData)
+                  // console.log(checkData)
                   if (checkData.length === setter.response.statusCode.ok) {
                       return layer.msg('请选择数据');
                   }

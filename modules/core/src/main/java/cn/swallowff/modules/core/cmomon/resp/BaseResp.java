@@ -53,6 +53,12 @@ public class BaseResp implements Serializable {
         return putState(ResponseState.SUCCESS);
     }
 
+    public BaseResp putSuccess(Object obj){
+        putState(ResponseState.SUCCESS);
+        this.data = obj;
+        return this;
+    }
+
     public static BaseResp newSuccess(){
         return new BaseResp(ResponseState.SUCCESS);
     }

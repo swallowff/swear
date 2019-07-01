@@ -17,8 +17,8 @@ import java.io.IOException;
 
 /**
  * 图片处理工具类
- * @author ThinkGem
- * @version 2018年12月31日
+ * @author shenyu
+ * @version 2019年5月30日
  */
 public class ImageUtils {
 

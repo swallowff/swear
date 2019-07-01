@@ -7,6 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.Optional;
 
 @Component
@@ -34,7 +35,11 @@ public class CoreProperties {
     private Integer sessionValidationInterval = 15 * 60;
 
     public String getFileUploadPath() {
-        return fileUploadPath;
+        if (fileUploadPath.endsWith(File.separator)){
+            return fileUploadPath;
+        }else {
+            return fileUploadPath.concat(File.separator);
+        }
     }
 
     public void setFileUploadPath(String fileUploadPath) {

@@ -26,7 +26,7 @@
             <img class="layui-upload-img" style="margin-top: 10px;" width="50%" id="user-avatar">
             <p id="demoText"></p>
         </div>
-        <input type="hidden" name="avatar">
+        <input id="swear-user-avatar" type="hidden" name="avatar">
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">登录账户</label>
@@ -137,17 +137,32 @@
                 elem: '#btn-user-avatar-upload'
                 ,url: setter.ctxPath + '/upload/img'
                 ,before: function(obj){
+                    layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                        ,time: 20000
+                    });
+                    // layer.load(2);
+                    // setTimeout(function(){
+                    //     layer.closeAll('loading');
+                    // }, 5000);
+
                     //预读本地文件示例，不支持ie8
                     obj.preview(function(index, file, result){
                         $('#user-avatar').attr('src', result); //图片链接（base64）
                     });
                 }
                 ,done: function(res){
+                    layer.closeAll('tips');
                     //如果上传失败
                     if(res.code != setter.response.statusCode.ok){
                         return layer.msg('上传失败');
+                    }else {
+                        //上传成功
+                        // console.log(res)
+                        layer.msg(res.msg)
+                        $('#swear-user-avatar').val(res.data.url);
                     }
-                    //上传成功
                 }
                 ,error: function(){
                     //演示失败状态，并实现重传
