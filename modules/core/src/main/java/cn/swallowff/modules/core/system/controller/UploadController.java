@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class UploadController {
         String dateStr = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
         String fileDir = realPath + File.separator + dateStr + File.separator;
         FileUtils.createDirectory(fileDir);
-        String fileName = String.valueOf(IdGenerate.uuid()) + "." + suffix;
+        String fileName = String.valueOf(IdGenerate.uuid()) + suffix;
         File imgFile = new File(fileDir + fileName);
 //        while (imgFile.exists()){
 //            fileName = String.valueOf(System.currentTimeMillis()).concat(StringUtils.getRandomStr(8));
@@ -59,8 +60,10 @@ public class UploadController {
             e.printStackTrace();
             return baseResp.putError("文件保存失败");
         }
+        String targetUrl = imgBaseUrl + dateStr + "/";
         Map<String,Object> respMap = new HashMap<>();
-        respMap.put("url",imgBaseUrl  + dateStr + "/" + fileName);
+        respMap.put("url",targetUrl + fileName);
+        respMap.put("compressionUrl",targetUrl + imgFile.getName()+".png");
         return baseResp.putSuccess(respMap);
     }
 
