@@ -15,7 +15,7 @@ public class User extends BaseEntity<User> implements Serializable {
     private String password; //密码
     private String salt;    //md5密码盐值
     private String name;    //姓名
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy/MM/dd",timezone = "GMT+8")
     private Date birthday;  //出生日期
     private Integer sex;    //性别
     private String email;   //电子邮箱

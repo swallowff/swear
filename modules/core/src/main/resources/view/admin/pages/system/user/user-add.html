@@ -19,20 +19,24 @@
                    class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item layui-upload">
-        <label class="layui-form-label">用户头像</label>
-        <div class="layui-input-inline layui-upload-list">
-            <button type="button" class="layui-btn" id="btn-user-avatar-upload">上传图片</button>
-            <img class="layui-upload-img" style="margin-top: 10px;" width="50%" id="user-avatar">
-            <p id="demoText"></p>
-        </div>
-        <input id="swear-user-avatar" type="hidden" name="avatar">
-    </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">登录账户</label>
+        <!--<label class="layui-form-label">用户头像</label>-->
+        <!--<div class="layui-input-inline layui-upload-list">-->
+            <!--<button type="button" class="layui-btn" id="btn-user-avatar-upload">上传图片</button>-->
+            <!--<img class="layui-upload-img" style="margin-top: 10px;" width="50%" id="user-avatar">-->
+            <!--<p id="demoText"></p>-->
+        <!--</div>-->
+        <!--<input id="swear-user-avatar" type="hidden" name="avatar">-->
+
+        <label class="layui-form-label">头像</label>
         <div class="layui-input-inline">
-            <input type="text" name="account" lay-verify="username" placeholder="请输入登录账户" autocomplete="off"
-                   class="layui-input">
+            <input name="avatar" lay-verify="required" id="LAY_imgSrc" placeholder="图片地址" class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-btn-container" style="width: auto;">
+            <button type="button" class="layui-btn layui-btn-primary" id="LAY_imgUpload">
+                <i class="layui-icon">&#xe67c;</i>上传图片
+            </button>
+            <button class="layui-btn layui-btn-primary" layadmin-event="imgPreview">查看图片</button >
         </div>
     </div>
     <div class="layui-form-item">
@@ -43,16 +47,30 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+            <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">登录账户</label>
+        <div class="layui-input-inline">
+            <input type="text" name="account" lay-verify="username" placeholder="请输入登录账户" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">登录密码</label>
         <div class="layui-input-inline">
-            <input type="text" name="password" lay-verify="required" placeholder="请输入登录密码" autocomplete="off"
+            <input type="password" name="password" lay-verify="required" placeholder="请输入登录密码" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">富文本内容</label>
         <div class="layui-input-inline">
-            <div id="contentEditor" style="width: 620px;"></div>
+            <div id="contentEditor" style="width: 700px;"></div>
             <!--<textarea id="contentHidden" name="content" style="display: none;"></textarea>-->
         </div>
     </div>
@@ -60,13 +78,12 @@
         <div class="layui-inline">
             <label class="layui-form-label">出生</label>
             <div class="layui-input-inline">
-                <input type="text" class="layui-input" id="user-birthday" placeholder="xxxx年xx月xx日">
+                <input type="text" name="birthday" class="layui-input" id="user-birthday" placeholder="xxxx年xx月xx日">
             </div>
         </div>
     </div>
     <#dictSelector name="sex" label="性别" code="sex" placeholder="请选择" width="190"/>
     <div class="layui-form-item">
-
         <label class="layui-form-label">用户状态</label>
         <div class="layui-input-inline">
             <input type="radio" name="status" value="1" title="启用" checked>
@@ -88,7 +105,7 @@
             base: '${static}/layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index', 'form', 'upload' , 'laydate' ,'layedit'], function () {
+        }).use(['index', 'form', 'upload' , 'laydate' ,'layedit' ,'set'], function () {
             var $ = layui.$
                 , form = layui.form,
                 layer = layui.layer,
@@ -101,12 +118,12 @@
             //富文本编辑器
             var E = window.wangEditor
             var editor = new E('#contentEditor')
-            editor.customConfig.uploadImgShowBase64 = true
-            editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024
-            editor.customConfig.uploadImgMaxLength = 5
+            editor.customConfig.uploadImgShowBase64 = true;
+            editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024;
+            editor.customConfig.uploadImgMaxLength = 5;
+            editor.customConfig.zIndex = 100;
             // 或者 var editor = new E( document.getElementById('editor') )
             editor.create();
-
             // var editorText = editor.txt.html();
 
 
@@ -114,7 +131,6 @@
             form.on('submit(LAYF-user-form-add-submit)', function (data) {
                 var field = data.field; //获取提交的字段
                 field.content = editor.txt.html();
-                console.log(field);
                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 
                 //提交 Ajax 成功后，关闭当前弹层并重载表格
@@ -158,59 +174,60 @@
             });
 
             //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#btn-user-avatar-upload'
-                ,url: setter.ctxPath + '/upload/img'
-                ,type: 'POST'
-                ,before: function(obj){
-                    layer.msg('加载中', {
-                        icon: 16
-                        ,shade: 0.01
-                        ,time: 20000
-                    });
-                    // layer.load(2);
-                    // setTimeout(function(){
-                    //     layer.closeAll('loading');
-                    // }, 5000);
-
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function(index, file, result){
-                        $('#user-avatar').attr('src', result); //图片链接（base64）
-                    });
-                }
-                ,done: function(res){
-                    layer.closeAll('tips');
-                    //如果上传失败
-                    if(res.code != setter.response.statusCode.ok){
-                        return layer.msg('上传失败',{
-                            icon: 2,
-                            time: 3000
-                        });
-                    }else {
-                        //上传成功
-                        // console.log(res)
-                        layer.msg(res.msg,{
-                            icon: 6,
-                            time: 2300
-                        })
-                        $('#swear-user-avatar').val(res.data.src);
-                    }
-                }
-                ,error: function(){
-                    //演示失败状态，并实现重传
-                    var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                    demoText.find('.demo-reload').on('click', function(){
-                        uploadInst.upload();
-                    });
-                }
-            });
+            // var uploadInst = upload.render({
+            //     elem: '#btn-user-avatar-upload'
+            //     ,url: setter.ctxPath + '/upload/img'
+            //     ,type: 'POST'
+            //     ,before: function(obj){
+            //         layer.msg('加载中', {
+            //             icon: 16
+            //             ,shade: 0.01
+            //             ,time: 20000
+            //         });
+            //         // layer.load(2);
+            //         // setTimeout(function(){
+            //         //     layer.closeAll('loading');
+            //         // }, 5000);
+            //
+            //         //预读本地文件示例，不支持ie8
+            //         obj.preview(function(index, file, result){
+            //             $('#user-avatar').attr('src', result); //图片链接（base64）
+            //         });
+            //     }
+            //     ,done: function(res){
+            //         layer.closeAll('tips');
+            //         //如果上传失败
+            //         if(res.code != setter.response.statusCode.ok){
+            //             return layer.msg('上传失败',{
+            //                 icon: 2,
+            //                 time: 3000
+            //             });
+            //         }else {
+            //             //上传成功
+            //             // console.log(res)
+            //             layer.msg(res.msg,{
+            //                 icon: 6,
+            //                 time: 2300
+            //             })
+            //             $('#swear-user-avatar').val(res.data.src);
+            //         }
+            //     }
+            //     ,error: function(){
+            //         //演示失败状态，并实现重传
+            //         var demoText = $('#demoText');
+            //         demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+            //         demoText.find('.demo-reload').on('click', function(){
+            //             uploadInst.upload();
+            //         });
+            //     }
+            // });
 
             //laydate常规用法
             laydate.render({
                 elem: '#user-birthday',
                 type: 'date',
-                trigger: 'click'
+                trigger: 'click',
+                format: 'yyyy/MM/dd'
             });
         })
 

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>部门编辑 iframe 框</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-form" lay-filter="LAYF-dept-form-edit" id="LAYF-dept-form-edit"
+     style="padding: 20px 30px 0 0;">
+    <input type="hidden" name="id">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="请输入类型名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典CODE</label>
+        <div class="layui-input-inline">
+            <input type="text" name="code" lay-verify="required" placeholder="字典CODE" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标签名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="label" lay-verify="required" placeholder="标签名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典值</label>
+        <div class="layui-input-inline">
+            <input type="text" name="val" lay-verify="required" placeholder="字典值" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline">
+            <input type="text" name="sort" lay-verify="required" placeholder="请输入排序值" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">字典描述</label>
+        <div class="layui-input-inline">
+            <textarea name="tips" style="width: 400px; height: 150px;" autocomplete="off"
+                      class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAYF-dept-form-edit-submit" id="LAYF-dept-form-edit-submit"
+               value="确认">
+        <!--<input type="button" lay-submit lay-filter="layuiadmin-dept-edit-edit" id="layuiadmin-dept-edit-edit"-->
+               <!--value="确认编辑">-->
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '${static}/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form'], function () {
+        var $ = layui.$,
+            form = layui.form,
+            setter = layui.setter,
+            layer = layui.layer;
+        setter.serverUrl = '${serverUrl}';
+        setter.ctxPath = '${admin}';
+
+        form.val('LAYF-dept-form-edit', {
+            id: '${dept.id}',
+            name: '${dept.name}',
+            code: '${dept.code}',
+            label: '${dept.label}',
+            val: '${dept.val}',
+            sort: '${dept.sort}',
+            tips: '${dept.tips}'
+        })
+
+        //监听提交
+        form.on('submit(LAYF-dept-form-edit-submit)', function (data) {
+            var field = data.field; //获取提交的字段
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+
+            //提交 Ajax 成功后，关闭当前弹层并重载表格
+            $.ajax({
+                url: setter.ctxPath + '/dept/edit.ajax',
+                data: field,
+                method: 'POST',
+                success: function (res) {
+                    if (res.code == setter.response.statusCode.ok) {
+                        parent.layer.msg(res.msg);
+                        parent.layui.table.reload('deptTable'); //重载表格
+                        parent.layer.close(index); //再执行关闭
+                    } else {
+                        console.log(res.msg)
+                        layer.msg(res.msg);
+                    }
+
+                }
+            });
+
+        });
+    })
+</script>
+</body>
+</html>

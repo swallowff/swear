@@ -9,6 +9,7 @@ import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.system.entity.User;
 import cn.swallowff.modules.core.system.service.UserService;
 import cn.swallowff.modules.core.system.wrapper.UserAjaxListDictWrapper;
+import cn.swallowff.modules.core.system.wrapper.UserDateFormatWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +44,8 @@ public class UserController {
     @RequestMapping(value = "edit.html")
     public String editHtml(@RequestParam("id") String id, Model model){
         User user = userService.selectById(id);
-        model.addAttribute("user",user);
+        UserDateFormatWrapper wrapper = new UserDateFormatWrapper(user);
+        model.addAttribute("user",wrapper.wrap());
         return "admin/pages/system/user/user-edit";
     }
 
@@ -82,7 +83,7 @@ public class UserController {
         if (null == user || StringUtils.isBlank(user.getId())){
             return baseResp.paramsError();
         }
-        if (StringUtils.isNotBlank(user.getPassword())){
+        if (StringUtils.isNotBlank(user.getPassword()) && user.getPassword().length() <= 16){
             String salt = ShiroKit.getRandomSalt(8);
             user.setSalt(salt);
             user.setPassword(ShiroKit.md5(user.getPassword(),salt));
@@ -92,6 +93,7 @@ public class UserController {
             return baseResp;
         }else return baseResp.putError();
     }
+
 
     @RequestMapping(value = "delete")
     @ResponseBody

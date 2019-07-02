@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统管理 - 部门列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="${static}/layuiadmin/style/eleTree.css" media="all">
+    <style>
+        .eleTree{
+            width: 350px;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <!--<label class="layui-form-label">类型名称</label>-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" placeholder="请输入部门名称" autocomplete="off" class="layui-input eleTree ele1">
+                    </div>
+                </div>
+
+                <div class=""></div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-list-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+                <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
+                <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+            </div>
+            <table id="LAYF-list-table" lay-filter="LAYF-list-table"></table>
+        </div>
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '${static}/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'table', 'jquery', 'admin' , 'tree' , 'eleTree'], function () {
+        var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter , tree = layui.eleTree;
+        setter.serverUrl = '${serverUrl}';
+        setter.ctxPath = '${admin}';
+
+        table.render({
+            id: "deptTable", //table id
+            elem: '#LAYF-list-table', //指定表格元素
+            url: setter.ctxPath + '/dept/list.ajax',  //请求路径
+            cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+            , even: true    //隔行换色
+            , page: true  //开启分页
+            , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+            , limit: 10 //每页默认显示的数量
+            , method: 'post'  //提交方式
+            , cols: [[
+                {type: 'checkbox'}, //开启多选框
+                {type: 'numbers', title: '序号'}, //序号
+                {
+                    field: 'name',
+                    title: '类型名称',
+                    sort: true
+                },
+                {
+                    field: 'code',
+                    title: '字典CODE',
+                    sort: true
+                },
+                {
+                    field: 'label',
+                    title: '标签名',
+                    sort: true
+                },
+                {
+                    field: 'val',
+                    title: '字典值',
+                    sort: false
+                },
+                {
+                    field: 'sort',
+                    title: '排序',
+                    sort: true
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    sort: true
+                },
+                {
+                    title: '操作',
+                    templet: operation,
+                    width: 120,
+                    align: 'center'
+                }
+            ]]
+        });
+
+        //监听搜索
+        form.on('submit(LAYF-list-search)', function (data) {
+            var field = data.field;
+            //执行重载
+            table.reload('deptTable', {
+                where: field
+            });
+        });
+
+        var $ = layui.$, active = {
+            batchdel: function () {
+                var checkStatus = table.checkStatus('deptTable')
+                    , checkData = checkStatus.data; //得到选中的数据
+                console.log(checkData)
+                if (checkData.length === 0) {
+                    return layer.msg('请选择数据');
+                }
+
+                var idAry = new Array();
+                for (var i = 0; i < checkData.length; i++) {
+                    idAry[i] = checkData[i].id
+                }
+
+                layer.confirm('确定删除吗？', function (index) {
+
+                    //执行 Ajax 后重载
+                    admin.req({
+                        url: setter.ctxPath + '/dept/batchDel',
+                        method: 'POST',
+                        traditional: true,   //指定参数序列化时，不做深度序列化
+                        data: {
+                            ids: idAry
+                        },
+                        success: function (res) {
+                            // console.log(res)
+                            table.reload('deptTable');
+                            layer.msg('已删除');
+                        }
+
+                    });
+
+                });
+            },
+            add: function () {
+                layer.open({
+                    type: 2
+                    , title: '添加字典'
+                    , content: setter.ctxPath + '/dept/add.html'
+                    , maxmin: true
+                    , area: ['550px', '550px']
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        //点击确认触发 iframe 内容中的按钮提交
+                        var submit = layero.find('iframe').contents().find("#LAYF-dept-form-add-submit");
+                        submit.click();
+                    }
+                });
+            }
+        };
+
+        $('.layui-btn.layuiadmin-btn-list').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        function operation(data) {
+            var id = data.id;
+            var btn = '';
+            btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="editRow(\'' + id + '\')"><i class="layui-icon">&#xe642;</i></button>'
+            btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
+            return btn;
+        }
+
+        window.deleteRow = function (id) {
+            $.ajax({
+                url: setter.ctxPath + '/dept/delete',
+                method: 'POST',
+                contentType: 'application/x-www-form-urlencoded',
+                data: {
+                    id: id
+                },
+                success: function (res) {
+                    layer.msg(res.msg);
+                    if (res.code == 0) {
+                        layui.table.reload('deptTable');
+                    } else {
+
+                    }
+                }
+            })
+        }
+
+        window.editRow = function (id) {
+            layer.open({
+                type: 2
+                , title: '編輯字典'
+                , content: setter.ctxPath + '/dept/edit.html?id=' + id
+                , maxmin: true
+                , area: ['550px', '550px']
+                , btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    //点击确认触发 iframe 内容中的按钮提交
+                    var submit = layero.find('iframe').contents().find("#LAYF-dept-form-edit-submit");
+                    submit.click();
+                }
+            });
+        };
+
+        // eleTree文档 : https://fly.layui.com/extend/eleTree/#doc
+        tree.render({
+            elem: '.ele1',
+            data: [
+                {
+                    id: 1,
+                    label: "安徽省",
+                    children: [
+                        {
+                            id: 2,
+                            label: "马鞍山市",
+                            disabled: true,
+                            children: [
+                                {
+                                    id: 3,
+                                    label: "和县",
+                                },
+                                {
+                                    id: 4,
+                                    label: "花山区",
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 5,
+                    label: "河南省",
+                    children: [
+                        {
+                            id: 6,
+                            label: "郑州市"
+                        }
+                    ]
+                }
+            ],
+            showCheckbox: true,
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

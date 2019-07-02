@@ -24,6 +24,7 @@ public class MenuService extends CrudService<MenuDao,Menu> {
         for (Menu m : firstList){
             Menu qEntity2 = new Menu();
             qEntity2.setPcode(m.getCode());
+            qEntity2.setOrderBy("sort ASC");
             List<Menu> secondList = super.findList(qEntity2);
             m.setSubMenuList(secondList);
         }
