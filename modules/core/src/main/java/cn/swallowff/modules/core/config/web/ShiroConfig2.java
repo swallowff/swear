@@ -48,7 +48,7 @@ public class ShiroConfig2 {
         securityManager.setRememberMeManager(rememberMeManager);
         //设置realm.
         securityManager.setRealm(shiroDBRealm());
-        // 自定义缓存实现 使用redis
+        // 自定义缓存实现
         securityManager.setCacheManager(shiroEhCacheManager);
         securityManager.setSessionManager(sessionManager);
         return securityManager;
@@ -99,6 +99,7 @@ public class ShiroConfig2 {
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionValidationSchedulerEnabled(true);
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
 //        Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
         Cookie cookie = new SimpleCookie("swearShiroCookie");
         cookie.setName("swearShiroCookie");
