@@ -11,12 +11,7 @@
     <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
     <link rel="stylesheet" href="${static}/layuiadmin/style/eleTree.css" media="all">
     <style>
-        .eleTree{
-            width: 350px;
-            height: 300px;
-            border: 1px solid #ccc;
-            overflow: hidden;
-        }
+
     </style>
 </head>
 <body>
@@ -28,11 +23,9 @@
                 <div class="layui-inline">
                     <!--<label class="layui-form-label">类型名称</label>-->
                     <div class="layui-input-inline">
-                        <input type="text" name="name" placeholder="请输入部门名称" autocomplete="off" class="layui-input eleTree ele1">
+                        <input type="text" name="name" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-
-                <div class=""></div>
 
                 <div class="layui-inline">
                     <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-list-search">
@@ -223,44 +216,6 @@
             });
         };
 
-        // eleTree文档 : https://fly.layui.com/extend/eleTree/#doc
-        tree.render({
-            elem: '.ele1',
-            data: [
-                {
-                    id: 1,
-                    label: "安徽省",
-                    children: [
-                        {
-                            id: 2,
-                            label: "马鞍山市",
-                            disabled: true,
-                            children: [
-                                {
-                                    id: 3,
-                                    label: "和县",
-                                },
-                                {
-                                    id: 4,
-                                    label: "花山区",
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    id: 5,
-                    label: "河南省",
-                    children: [
-                        {
-                            id: 6,
-                            label: "郑州市"
-                        }
-                    ]
-                }
-            ],
-            showCheckbox: true,
-        });
 
     });
 

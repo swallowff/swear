@@ -16,6 +16,7 @@
     }), n.on("submit(setmyinfo)", function (t) {
         return e.msg(JSON.stringify(t.field)), !1
     });
+
     var r = i("#LAY_imgSrc");
     s.render({
         url: "/swear/a/upload/img", elem: "#LAY_imgUpload", done: function (t) {
