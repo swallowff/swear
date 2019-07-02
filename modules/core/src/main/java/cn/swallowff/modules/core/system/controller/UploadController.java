@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.stream.FileImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.nio.file.Files;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +28,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${swear.path.admin}/upload")
 public class UploadController {
+    public static final String IMG_COMPRESS_FORMAT = "png";
 
     @Autowired
     private CoreProperties coreProperties;
@@ -48,22 +48,18 @@ public class UploadController {
         FileUtils.createDirectory(fileDir);
         String fileName = String.valueOf(IdGenerate.uuid()) + suffix;
         File imgFile = new File(fileDir + fileName);
-//        while (imgFile.exists()){
-//            fileName = String.valueOf(System.currentTimeMillis()).concat(StringUtils.getRandomStr(8));
-//            imgFile = new File( fileDir + File.separator + fileName);
-//        }
         try{
             imgFile.createNewFile();
-            file.transferTo(imgFile);
-            ImageUtils.thumbnails(imgFile,720,720,"png");
+            file.transferTo(imgFile.getAbsoluteFile());
+            ImageUtils.thumbnails(imgFile,720,720,IMG_COMPRESS_FORMAT);
         }catch (IOException e){
             e.printStackTrace();
             return baseResp.putError("文件保存失败");
         }
-        String targetUrl = imgBaseUrl + dateStr + "/";
+        String targetPath = imgBaseUrl + dateStr + "/";
         Map<String,Object> respMap = new HashMap<>();
-        respMap.put("url",targetUrl + fileName);
-        respMap.put("compressionUrl",targetUrl + imgFile.getName()+".png");
+        respMap.put("src",targetPath + fileName);
+        respMap.put("thumbnail",targetPath + fileName + "." + IMG_COMPRESS_FORMAT);
         return baseResp.putSuccess(respMap);
     }
 
