@@ -31,8 +31,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">父级菜单</label>
         <div class="layui-input-inline">
-            <input type="text" name="pcode" lay-verify="" placeholder="请输入父级菜单编号" autocomplete="off"
-                   class="layui-input">
+            <select id="pcode-select" data-placeholder="请选择" name="pcode" lay-search=""></select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -135,8 +134,29 @@
 
                 }
             });
-
         });
+
+        //渲染父级菜单下拉选择
+        $.ajax({
+            url: setter.ctxPath + '/menu/list.ajax',
+            data: '',
+            method: 'GET',
+            success: function (res) {
+                // console.log(res)
+                if (res.code == setter.response.statusCode.ok) {
+                    var menuList = res.data;
+                    var pcodeSelect = $('#pcode-select');
+                    pcodeSelect.append('<option value="">请选择</option>')
+                    for (var i in menuList){
+                        if (menuList[i].id != '${menu.id}'){
+                            pcodeSelect.append('<option value="'+menuList[i].code+'">'+menuList[i].name+'</option>')
+                        }
+                    }
+                    form.render('select','LAYF-menu-form-edit'); //刷新select选择框
+                }
+            }
+        });
+
     })
 </script>
 </body>

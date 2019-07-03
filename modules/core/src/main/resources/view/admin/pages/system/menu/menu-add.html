@@ -10,77 +10,76 @@
     <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
 </head>
 <body>
-<div class="layui-form" lay-filter="LAYF-menu-form-add" id="LAYF-menu-form-add"
-     style="padding: 20px 30px 0 0;">
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单名称</label>
-        <div class="layui-input-inline">
-            <input type="text" name="name" lay-verify="required" placeholder="请输入菜单名称" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单编号</label>
-        <div class="layui-input-inline">
-            <input type="text" name="code" lay-verify="required" placeholder="请输入菜单编号" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">父级菜单</label>
-        <div class="layui-input-inline">
-            <input type="text" name="pcode" placeholder="请输入父级菜单编号" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单图标</label>
-        <div class="layui-input-inline">
-            <input type="text" name="icon" placeholder="请输入菜单图标" autocomplete="off"
-                   class="layui-input layui-inline">
-            <a class="layui-inline" href="javascript:;">需要帮助?</a>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">链接地址</label>
-        <div class="layui-input-inline">
-            <input type="text" name="url" lay-verify="required" placeholder="请输入链接地址" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">排序</label>
-        <div class="layui-input-inline">
-            <input type="text" name="sort" lay-verify="number" placeholder="请输入排序号" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单级别</label>
-        <div class="layui-input-inline">
-            <input type="text" name="levels" lay-verify="required number" placeholder="请输入菜单级别1,2,3" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">是否菜单</label>
-        <div class="layui-input-inline">
-            <!--开关-->
-            <input type="checkbox" lay-filter="status" name="isMenu" lay-skin="switch" lay-text="是|否" value="1">
+    <div class="layui-form" lay-filter="LAYF-menu-form-add" id="LAYF-menu-form-add" style="padding: 20px 30px 0 0;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" lay-verify="required" placeholder="请输入菜单名称" autocomplete="off"
+                       class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-inline">
-            <textarea name="tips" style="width: 400px; height: 150px;" autocomplete="off"
-                      class="layui-textarea"></textarea>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" lay-verify="required" placeholder="请输入菜单编号" autocomplete="off"
+                       class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="LAYF-menu-form-add-submit" id="LAYF-menu-form-add-submit"
-               value="确认">
-    </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">父级菜单</label>
+            <div class="layui-input-inline">
+                <select id="pcode-select" data-placeholder="请选择" name="pcode" lay-search=""></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单图标</label>
+            <div class="layui-input-inline">
+                <input type="text" name="icon" placeholder="请输入菜单图标" autocomplete="off"
+                       class="layui-input layui-inline">
+                <a class="layui-inline" href="javascript:;">需要帮助?</a>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="url" lay-verify="required" placeholder="请输入链接地址" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sort" lay-verify="number" placeholder="请输入排序号" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单级别</label>
+            <div class="layui-input-inline">
+                <input type="text" name="levels" lay-verify="required number" placeholder="请输入菜单级别1,2,3" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否菜单</label>
+            <div class="layui-input-inline">
+                <!--开关-->
+                <input type="checkbox" lay-filter="status" name="isMenu" lay-skin="switch" lay-text="是|否" value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <textarea name="tips" style="width: 400px; height: 150px;" autocomplete="off"
+                          class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <input type="button" lay-submit lay-filter="LAYF-menu-form-add-submit" id="LAYF-menu-form-add-submit"
+                   value="确认">
+        </div>
     </div>
 
     <script src="${static}/layuiadmin/layui/layui.js"></script>
@@ -89,17 +88,17 @@
             base: '${static}/layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use(['index', 'form'], function () {
-            var $ = layui.$
-                , form = layui.form,
-                layer = layui.layer,
-                setter = layui.setter;
+        }).use(['index', 'form' ,'admin','element'], function () {
+            var $ = layui.$, form = layui.form,
+                layer = layui.layer, setter = layui.setter,
+                admin = layui.admin;
+
             setter.serverUrl = '${serverUrl}';
             setter.ctxPath = '${admin}';
 
             //监听提交
             form.on('submit(LAYF-menu-form-add-submit)', function (data) {
-                var field = data.field; //获取提交的字段
+                var field = data.field;       //获取提交的字段
                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 
                 //提交 Ajax 成功后，关闭当前弹层并重载表格
@@ -121,6 +120,24 @@
                 });
             });
 
+            //渲染父级菜单下拉选择
+            $.ajax({
+                url: setter.ctxPath + '/menu/list.ajax',
+                data: '',
+                method: 'GET',
+                success: function (res) {
+                    // console.log(res)
+                    if (res.code == setter.response.statusCode.ok) {
+                        var menuList = res.data;
+                        var pcodeSelect = $('#pcode-select');
+                        pcodeSelect.append('<option value="">请选择</option>')
+                        for (var i in menuList){
+                            pcodeSelect.append('<option value="'+menuList[i].code+'">'+menuList[i].name+'</option>')
+                        }
+                        form.render('select','LAYF-menu-form-add'); //刷新select选择框
+                    }
+                }
+            });
 
         })
     </script>
