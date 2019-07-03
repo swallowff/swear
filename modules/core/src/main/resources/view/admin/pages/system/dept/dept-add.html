@@ -13,45 +13,30 @@
 <div class="layui-form" lay-filter="LAYF-dept-form-add" id="LAYF-dept-form-add"
      style="padding: 20px 30px 0 0;">
     <div class="layui-form-item">
-        <label class="layui-form-label">类型名称</label>
+        <label class="layui-form-label">部门全称</label>
         <div class="layui-input-inline">
-            <input type="text" name="name" lay-verify="required" placeholder="请输入类型名称" autocomplete="off"
+            <input type="text" name="fullName" lay-verify="required" placeholder="请输入全称" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">字典CODE</label>
+        <label class="layui-form-label">简称</label>
         <div class="layui-input-inline">
-            <input type="text" name="code" lay-verify="required" placeholder="字典CODE" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">标签名称</label>
-        <div class="layui-input-inline">
-            <input type="text" name="label" lay-verify="required" placeholder="标签名称" autocomplete="off"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">字典值</label>
-        <div class="layui-input-inline">
-            <input type="text" name="val" lay-verify="required" placeholder="字典值" autocomplete="off"
+            <input type="text" name="simpleName" placeholder="请输入简称" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">排序</label>
         <div class="layui-input-inline">
-            <input type="text" name="sort" lay-verify="number" placeholder="请输入排序值" autocomplete="off"
+            <input type="text" name="sort" lay-verify="number" placeholder="排序" autocomplete="10"
                    class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">字典描述</label>
+        <label class="layui-form-label">父级部门</label>
         <div class="layui-input-inline">
-            <textarea name="tips" style="width: 400px; height: 150px;" autocomplete="off"
-                      class="layui-textarea"></textarea>
+            <select id="parent-dept-select" data-placeholder="父级部门" name="pid" lay-search=""></select>
         </div>
     </div>
     <div class="layui-form-item layui-hide">
@@ -95,7 +80,25 @@
                     }
                 }
             });
+        });
 
+        //渲染父级菜单下拉选择
+        $.ajax({
+            url: setter.ctxPath + '/dept/list.ajax',
+            data: '',
+            method: 'GET',
+            success: function (res) {
+                // console.log(res)
+                if (res.code == setter.response.statusCode.ok) {
+                    var list = res.data;
+                    var pElement = $('#parent-dept-select');
+                    pElement.append('<option value="">请选择</option>')
+                    for (var i in list){
+                        pElement.append('<option value="'+list[i].pid+'">'+list[i].fullName+'</option>')
+                    }
+                    form.render('select','LAYF-dept-form-add'); //刷新select选择框
+                }
+            }
         });
     })
 </script>

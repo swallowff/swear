@@ -50,8 +50,8 @@
         base: '${static}/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'table', 'jquery', 'admin' , 'tree' , 'eleTree'], function () {
-        var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter , tree = layui.eleTree;
+    }).use(['index', 'table', 'jquery', 'admin'], function () {
+        var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter;
         setter.serverUrl = '${serverUrl}';
         setter.ctxPath = '${admin}';
 
@@ -70,24 +70,14 @@
                 {type: 'checkbox'}, //开启多选框
                 {type: 'numbers', title: '序号'}, //序号
                 {
-                    field: 'name',
-                    title: '类型名称',
+                    field: 'fullName',
+                    title: '部门全称',
                     sort: true
                 },
                 {
-                    field: 'code',
-                    title: '字典CODE',
+                    field: 'pid',
+                    title: '父级ID',
                     sort: true
-                },
-                {
-                    field: 'label',
-                    title: '标签名',
-                    sort: true
-                },
-                {
-                    field: 'val',
-                    title: '字典值',
-                    sort: false
                 },
                 {
                     field: 'sort',
