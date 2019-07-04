@@ -1,8 +1,8 @@
 package cn.swallowff.modules.core.cmomon.resp;
 
 import cn.swallowff.common.json.JacksonUtil;
+import cn.swallowff.modules.core.cmomon.state.AbstractState;
 import cn.swallowff.modules.core.constant.states.ResponseState;
-import cn.swallowff.modules.core.state.AbstractState;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;

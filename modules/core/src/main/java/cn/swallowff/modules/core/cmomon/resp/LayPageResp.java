@@ -12,7 +12,7 @@ public class LayPageResp<T> extends BaseResp {
     private long count;  //总数据
 
     public LayPageResp(List<T> dataList,long count){
-        super(ResponseState.LAYUI_TABLE_AJAX_SUCCESS);
+        super(ResponseState.SUCCESS);
         this.setData(dataList);
         this.setCount(count);
     }

@@ -1,6 +1,6 @@
 package cn.swallowff.modules.core.excepiton;
 
-import cn.swallowff.modules.core.state.AbstractState;
+import cn.swallowff.modules.core.cmomon.state.AbstractState;
 
 /**
  * @author shenyu

@@ -23,7 +23,7 @@ import java.util.TimeZone;
  * @create 19-6-28
  */
 @Configuration
-public class InterceptorConf extends WebMvcConfigurationSupport {
+public class WebMvcConf extends WebMvcConfigurationSupport {
     @Autowired
     private CoreProperties coreProperties;
 

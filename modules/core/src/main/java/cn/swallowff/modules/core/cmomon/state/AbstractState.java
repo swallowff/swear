@@ -1,4 +1,4 @@
-package cn.swallowff.modules.core.state;
+package cn.swallowff.modules.core.cmomon.state;
 
 public interface AbstractState {
     Integer getCode();
