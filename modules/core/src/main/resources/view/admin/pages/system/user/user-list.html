@@ -8,8 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
-  <link rel="stylesheet" href="${static}/layuiadmin/style/dtree.css" media="all">
-  <link rel="stylesheet" href="${static}/fonts/dtreefont/dtreefont.css" media="all">
+  <link rel="stylesheet" href="${static}/layuiadmin/style/eleTree.css" media="all"
 </head>
 <body>
 
@@ -57,7 +56,7 @@
           <button class="layui-btn layui-btn-primary layuiadmin-btn-list" data-type="role">分配角色</button>
         </div>
 
-        <ul id="role-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;display: none;"></ul>
+        <div id="role-select" class="treeDemo1 eleTree ele1" style="display: none;"></div>
 
         <table id="LAYF-list-table" lay-filter="LAYF-user-list-table"></table>
 
@@ -76,14 +75,15 @@
           base: '${static}/layuiadmin/' //静态资源所在路径
       }).extend({
           index: 'lib/index', //主入口模块
-          dtree: 'tree/dtree'
-      }).use(['index', 'contlist', 'table', 'jquery', 'admin' ,'dtree'], function () {
+          eleTree: 'tree/eleTree'
+      }).use(['index', 'contlist', 'table', 'jquery', 'admin' ,'eleTree'], function () {
           var table = layui.table,
               form = layui.form,
               $ = layui.jquery,
               admin = layui.admin,
               setter = layui.setter,
-              dtree = layui.dtree;
+                eleTree = layui.eleTree;
+              // dtree = layui.dtree;
 
 
           setter.serverUrl = '${serverUrl}';
@@ -277,33 +277,35 @@
               });
           };
 
-          //渲染dtree
-          dtree.render({
-              elem: "#role-select",
-              data: [
-                  {"id":"001","title": "湖南省","checkArr": "0","parentId": "0"},
-                  {"id":"002","title": "湖北省","checkArr": "0","parentId": "0"},
-                  {"id":"003","title": "广东省","checkArr": "0","parentId": "0"},
-                  {"id":"004","title": "浙江省","checkArr": "0","parentId": "0"},
-                  {"id":"005","title": "福建省","checkArr": "0","parentId": "0"},
-                  {"id":"001001","title": "长沙市","checkArr": "0","parentId": "001"},
-                  {"id":"001002","title": "株洲市","checkArr": "0","parentId": "001"},
-                  {"id":"001003","title": "湘潭市","checkArr": "0","parentId": "001"},
-                  {"id":"001004","title": "衡阳市","checkArr": "0","parentId": "001"},
-                  {"id":"001005","title": "郴州市","checkArr": "0","iconClass": "dtree-icon-caidan_xunzhang","parentId": "001"}
-              ], // 使用data加载
-              url: setter.ctxPath + "/role/roleTree.ajax", // 使用url加载（可与data加载同时存在）
-              dataStyle: "layuiStyle",  //使用layui风格的数据格式
-              dataFormat: "list",  //配置data的风格为list
-              response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
-              checkbar:true //开启复选框
+          var treeData = [{id:1,label:"安徽省",children:[{id:2,label:"马鞍山市",disabled:true,children:[{id:3,label:"和县",},{id:4,label:"花山区",}]}]},{id:5,label:"河南省",children:[{id:6,label:"郑州市"}]}];
+          // eleTree   文档:https://fly.layui.com/extend/eleTree/#doc
+          eleTree.render({
+              elem: '.treeDemo1',
+              // data: treeData,
+              emptText: '没有数据噢',
+              url: setter.ctxPath + '/role/roleTree.ajax',
+              method: 'GET',
+              showCheckbox: true,  //显示复选框
+              highlightCurrent: true, //是否高亮当前选中节点，默认值是 false
+              accordion: false,   //手风琴效果
+              request:{      //对于后台数据重新定义名字
+                  name: "label",
+                  key: "id",
+                  children: "children",
+                  checked: "checked",
+                  disabled: "disabled",
+                  isLeaf: "isLeaf"
+              },
+              response: {     //对后台返回的数据格式重新定义
+                  statusName: "code",
+                  statusCode: 0,
+                  dataName: "data"
+              },
+              done: function(res){
+                  // res即为你接口返回的信息。
+                  console.log(res);
+              }
           });
-
-          // 绑定节点点击
-          dtree.on("node('role-select')" ,function(obj){
-              layer.msg(JSON.stringify(obj.param));
-          });
-
       });
 
   </script>

@@ -144,14 +144,17 @@
             success: function (res) {
                 // console.log(res)
                 if (res.code == setter.response.statusCode.ok) {
-                    var menuList = res.data;
-                    var pcodeSelect = $('#pcode-select');
-                    pcodeSelect.append('<option value="">请选择</option>')
-                    for (var i in menuList){
-                        if (menuList[i].id != '${menu.id}'){
-                            pcodeSelect.append('<option value="'+menuList[i].code+'">'+menuList[i].name+'</option>')
+                    var listData = res.data;
+                    var $select = $('#pcode-select');
+                    $select.append('<option value="">请选择</option>')
+                    for (var i in listData){
+                        if (listData[i].id != '${menu.id}'){
+                            $select.append('<option value="'+listData[i].code+'">'+listData[i].name+'</option>')
                         }
                     }
+                    form.val('LAYF-menu-form-edit',{
+                        pcode: '${menu.pcode}',
+                    });
                     form.render('select','LAYF-menu-form-edit'); //刷新select选择框
                 }
             }

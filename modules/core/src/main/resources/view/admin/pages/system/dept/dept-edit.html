@@ -101,13 +101,16 @@
                 // console.log(res)
                 if (res.code == setter.response.statusCode.ok) {
                     var list = res.data;
-                    var pElement = $('#parent-dept-select');
-                    pElement.append('<option value="">请选择</option>')
+                    var $select = $('#parent-dept-select');
+                    $select.append('<option value="">请选择</option>')
                     for (var i in list){
                         if (list[i].id != '${dept.id}') {
-                            pElement.append('<option value="' + list[i].pid + '">' + list[i].fullName + '</option>')
+                            $select.append('<option value="' + list[i].id + '">' + list[i].fullName + '</option>')
                         }
                     }
+                    form.val('LAYF-dept-form-edit',{
+                        pid: '${dept.pid}'
+                    });
                     form.render('select','LAYF-dept-form-edit'); //刷新select选择框
                 }
             }

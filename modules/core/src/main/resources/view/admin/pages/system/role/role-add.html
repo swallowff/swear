@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>菜单添加 iframe 框</title>
+    <title>角色添加 iframe 框</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
@@ -11,40 +11,25 @@
 </head>
 <body>
 
-    <div class="layui-form" lay-filter="LAYF-menu-form-add" id="LAYF-menu-form-add" style="padding: 20px 30px 0 0;">
+    <div class="layui-form" lay-filter="LAYF-role-form-add" id="LAYF-role-form-add" style="padding: 20px 30px 0 0;">
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单名称</label>
+            <label class="layui-form-label">角色名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="name" lay-verify="required" placeholder="请输入菜单名称" autocomplete="off"
+                <input type="text" name="name" lay-verify="required" placeholder="请输入角色名称" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单编号</label>
+            <label class="layui-form-label">父级角色ID</label>
             <div class="layui-input-inline">
-                <input type="text" name="code" lay-verify="required" placeholder="请输入菜单编号" autocomplete="off"
+                <input type="text" name="pid" placeholder="父级角色ID" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">父级菜单</label>
+            <label class="layui-form-label">部门</label>
             <div class="layui-input-inline">
-                <select id="pcode-select" data-placeholder="请选择" name="pcode" lay-search=""></select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">菜单图标</label>
-            <div class="layui-input-inline">
-                <input type="text" name="icon" placeholder="请输入菜单图标" autocomplete="off"
-                       class="layui-input layui-inline">
-                <a class="layui-inline" href="javascript:;">需要帮助?</a>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">链接地址</label>
-            <div class="layui-input-inline">
-                <input type="text" name="url" lay-verify="required" placeholder="请输入链接地址" autocomplete="off"
-                       class="layui-input">
+                <select id="dept-select" data-placeholder="请选择部门" name="deptId" lay-search=""></select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -55,21 +40,6 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单级别</label>
-            <div class="layui-input-inline">
-                <input type="text" name="levels" lay-verify="required number" placeholder="请输入菜单级别1,2,3" autocomplete="off"
-                       class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">是否菜单</label>
-            <div class="layui-input-inline">
-                <!--开关-->
-                <input type="checkbox" lay-filter="status" name="isMenu" lay-skin="switch" lay-text="是|否" value="1">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-inline">
                 <textarea name="tips" style="width: 400px; height: 150px;" autocomplete="off"
@@ -77,7 +47,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-hide">
-            <input type="button" lay-submit lay-filter="LAYF-menu-form-add-submit" id="LAYF-menu-form-add-submit"
+            <input type="button" lay-submit lay-filter="LAYF-role-form-add-submit" id="LAYF-role-form-add-submit"
                    value="确认">
         </div>
     </div>
@@ -97,20 +67,20 @@
             setter.ctxPath = '${admin}';
 
             //监听提交
-            form.on('submit(LAYF-menu-form-add-submit)', function (data) {
+            form.on('submit(LAYF-role-form-add-submit)', function (data) {
                 var field = data.field;       //获取提交的字段
                 var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 
                 //提交 Ajax 成功后，关闭当前弹层并重载表格
                 $.ajax({
-                    url: setter.ctxPath + '/menu/add.ajax',
+                    url: setter.ctxPath + '/role/add.ajax',
                     data: field,
                     method: 'POST',
                     success: function (res) {
                         // console.log(res);
                         if (res.code == setter.response.statusCode.ok) {
                             parent.layer.msg(res.msg);
-                            parent.layui.table.reload('menuTable'); //重载表格
+                            parent.layui.table.reload('roleTable'); //重载表格
                             parent.layer.close(index); //再执行关闭
                         } else {
                             layer.msg(res.msg);
@@ -122,19 +92,19 @@
 
             //渲染父级菜单下拉选择
             $.ajax({
-                url: setter.ctxPath + '/menu/list.ajax',
+                url: setter.ctxPath + '/dept/list.ajax',
                 data: '',
                 method: 'GET',
                 success: function (res) {
                     // console.log(res)
                     if (res.code == setter.response.statusCode.ok) {
                         var listData = res.data;
-                        var $select = $('#pcode-select');
+                        var $select = $('#dept-select');
                         $select.append('<option value="">请选择</option>')
                         for (var i in listData){
-                            $select.append('<option value="'+listData[i].code+'">'+menuList[i].name+'</option>')
+                            $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
                         }
-                        form.render('select','LAYF-menu-form-add'); //刷新select选择框
+                        form.render('select','LAYF-role-form-add'); //刷新select选择框
                     }
                 }
             });

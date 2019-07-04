@@ -6,7 +6,7 @@ public class Role extends BaseEntity<Role> {
     private Integer sort;    //排序
     private String name;    //角色名称
     private Integer pid;    //角色父级id
-    private Integer deptId;  //部门id
+    private String deptId;  //部门id
     private String tips;    //提示
 
     public Integer getSort() {
@@ -33,11 +33,11 @@ public class Role extends BaseEntity<Role> {
         this.pid = pid;
     }
 
-    public Integer getDeptId() {
+    public String getDeptId() {
         return deptId;
     }
 
-    public void setDeptId(Integer deptId) {
+    public void setDeptId(String deptId) {
         this.deptId = deptId;
     }
 

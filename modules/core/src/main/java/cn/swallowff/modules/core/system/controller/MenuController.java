@@ -55,6 +55,10 @@ public class MenuController extends BaseController {
     @ResponseBody
     public BaseResp add(Menu menu){
         BaseResp baseResp = BaseResp.newSuccess();
+        Menu existMenu = menuService.selectByCode(menu.getCode());
+        if (null != existMenu){
+            return baseResp.putError("菜单CODE重复了哦");
+        }
         menuService.save(menu);
         return baseResp;
     }

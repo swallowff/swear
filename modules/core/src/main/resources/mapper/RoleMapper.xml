@@ -14,6 +14,18 @@
         a.version AS version
     </sql>
 
+    <sql id="treeListColumns">
+        a.id AS id,
+        a.sort AS sort,
+        a.name AS name,
+        a.pid AS pid,
+        a.dept_id AS deptId,
+        a.tips AS tips,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
     <select id="selectById" resultType="Role">
       SELECT
       <include refid="baseColumns"/>

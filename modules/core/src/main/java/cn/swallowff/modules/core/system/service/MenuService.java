@@ -3,6 +3,7 @@ package cn.swallowff.modules.core.system.service;
 import cn.swallowff.modules.core.cmomon.service.CrudService;
 import cn.swallowff.modules.core.system.dao.MenuDao;
 import cn.swallowff.modules.core.system.entity.Menu;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,13 @@ import java.util.List;
  */
 @Service
 public class MenuService extends CrudService<MenuDao,Menu> {
+
+    public Menu selectByCode(String code){
+        Menu menu = new Menu();
+        menu.setCode(code);
+        List<Menu> list = super.findList(menu);
+        return CollectionUtils.isEmpty(list) ? null : list.get(0);
+    }
 
     public List<Menu> findMenuTree(){
         Menu qEntity1 = new Menu();
