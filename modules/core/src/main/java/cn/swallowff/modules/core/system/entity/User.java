@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 系统用户
  */
-public class User extends BaseEntity<User> implements Serializable {
+public class User extends BaseEntity implements Serializable {
     private String avatar;  //头像
     private String account; //用户名
     private String password; //密码

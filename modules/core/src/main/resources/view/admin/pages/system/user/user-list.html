@@ -277,20 +277,29 @@
               });
           };
 
-          var treeData = [{id:1,label:"安徽省",children:[{id:2,label:"马鞍山市",disabled:true,children:[{id:3,label:"和县",},{id:4,label:"花山区",}]}]},{id:5,label:"河南省",children:[{id:6,label:"郑州市"}]}];
+          var treeData = [{
+              id: 1,
+              label: "安徽省",
+              children: [{
+                  id: 2,
+                  label: "马鞍山市",
+                  disabled: true,
+                  children: [{id: 3, label: "和县",children:[{id:10,label:"走马镇"}]}, {id: 4, label: "花山区",}]
+              }]
+          }, {id: 5, label: "河南省", children: [{id: 6, label: "郑州市"}]}];
           // eleTree   文档:https://fly.layui.com/extend/eleTree/#doc
           eleTree.render({
               elem: '.treeDemo1',
               // data: treeData,
               emptText: '没有数据噢',
-              url: setter.ctxPath + '/role/roleTree.ajax',
+              url: setter.ctxPath + '/dept/treeList.ajax',
               method: 'GET',
               showCheckbox: true,  //显示复选框
               highlightCurrent: true, //是否高亮当前选中节点，默认值是 false
               accordion: false,   //手风琴效果
               request:{      //对于后台数据重新定义名字
-                  name: "label",
                   key: "id",
+                  name: "label",
                   children: "children",
                   checked: "checked",
                   disabled: "disabled",

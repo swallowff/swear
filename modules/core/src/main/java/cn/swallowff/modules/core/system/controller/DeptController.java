@@ -1,9 +1,11 @@
 package cn.swallowff.modules.core.system.controller;
 
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
+import cn.swallowff.modules.core.cmomon.entity.TreeNode;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.system.dto.DeptRoleDto;
 import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.modules.core.system.service.DeptService;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shenyu
@@ -53,9 +58,11 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "treeList.ajax")
     @ResponseBody
     public Object ajaxTree(Dept dept){
-        PageResp<Dept> pageResp = deptService.findPage(dept);
-        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
-        return layPageResp;
+        BaseResp baseResp = BaseResp.newSuccess();
+        DeptRoleDto treeNode = deptService.findTree();
+        List<DeptRoleDto> list = new ArrayList<>();
+        list.add(treeNode);
+        return baseResp.setData(list);
     }
 
     @RequestMapping(value = "add.ajax")

@@ -8,7 +8,7 @@ import java.util.Date;
  * @author shenyu
  * @create 2019/3/15
  */
-public class LoginLog extends BaseEntity<LoginLog> {
+public class LoginLog extends BaseEntity {
     /**
      * 日志名称
      */

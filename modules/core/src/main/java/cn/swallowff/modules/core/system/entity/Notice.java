@@ -6,7 +6,7 @@ import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
  * @author shenyu
  * @create 2019/4/12
  */
-public class Notice extends BaseEntity<Notice> {
+public class Notice extends BaseEntity {
     private String tittle;
     private Integer type;
     private String content;

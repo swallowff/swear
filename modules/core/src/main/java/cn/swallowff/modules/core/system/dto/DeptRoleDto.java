@@ -1,35 +1,16 @@
 package cn.swallowff.modules.core.system.dto;
 
-import java.util.List;
+import cn.swallowff.modules.core.cmomon.entity.TreeNode;
 
 /**
  * @author Administrator
  * @description
  * @create 2019/7/4
  */
-public class DeptRoleDto {
-    private String id;
-    private String label;
+public class DeptRoleDto extends TreeNode<DeptRoleDto> {
     private boolean checked;
     private boolean disabled;
     private boolean isLeaf;
-    private List<DeptRoleDto> children;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
 
     public boolean isChecked() {
         return checked;
@@ -53,13 +34,5 @@ public class DeptRoleDto {
 
     public void setLeaf(boolean leaf) {
         isLeaf = leaf;
-    }
-
-    public List<DeptRoleDto> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<DeptRoleDto> children) {
-        this.children = children;
     }
 }

@@ -7,7 +7,7 @@ import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
  * @description
  * @create 2019/7/2
  */
-public class ImageGallery extends BaseEntity<ImageGallery> {
+public class ImageGallery extends BaseEntity {
     private String originName;
     private String imgName;
     private String imgUrl;

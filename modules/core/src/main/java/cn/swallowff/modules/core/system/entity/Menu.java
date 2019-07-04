@@ -9,7 +9,7 @@ import java.util.List;
  * @author shenyu
  * @create 2019/5/6
  */
-public class Menu extends BaseEntity<Menu> {
+public class Menu extends BaseEntity {
     private String code;    //菜单编号
     private String pcode;   //父级菜单编号
     private String pcodes;  //所有父级编号

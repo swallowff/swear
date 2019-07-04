@@ -15,7 +15,7 @@ public class UserServiceTest {
 
     @Test
     public void selectById() {
-        userService.selectById("54");
+        userService.selectById("1145706884594966528");
     }
 
     @Test

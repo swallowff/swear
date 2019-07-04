@@ -6,7 +6,7 @@ import org.omg.CORBA.INTERNAL;
 
 import java.util.Date;
 
-public class BaseEntity<E extends BaseEntity> {
+public class BaseEntity {
     private String id;
     private Date createTime;
     private Date updateTime;

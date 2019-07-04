@@ -8,9 +8,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.List;
 
-public abstract class CrudService<M extends CrudDao<E>,E extends BaseEntity<E>> {
+public abstract class CrudService<M extends CrudDao<E>,E extends BaseEntity> {
     @Autowired
     protected M crudDao;
 

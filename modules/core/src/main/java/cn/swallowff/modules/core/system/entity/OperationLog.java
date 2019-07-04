@@ -6,7 +6,7 @@ import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
  * @author shenyu
  * @create 2019/3/15
  */
-public class OperationLog extends BaseEntity<OperationLog> {
+public class OperationLog extends BaseEntity {
     private Integer logType;  //日志类型
     private String logName;   //日志名称
     private String userId;  //用户id

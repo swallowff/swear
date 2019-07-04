@@ -2,7 +2,7 @@ package cn.swallowff.modules.core.system.entity;
 
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 
-public class Dict extends BaseEntity<Dict> {
+public class Dict extends BaseEntity {
     private String name;    //类型名称
     private String code;    //字典code
     private String label;    //标签名

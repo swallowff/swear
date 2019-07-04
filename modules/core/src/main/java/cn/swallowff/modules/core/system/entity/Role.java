@@ -2,7 +2,7 @@ package cn.swallowff.modules.core.system.entity;
 
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 
-public class Role extends BaseEntity<Role> {
+public class Role extends BaseEntity {
     private Integer sort;    //排序
     private String name;    //角色名称
     private Integer pid;    //角色父级id
