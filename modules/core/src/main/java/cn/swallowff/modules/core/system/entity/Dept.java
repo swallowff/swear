@@ -1,19 +1,25 @@
 package cn.swallowff.modules.core.system.entity;
 
-import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
+import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 
 import java.io.Serializable;
 
 /**
  * 部门
  */
-public class Dept extends BaseEntity implements Serializable {
+public class Dept extends TreeEntity<Dept> implements Serializable {
+//    private String pid;
     private Integer sort;   //排序
-    private String pid;    //父级id
-    private String pids;    //所有父级id
     private String simpleName;  //简称
     private String fullName;    //全称
     private String tips;        //提示
+
+    public Dept() {
+    }
+
+    public Dept(String id) {
+        super(id);
+    }
 
     public Integer getSort() {
         return sort;
@@ -21,22 +27,6 @@ public class Dept extends BaseEntity implements Serializable {
 
     public void setSort(Integer sort) {
         this.sort = sort;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
-    public String getPids() {
-        return pids;
-    }
-
-    public void setPids(String pids) {
-        this.pids = pids;
     }
 
     public String getSimpleName() {
@@ -62,4 +52,18 @@ public class Dept extends BaseEntity implements Serializable {
     public void setTips(String tips) {
         this.tips = tips;
     }
+
+//    public String getPid() {
+//        if (null == getParent()){
+//            return null;
+//        }else {
+//            return getParent().getId();
+//        }
+//    }
+//
+//    public void setPid(String pid) {
+//        if (null == getParent()){
+//            setParent(new Dept(pid));
+//        }
+//    }
 }

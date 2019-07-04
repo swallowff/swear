@@ -7,7 +7,7 @@ import cn.swallowff.modules.core.cmomon.entity.TreeNode;
  * @description
  * @create 2019/7/4
  */
-public class DeptRoleDto extends TreeNode<DeptRoleDto> {
+public class DeptTreeDto extends TreeNode<DeptTreeDto> {
     private boolean checked;
     private boolean disabled;
     private boolean isLeaf;

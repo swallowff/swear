@@ -5,7 +5,7 @@
     <sql id="baseColumns">
         a.id AS id,
         a.sort AS sort,
-        a.pid AS pid,
+        a.pid AS "parent.id",
         a.pids AS pids,
         a.simple_name AS simpleName,
         a.full_name AS fullName,
@@ -31,8 +31,8 @@
         FROM sys_dept a
         <where>
             a.delflag = 0
-            <if test="pid != null and pid != ''">
-              AND a.pid = #{pid}
+            <if test="parent != null and parent.id != null and parent.id != ''">
+              AND a.pid = #{parent.id}
             </if>
             <if test="simpleName != null and simpleName != ''">
                 AND a.simple_name = #{simpleName}
@@ -51,10 +51,10 @@
         </choose>
     </select>
 
-    <select id="findChildren" resultType="cn.swallowff.modules.core.system.dto.DeptRoleDto">
+    <select id="findChildren" resultType="Dept">
         SELECT
         a.id AS id,
-        a.full_name AS label
+        a.full_name AS fullName
         FROM sys_dept a
         <where>
             a.delflag = 0
@@ -79,7 +79,7 @@
         ) VALUES (
           #{id},
           #{sort},
-          #{pid},
+          #{parent.id},
           #{pids},
           #{simpleName},
           #{fullName},
@@ -93,7 +93,7 @@
     <update id="update">
         UPDATE sys_dept SET
             sort = #{sort},
-            pid = #{pid},
+            pid = #{parent.id},
             pids = #{pids},
             simple_name = #{simpleName},
             full_name = #{fullName},
@@ -111,7 +111,7 @@
             <if test="sort != null">
                 sort = #{sort},
             </if>
-            <if test="pid != null and pid != ''">
+            <if test="parent != null and parent.id != null and parent.id != ''">
                 pid = #{pid},
             </if>
             <if test="pids != null and pids != ''">

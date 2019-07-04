@@ -1,11 +1,9 @@
 package cn.swallowff.modules.core.system.controller;
 
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
-import cn.swallowff.modules.core.cmomon.entity.TreeNode;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
-import cn.swallowff.modules.core.system.dto.DeptRoleDto;
 import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.modules.core.system.service.DeptService;
 import org.apache.commons.lang3.StringUtils;
@@ -58,10 +56,12 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "treeList.ajax")
     @ResponseBody
     public Object ajaxTree(Dept dept){
+        dept.setPid("0");
+        dept.setFullName("根节点");
         BaseResp baseResp = BaseResp.newSuccess();
-        DeptRoleDto treeNode = deptService.findTree();
-        List<DeptRoleDto> list = new ArrayList<>();
-        list.add(treeNode);
+        dept = deptService.findChildren(dept);
+        List<Dept> list = new ArrayList<>();
+        list.add(dept);
         return baseResp.setData(list);
     }
 

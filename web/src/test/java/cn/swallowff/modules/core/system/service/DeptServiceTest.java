@@ -1,6 +1,6 @@
 package cn.swallowff.modules.core.system.service;
 
-import cn.swallowff.modules.core.system.entity.Dept2;
+import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.web.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,24 +10,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class DeptService2Test {
+public class DeptServiceTest {
 
     @Autowired
-    private DeptService2 deptService2;
+    private DeptService deptService;
 
     @Test
     public void testSave(){
-        Dept2 dept2 = deptService2.selectById("1146733087980478464");
-        Dept2 newDept = new Dept2();
+        Dept dept = deptService.selectById("1146733087980478464");
+        Dept newDept = new Dept();
         newDept.setFullName("这是测试数据");
-        newDept.setParent(dept2);
-        deptService2.save(newDept);
+        newDept.setParent(dept);
+        deptService.save(newDept);
     }
 
     @Test
     public void testFindChildren(){
-        Dept2 parent = deptService2.selectById("1146733087980478464");
-        Dept2 result = deptService2.findChildren(parent);
+        Dept parent = deptService.selectById("1146733087980478464");
+        Dept result = deptService.findChildren(parent);
         System.out.println(result);
     }
 

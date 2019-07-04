@@ -132,7 +132,6 @@
                             ids: idAry
                         },
                         success: function (res) {
-                            // console.log(res)
                             table.reload('deptTable');
                             layer.msg('已删除');
                         }
@@ -193,7 +192,7 @@
         window.editRow = function (id) {
             layer.open({
                 type: 2
-                , title: '編輯字典'
+                , title: '編輯部门'
                 , content: setter.ctxPath + '/dept/edit.html?id=' + id
                 , maxmin: true
                 , area: ['550px', '550px']

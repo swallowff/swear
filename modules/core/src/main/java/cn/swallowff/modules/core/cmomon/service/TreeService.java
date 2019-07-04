@@ -25,7 +25,7 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
     }
 
     /**
-     * 通过循环查询查出所有子节点
+     * 通过递归循环查询查出所有子节点
      * @param parent
      * @return
      */
@@ -40,6 +40,14 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         return parent;
     }
 
+    /**
+     * TODO 优化查询树结构,一次查出所有list
+     */
+
+    /**
+     * 递归查询子节点
+     * @param treeNodeList
+     */
     private void updateChildrenNode(List<E> treeNodeList){
         for (E node : treeNodeList){
             List<E> children = crudDao.findChildren(node);

@@ -4,7 +4,6 @@ import cn.swallowff.modules.core.cmomon.controller.BaseController;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
-import cn.swallowff.modules.core.system.dto.DeptRoleDto;
 import cn.swallowff.modules.core.system.entity.Role;
 import cn.swallowff.modules.core.system.service.RoleService;
 import org.apache.commons.lang3.StringUtils;
@@ -14,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 /**
  * @author swallowff
@@ -58,7 +55,7 @@ public class RoleController extends BaseController {
     @ResponseBody
     public Object ajaxRoleTree(Role role){
         role.setOrderBy("sort ASC");
-//        List<DeptRoleDto> list = roleService.findList(new Role());
+//        List<DeptTreeDto> list = roleService.findList(new Role());
 //        BaseResp baseResp = BaseResp.newSuccess().setData(list);
         return null;
     }
