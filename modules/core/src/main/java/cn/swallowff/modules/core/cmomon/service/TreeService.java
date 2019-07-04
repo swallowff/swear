@@ -2,7 +2,6 @@ package cn.swallowff.modules.core.cmomon.service;
 
 import cn.swallowff.modules.core.cmomon.dao.TreeDao;
 import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
-import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 
@@ -29,9 +28,9 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
      * @param parent
      * @return
      */
-    public E findChildren(E parent){
+    public E findTree(E parent){
         List<E> children = crudDao.findChildren(parent);
-        if (CollectionUtils.isEmpty(children)){
+        if (null == children || children.size() == 0){
             return parent;
         }else {
             updateChildrenNode(children);
@@ -41,7 +40,7 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
     }
 
     /**
-     * TODO 优化查询树结构,一次查出所有list
+     * TODO 优化查询树,一次查出所有list
      */
 
     /**
@@ -49,9 +48,10 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
      * @param treeNodeList
      */
     private void updateChildrenNode(List<E> treeNodeList){
-        for (E node : treeNodeList){
+        for (int i = 0; i < treeNodeList.size() ; i++){
+            E node = treeNodeList.get(i);
             List<E> children = crudDao.findChildren(node);
-            if (CollectionUtils.isEmpty(children)){
+            if (null == children || children.size() == 0){
                 break;
             }
             updateChildrenNode(children);

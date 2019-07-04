@@ -56,10 +56,10 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "treeList.ajax")
     @ResponseBody
     public Object ajaxTree(Dept dept){
-        dept.setPid("0");
+        dept.setId("0");
         dept.setFullName("根节点");
         BaseResp baseResp = BaseResp.newSuccess();
-        dept = deptService.findChildren(dept);
+        dept = deptService.findTree(dept);
         List<Dept> list = new ArrayList<>();
         list.add(dept);
         return baseResp.setData(list);

@@ -132,7 +132,7 @@
                         var $select = $('#pcode-select');
                         $select.append('<option value="">请选择</option>')
                         for (var i in listData){
-                            $select.append('<option value="'+listData[i].code+'">'+menuList[i].name+'</option>')
+                            $select.append('<option value="'+listData[i].code+'">'+listData[i].name+'</option>')
                         }
                         form.render('select','LAYF-menu-form-add'); //刷新select选择框
                     }

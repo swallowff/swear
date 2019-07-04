@@ -58,9 +58,7 @@
         FROM sys_dept a
         <where>
             a.delflag = 0
-            <if test="id != null and id != ''">
-                AND a.pid = #{id}
-            </if>
+            AND a.pid = #{id}
         </where>
     </select>
 
