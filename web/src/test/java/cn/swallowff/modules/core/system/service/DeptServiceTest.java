@@ -27,7 +27,7 @@ public class DeptServiceTest {
     @Test
     public void testFindChildren(){
         Dept parent = deptService.selectById("1146733087980478464");
-        Dept result = deptService.findChildren(parent);
+        Dept result = deptService.findTree(parent);
         System.out.println(result);
     }
 
