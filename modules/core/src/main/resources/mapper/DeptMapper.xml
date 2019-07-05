@@ -34,6 +34,9 @@
             <if test="parent != null and parent.id != null and parent.id != ''">
               AND a.pid = #{parent.id}
             </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
             <if test="simpleName != null and simpleName != ''">
                 AND a.simple_name = #{simpleName}
             </if>

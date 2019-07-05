@@ -11,6 +11,9 @@ import java.util.List;
  * @create 2019/7/4
  */
 public class TreeEntity<E extends TreeEntity> extends BaseEntity{
+    public static final String ROOT_ID = "0";
+    public static final String ROOT_NAME = "顶级";
+
     private E parent;
     private String pids;
     private List<E> children;
@@ -68,4 +71,5 @@ public class TreeEntity<E extends TreeEntity> extends BaseEntity{
             parent.setId(pid);
         }
     }
+
 }

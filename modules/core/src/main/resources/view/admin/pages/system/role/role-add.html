@@ -116,7 +116,7 @@
                     if (res.code == setter.response.statusCode.ok) {
                         var listData = res.data;
                         var $select = $('#prole-select');
-                        $select.append('<option value="0">顶级</option>');
+                        $select.append('<option value="">请选择</option>');
                         for (var i in listData){
                             $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
                         }

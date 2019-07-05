@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
-    <link rel="stylesheet" href="${static}/layuiadmin/style/eleTree.css" media="all">
+    <link rel="stylesheet" href="${static}/layuiadmin/modules/treetable-lay/treetable.css" media="all">
     <style>
 
     </style>
@@ -20,13 +20,6 @@
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
-                <div class="layui-inline">
-                    <!--<label class="layui-form-label">部门名称</label>-->
-                    <div class="layui-input-inline">
-                        <input type="text" name="fullName" placeholder="请输入部门名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
                 <div class="layui-inline">
                     <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-list-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
@@ -39,7 +32,8 @@
                 <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
             </div>
-            <table id="LAYF-list-table" lay-filter="LAYF-list-table"></table>
+            <table id="LAYF-list-table" lay-filter="LAYF-list-table" class="layui-table layui-form" lay-size="sm"></table>
+            <!--<table id="LAYF-list-table" lay-filter="LAYF-list-table"></table>-->
         </div>
     </div>
 </div>
@@ -49,76 +43,124 @@
     layui.config({
         base: '${static}/layuiadmin/' //静态资源所在路径
     }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'table', 'jquery', 'admin'], function () {
-        var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter;
+        index: 'lib/index', //主入口模块
+        treeTable: 'tree/treeTable',
+        treetable: 'treetable-lay/treetable'
+    }).use(['index', 'table', 'jquery', 'admin' ,'treeTable','treetable'], function () {
+        var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter,
+            treeTable = layui.treeTable , treetable = layui.treetable;
         setter.serverUrl = '${serverUrl}';
         setter.ctxPath = '${admin}';
 
-        table.render({
-            id: "deptTable", //table id
-            elem: '#LAYF-list-table', //指定表格元素
-            url: setter.ctxPath + '/dept/list.ajax',  //请求路径
-            cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-            , even: true    //隔行换色
-            , page: true  //开启分页
-            , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-            , limit: 10 //每页默认显示的数量
-            , method: 'post'  //提交方式
-            , cols: [[
-                {type: 'checkbox'}, //开启多选框
-                {type: 'numbers', title: '序号'}, //序号
-                {
-                    field: 'fullName',
-                    title: '部门全称',
-                    sort: true
+        // table.render({
+        //     id: "deptTable", //table id
+        //     elem: '#LAYF-list-table', //指定表格元素
+        //     url: setter.ctxPath + '/dept/list.ajax',  //请求路径
+        //     cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+        //     , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
+        //     , even: true    //隔行换色
+        //     , page: true  //开启分页
+        //     , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+        //     , limit: 10 //每页默认显示的数量
+        //     , method: 'post'  //提交方式
+        //     , cols: [[
+        //         {type: 'checkbox'}, //开启多选框
+        //         {type: 'numbers', title: '序号'}, //序号
+        //         {
+        //             field: 'fullName',
+        //             title: '部门全称',
+        //             sort: true
+        //         },
+        //         {
+        //             field: 'pid',
+        //             title: '父级ID',
+        //             sort: true
+        //         },
+        //         {
+        //             field: 'sort',
+        //             title: '排序',
+        //             sort: true
+        //         },
+        //         {
+        //             field: 'createTime',
+        //             title: '创建时间',
+        //             sort: true
+        //         },
+        //         {
+        //             title: '操作',
+        //             templet: operation,
+        //             width: 120,
+        //             align: 'center'
+        //         }
+        //     ]]
+        // });
+
+        window.renderTable = function (){
+            return treeTable.render({
+                elem: '#LAYF-list-table',
+                url: setter.ctxPath + '/dept/treeTable.ajax',
+                // where: field,
+                icon_key: 'fullName',
+                is_checkbox: true,
+                primary_key: 'id',
+                parent_key: 'pid',
+                top_value: 0,
+                hide_class: 'layui-hide',
+                is_click_icon: false,
+                icon: {
+                    open: 'layui-icon layui-icon-triangle-d',
+                    close: 'layui-icon layui-icon-triangle-r',
+                    left: 16,
                 },
-                {
-                    field: 'pid',
-                    title: '父级ID',
-                    sort: true
+                // checked: {
+                //     key: 'id',
+                //     data: [0,1,4,10,11,5,2,6,7,3,8,9],
+                // },
+                end: function(e){
+                    // console.log(e.data)
+                    // form.render();
                 },
-                {
-                    field: 'sort',
-                    title: '排序',
-                    sort: true
-                },
-                {
-                    field: 'createTime',
-                    title: '创建时间',
-                    sort: true
-                },
-                {
-                    title: '操作',
-                    templet: operation,
-                    width: 120,
-                    align: 'center'
-                }
-            ]]
-        });
+                cols: [
+                    {
+                        key: 'fullName',
+                        title: '名称',
+                        width: '300px',
+                        align: 'center'
+                    },
+                    {
+                        key: 'pid',
+                        title: '父ID',
+                        width: '300px',
+                        align: 'center'
+                    },
+                    {
+                        key: 'sort',
+                        title: '排序',
+                        align: 'center'
+                    },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        width: '120px',
+                        template: operation
+                    }
+                ]
+            });
+        }
+        var re = renderTable();
 
         //监听搜索
         form.on('submit(LAYF-list-search)', function (data) {
-            var field = data.field;
             //执行重载
-            table.reload('deptTable', {
-                where: field
-            });
+            re = renderTable()
         });
 
         var $ = layui.$, active = {
             batchdel: function () {
-                var checkStatus = table.checkStatus('deptTable')
-                    , checkData = checkStatus.data; //得到选中的数据
-                console.log(checkData)
-                if (checkData.length === 0) {
-                    return layer.msg('请选择数据');
-                }
-
-                var idAry = new Array();
-                for (var i = 0; i < checkData.length; i++) {
-                    idAry[i] = checkData[i].id
+                var checkedIds = treeTable.checked(re)
+                console.log(checkedIds)
+                if (checkedIds.length === 0){
+                    return layer.msg('请选择数据')
                 }
 
                 layer.confirm('确定删除吗？', function (index) {
@@ -129,10 +171,10 @@
                         method: 'POST',
                         traditional: true,   //指定参数序列化时，不做深度序列化
                         data: {
-                            ids: idAry
+                            ids: checkedIds
                         },
                         success: function (res) {
-                            table.reload('deptTable');
+                            renderTable();
                             layer.msg('已删除');
                         }
 
@@ -152,6 +194,7 @@
                         //点击确认触发 iframe 内容中的按钮提交
                         var submit = layero.find('iframe').contents().find("#LAYF-dept-form-add-submit");
                         submit.click();
+                        renderTable();
                     }
                 });
             }

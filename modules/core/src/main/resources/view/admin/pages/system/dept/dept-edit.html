@@ -82,7 +82,8 @@
                 success: function (res) {
                     if (res.code == setter.response.statusCode.ok) {
                         parent.layer.msg(res.msg);
-                        parent.layui.table.reload('deptTable'); //重载表格
+                        // parent.layui.table.reload('deptTable'); //重载表格
+                        parent.renderTable();
                         parent.layer.close(index); //再执行关闭
                     } else {
                         layer.msg(res.msg);
@@ -102,7 +103,7 @@
                 if (res.code == setter.response.statusCode.ok) {
                     var list = res.data;
                     var $select = $('#parent-dept-select');
-                    $select.append('<option value="0">顶级</option>')
+                    $select.append('<option value="">请选择</option>')
                     for (var i in list){
                         if (list[i].id != '${dept.id}') {
                             $select.append('<option value="' + list[i].id + '">' + list[i].fullName + '</option>')

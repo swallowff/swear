@@ -13,19 +13,52 @@ import java.util.List;
  */
 public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> extends CrudService<M,E>{
 
+    @Override
     public int save(E entity){
+        pre(entity);
+        return super.save(entity);
+    }
+
+    @Override
+    public int insert(E entity){
+        pre(entity);
+        return super.insert(entity);
+    }
+
+    @Override
+    public int insertSelective(E entity){
+        pre(entity);
+        return super.insertSelective(entity);
+    }
+
+    @Override
+    public int update(E entity){
+        pre(entity);
+        return super.update(entity);
+    }
+
+    @Override
+    public int updateSelective(E entity){
+        pre(entity);
+        return super.updateSelective(entity);
+    }
+
+    private void pre(E entity){
         E parent = (E) entity.getParent();
-        if (null != parent){
+        if (null != parent && StringUtils.isNotBlank(parent.getId())){
+            parent = crudDao.selectById(parent.getId());
             String pids = null;
-            if (StringUtils.isNotBlank(parent.getId())){
+            if (null != parent){
                 pids = parent.getId();
-            }
-            if (parent.getPids() != null && !"".equals(parent.getPids())){
-                pids = parent.getPids().concat("," + pids);
+                if (parent.getPids() != null && !"".equals(parent.getPids())){
+                    pids = parent.getPids().concat("," + pids);
+                }
             }
             entity.setPids(pids);
+        }else {
+            entity.setPid(TreeEntity.ROOT_ID);
+            entity.setPids(TreeEntity.ROOT_ID);
         }
-        return super.save(entity);
     }
 
     /**
@@ -48,17 +81,13 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         Class<E> entityClass = ReflectUtils.getClassGenricType(getClass(), 1);
         try {
             E parent = entityClass.getConstructor().newInstance();
-            parent.setId("0");
+            parent.setId(TreeEntity.ROOT_ID);
             return findTree(parent);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-
-    /**
-     * TODO 优化查询树,一次查出所有list
-     */
 
     /**
      * 递归查询子节点
@@ -75,4 +104,7 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         }
 
     }
+
+
+
 }

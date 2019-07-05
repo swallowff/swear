@@ -7,6 +7,7 @@
         a.sort AS sort,
         a.name AS name,
         a.pid AS "parent.id",
+        a.pids AS pids,
         a.dept_id AS deptId,
         a.tips AS tips,
         a.create_time AS createTime,
@@ -32,6 +33,9 @@
             a.delflag = 0
             <if test="parent != null and parent.id != null and parent.id != ''">
               AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
             </if>
             <if test="name != null and name != ''">
                 AND a.name = #{name}
@@ -64,6 +68,7 @@
           sort,
           name,
           pid,
+          pids,
           dept_id,
           tips,
           update_time,
@@ -74,6 +79,7 @@
           #{sort},
           #{name},
           #{parent.id},
+          #{pids},
           #{deptId},
           #{tips},
           #{updateTime},
@@ -96,6 +102,9 @@
             </if>
             <if test="parent != null and parent.id != null and parent.id != ''">
                 pid,
+            </if>
+            <if test="pids != null and pids != ''">
+                pids,
             </if>
             <if test="deptId != null and deptId != ''">
                 dept_id,
@@ -127,6 +136,9 @@
             <if test="parent != null and parent.id != null and parent.id != ''">
                 #{parent.id},
             </if>
+            <if test="pids != null and pids != ''">
+                #{pids},
+            </if>
             <if test="deptId != null and deptId != ''">
                 #{deptId},
             </if>
@@ -150,6 +162,7 @@
           sort = #{sort},
           name = #{name},
           pid = #{parent.id},
+          pids = #{pids},
           dept_id = #{deptId},
           tips = #{tips},
           update_time = #{updateTime}
@@ -170,6 +183,9 @@
             </if>
             <if test="parent != null and parent.id != null and parent.id != ''">
                 pid = #{parent.id},
+            </if>
+            <if test="pids != null and pids != ''">
+                pids = #{pids},
             </if>
             <if test="deptId != null and deptId != ''">
                 dept_id = #{deptId},

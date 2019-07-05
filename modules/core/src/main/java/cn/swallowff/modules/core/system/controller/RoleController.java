@@ -1,12 +1,13 @@
 package cn.swallowff.modules.core.system.controller;
 
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
+import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
-import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.modules.core.system.entity.Role;
 import cn.swallowff.modules.core.system.service.RoleService;
+import cn.swallowff.modules.core.system.wrapper.RoleDtreeNodeWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,24 +55,20 @@ public class RoleController extends BaseController {
         return layPageResp;
     }
 
-    @RequestMapping(value = "treeList.ajax")
+    @RequestMapping(value = "dtree.ajax")
     @ResponseBody
-    public Object ajaxTree(Role role){
+    public Object dtree(Role role){
         BaseResp baseResp = BaseResp.newSuccess();
-        role = roleService.findAllTree();
-        role.setName("顶级");
-        List<Role> list = new ArrayList<>();
-        list.add(role);
-        return baseResp.setData(list);
+        role.setPids(TreeEntity.ROOT_ID);
+        List<Role> list = roleService.findList(role);
+        RoleDtreeNodeWrapper wrapper = new RoleDtreeNodeWrapper(list);
+        return baseResp.setData(wrapper.wrapList());
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
     public BaseResp add(Role role){
         BaseResp baseResp = BaseResp.newSuccess();
-        if (StringUtils.isBlank(role.getPid())){
-            role.setPid("0");
-        }
         roleService.save(role);
         return baseResp;
     }

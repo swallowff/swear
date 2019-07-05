@@ -8,7 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
   <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
-  <link rel="stylesheet" href="${static}/layuiadmin/style/eleTree.css" media="all"
+  <link rel="stylesheet" href="${static}/layuiadmin/style/dtree.css" media="all">
+  <link rel="stylesheet" href="${static}/fonts/dtreefont/dtreefont.css" media="all">
 </head>
 <body>
 
@@ -23,19 +24,16 @@
             </div>
           </div>
           <div class="layui-inline">
-            <!--<label class="layui-form-label">用户名</label>-->
             <div class="layui-input-inline">
               <input type="text" name="name" placeholder="请输入用户名" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-inline">
-            <!--<label class="layui-form-label">账号</label>-->
             <div class="layui-input-inline">
               <input type="text" name="account" placeholder="请输入登录账号" autocomplete="off" class="layui-input">
             </div>
           </div>
           <div class="layui-inline">
-            <!--<label class="layui-form-label">邮箱</label>-->
             <div class="layui-input-inline">
               <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
             </div>
@@ -56,7 +54,7 @@
           <button class="layui-btn layui-btn-primary layuiadmin-btn-list" data-type="role">分配角色</button>
         </div>
 
-        <div id="role-tree" class="eleTree ele1" style="display: none;"></div>
+        <ul id="role-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;display: none;"></ul>
 
         <table id="LAYF-list-table" lay-filter="LAYF-user-list-table"></table>
 
@@ -75,15 +73,14 @@
           base: '${static}/layuiadmin/' //静态资源所在路径
       }).extend({
           index: 'lib/index', //主入口模块
-          eleTree: 'tree/eleTree'
-      }).use(['index', 'contlist', 'table', 'jquery', 'admin' ,'eleTree'], function () {
+          dtree: 'tree/dtree'
+      }).use(['index', 'contlist', 'table', 'jquery', 'admin' ,'dtree'], function () {
           var table = layui.table,
               form = layui.form,
               $ = layui.jquery,
               admin = layui.admin,
               setter = layui.setter,
-                eleTree = layui.eleTree;
-              // dtree = layui.dtree;
+              dtree = layui.dtree;
 
 
           setter.serverUrl = '${serverUrl}';
@@ -213,18 +210,18 @@
                   layer.open({
                       type: 1,
                       tittle: '请选择角色',
-                      area: ['390px','330px'],
+                      area: ['390px', '330px'],
                       shade: 0.4,
-                      btn: ['确定','取消'],
-                      content: $('#role-tree'),
-                      scrollbar: true ,//屏蔽浏览器滚动条
-                      yes: function(index){//layer.msg('yes');    //点击确定回调
+                      btn: ['确定', '取消'],
+                      content: $('#role-select'),
+                      scrollbar: true,//屏蔽浏览器滚动条
+                      yes: function (index) {//layer.msg('yes');    //点击确定回调
                           layer.close(index);
                           console.log('确定提交');
                       }
 
                   })
-                  
+
               }
 
           };
@@ -277,34 +274,25 @@
               });
           };
 
-          // eleTree   文档:https://fly.layui.com/extend/eleTree/#doc
-          eleTree.render({
-              elem: '#role-tree',
-              // data: treeData,
-              emptText: '没有数据噢',
-              url: setter.ctxPath + '/role/treeList.ajax',
+          dtree.render({
+              elem: "#role-select",
+              // data: dtreeData, // 使用data加载
+              ficon: ["1","5"],
+              icon: ["1","5"],
+              url: setter.ctxPath + "/role/dtree.ajax", // 使用url加载（可与data加载同时存在）
               method: 'GET',
-              showCheckbox: true,  //显示复选框
-              highlightCurrent: true, //是否高亮当前选中节点，默认值是 false
-              accordion: false,   //手风琴效果
-              request:{      //对于后台数据重新定义名字
-                  key: "id",
-                  name: "name",
-                  children: "children",
-                  checked: "checked",
-                  disabled: "disabled",
-                  isLeaf: "isLeaf"
-              },
-              response: {     //对后台返回的数据格式重新定义
-                  statusName: "code",
-                  statusCode: 0,
-                  dataName: "data"
-              },
-              done: function(res){
-                  // res即为你接口返回的信息
-                  console.log(res);
-              }
+              dataStyle: "layuiStyle",  //使用layui风格的数据格式
+              dataFormat: "list",  //配置data的风格为list
+              response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+              checkbar:true //开启复选框
           });
+
+          // 绑定节点点击
+          dtree.on("node('role-select')" ,function(obj){
+              layer.msg(JSON.stringify(obj.param));
+          });
+
+
       });
 
   </script>

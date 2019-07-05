@@ -6,6 +6,7 @@ import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
 import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.modules.core.system.service.DeptService;
+import cn.swallowff.modules.core.system.wrapper.DeptDtreeNodeWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,32 +53,37 @@ public class DeptController extends BaseController {
         return layPageResp;
     }
 
-    @RequestMapping(value = "treeList.ajax")
+    @RequestMapping(value = "dtree.ajax")
     @ResponseBody
-    public Object ajaxTree(Dept dept){
-        dept.setId("0");
-        dept.setFullName("根节点");
+    public Object dtree(Dept dept){
         BaseResp baseResp = BaseResp.newSuccess();
-        dept = deptService.findTree(dept);
-        List<Dept> list = new ArrayList<>();
-        list.add(dept);
-        return baseResp.setData(list);
+        dept.setPids(Dept.ROOT_ID);
+        List<Dept> deptList = deptService.findList(dept);
+        DeptDtreeNodeWrapper wrapper = new DeptDtreeNodeWrapper(deptList);
+        return baseResp.setData(wrapper.wrapList());
     }
 
-    @RequestMapping(value = "treeTableList.ajax")
+    @RequestMapping(value = "treeTable.ajax")
     @ResponseBody
-    public Object treeTableList(Dept dept){
-        List<Dept> deptList = deptService.findList(new Dept());
+    public Object treeTable(Dept dept){
+        List<Dept> deptList = deptService.findList(dept);
         return deptList;
+    }
+
+    @RequestMapping(value = "laytreeTable.ajax")
+    @ResponseBody
+    public Object laytreeTable(Dept dept){
+        BaseResp baseResp = BaseResp.newSuccess();
+        List<Dept> deptList = deptService.findList(dept);
+        baseResp.setData(deptList);
+//        return deptList;
+        return baseResp;
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
     public BaseResp add(Dept dept){
         BaseResp baseResp = BaseResp.newSuccess();
-        if (StringUtils.isBlank(dept.getPid())){
-            dept.setPid("0");
-        }
         deptService.save(dept);
         return baseResp;
     }
@@ -117,7 +122,7 @@ public class DeptController extends BaseController {
                 count ++;
             }
         }
-        if (count == ids.length){
+        if (count > 0){
             return baseResp;
         }else return baseResp.putError();
     }
