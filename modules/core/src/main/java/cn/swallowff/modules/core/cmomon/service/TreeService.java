@@ -1,7 +1,9 @@
 package cn.swallowff.modules.core.cmomon.service;
 
+import cn.swallowff.common.reflect.ReflectUtils;
 import cn.swallowff.modules.core.cmomon.dao.TreeDao;
 import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -14,7 +16,10 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
     public int save(E entity){
         E parent = (E) entity.getParent();
         if (null != parent){
-            String pids = parent.getId();
+            String pids = null;
+            if (StringUtils.isNotBlank(parent.getId())){
+                pids = parent.getId();
+            }
             if (parent.getPids() != null && !"".equals(parent.getPids())){
                 pids = parent.getPids().concat("," + pids);
             }
@@ -39,6 +44,18 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         return parent;
     }
 
+    public E findAllTree(){
+        Class<E> entityClass = ReflectUtils.getClassGenricType(getClass(), 1);
+        try {
+            E parent = entityClass.getConstructor().newInstance();
+            parent.setId("0");
+            return findTree(parent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * TODO 优化查询树,一次查出所有list
      */
@@ -51,11 +68,10 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         for (int i = 0; i < treeNodeList.size() ; i++){
             E node = treeNodeList.get(i);
             List<E> children = crudDao.findChildren(node);
-            if (null == children || children.size() == 0){
-                break;
+            if (null != children && children.size() != 0){
+                updateChildrenNode(children);
+                node.setChildren(children);
             }
-            updateChildrenNode(children);
-            node.setChildren(children);
         }
 
     }

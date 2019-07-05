@@ -20,10 +20,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">父级角色ID</label>
+            <label class="layui-form-label">父级角色</label>
             <div class="layui-input-inline">
-                <input type="text" name="pid" placeholder="父级角色ID" autocomplete="off"
-                       class="layui-input">
+                <select id="prole-select" data-placeholder="请选择父级角色" name="pid" lay-search=""></select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -90,19 +89,36 @@
                 });
             });
 
-            //渲染父级菜单下拉选择
+            //渲染所属部门下拉选择
             $.ajax({
                 url: setter.ctxPath + '/dept/list.ajax',
                 data: '',
                 method: 'GET',
                 success: function (res) {
-                    // console.log(res)
                     if (res.code == setter.response.statusCode.ok) {
                         var listData = res.data;
                         var $select = $('#dept-select');
                         $select.append('<option value="">请选择</option>')
                         for (var i in listData){
                             $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
+                        }
+                        form.render('select','LAYF-role-form-add'); //刷新select选择框
+                    }
+                }
+            });
+
+            //渲染父级角色下拉选择
+            $.ajax({
+                url: setter.ctxPath + '/role/list.ajax',
+                data: '',
+                method: 'GET',
+                success: function (res) {
+                    if (res.code == setter.response.statusCode.ok) {
+                        var listData = res.data;
+                        var $select = $('#prole-select');
+                        $select.append('<option value="0">顶级</option>');
+                        for (var i in listData){
+                            $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
                         }
                         form.render('select','LAYF-role-form-add'); //刷新select选择框
                     }

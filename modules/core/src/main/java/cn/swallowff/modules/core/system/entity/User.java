@@ -21,7 +21,7 @@ public class User extends BaseEntity implements Serializable {
     private String email;   //电子邮箱
     private String phone;   //手机号
     private String roleId; //角色id
-    private Integer deptId; //部门id
+    private String deptId; //部门id
     private Integer status; //启用状态    1:启用  0:停用  字典YesOrNo
 
     public String getAvatar() {
@@ -104,11 +104,11 @@ public class User extends BaseEntity implements Serializable {
         this.roleId = roleId;
     }
 
-    public Integer getDeptId() {
+    public String getDeptId() {
         return deptId;
     }
 
-    public void setDeptId(Integer deptId) {
+    public void setDeptId(String deptId) {
         this.deptId = deptId;
     }
 

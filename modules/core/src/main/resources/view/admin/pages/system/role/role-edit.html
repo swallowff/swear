@@ -22,10 +22,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">父级角色ID</label>
+        <label class="layui-form-label">父级角色</label>
         <div class="layui-input-inline">
-            <input type="text" name="pid" placeholder="请输入父级角色ID" autocomplete="off"
-                   class="layui-input">
+            <select id="prole-select" data-placeholder="请选择父级角色" name="pid" lay-search=""></select>
         </div>
     </div>
     <div class="layui-form-item">
@@ -118,6 +117,30 @@
                     }
                     form.val('LAYF-role-form-edit',{
                         deptId: '${role.deptId}',
+                    });
+                    form.render('select','LAYF-role-form-edit'); //刷新select选择框
+                }
+            }
+        });
+
+        //渲染父级角色下拉选择
+        $.ajax({
+            url: setter.ctxPath + '/role/list.ajax',
+            data: '',
+            method: 'GET',
+            success: function (res) {
+                // console.log(res)
+                if (res.code == setter.response.statusCode.ok) {
+                    var listData = res.data;
+                    var $select = $('#prole-select');
+                    $select.append('<option value="0">顶级</option>');
+                    for (var i in listData){
+                        if (listData[i].id != '${role.id}'){
+                            $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
+                        }
+                    }
+                    form.val('LAYF-role-form-edit',{
+                        pid: '${role.pid}',
                     });
                     form.render('select','LAYF-role-form-edit'); //刷新select选择框
                 }

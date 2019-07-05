@@ -56,7 +56,7 @@
           <button class="layui-btn layui-btn-primary layuiadmin-btn-list" data-type="role">分配角色</button>
         </div>
 
-        <div id="role-select" class="treeDemo1 eleTree ele1" style="display: none;"></div>
+        <div id="role-tree" class="eleTree ele1" style="display: none;"></div>
 
         <table id="LAYF-list-table" lay-filter="LAYF-user-list-table"></table>
 
@@ -216,7 +216,7 @@
                       area: ['390px','330px'],
                       shade: 0.4,
                       btn: ['确定','取消'],
-                      content: $('#role-select'),
+                      content: $('#role-tree'),
                       scrollbar: true ,//屏蔽浏览器滚动条
                       yes: function(index){//layer.msg('yes');    //点击确定回调
                           layer.close(index);
@@ -279,17 +279,17 @@
 
           // eleTree   文档:https://fly.layui.com/extend/eleTree/#doc
           eleTree.render({
-              elem: '.treeDemo1',
+              elem: '#role-tree',
               // data: treeData,
               emptText: '没有数据噢',
-              url: setter.ctxPath + '/dept/treeList.ajax',
+              url: setter.ctxPath + '/role/treeList.ajax',
               method: 'GET',
               showCheckbox: true,  //显示复选框
               highlightCurrent: true, //是否高亮当前选中节点，默认值是 false
               accordion: false,   //手风琴效果
               request:{      //对于后台数据重新定义名字
                   key: "id",
-                  name: "fullName",
+                  name: "name",
                   children: "children",
                   checked: "checked",
                   disabled: "disabled",
@@ -301,7 +301,7 @@
                   dataName: "data"
               },
               done: function(res){
-                  // res即为你接口返回的信息。
+                  // res即为你接口返回的信息
                   console.log(res);
               }
           });

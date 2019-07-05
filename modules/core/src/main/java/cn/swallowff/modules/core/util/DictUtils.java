@@ -39,7 +39,7 @@ public class DictUtils {
         return TIPS;
     }
 
-    public static List<DictCache> selectByCode(String code){
+    public static List<DictCache> getDictByCode(String code){
         List<DictCache> cacheList = dictCacheMap.get(code);
         if (CollectionUtils.isEmpty(cacheList)){
             Assert.notNull(dictService,"dictService must not be null ");

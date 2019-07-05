@@ -4,6 +4,7 @@ import cn.swallowff.modules.core.cmomon.controller.BaseController;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.modules.core.system.entity.Role;
 import cn.swallowff.modules.core.system.service.RoleService;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author swallowff
@@ -51,19 +55,24 @@ public class RoleController extends BaseController {
         return layPageResp;
     }
 
-    @RequestMapping(value = "roleTree.ajax")
+    @RequestMapping(value = "treeList.ajax")
     @ResponseBody
-    public Object ajaxRoleTree(Role role){
-        role.setOrderBy("sort ASC");
-//        List<DeptTreeDto> list = roleService.findList(new Role());
-//        BaseResp baseResp = BaseResp.newSuccess().setData(list);
-        return null;
+    public Object ajaxTree(Role role){
+        BaseResp baseResp = BaseResp.newSuccess();
+        role = roleService.findAllTree();
+        role.setName("顶级");
+        List<Role> list = new ArrayList<>();
+        list.add(role);
+        return baseResp.setData(list);
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
     public BaseResp add(Role role){
         BaseResp baseResp = BaseResp.newSuccess();
+        if (StringUtils.isBlank(role.getPid())){
+            role.setPid("0");
+        }
         roleService.save(role);
         return baseResp;
     }

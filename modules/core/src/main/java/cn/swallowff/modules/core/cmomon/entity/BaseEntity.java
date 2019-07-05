@@ -2,6 +2,8 @@ package cn.swallowff.modules.core.cmomon.entity;
 
 import cn.swallowff.common.idgen.IdGenerate;
 import cn.swallowff.common.lang.StringUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.omg.CORBA.INTERNAL;
 
 import java.util.Date;
@@ -10,13 +12,18 @@ public class BaseEntity {
     private String id;
     private Date createTime;
     private Date updateTime;
+    @JsonIgnore
     private Integer version;
+    @JsonIgnore
     private String orderBy;
+    @JsonIgnore
     private boolean delflag;
 
+    @JsonIgnore
     private Integer page = 1;
+    @JsonIgnore
     private Integer limit = 20;
-
+    @JsonIgnore
     private boolean isNewRecord;
 
     public String getId() {

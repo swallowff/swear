@@ -46,6 +46,12 @@
       </div>
     </div>
     <div class="layui-form-item">
+      <label class="layui-form-label">部门</label>
+      <div class="layui-input-inline">
+        <select id="dept-select" data-placeholder="请选择" name="deptId" lay-search=""></select>
+      </div>
+    </div>
+    <div class="layui-form-item">
       <label class="layui-form-label">登录账户</label>
       <div class="layui-input-inline">
         <input type="text" name="account" lay-verify="username" placeholder="请输入登录账户" autocomplete="off"
@@ -162,6 +168,28 @@
               trigger: 'click',
               format: 'yyyy/MM/dd',
               value: '${user.birthday}'
+          });
+
+          //渲染父级菜单下拉选择
+          $.ajax({
+              url: setter.ctxPath + '/dept/list.ajax',
+              data: '',
+              method: 'GET',
+              success: function (res) {
+                  // console.log(res)
+                  if (res.code == setter.response.statusCode.ok) {
+                      var listData = res.data;
+                      var $select = $('#dept-select');
+                      $select.append('<option value="">请选择</option>')
+                      for (var i in listData){
+                          $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
+                      }
+                      form.val('LAYF-user-form-edit',{
+                          deptId: '${user.deptId}',
+                      });
+                      form.render('select','LAYF-user-form-edit'); //刷新select选择框
+                  }
+              }
           });
       })
   </script>

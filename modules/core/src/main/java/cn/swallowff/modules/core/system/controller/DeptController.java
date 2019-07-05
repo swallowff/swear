@@ -65,10 +65,20 @@ public class DeptController extends BaseController {
         return baseResp.setData(list);
     }
 
+    @RequestMapping(value = "treeTableList.ajax")
+    @ResponseBody
+    public Object treeTableList(Dept dept){
+        List<Dept> deptList = deptService.findList(new Dept());
+        return deptList;
+    }
+
     @RequestMapping(value = "add.ajax")
     @ResponseBody
     public BaseResp add(Dept dept){
         BaseResp baseResp = BaseResp.newSuccess();
+        if (StringUtils.isBlank(dept.getPid())){
+            dept.setPid("0");
+        }
         deptService.save(dept);
         return baseResp;
     }

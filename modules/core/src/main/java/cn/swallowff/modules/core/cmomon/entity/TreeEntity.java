@@ -64,6 +64,8 @@ public class TreeEntity<E extends TreeEntity> extends BaseEntity{
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else {
+            parent.setId(pid);
         }
     }
 }

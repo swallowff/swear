@@ -6,19 +6,7 @@
         a.id AS id,
         a.sort AS sort,
         a.name AS name,
-        a.pid AS pid,
-        a.dept_id AS deptId,
-        a.tips AS tips,
-        a.create_time AS createTime,
-        a.update_time AS updateTime,
-        a.version AS version
-    </sql>
-
-    <sql id="treeListColumns">
-        a.id AS id,
-        a.sort AS sort,
-        a.name AS name,
-        a.pid AS pid,
+        a.pid AS "parent.id",
         a.dept_id AS deptId,
         a.tips AS tips,
         a.create_time AS createTime,
@@ -42,8 +30,8 @@
         FROM sys_role a
         <where>
             a.delflag = 0
-            <if test="pid != null and pid != ''">
-              AND a.pid = #{pid}
+            <if test="parent != null and parent.id != null and parent.id != ''">
+              AND a.pid = #{parent.id}
             </if>
             <if test="name != null and name != ''">
                 AND a.name = #{name}
@@ -57,6 +45,17 @@
                 ORDER BY a.update_time DESC
             </otherwise>
         </choose>
+    </select>
+
+    <select id="findChildren" resultType="Role">
+        SELECT
+        a.id AS id,
+        a.name AS name
+        FROM sys_role a
+        <where>
+            a.delflag = 0
+            AND a.pid = #{id}
+        </where>
     </select>
 
     <insert id="insert">
@@ -74,7 +73,7 @@
           #{id},
           #{sort},
           #{name},
-          #{pid},
+          #{parent.id},
           #{deptId},
           #{tips},
           #{updateTime},
@@ -94,6 +93,9 @@
             </if>
             <if test="name != null and name != ''">
                 name,
+            </if>
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                pid,
             </if>
             <if test="deptId != null and deptId != ''">
                 dept_id,
@@ -122,8 +124,8 @@
             <if test="name != null and name != ''">
                 #{name},
             </if>
-            <if test="pid != null and pid != ''">
-                #{pid},
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                #{parent.id},
             </if>
             <if test="deptId != null and deptId != ''">
                 #{deptId},
@@ -147,7 +149,7 @@
         UPDATE sys_role SET
           sort = #{sort},
           name = #{name},
-          pid = #{pid},
+          pid = #{parent.id},
           dept_id = #{deptId},
           tips = #{tips},
           update_time = #{updateTime}
@@ -166,8 +168,8 @@
             <if test="name != null and name != ''">
                 name = #{name},
             </if>
-            <if test="pid != null and pid != ''">
-                pid = #{pid},
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                pid = #{parent.id},
             </if>
             <if test="deptId != null and deptId != ''">
                 dept_id = #{deptId},

@@ -4,12 +4,9 @@ import cn.swallowff.common.lang.ObjectUtils;
 import cn.swallowff.common.lang.StringUtils;
 import cn.swallowff.modules.core.cache.DictCache;
 import cn.swallowff.modules.core.constant.exceptionenum.BizExceptionEnum;
-import cn.swallowff.modules.core.system.entity.Dict;
-import cn.swallowff.modules.core.system.service.DictService;
 import cn.swallowff.modules.core.excepiton.ServiceException;
 import cn.swallowff.modules.core.util.DictUtils;
 import org.beetl.core.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -61,8 +58,8 @@ public class DictSelectorTag extends Tag {
         //searchnum 下拉选项数量达到多少启用搜索,默认10
         int searchnum = ObjectUtils.isNum(attrs.get("searchnum")) ? Integer.parseInt(attrs.get("searchnum").toString()) : 10;
         //根据code查询字典数据
-//        List<Dict> list = dictService.selectByCode(code);
-        List<DictCache> list = DictUtils.selectByCode(code);  //从字典缓存里读取字典数据
+//        List<Dict> list = dictService.getDictByCode(code);
+        List<DictCache> list = DictUtils.getDictByCode(code);  //从字典缓存里读取字典数据
 
         StringBuffer html = new StringBuffer();
 //        html.append("<div class=\"layui-form-item\">\r\n"); //x-admin版本
