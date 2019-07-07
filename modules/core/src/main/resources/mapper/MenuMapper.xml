@@ -97,9 +97,16 @@
         SELECT
         <include refid="baseColumns"/>
         FROM sys_menu a
+        INNER JOIN sys_user u ON u.delflag = 0 AND u.id = #{userId}
+        INNER JOIN sys_user_role_relation ur ON ur.delflag = 0 AND ur.user_id = u.id
+        INNER JOIN sys_role r ON r.delflag = 0 AND r.id = ur.role_id
+        INNER JOIN sys_role_auth_relation ra ON ra.delflag = 0 AND ra.role_id = r.id AND ra.menu_id = a.id
         <where>
             a.delflag = 0
             AND a.pid = #{id}
+            <if test="isMenu != null">
+              AND a.is_menu = #{isMenu}
+            </if>
         </where>
         <choose>
             <when test="orderBy != null and orderBy != ''">

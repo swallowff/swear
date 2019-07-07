@@ -19,6 +19,17 @@ public class Menu extends TreeEntity<Menu> {
     private String tips;    //备注
     private Boolean isOpen; //是否打开
 
+    //用户菜单权限查询字段
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getCode() {
         return code;
     }

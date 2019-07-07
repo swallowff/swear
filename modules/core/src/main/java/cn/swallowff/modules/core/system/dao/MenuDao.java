@@ -18,4 +18,5 @@ import java.util.List;
 @Mapper
 public interface MenuDao extends TreeDao<Menu> {
     List<DtreeNode> findMenuListWithRole(@Param(value = "menu") Menu menu, @Param(value = "roleId") String roleId);
+
 }

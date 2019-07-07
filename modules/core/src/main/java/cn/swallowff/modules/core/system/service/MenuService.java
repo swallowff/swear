@@ -24,7 +24,21 @@ public class MenuService extends TreeService<MenuDao,Menu> {
         return CollectionUtils.isEmpty(list) ? null : list.get(0);
     }
 
-    public List<DtreeNode> findMenuListWithRole(Menu menu,String roleId) {
+    @Override
+    protected void updateChildrenNode(List<Menu> treeNodeList, Menu parent) {
+        for (int i = 0; i < treeNodeList.size() ; i++){
+            Menu menu = treeNodeList.get(i);
+            menu.setOrderBy(parent.getOrderBy());
+            menu.setUserId(parent.getUserId());
+            List<Menu> children = crudDao.findChildren(menu);
+            if (null != children && children.size() != 0){
+                updateChildrenNode(children,parent);
+                menu.setChildren(children);
+            }
+        }
+    }
+
+    public List<DtreeNode> findMenuListWithRole(Menu menu, String roleId) {
         return crudDao.findMenuListWithRole(menu,roleId);
     }
 }

@@ -50,6 +50,7 @@ public class GlobalController extends BaseController {
         Menu menu = new Menu();
         menu.setId(Menu.ROOT_ID);
         menu.setOrderBy("sort ASC");
+        menu.setUserId(shiroUser.id);
         List<Menu> list = menuService.findTree(menu).getChildren();
         model.addAttribute("menuList",list);
         return "admin/pages/index";

@@ -71,7 +71,7 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         if (null == children || children.size() == 0){
             return parent;
         }else {
-            updateChildrenNode(children,parent);
+            this.updateChildrenNode(children,parent);
         }
         parent.setChildren(children);
         return parent;
@@ -97,7 +97,7 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
      * 递归查询子节点
      * @param treeNodeList
      */
-    private void updateChildrenNode(List<E> treeNodeList,E parent){
+    protected void updateChildrenNode(List<E> treeNodeList,E parent){
         for (int i = 0; i < treeNodeList.size() ; i++){
             E node = treeNodeList.get(i);
             node.setOrderBy(parent.getOrderBy());
