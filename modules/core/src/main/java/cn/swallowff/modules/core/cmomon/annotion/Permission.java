@@ -35,5 +35,5 @@ public @interface Permission {
      */
     String[] value() default {};
 
-    String[] roleCode();
+    String[] roleCode() default {};
 }

@@ -30,7 +30,7 @@ public class DictController extends BaseController {
     private DictService dictService;
 
     @RequestMapping(value = "list.html")
-    @Permission(roleCode = "front")
+    @Permission(value = "sys-dict-list")
     public String listHtml(){
         return "admin/pages/system/dict/dict-list";
     }
