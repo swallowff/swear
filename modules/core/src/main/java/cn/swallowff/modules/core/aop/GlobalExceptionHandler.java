@@ -3,6 +3,7 @@ package cn.swallowff.modules.core.aop;
 import cn.swallowff.modules.core.constant.exceptionenum.BizExceptionEnum;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.excepiton.BizException;
+import cn.swallowff.modules.core.excepiton.NoPermissionsException;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.excepiton.InvalidKaptchaException;
 import cn.swallowff.modules.core.excepiton.ServiceException;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.naming.NoPermissionException;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.UndeclaredThrowableException;
 
@@ -59,6 +61,15 @@ public class GlobalExceptionHandler {
 //        request.setAttribute("tip",e.getMessage());
 //        log.error("业务异常:",e);
         return new BaseResp(e.getCode(),e.getErrorMessage());
+    }
+
+    @ExceptionHandler(NoPermissionsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String noPermission(NoPermissionsException e, HttpServletRequest request){
+        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
+//        log.error("业务异常:",e);
+//        return new BaseResp(e.getCode(),e.getErrorMessage());
+        return "error/404";
     }
 
     /**
@@ -114,7 +125,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(InvalidKaptchaException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String credentials(InvalidKaptchaException e, Model model) {
+    public String kaptchaException(InvalidKaptchaException e, Model model) {
         String account = HttpContext.getRequest().getParameter("account");
         LogManager.me().executeLog(LogTaskFactory.loginLog(account, "验证码错误", HttpContext.getIp()));
         model.addAttribute("tips", "验证码错误");
@@ -127,11 +138,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UndeclaredThrowableException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
-    public BaseResp credentials(UndeclaredThrowableException e) {
+    public BaseResp undeclaredThrowableException(UndeclaredThrowableException e) {
         HttpContext.getRequest().setAttribute("tips", "权限异常");
         log.error("权限异常!", e);
         return new BaseResp(BizExceptionEnum.NO_PERMITION.getCode(), BizExceptionEnum.NO_PERMITION.getMsg());
     }
+
     /**
      * 拦截未知的运行时异常
      */

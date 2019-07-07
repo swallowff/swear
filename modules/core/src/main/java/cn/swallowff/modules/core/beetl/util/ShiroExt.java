@@ -1,5 +1,6 @@
 package cn.swallowff.modules.core.beetl.util;
 
+import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.shiro.ShiroUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -102,6 +103,7 @@ public class ShiroExt {
      * @return 拥有权限：true，否则false
      */
     public boolean hasPermission(String permission) {
+        if (ShiroKit.isAdmin())return true;
         return getSubject() != null && permission != null
                 && permission.length() > 0
                 && getSubject().isPermitted(permission);

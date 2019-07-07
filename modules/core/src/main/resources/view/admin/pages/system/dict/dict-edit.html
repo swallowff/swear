@@ -59,26 +59,17 @@
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="LAYF-dict-form-edit-submit" id="LAYF-dict-form-edit-submit"
                value="确认">
-        <!--<input type="button" lay-submit lay-filter="layuiadmin-dict-edit-edit" id="layuiadmin-dict-edit-edit"-->
-               <!--value="确认编辑">-->
     </div>
 </div>
 
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
-    layui.config({
-        base: '${static}/layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'form'], function () {
-        var $ = layui.$,
-            form = layui.form,
-            setter = layui.setter,
-            layer = layui.layer;
-        setter.serverUrl = '${serverUrl}';
-        setter.ctxPath = '${admin}';
+    var Swear = {
+        serverUrl : '${serverUrl}',
+        ctxPath : '${admin}',
+        static : '${static}',
 
-        form.val('LAYF-dict-form-edit', {
+        formValue: {
             id: '${dict.id}',
             name: '${dict.name}',
             code: '${dict.code}',
@@ -86,33 +77,12 @@
             val: '${dict.val}',
             sort: '${dict.sort}',
             tips: '${dict.tips}'
-        })
+        }
+    }
+</script>
+<script src="${static}/module/admin/system/dict/dict-edit.js"></script>
+<script>
 
-        //监听提交
-        form.on('submit(LAYF-dict-form-edit-submit)', function (data) {
-            var field = data.field; //获取提交的字段
-            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-
-            //提交 Ajax 成功后，关闭当前弹层并重载表格
-            $.ajax({
-                url: setter.ctxPath + '/dict/edit.ajax',
-                data: field,
-                method: 'POST',
-                success: function (res) {
-                    if (res.code == setter.response.statusCode.ok) {
-                        parent.layer.msg(res.msg);
-                        parent.layui.table.reload('dictTable'); //重载表格
-                        parent.layer.close(index); //再执行关闭
-                    } else {
-                        console.log(res.msg)
-                        layer.msg(res.msg);
-                    }
-
-                }
-            });
-
-        });
-    })
 </script>
 </body>
 </html>

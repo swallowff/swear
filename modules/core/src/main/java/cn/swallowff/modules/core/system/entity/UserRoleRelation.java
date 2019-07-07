@@ -11,7 +11,7 @@ public class UserRoleRelation extends BaseEntity {
     private String roleId;
 
     //结果额外字段
-    private String roleName;
+    private String roleCode;
 
     public String getUserId() {
         return userId;
@@ -29,11 +29,11 @@ public class UserRoleRelation extends BaseEntity {
         this.roleId = roleId;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getRoleCode() {
+        return roleCode;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode;
     }
 }

@@ -7,6 +7,7 @@ import cn.swallowff.modules.core.system.entity.UserRoleRelation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -24,8 +25,7 @@ public class ShiroUser implements Serializable {
     public String deptId;      // 部门id
     public List<String> roleList; // 角色集
     public String deptName;        // 部门名称
-    public List<String> roleNames; // 角色名称集
-
+    public List<String> roleCodes; // 角色权限码集
 
     public String getId() {
         return id;
@@ -75,12 +75,12 @@ public class ShiroUser implements Serializable {
         this.deptName = deptName;
     }
 
-    public List<String> getRoleNames() {
-        return roleNames;
+    public List<String> getRoleCodes() {
+        return roleCodes;
     }
 
-    public void setRoleNames(List<String> roleNames) {
-        this.roleNames = roleNames;
+    public void setRoleCodes(List<String> roleCodes) {
+        this.roleCodes = roleCodes;
     }
 
     public static ShiroUser fromSysUser(User user){
@@ -91,7 +91,7 @@ public class ShiroUser implements Serializable {
         shiroUser.deptId = user.getDeptId();
         List<UserRoleRelation> roleRelationList = UserRoleServiceImpl.me().findRoleListByUserId(user.getId());
         shiroUser.roleList = roleRelationList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
-        shiroUser.roleNames = roleRelationList.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
+        shiroUser.roleCodes = roleRelationList.stream().map(item -> item.getRoleCode()).collect(Collectors.toList());
         return shiroUser;
     }
 }

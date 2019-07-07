@@ -38,12 +38,12 @@ public class UserController {
     private UserRoleRelationService userRoleRelationService;
 
     @RequestMapping(value = "list.html")
-    public String listHtml(User user,Model model){
+    public String listHtml(){
         return "admin/pages/system/user/user-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String addHtml(User user,Model model){
+    public String addHtml(){
         return "admin/pages/system/user/user-add";
     }
 
@@ -105,6 +105,9 @@ public class UserController {
     @ResponseBody
     public BaseResp delete(String id){
         BaseResp baseResp = BaseResp.newSuccess();
+        if ("0".equals(id)){
+            return baseResp.putError("无法删除超级管理员");
+        }
         int r = userService.delete(id);
         if (r == 1){
             return baseResp;
@@ -142,6 +145,9 @@ public class UserController {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
         for (String id : ids){
+            if ("0".equals(id)){
+                continue;
+            }
             int r = userService.delete(id);
             if (r == 1){
                 count ++;

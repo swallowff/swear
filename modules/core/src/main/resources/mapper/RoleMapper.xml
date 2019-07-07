@@ -6,6 +6,7 @@
         a.id AS id,
         a.sort AS sort,
         a.name AS name,
+        a.code AS code,
         a.pid AS "parent.id",
         a.pids AS pids,
         a.dept_id AS deptId,
@@ -39,6 +40,9 @@
             </if>
             <if test="name != null and name != ''">
                 AND a.name = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                AND a.code = #{code}
             </if>
             <if test="deptId != null and deptId != ''">
                 AND a.dept_id = #{deptId}
@@ -94,6 +98,7 @@
           id,
           sort,
           name,
+          code,
           pid,
           pids,
           dept_id,
@@ -105,6 +110,7 @@
           #{id},
           #{sort},
           #{name},
+          #{code},
           #{parent.id},
           #{pids},
           #{deptId},
@@ -126,6 +132,9 @@
             </if>
             <if test="name != null and name != ''">
                 name,
+            </if>
+            <if test="code != null and code != ''">
+                code,
             </if>
             <if test="parent != null and parent.id != null and parent.id != ''">
                 pid,
@@ -160,6 +169,9 @@
             <if test="name != null and name != ''">
                 #{name},
             </if>
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
             <if test="parent != null and parent.id != null and parent.id != ''">
                 #{parent.id},
             </if>
@@ -188,6 +200,7 @@
         UPDATE sys_role SET
           sort = #{sort},
           name = #{name},
+          code = #{code},
           pid = #{parent.id},
           pids = #{pids},
           dept_id = #{deptId},
@@ -207,6 +220,9 @@
             </if>
             <if test="name != null and name != ''">
                 name = #{name},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
             </if>
             <if test="parent != null and parent.id != null and parent.id != ''">
                 pid = #{parent.id},

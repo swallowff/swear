@@ -111,6 +111,9 @@ public class RoleController extends BaseController {
     @ResponseBody
     public BaseResp delete(String id){
         BaseResp baseResp = BaseResp.newSuccess();
+        if ("1".equals(id)){
+            return baseResp.putError("无法删除超级管理员角色");
+        }
         int r = roleService.delete(id);
         if (r == 1){
             return baseResp;
@@ -123,6 +126,9 @@ public class RoleController extends BaseController {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
         for (String id : ids){
+            if ("1".equals(id)){
+                continue;
+            }
             int r = roleService.delete(id);
             if (r == 1){
                 count ++;

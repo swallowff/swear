@@ -1,9 +1,9 @@
 package cn.swallowff.modules.core.shiro;
 
-import cn.swallowff.common.lang.StringUtils;
 import cn.swallowff.modules.core.shiro.service.UserAuthService;
 import cn.swallowff.modules.core.shiro.service.impl.UserAuthServiceImpl;
 import cn.swallowff.modules.core.system.entity.User;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -15,6 +15,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ShiroDBRealm extends AuthorizingRealm {
 
@@ -47,19 +48,17 @@ public class ShiroDBRealm extends AuthorizingRealm {
         UserAuthService userAuthService = UserAuthServiceImpl.me();
         ShiroUser shiroUser = (ShiroUser) principalCollection.getPrimaryPrincipal();
         List<String> roleList = shiroUser.getRoleList();
+        List<String> roleCodes = shiroUser.getRoleCodes();
 
         Set<String> permissionSet = new HashSet<>();
         Set<String> roleNameSet = new HashSet<>();
 
         for (String roleId : roleList) {
             List<String> permissions = userAuthService.findPermissionsByRole(roleId);
-            if (permissions != null) {
-                for (String permission : permissions) {
-                    if (StringUtils.isNotBlank(permission)) {
-                        permissionSet.add(permission);
-                    }
-                }
+            if (CollectionUtils.isNotEmpty(permissions)) {
+                permissionSet = permissions.stream().collect(Collectors.toSet());
             }
+            roleNameSet = roleCodes.stream().collect(Collectors.toSet());
 //            String roleName = userAuthService.findRoleNameByRoleId(roleId);
 //            roleNameSet.add(roleName);
         }

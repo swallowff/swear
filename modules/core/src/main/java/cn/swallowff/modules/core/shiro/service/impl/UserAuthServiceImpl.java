@@ -34,7 +34,6 @@ public class UserAuthServiceImpl implements UserAuthService {
         return null;
     }
 
-    //TODO
     @Override
     public List<String> findPermissionsByRole(String roleId) {
         return roleAuthRelationService.findPermissionsByRole(roleId);

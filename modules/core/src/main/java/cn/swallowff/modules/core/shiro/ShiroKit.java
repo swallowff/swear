@@ -1,6 +1,8 @@
 package cn.swallowff.modules.core.shiro;
 
 import cn.swallowff.common.idgen.RandomUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -8,11 +10,15 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 
+import java.util.List;
+
 /**
  * shiro工具包
  * @author yushen
  */
 public class ShiroKit {
+    private static final String NAMES_DELIMETER = ",";
+
 
     /**
      * 加盐参数
@@ -82,5 +88,76 @@ public class ShiroKit {
      */
     public static boolean isUser() {
         return getSubject() != null && getSubject().getPrincipal() != null;
+    }
+
+    public static boolean isAdmin(){
+        return getUser() != null && "0".equals(getUser().id);
+    }
+
+    /**
+     * 验证当前用户是否拥有指定权限,使用时与lacksPermission 搭配使用
+     *
+     * @param permission 权限名
+     * @return 拥有权限：true，否则false
+     */
+    public static boolean hasPermission(String permission) {
+        if (ShiroKit.isAdmin())return true;
+        return getSubject() != null && permission != null
+                && permission.length() > 0
+                && getSubject().isPermitted(permission);
+    }
+
+    /**
+     * 验证当前用户是否属于该角色？,使用时与lacksRole 搭配使用
+     *
+     * @param roleName 角色名
+     * @return 属于该角色：true，否则false
+     */
+    public static boolean hasRole(String roleName) {
+        if (ShiroKit.isAdmin())return true;
+        return getSubject() != null && roleName != null
+                && roleName.length() > 0 && getSubject().hasRole(roleName);
+    }
+
+    /**
+     * 验证当前用户是否属于以下任意一个角色。
+     *
+     * @param roles 角色列表
+     * @return 属于:true,否则false
+     */
+    public static boolean hasAnyRoles(String[] roles) {
+        if (ShiroKit.isAdmin())return true;
+        boolean hasAnyRole = false;
+        Subject subject = getSubject();
+        if (subject != null && ArrayUtils.isNotEmpty(roles)) {
+            for (String role : roles) {
+                if (subject.hasRole(role.trim())) {
+                    hasAnyRole = true;
+                    break;
+                }
+            }
+        }
+        return hasAnyRole;
+    }
+
+    /**
+     * 验证当前用户是否属于以下所有角色。
+     *
+     * @param roleNames 角色列表
+     * @return 属于:true,否则false
+     */
+    public static boolean hasAllRoles(String roleNames) {
+        if (ShiroKit.isAdmin())return true;
+        boolean hasAllRole = true;
+        Subject subject = getSubject();
+        if (subject != null && roleNames != null && roleNames.length() > 0) {
+            for (String role : roleNames.split(NAMES_DELIMETER)) {
+                if (!subject.hasRole(role.trim())) {
+                    hasAllRole = false;
+                    break;
+                }
+            }
+        }
+        return hasAllRole;
     }
 }

@@ -8,7 +8,7 @@
         a.create_time AS createTime,
         a.update_time AS updateTime,
         a.version AS version,
-        r.name AS roleName
+        r.code AS roleCode
     </sql>
     
     <sql id="sys_role_join">

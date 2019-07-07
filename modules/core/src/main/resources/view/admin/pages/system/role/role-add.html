@@ -20,6 +20,13 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">角色CODE</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" lay-verify="required" placeholder="请输入角色CODE" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">父级角色</label>
             <div class="layui-input-inline">
                 <select id="prole-select" data-placeholder="请选择父级角色" name="pid" lay-search=""></select>
@@ -53,79 +60,12 @@
 
     <script src="${static}/layuiadmin/layui/layui.js"></script>
     <script>
-        layui.config({
-            base: '${static}/layuiadmin/' //静态资源所在路径
-        }).extend({
-            index: 'lib/index' //主入口模块
-        }).use(['index', 'form' ,'admin','element'], function () {
-            var $ = layui.$, form = layui.form,
-                layer = layui.layer, setter = layui.setter,
-                admin = layui.admin;
-
-            setter.serverUrl = '${serverUrl}';
-            setter.ctxPath = '${admin}';
-
-            //监听提交
-            form.on('submit(LAYF-role-form-add-submit)', function (data) {
-                var field = data.field;       //获取提交的字段
-                var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-
-                //提交 Ajax 成功后，关闭当前弹层并重载表格
-                $.ajax({
-                    url: setter.ctxPath + '/role/add.ajax',
-                    data: field,
-                    method: 'POST',
-                    success: function (res) {
-                        // console.log(res);
-                        if (res.code == setter.response.statusCode.ok) {
-                            parent.layer.msg(res.msg);
-                            parent.layui.table.reload('roleTable'); //重载表格
-                            parent.layer.close(index); //再执行关闭
-                        } else {
-                            layer.msg(res.msg);
-                        }
-
-                    }
-                });
-            });
-
-            //渲染所属部门下拉选择
-            $.ajax({
-                url: setter.ctxPath + '/dept/list.ajax',
-                data: '',
-                method: 'GET',
-                success: function (res) {
-                    if (res.code == setter.response.statusCode.ok) {
-                        var listData = res.data;
-                        var $select = $('#dept-select');
-                        $select.append('<option value="">请选择</option>')
-                        for (var i in listData){
-                            $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
-                        }
-                        form.render('select','LAYF-role-form-add'); //刷新select选择框
-                    }
-                }
-            });
-
-            //渲染父级角色下拉选择
-            $.ajax({
-                url: setter.ctxPath + '/role/list.ajax',
-                data: '',
-                method: 'GET',
-                success: function (res) {
-                    if (res.code == setter.response.statusCode.ok) {
-                        var listData = res.data;
-                        var $select = $('#prole-select');
-                        $select.append('<option value="">请选择</option>');
-                        for (var i in listData){
-                            $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
-                        }
-                        form.render('select','LAYF-role-form-add'); //刷新select选择框
-                    }
-                }
-            });
-
-        })
+        var Swear = {
+            serverUrl: '${serverUrl}',
+            ctxPath: '${admin}',
+            static: '${static}'
+        }
     </script>
+    <script src="${static}/module/admin/system/role/role-add.js"></script>
 </body>
 </html>

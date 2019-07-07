@@ -1,5 +1,6 @@
 package cn.swallowff.modules.core.system.controller;
 
+import cn.swallowff.modules.core.cmomon.annotion.Permission;
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
@@ -29,6 +30,7 @@ public class DictController extends BaseController {
     private DictService dictService;
 
     @RequestMapping(value = "list.html")
+    @Permission(roleCode = "front")
     public String listHtml(){
         return "admin/pages/system/dict/dict-list";
     }

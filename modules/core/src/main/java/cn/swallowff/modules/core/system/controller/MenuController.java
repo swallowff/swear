@@ -54,7 +54,7 @@ public class MenuController extends BaseController {
     @RequestMapping(value = "list.ajax")
     @ResponseBody
     public Object ajaxList(Menu menu){
-        menu.setOrderBy("sort ASC");
+        menu.setOrderBy("name ASC");
         if (menu.getPage() == -1){
             return BaseResp.newSuccess().setData(menuService.findList(menu));
         }
