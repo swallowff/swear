@@ -44,7 +44,9 @@
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
                 <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
+                @if(shiro.hasPermission("sys-dict-add")){
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                @}
             </div>
             <table id="LAYF-list-table" lay-filter="LAYF-dict-list-table"></table>
         </div>

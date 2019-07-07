@@ -27,4 +27,8 @@ public class RoleAuthRelationService extends CrudService<RoleAuthRelationDao,Rol
     public int delByRoleId(String roleId) {
         return crudDao.delByRoleId(roleId);
     }
+
+    public List<String> findPermissionsByRole(String roleId) {
+        return crudDao.findPermissionsByRole(roleId);
+    }
 }

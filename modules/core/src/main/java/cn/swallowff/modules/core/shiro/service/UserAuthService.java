@@ -26,7 +26,7 @@ public interface UserAuthService {
      * @param roleId
      * @return
      */
-    List<String> findPermissionsByRole(Integer roleId);
+    List<String> findPermissionsByRole(String roleId);
 
     /**
      * 获取Shiro认证信息

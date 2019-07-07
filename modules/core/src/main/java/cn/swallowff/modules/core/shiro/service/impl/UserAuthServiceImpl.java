@@ -3,6 +3,7 @@ package cn.swallowff.modules.core.shiro.service.impl;
 import cn.swallowff.modules.core.shiro.ShiroUser;
 import cn.swallowff.modules.core.shiro.service.UserAuthService;
 import cn.swallowff.modules.core.system.entity.User;
+import cn.swallowff.modules.core.system.service.RoleAuthRelationService;
 import cn.swallowff.modules.core.system.service.UserService;
 import cn.swallowff.modules.core.util.SpringContextHolder;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -19,6 +20,8 @@ import java.util.List;
 public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleAuthRelationService roleAuthRelationService;
 
     @Override
     public User user(String account) {
@@ -31,9 +34,10 @@ public class UserAuthServiceImpl implements UserAuthService {
         return null;
     }
 
+    //TODO
     @Override
-    public List<String> findPermissionsByRole(Integer roleId) {
-        return null;
+    public List<String> findPermissionsByRole(String roleId) {
+        return roleAuthRelationService.findPermissionsByRole(roleId);
     }
 
     @Override

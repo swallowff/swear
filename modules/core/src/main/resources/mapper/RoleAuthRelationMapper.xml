@@ -47,6 +47,16 @@
         </choose>
     </select>
 
+    <select id="findPermissionsByRole" resultType="java.lang.String">
+        SELECT
+        a.auth_code
+        FROM sys_role_auth_relation a
+        <where>
+            a.delflag = 0
+            AND a.role_id = #{arg0}
+        </where>
+    </select>
+
     <insert id="insert">
         INSERT INTO sys_role_auth_relation(
           id,
