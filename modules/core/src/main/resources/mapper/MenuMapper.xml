@@ -5,14 +5,15 @@
     <sql id="baseColumns">
         a.id AS id,
         a.code AS code,
-        a.pcode AS pcode,
-        a.pcodes AS pcodes,
+        a.pid AS pid,
+        a.pids AS pids,
         a.name AS name,
         a.icon AS icon,
         a.url AS url,
         a.sort AS sort,
         a.levels AS levels,
         a.is_menu AS isMenu,
+        a.is_expandable AS isExpandable,
         a.tips AS tips,
         a.is_open AS isOpen,
         a.create_time AS createTime,
@@ -39,8 +40,11 @@
             <if test="code != null and code != ''">
               AND a.code = #{code}
             </if>
-            <if test="pcode != null and pcode != ''">
-                AND a.pcode = #{pcode}
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
             </if>
             <if test="name != null and name != ''">
                 AND a.name = #{name}
@@ -48,9 +52,54 @@
             <if test="levels != null">
                 AND a.levels = #{levels}
             </if>
-            <if test="pcodes != null and pcodes != ''">
-                AND a.pcodes LIKE CONCAT('%',#{pcodes},'%')
+            <if test="isMenu != null">
+                AND a.is_menu = #{isMenu}
             </if>
+            <if test="isExpandable != null">
+                AND a.is_expandable = #{isExpandable}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findMenuListWithRole" resultType="cn.swallowff.modules.core.system.dto.DtreeNode">
+        SELECT
+        a.id AS id,
+        a.pid AS parentId,
+        IF(r.id IS NOT NULL,1,0) AS checkArr,
+        a.name AS title
+        FROM sys_menu a
+        LEFT JOIN sys_role_auth_relation r ON r.role_id = #{roleId} AND r.menu_id = a.id AND r.delflag = 0
+        <where>
+            a.delflag = 0
+            <if test="menu.pids != null and menu.pids != ''">
+                AND a.pids LIKE CONCAT('%',#{menu.pids},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="menu.orderBy != null and menu.orderBy != ''">
+                ORDER BY ${menu.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findChildren" resultType="Menu">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_menu a
+        <where>
+            a.delflag = 0
+            AND a.pid = #{id}
         </where>
         <choose>
             <when test="orderBy != null and orderBy != ''">
@@ -66,14 +115,15 @@
         INSERT INTO sys_menu(
           id,
           code,
-          pcode,
-          pcodes,
+          pid,
+          pids,
           name,
           icon,
           url,
           sort,
           levels,
           is_menu,
+          is_expandable,
           tips,
           is_open,
           update_time,
@@ -82,14 +132,15 @@
         ) VALUES (
           #{id},
           #{code},
-          #{pcode},
-          #{pcodes},
+          #{pid},
+          #{pids},
           #{name},
           #{icon},
           #{url},
           #{sort},
           #{levels},
           #{isMenu},
+          #{isExpandable},
           #{tips},
           #{isOpen},
           #{updateTime},
@@ -101,14 +152,15 @@
     <update id="update">
         UPDATE sys_menu SET
             code = #{code},
-            pcode = #{pcode},
-            pcodes = #{pcodes},
+            pid = #{pid},
+            pids = #{pids},
             name = #{name},
             icon = #{icon},
             url = #{url},
             sort = #{sort},
             levels = #{levels},
             is_menu = #{isMenu},
+            is_expandable = #{isExpandable},
             tips = #{tips},
             is_open = #{isOpen},
             update_time = #{updateTime}
@@ -124,11 +176,11 @@
             <if test="code != null">
                 code = #{code},
             </if>
-            <if test="pcode != null">
-                pcode = #{pcode},
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                pid = #{parent.id},
             </if>
-            <if test="pcodes != null">
-                pcodes = #{pcodes},
+            <if test="pids != null and pids != ''">
+                pids = #{pids},
             </if>
             <if test="name != null">
                 name = #{name},
@@ -148,6 +200,9 @@
             <if test="isMenu != null">
                 is_menu = #{isMenu},
             </if>
+            <if test="isExpandable != null">
+                is_expandable = #{isExpandable},
+            </if>
             <if test="tips != null">
                 tips = #{tips},
             </if>
@@ -164,13 +219,13 @@
         </where>
     </update>
 
-    <delete id="delete">
+    <update id="delete">
         UPDATE sys_menu a
         SET a.delflag = 1
         <where>
             a.delflag = 0
             AND a.id = #{id}
         </where>
-    </delete>
+    </update>
 
 </mapper>

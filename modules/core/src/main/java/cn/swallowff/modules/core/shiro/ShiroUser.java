@@ -1,9 +1,13 @@
 package cn.swallowff.modules.core.shiro;
 
+import cn.swallowff.modules.core.shiro.service.impl.UserRoleServiceImpl;
 import cn.swallowff.modules.core.system.entity.User;
+import cn.swallowff.modules.core.system.entity.UserRoleRelation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息
@@ -85,15 +89,9 @@ public class ShiroUser implements Serializable {
         shiroUser.account = user.getAccount();
         shiroUser.name = user.getName();
         shiroUser.deptId = user.getDeptId();
-//        Integer[] roleArray = Convert.toIntArray(user.getRoleId());
-//        List<Integer> roleList = new ArrayList<>();
-//        List<String> roleNames = new ArrayList<>();
-//        for (Integer roleId : roleArray){
-//            roleList.add(roleId);
-//            roleNames.add(UserRoleServiceImpl.me().getRoleName(roleId));
-//        }
-//        shiroUser.setRoleList(roleList);
-//        shiroUser.setRoleNames(roleNames);
+        List<UserRoleRelation> roleRelationList = UserRoleServiceImpl.me().findRoleListByUserId(user.getId());
+        shiroUser.roleList = roleRelationList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        shiroUser.roleNames = roleRelationList.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
         return shiroUser;
     }
 }

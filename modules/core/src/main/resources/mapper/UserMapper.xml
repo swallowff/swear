@@ -18,13 +18,19 @@
         a.status AS status,
         a.create_time AS createTime,
         a.update_time AS updateTime,
-        a.version AS version
+        a.version AS version,
+        r.name AS roleName
+    </sql>
+    
+    <sql id="sys_role_join">
+        LEFT JOIN sys_role r ON r.id = a.role_id AND r.delflag = 0
     </sql>
 
     <select id="selectById" resultType="User">
       SELECT
       <include refid="baseColumns"/>
       FROM sys_user a
+      <include refid="sys_role_join"/>
       <where>
           a.delflag = 0
           AND a.id = #{id}
@@ -35,6 +41,7 @@
         SELECT
         <include refid="baseColumns"/>
         FROM sys_user a
+        <include refid="sys_role_join"/>
         <where>
             a.delflag = 0
             <if test="id != null and id != ''">
@@ -263,6 +270,9 @@
             </if>
             <if test="phone != null">
                 phone = #{phone},
+            </if>
+            <if test="roleId != null">
+                role_id = #{roleId},
             </if>
             <if test="deptId != null">
                 dept_id = #{deptId},

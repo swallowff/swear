@@ -7,9 +7,12 @@ import cn.swallowff.modules.core.constant.states.ResponseState;
 import cn.swallowff.modules.core.excepiton.BizException;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.system.entity.User;
+import cn.swallowff.modules.core.system.entity.UserRoleRelation;
+import cn.swallowff.modules.core.system.service.UserRoleRelationService;
 import cn.swallowff.modules.core.system.service.UserService;
 import cn.swallowff.modules.core.system.wrapper.UserAjaxListDictWrapper;
 import cn.swallowff.modules.core.system.wrapper.UserDateFormatWrapper;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +34,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRoleRelationService userRoleRelationService;
 
     @RequestMapping(value = "list.html")
     public String listHtml(User user,Model model){
@@ -101,6 +107,31 @@ public class UserController {
         BaseResp baseResp = BaseResp.newSuccess();
         int r = userService.delete(id);
         if (r == 1){
+            return baseResp;
+        }else return baseResp.putError();
+    }
+
+    @RequestMapping(value = "batchSetupRoles")
+    @ResponseBody
+    public BaseResp batchSetupRoles(String userId,String[] roleIds){
+        BaseResp baseResp = BaseResp.newSuccess();
+        if (StringUtils.isBlank(userId)){
+            return baseResp.putError("请选择用户");
+        }
+        if (ArrayUtils.isEmpty(roleIds)){
+            return baseResp.putError("请选择角色");
+        }
+        int count = 0;
+        userRoleRelationService.delByUserId(userId);
+        for (String roleId : roleIds){
+            UserRoleRelation userRoleRelation = new UserRoleRelation();
+            userRoleRelation.setUserId(userId);
+            userRoleRelation.setRoleId(roleId);
+            userRoleRelationService.save(userRoleRelation);
+            count ++ ;
+        }
+
+        if (count > 0){
             return baseResp;
         }else return baseResp.putError();
     }

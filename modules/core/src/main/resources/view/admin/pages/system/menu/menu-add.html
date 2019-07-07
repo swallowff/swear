@@ -29,7 +29,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">父级菜单</label>
             <div class="layui-input-inline">
-                <select id="pcode-select" data-placeholder="请选择" name="pcode" lay-search=""></select>
+                <select id="menu-select" data-placeholder="请选择" name="pid" lay-search=""></select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -37,13 +37,13 @@
             <div class="layui-input-inline">
                 <input type="text" name="icon" placeholder="请输入菜单图标" autocomplete="off"
                        class="layui-input layui-inline">
-                <a class="layui-inline" href="javascript:;">需要帮助?</a>
+                <a class="layui-inline" href="https://www.layui.com/doc/element/icon.html" target="_blank">需要帮助?</a>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">链接地址</label>
             <div class="layui-input-inline">
-                <input type="text" name="url" lay-verify="required" placeholder="请输入链接地址" autocomplete="off"
+                <input type="text" name="url" placeholder="请输入链接地址" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -65,8 +65,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">是否菜单</label>
             <div class="layui-input-inline">
-                <!--开关-->
-                <input type="checkbox" lay-filter="status" name="isMenu" lay-skin="switch" lay-text="是|否" value="1">
+                <input type="radio" name="isMenu" value="false" title="否" checked>
+                <input type="radio" name="isMenu" value="true" title="是">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否可展开</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="isExpandable" value="false" title="否" checked>
+                <input type="radio" name="isExpandable" value="true" title="是">
             </div>
         </div>
         <div class="layui-form-item">
@@ -120,19 +127,22 @@
                 });
             });
 
-            //渲染父级菜单下拉选择
+            //渲染菜单下拉选择
             $.ajax({
                 url: setter.ctxPath + '/menu/list.ajax',
-                data: '',
+                data: {
+                    isMenu:true,
+                    page: -1      //不分页
+                },
                 method: 'GET',
                 success: function (res) {
                     // console.log(res)
                     if (res.code == setter.response.statusCode.ok) {
                         var listData = res.data;
-                        var $select = $('#pcode-select');
+                        var $select = $('#menu-select');
                         $select.append('<option value="">请选择</option>')
                         for (var i in listData){
-                            $select.append('<option value="'+listData[i].code+'">'+listData[i].name+'</option>')
+                            $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
                         }
                         form.render('select','LAYF-menu-form-add'); //刷新select选择框
                     }

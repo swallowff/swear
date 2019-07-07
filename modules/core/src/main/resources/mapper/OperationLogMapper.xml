@@ -135,13 +135,13 @@
         </where>
     </update>
 
-    <delete id="delete">
+    <update id="delete">
         UPDATE sys_operation_log a
         SET a.delflag = 1
         <where>
             a.delflag = 0
             AND a.id = #{id}
         </where>
-    </delete>
+    </update>
 
 </mapper>

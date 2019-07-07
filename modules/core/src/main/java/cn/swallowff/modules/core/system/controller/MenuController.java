@@ -1,11 +1,18 @@
 package cn.swallowff.modules.core.system.controller;
 
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
+import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.system.dto.DtreeNode;
+import cn.swallowff.modules.core.system.entity.Dept;
 import cn.swallowff.modules.core.system.entity.Menu;
+import cn.swallowff.modules.core.system.entity.Role;
 import cn.swallowff.modules.core.system.service.MenuService;
+import cn.swallowff.modules.core.system.wrapper.DeptDtreeNodeWrapper;
+import cn.swallowff.modules.core.system.wrapper.MenuDtreeNodeWrapper;
+import cn.swallowff.modules.core.system.wrapper.RoleDtreeNodeWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author swallowff
@@ -46,9 +55,32 @@ public class MenuController extends BaseController {
     @ResponseBody
     public Object ajaxList(Menu menu){
         menu.setOrderBy("sort ASC");
+        if (menu.getPage() == -1){
+            return BaseResp.newSuccess().setData(menuService.findList(menu));
+        }
         PageResp<Menu> pageResp = menuService.findPage(menu);
         LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
         return layPageResp;
+    }
+
+    @RequestMapping(value = "dtree.ajax")
+    @ResponseBody
+    public Object dtree(Menu menu){
+        BaseResp baseResp = BaseResp.newSuccess();
+        menu.setPids(Dept.ROOT_ID);
+        List<Menu> list = menuService.findList(menu);
+        MenuDtreeNodeWrapper wrapper = new MenuDtreeNodeWrapper(list);
+        return baseResp.setData(wrapper.wrapList());
+    }
+
+    @RequestMapping(value = "roleDtree.ajax")
+    @ResponseBody
+    public Object roleDtree(String roleId){
+        BaseResp baseResp = BaseResp.newSuccess();
+        Menu menu = new Menu();
+        menu.setPids(Dept.ROOT_ID);
+        List<DtreeNode> list = menuService.findMenuListWithRole(menu,roleId);
+        return baseResp.setData(list);
     }
 
     @RequestMapping(value = "add.ajax")

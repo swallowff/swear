@@ -124,8 +124,8 @@
                     {
                         key: 'fullName',
                         title: '名称',
-                        width: '300px',
-                        align: 'center'
+                        width: '200px',
+                        align: 'left'
                     },
                     {
                         key: 'pid',
@@ -134,8 +134,20 @@
                         align: 'center'
                     },
                     {
+                        key: 'pids',
+                        title: '所有父ID',
+                        align: 'center'
+                    },
+                    {
                         key: 'sort',
                         title: '排序',
+                        width: '50px',
+                        align: 'center'
+                    },
+                    {
+                        key: 'createTime',
+                        title: '创建时间',
+                        width: '140px',
                         align: 'center'
                     },
                     {
@@ -147,6 +159,7 @@
                 ]
             });
         }
+
         var re = renderTable();
 
         //监听搜索
@@ -158,13 +171,14 @@
         var $ = layui.$, active = {
             batchdel: function () {
                 var checkedIds = treeTable.checked(re)
-                console.log(checkedIds)
+                // console.log(checkedIds)
                 if (checkedIds.length === 0){
                     return layer.msg('请选择数据')
                 }
 
-                layer.confirm('确定删除吗？', function (index) {
-
+                layer.confirm('确定删除吗？',{
+                    btn: ['删除','容朕想想'] //按钮
+                }, function (index) {
                     //执行 Ajax 后重载
                     admin.req({
                         url: setter.ctxPath + '/dept/batchDel',
@@ -214,22 +228,31 @@
         }
 
         window.deleteRow = function (id) {
-            $.ajax({
-                url: setter.ctxPath + '/dept/delete',
-                method: 'POST',
-                contentType: 'application/x-www-form-urlencoded',
-                data: {
-                    id: id
-                },
-                success: function (res) {
-                    layer.msg(res.msg);
-                    if (res.code == 0) {
-                        layui.table.reload('deptTable');
-                    } else {
-
+            // console.log(re.childs[id])
+            layer.confirm('将删除该节点及其所有下属节点,确定要删除吗?', {
+                btn: ['删除','容朕想想'] //按钮
+            }, function(){
+                //确定删除
+                $.ajax({
+                    url: setter.ctxPath + '/dept/deleteTree',
+                    method: 'POST',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        if (res.code == 0) {
+                            layer.msg('成功删除'+res.data+'条数据');
+                            renderTable();
+                        } else {
+                            layer.msg(res.msg)
+                        }
                     }
-                }
-            })
+                })
+            }, function(){
+
+            });
+
         }
 
         window.editRow = function (id) {

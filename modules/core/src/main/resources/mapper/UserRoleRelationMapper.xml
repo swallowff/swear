@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.swallowff.modules.core.system.dao.NoticeDao">
+<mapper namespace="cn.swallowff.modules.core.system.dao.UserRoleRelationDao">
 
     <sql id="baseColumns">
-        a.tittle AS tittle,
-        a.type AS type,
-        a.content AS content,
+        a.user_id AS userId,
+        a.role_id AS roleId,
         a.create_time AS createTime,
         a.update_time AS updateTime,
         a.version AS version,
-        a.to_user AS toUser,
-        a.creator AS creator
+        r.name AS roleName
+    </sql>
+    
+    <sql id="sys_role_join">
+        LEFT JOIN sys_role r ON r.delflag = 0 AND r.id = a.role_id
     </sql>
 
-    <select id="selectById" resultType="Notice">
+    <select id="selectById" resultType="UserRoleRelation">
       SELECT
       <include refid="baseColumns"/>
-      FROM sys_notice a
+      FROM sys_user_role_relation a
+      <include refid="sys_role_join"/>
       <where>
           a.delflag = 0
           AND a.id = #{id}
       </where>
     </select>
 
-    <select id="findList" resultType="Notice">
+    <select id="findList" resultType="UserRoleRelation">
         SELECT
         <include refid="baseColumns"/>
-        FROM sys_notice a
+        FROM sys_user_role_relation a
+        <include refid="sys_role_join"/>
         <where>
             a.delflag = 0
-            <if test="type != null">
-              AND a.type = #{type}
+            <if test="userId != null and userId != ''">
+              AND a.user_id = #{userId}
             </if>
-            <if test="tittle != null and tittle != ''">
-                AND a.tittle = #{tittle}
-            </if>
-            <if test="creator != null and creator != ''">
-                AND a.creator = #{creator}
-            </if>
-            <if test="toUser != null and toUser != ''">
-                AND a.to_user = #{toUser}
+            <if test="roleId != null and roleId != ''">
+                AND a.role_id = #{roleId}
             </if>
         </where>
         <choose>
@@ -53,24 +51,18 @@
     </select>
 
     <insert id="insert">
-        INSERT INTO sys_notice(
+        INSERT INTO sys_user_role_relation(
           id,
-          tittle,
-          type,
-          content,
-          creator,
-          to_user,
+          user_id,
+          role_id,
           create_time,
           update_time,
           version,
           delflag
         ) VALUES (
           #{id},
-          #{tittle},
-          #{type},
-          #{content},
-          #{creator},
-          #{toUser},
+          #{userId},
+          #{roleId},
           #{createTime},
           #{updateTime},
           #{version},
@@ -79,12 +71,9 @@
     </insert>
 
     <update id="update">
-        UPDATE sys_notice SET
-          tittle = #{tittle},
-          type = #{type},
-          content = #{content},
-          creator = #{creator},
-          to_user = #{toUser},
+        UPDATE sys_user_role_relation SET
+          user_id = #{userId},
+          role_id = #{roleId},
           update_time = #{updateTime},
           version = #{version}
           <where>
@@ -94,19 +83,13 @@
     </update>
 
     <update id="updateSelective">
-        UPDATE sys_notice
+        UPDATE sys_user_role_relation
         <set>
-            <if test="tittle != null and tittle != ''">
-                tittle = #{tittle},
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
             </if>
-            <if test="type != null">
-                type = #{type},
-            </if>
-            <if test="creator != null and creator != ''">
-                creator = #{creator},
-            </if>
-            <if test="toUser != null and toUser != ''">
-                to_user = #{toUser},
+            <if test="roleId != null and roleId != ''">
+                role_id = #{roleId},
             </if>
             <if test="version != null">
                 version = #{version},
@@ -122,12 +105,20 @@
     </update>
 
     <update id="delete">
-        UPDATE sys_notice a
+        UPDATE sys_user_role_relation a
         SET a.delflag = 1
         <where>
             a.delflag = 0
             AND a.id = #{id}
         </where>
     </update>
+    
+    <delete id="delByUserId">
+        DELETE FROM sys_user_role_relation
+        <where>
+            delflag = 0
+            AND user_id = #{arg0}
+        </where>
+    </delete>
 
 </mapper>

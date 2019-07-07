@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.swallowff.modules.core.system.dao.NoticeDao">
+<mapper namespace="cn.swallowff.modules.core.system.dao.RoleAuthRelationDao">
 
     <sql id="baseColumns">
-        a.tittle AS tittle,
-        a.type AS type,
-        a.content AS content,
+        a.role_id AS roleId,
+        a.auth_code AS authCode,
+        a.menu_id AS menuId,
         a.create_time AS createTime,
         a.update_time AS updateTime,
-        a.version AS version,
-        a.to_user AS toUser,
-        a.creator AS creator
+        a.version AS version
     </sql>
 
-    <select id="selectById" resultType="Notice">
+    <select id="selectById" resultType="RoleAuthRelation">
       SELECT
       <include refid="baseColumns"/>
-      FROM sys_notice a
+      FROM sys_role_auth_relation a
       <where>
           a.delflag = 0
           AND a.id = #{id}
       </where>
     </select>
 
-    <select id="findList" resultType="Notice">
+    <select id="findList" resultType="RoleAuthRelation">
         SELECT
         <include refid="baseColumns"/>
-        FROM sys_notice a
+        FROM sys_role_auth_relation a
         <where>
             a.delflag = 0
-            <if test="type != null">
-              AND a.type = #{type}
+            <if test="roleId != null and roleId != ''">
+              AND a.role_id = #{roleId}
             </if>
-            <if test="tittle != null and tittle != ''">
-                AND a.tittle = #{tittle}
+            <if test="authCode != null and authCode != ''">
+                AND a.auth_code = #{authCode}
             </if>
-            <if test="creator != null and creator != ''">
-                AND a.creator = #{creator}
-            </if>
-            <if test="toUser != null and toUser != ''">
-                AND a.to_user = #{toUser}
+            <if test="menuId != null and menuId != ''">
+                AND a.menu_id = #{menuId}
             </if>
         </where>
         <choose>
@@ -53,24 +48,20 @@
     </select>
 
     <insert id="insert">
-        INSERT INTO sys_notice(
+        INSERT INTO sys_role_auth_relation(
           id,
-          tittle,
-          type,
-          content,
-          creator,
-          to_user,
+          role_id,
+          auth_code,
+          menu_id,
           create_time,
           update_time,
           version,
           delflag
         ) VALUES (
           #{id},
-          #{tittle},
-          #{type},
-          #{content},
-          #{creator},
-          #{toUser},
+          #{roleId},
+          #{authCode},
+          #{menuId},
           #{createTime},
           #{updateTime},
           #{version},
@@ -79,12 +70,10 @@
     </insert>
 
     <update id="update">
-        UPDATE sys_notice SET
-          tittle = #{tittle},
-          type = #{type},
-          content = #{content},
-          creator = #{creator},
-          to_user = #{toUser},
+        UPDATE sys_role_auth_relation SET
+          role_id = #{roleId},
+          auth_code = #{authCode},
+          menu_id = #{menuId},
           update_time = #{updateTime},
           version = #{version}
           <where>
@@ -94,19 +83,16 @@
     </update>
 
     <update id="updateSelective">
-        UPDATE sys_notice
+        UPDATE sys_role_auth_relation
         <set>
-            <if test="tittle != null and tittle != ''">
-                tittle = #{tittle},
+            <if test="roleId != null and roleId != ''">
+                role_id = #{roleId},
             </if>
-            <if test="type != null">
-                type = #{type},
+            <if test="authCode != null and authCode != ''">
+                auth_code = #{authCode},
             </if>
-            <if test="creator != null and creator != ''">
-                creator = #{creator},
-            </if>
-            <if test="toUser != null and toUser != ''">
-                to_user = #{toUser},
+            <if test="menuId != null and menuId != ''">
+                menu_id = #{menuId},
             </if>
             <if test="version != null">
                 version = #{version},
@@ -122,12 +108,20 @@
     </update>
 
     <update id="delete">
-        UPDATE sys_notice a
+        UPDATE sys_role_auth_relation a
         SET a.delflag = 1
         <where>
             a.delflag = 0
             AND a.id = #{id}
         </where>
     </update>
+    
+    <delete id="delByRoleId">
+        DELETE FROM sys_role_auth_relation
+        <where>
+            delflag = 0
+            AND role_id = #{arg0}
+        </where>
+    </delete>
 
 </mapper>

@@ -14,7 +14,7 @@
 
         <div class="layui-fluid">
             <div class="layui-card">
-                <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="LAYF-menu-list-search">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <!--<label class="layui-form-label">菜单名称</label>-->
@@ -31,13 +31,11 @@
                         <div class="layui-inline">
                             <!--<label class="layui-form-label">父级菜单</label>-->
                             <div class="layui-input-inline">
-                                <input type="text" name="pcode" placeholder="请输入父级菜单编号" autocomplete="off"
-                                       class="layui-input">
+                                <select id="menu-select" data-placeholder="请选择父级菜单" name="pid" lay-search=""></select>
                             </div>
                         </div>
-                        <!--<#dictSelector name="sex" label="性别" code="sex" placeholder="请选择"></#dictSelector>-->
                         <div class="layui-inline">
-                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-menu-list-search">
+                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-menu-list-search-submit">
                                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                             </button>
                         </div>
@@ -90,8 +88,8 @@
                             sort: true
                         },
                         {
-                            field: 'pcode',
-                            title: '父级菜单',
+                            field: 'pid',
+                            title: '父级菜单ID',
                             sort: true
                         },
                         {
@@ -102,7 +100,7 @@
                         {
                             field: 'url',
                             title: '跳转链接',
-                            sort: true
+                            sort: false
                         },
                         {
                             field: 'sort',
@@ -111,7 +109,7 @@
                         },
                         {
                             field: 'levels',
-                            title: '级别',
+                            title: '层级',
                             sort: true
                         },
                         {
@@ -129,7 +127,7 @@
                 });
 
                 //监听搜索
-                form.on('submit(LAYF-menu-list-search)', function (data) {
+                form.on('submit(LAYF-menu-list-search-submit)', function (data) {
                     var field = data.field;
                     //执行重载
                     table.reload('menuTable', {
@@ -235,6 +233,28 @@
                         }
                     });
                 };
+
+                //渲染菜单下拉选择
+                $.ajax({
+                    url: setter.ctxPath + '/menu/list.ajax',
+                    data: {
+                        isMenu:true,
+                        page: -1      //不分页
+                    },
+                    method: 'GET',
+                    success: function (res) {
+                        // console.log(res)
+                        if (res.code == setter.response.statusCode.ok) {
+                            var listData = res.data;
+                            var $select = $('#menu-select');
+                            $select.append('<option value="">请选择父级菜单</option>');
+                            for (var i in listData){
+                                $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
+                            }
+                            form.render('select','LAYF-menu-list-search'); //刷新select选择框
+                        }
+                    }
+                });
 
             });
 

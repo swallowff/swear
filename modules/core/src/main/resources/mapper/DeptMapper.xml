@@ -137,13 +137,23 @@
         </where>
     </update>
 
-    <delete id="delete">
+    <update id="delete">
         UPDATE sys_dept a
         SET a.delflag = 1
         <where>
             a.delflag = 0
             AND a.id = #{id}
         </where>
-    </delete>
+    </update>
+
+    <update id="deleteTree">
+        UPDATE sys_dept a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{arg0}
+            OR a.pids LIKE CONCAT('%',#{arg0},'%')
+        </where>
+    </update>
 
 </mapper>

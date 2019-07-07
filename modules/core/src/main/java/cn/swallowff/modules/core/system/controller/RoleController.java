@@ -5,9 +5,15 @@ import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.system.dto.DtreeNode;
+import cn.swallowff.modules.core.system.entity.Menu;
 import cn.swallowff.modules.core.system.entity.Role;
+import cn.swallowff.modules.core.system.entity.RoleAuthRelation;
+import cn.swallowff.modules.core.system.service.MenuService;
+import cn.swallowff.modules.core.system.service.RoleAuthRelationService;
 import cn.swallowff.modules.core.system.service.RoleService;
 import cn.swallowff.modules.core.system.wrapper.RoleDtreeNodeWrapper;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +34,10 @@ import java.util.List;
 public class RoleController extends BaseController {
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private RoleAuthRelationService roleAuthRelationService;
+    @Autowired
+    private MenuService menuService;
 
     @RequestMapping(value = "list.html")
     public String listHtml(Role role,Model model){
@@ -63,6 +73,17 @@ public class RoleController extends BaseController {
         List<Role> list = roleService.findList(role);
         RoleDtreeNodeWrapper wrapper = new RoleDtreeNodeWrapper(list);
         return baseResp.setData(wrapper.wrapList());
+    }
+
+    @RequestMapping(value = "userDtree.ajax")
+    @ResponseBody
+    public Object userDtree(String userId){
+        BaseResp baseResp = BaseResp.newSuccess();
+        Role role = new Role();
+        role.setPids(TreeEntity.ROOT_ID);
+        List<DtreeNode> list = roleService.findDtreeNodeListWithUid(role,userId);
+//        RoleDtreeNodeWrapper wrapper = new RoleDtreeNodeWrapper(list);
+        return baseResp.setData(list);
     }
 
     @RequestMapping(value = "add.ajax")
@@ -112,6 +133,40 @@ public class RoleController extends BaseController {
         }else return baseResp.putError();
     }
 
+    @RequestMapping(value = "batchSetupAuth")
+    @ResponseBody
+    public BaseResp batchSetupAuth(String roleId,String[] menuIds){
+        BaseResp baseResp = BaseResp.newSuccess();
+        if (StringUtils.isBlank(roleId)){
+            return baseResp.putError("请选择角色");
+        }
+        if (ArrayUtils.isEmpty(menuIds)){
+            return baseResp.putError("请选择菜单");
+        }
+        //删除角色原来的权限
+        roleAuthRelationService.delByRoleId(roleId);
 
+        int count = 0;
+        for (int j = 0; j < menuIds.length; j++){
+            //添加角色菜单数据
+            String menuId = menuIds[j];
+            RoleAuthRelation roleAuthRelation = roleAuthRelationService.selectByRoleIdAndMenuId(roleId,menuId);
+            if (null == roleAuthRelation){
+                roleAuthRelation = new RoleAuthRelation();
+            }
+            roleAuthRelation.setRoleId(roleId);
+            roleAuthRelation.setMenuId(menuId);
+            Menu menu = menuService.selectById(menuId);
+            if (null != menu){
+                roleAuthRelation.setAuthCode(menu.getCode());
+            }
+            roleAuthRelationService.save(roleAuthRelation);
+            count ++;
+        }
+
+        if (count > 0){
+            return baseResp;
+        }else return baseResp.putError();
+    }
 
 }

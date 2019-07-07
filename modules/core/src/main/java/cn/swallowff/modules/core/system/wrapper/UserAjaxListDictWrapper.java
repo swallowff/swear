@@ -15,10 +15,6 @@ import java.util.Map;
  */
 public class UserAjaxListDictWrapper extends BaseWrapper<User> {
 
-    public UserAjaxListDictWrapper(User user) {
-        super(user);
-    }
-
     public UserAjaxListDictWrapper(List<User> entityList) {
         super(entityList);
     }

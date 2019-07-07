@@ -57,7 +57,7 @@ public class UploadController {
             return baseResp.putError("文件保存失败");
         }
         String targetPath = imgBaseUrl + dateStr + "/";
-        Map<String,Object> respMap = new HashMap<>();
+        Map<String,Object> respMap = new HashMap<>(3);
         respMap.put("src",targetPath + fileName);
         respMap.put("thumbnail",targetPath + fileName + "." + IMG_COMPRESS_FORMAT);
         return baseResp.putSuccess(respMap);

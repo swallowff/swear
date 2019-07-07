@@ -71,7 +71,7 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         if (null == children || children.size() == 0){
             return parent;
         }else {
-            updateChildrenNode(children);
+            updateChildrenNode(children,parent);
         }
         parent.setChildren(children);
         return parent;
@@ -89,21 +89,27 @@ public abstract class TreeService<M extends TreeDao<E>,E extends TreeEntity> ext
         }
     }
 
+    public int deleteTree(String id){
+        return crudDao.deleteTree(id);
+    }
+
     /**
      * 递归查询子节点
      * @param treeNodeList
      */
-    private void updateChildrenNode(List<E> treeNodeList){
+    private void updateChildrenNode(List<E> treeNodeList,E parent){
         for (int i = 0; i < treeNodeList.size() ; i++){
             E node = treeNodeList.get(i);
+            node.setOrderBy(parent.getOrderBy());
             List<E> children = crudDao.findChildren(node);
             if (null != children && children.size() != 0){
-                updateChildrenNode(children);
+                updateChildrenNode(children,parent);
                 node.setChildren(children);
             }
         }
-
     }
+
+
 
 
 

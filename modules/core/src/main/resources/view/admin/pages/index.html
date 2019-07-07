@@ -101,31 +101,61 @@
                     @for(menu in menuList){
                         <li data-name="first-level-menu-${menuLP.index}" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="${menu.name}">
-                                @if(isNotEmpty(menu.icon)){
-                                    <i class="layui-icon ${menu.icon}"></i>
-                                @}
-                                @else{
-                                    <i class="layui-icon layui-icon-spread-left"></i>
-                                @}
+                            @if(isNotEmpty(menu.icon)){
+                                <i class="layui-icon ${menu.icon}"></i>
+                            @}
+                            @else{
+                                <i class="layui-icon layui-icon-spread-left"></i>
+                            @}
                                 <cite>${menu.name}</cite>
                             </a>
-                            @if(isNotEmpty(menu.subMenuList)){
+                            @if(isNotEmpty(menu.children)){
                                 <dl class="layui-nav-child">
-                            @}
-                            @for(subMenu in menu.subMenuList){
-                                <dd data-name="second-level-menu-${subMenuLP.index}">
-                                    <a lay-href="${admin}${subMenu.url}">
-                                        @if(isNotEmpty(subMenu.icon)){
+                                @for(subMenu in menu.children){
+                                    @if(subMenu.isExpandable){
+                                    <dd data-name="second-level-menu-${subMenuLP.index}">
+                                        <a href="javascript:;">
+                                            @if(isNotEmpty(subMenu.icon)){
                                             <i class="layui-icon ${subMenu.icon}"></i>
+                                            @}
+                                            @else{
+                                            <i class="layui-icon layui-icon-fonts-code"></i>
+                                            @}
+                                            <cite>${subMenu.name}</cite>
+                                        </a>
+                                        @if(isNotEmpty(subMenu.children)){
+                                            <dl class="layui-nav-child">
+                                                @for(thirdMenu in subMenu.children){
+                                                <dd data-name="second-level-menu-${thirdMenuLP.index}">
+                                                    <a lay-href="${admin}${thirdMenu.url}">
+                                                        @if(isNotEmpty(thirdMenu.icon)){
+                                                        <i class="layui-icon ${thirdMenu.icon}"></i>
+                                                        @}
+                                                        @else{
+                                                        <i class="layui-icon layui-icon-fonts-code"></i>
+                                                        @}
+                                                        <cite>${thirdMenu.name}</cite>
+                                                    </a>
+                                                </dd>
+                                                @}
+                                            </dl>
                                         @}
-                                        @else{
-                                            <i class="layui-icon layui-icon-link"></i>
-                                        @}
-                                        <cite>${subMenu.name}</cite>
-                                    </a>
-                                </dd>
-                            @}
-                            @if(isNotEmpty(menu.subMenuList)){
+                                    </dd>
+                                    @}
+                                    @else{
+                                    <dd data-name="second-level-menu-${subMenuLP.index}">
+                                        <a lay-href="${admin}${subMenu.url}">
+                                            @if(isNotEmpty(subMenu.icon)){
+                                            <i class="layui-icon ${subMenu.icon}"></i>
+                                            @}
+                                            @else{
+                                            <i class="layui-icon layui-icon-fonts-code"></i>
+                                            @}
+                                            <cite>${subMenu.name}</cite>
+                                        </a>
+                                    </dd>
+                                    @}
+                                @}
                                 </dl>
                             @}
                         </li>

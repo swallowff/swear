@@ -1,37 +1,23 @@
 package cn.swallowff.modules.core.system.entity;
 
-import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
-
-import java.util.List;
+import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 
 /**
  * 菜单DO
  * @author shenyu
  * @create 2019/5/6
  */
-public class Menu extends BaseEntity {
+public class Menu extends TreeEntity<Menu> {
     private String code;    //菜单编号
-    private String pcode;   //父级菜单编号
-    private String pcodes;  //所有父级编号
     private String name;    //菜单名称
     private String icon;    //图标
     private String url;     //url地址
     private Integer sort;    //排序
     private Integer levels;  //级别
     private Boolean isMenu;  //是否是菜单
+    private Boolean isExpandable; //是否可展开
     private String tips;    //备注
     private Boolean isOpen; //是否打开
-
-    //子菜单列表
-    private List<Menu> subMenuList;
-
-    public List<Menu> getSubMenuList() {
-        return subMenuList;
-    }
-
-    public void setSubMenuList(List<Menu> subMenuList) {
-        this.subMenuList = subMenuList;
-    }
 
     public String getCode() {
         return code;
@@ -39,22 +25,6 @@ public class Menu extends BaseEntity {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getPcode() {
-        return pcode;
-    }
-
-    public void setPcode(String pcode) {
-        this.pcode = pcode;
-    }
-
-    public String getPcodes() {
-        return pcodes;
-    }
-
-    public void setPcodes(String pcodes) {
-        this.pcodes = pcodes;
     }
 
     public String getName() {
@@ -119,5 +89,13 @@ public class Menu extends BaseEntity {
 
     public void setIsOpen(Boolean open) {
         isOpen = open;
+    }
+
+    public Boolean getIsExpandable() {
+        return isExpandable;
+    }
+
+    public void setIsExpandable(Boolean expandable) {
+        isExpandable = expandable;
     }
 }

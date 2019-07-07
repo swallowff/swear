@@ -24,6 +24,9 @@ public class User extends BaseEntity implements Serializable {
     private String deptId; //部门id
     private Integer status; //启用状态    1:启用  0:停用  字典YesOrNo
 
+    //补充字段
+    private String roleName;  //角色名称
+
     public String getAvatar() {
         return avatar;
     }
@@ -118,5 +121,13 @@ public class User extends BaseEntity implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

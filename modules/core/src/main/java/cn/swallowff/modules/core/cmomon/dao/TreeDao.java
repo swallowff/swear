@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface TreeDao<E extends TreeEntity> extends CrudDao<E> {
     List<E> findChildren(E parent);
+
+    int deleteTree(String id);
 }

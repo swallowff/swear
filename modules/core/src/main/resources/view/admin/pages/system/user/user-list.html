@@ -51,13 +51,10 @@
         <div style="padding-bottom: 10px;">
           <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
           <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
-          <button class="layui-btn layui-btn-primary layuiadmin-btn-list" data-type="role">分配角色</button>
+          <!--<button class="layui-btn layui-btn-warm layuiadmin-btn-list" data-type="role">分配角色</button>-->
         </div>
 
-        <ul id="role-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;display: none;"></ul>
-
         <table id="LAYF-list-table" lay-filter="LAYF-user-list-table"></table>
-
 
         <script type="text/html" id="table-content-list">
           <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
@@ -116,14 +113,14 @@
                       sort: true
                   },
                   {
-                      field: 'email',
-                      title: '邮箱',
+                      field: 'roleName',
+                      title: '角色',
                       sort: true
                   },
                   {
-                      field: 'password',
-                      title: '密码',
-                      sort: false
+                      field: 'email',
+                      title: '邮箱',
+                      sort: true
                   },
                   {
                       field: 'phone',
@@ -143,7 +140,7 @@
                   {
                       title: '操作',
                       templet: operation,
-                      width: 120,
+                      width: 200,
                       align: 'center'
                   }
               ]]
@@ -163,7 +160,7 @@
                   var checkStatus = table.checkStatus('userTable')
                       , checkData = checkStatus.data; //得到选中的数据
                   // console.log(checkData)
-                  if (checkData.length === setter.response.statusCode.ok) {
+                  if (checkData.length === 0) {
                       return layer.msg('请选择数据');
                   }
 
@@ -182,9 +179,15 @@
                               ids: idAry
                           },
                           success: function (res) {
-                              // console.log(res)
-                              table.reload('userTable');
-                              layer.msg('已删除');
+                              if (res.code == setter.response.statusCode.ok) {
+                                  layer.msg(res.msg,{
+                                      icon: 1,
+                                      time: 2000
+                                  });
+                                  table.reload('userTable');
+                              }else {
+                                  layer.msg(res.msg);
+                              }
                           }
 
                       });
@@ -206,23 +209,73 @@
                       }
                   });
               },
-              role: function () {
-                  layer.open({
-                      type: 1,
-                      tittle: '请选择角色',
-                      area: ['390px', '330px'],
-                      shade: 0.4,
-                      btn: ['确定', '取消'],
-                      content: $('#role-select'),
-                      scrollbar: true,//屏蔽浏览器滚动条
-                      yes: function (index) {//layer.msg('yes');    //点击确定回调
-                          layer.close(index);
-                          console.log('确定提交');
-                      }
-
-                  })
-
-              }
+              // role: function () {
+              //     // var selectedRoleId = '';
+              //     layer.open({
+              //         type: 1,
+              //         tittle: '选择角色',
+              //         area: ['390px', '460px'],
+              //         shade: 0.4,
+              //         btn: ['确定', '取消'],
+              //         // content: $('#role-select'),
+              //         content: '<ul id="role-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;"></ul>',
+              //         scrollbar: true,//屏蔽浏览器滚动条
+              //         success: function(layero, index){
+              //             renderDtree();
+              //             // 绑定节点点击
+              //             // dtree.on("node('role-select')" ,function(obj){
+              //             //     // console.log(obj)
+              //             //     selectedRoleId = obj.param.nodeId;
+              //             // });
+              //         },
+              //         yes: function (index) {
+              //             var param = dtree.getCheckbarNodesParam("role-select")   //获取复选框选中数据
+              //             // console.log(param)
+              //             var roleAry = new Array();
+              //             for (var j = 0; j < param.length; j++) {
+              //                 roleAry[j] = param[j].nodeId
+              //             }
+              //
+              //             var checkStatus = table.checkStatus('userTable')
+              //                 , checkData = checkStatus.data;
+              //             var idAry = new Array();
+              //             for (var i = 0; i < checkData.length; i++) {
+              //                 idAry[i] = checkData[i].id
+              //             }
+              //             if (checkData.length === 0){
+              //                 return layer.msg('请选择用户',{
+              //                     icon: 5,
+              //                     time: 2000
+              //                 });
+              //             }
+              //             // console.log(idAry)
+              //             $.ajax({
+              //                 url: setter.ctxPath + '/user/batchSetupRoles',
+              //                 method: 'post',
+              //                 traditional: true,
+              //                 data: {
+              //                     uids: idAry,
+              //                     roleIds: roleAry
+              //                 },
+              //                 success: function (res) {
+              //                     if (res.code === setter.response.statusCode.ok) {
+              //                         layer.msg(res.msg,{
+              //                             icon: 1,
+              //                             time: 2000
+              //                         });
+              //                         layer.close(index);
+              //                         table.reload('userTable');
+              //                     }else {
+              //                         layer.msg(res.msg,{
+              //                             icon: 5,
+              //                             time: 2000
+              //                         });
+              //                     }
+              //                 }
+              //             })
+              //         }
+              //     })
+              // }
 
           };
 
@@ -234,6 +287,7 @@
           function operation(data) {
               var id = data.id;
               var btn = '';
+              btn += '<button type="button" class="layui-btn layui-btn-xs layui-btn-warm" onclick="setupRole(\'' + id + '\')">角色配置</button>'
               btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="editRow(\'' + id + '\')"><i class="layui-icon">&#xe642;</i></button>'
               btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
               return btn;
@@ -248,11 +302,17 @@
                       id: id
                   },
                   success: function (res) {
-                      layer.msg(res.msg);
                       if (res.code == setter.response.statusCode.ok) {
+                          layer.msg(res.msg,{
+                              icon: 1,
+                              time: 1800
+                          });
                           layui.table.reload('userTable');
                       } else {
-
+                          layer.msg(res.msg,{
+                              icon: 5,
+                              time: 1800
+                          });
                       }
                   }
               });
@@ -274,23 +334,78 @@
               });
           };
 
-          dtree.render({
-              elem: "#role-select",
-              // data: dtreeData, // 使用data加载
-              ficon: ["1","5"],
-              icon: ["1","5"],
-              url: setter.ctxPath + "/role/dtree.ajax", // 使用url加载（可与data加载同时存在）
-              method: 'GET',
-              dataStyle: "layuiStyle",  //使用layui风格的数据格式
-              dataFormat: "list",  //配置data的风格为list
-              response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
-              checkbar:true //开启复选框
-          });
+          window.setupRole = function (id) {
+              layer.open({
+                  type: 1,
+                  tittle: '选择角色',
+                  area: ['390px', '460px'],
+                  shade: 0.4,
+                  btn: ['确定', '取消'],
+                  // content: $('#role-select'),
+                  content: '<ul id="role-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;"></ul>',
+                  scrollbar: true,//屏蔽浏览器滚动条
+                  success: function(layero, index){
+                      renderDtree(id);
+                  },
+                  yes: function (index) {
+                      var param = dtree.getCheckbarNodesParam("role-select")   //获取复选框选中数据
+                      console.log(param)
+                      var roleAry = new Array();
+                      for (var k = 0; k < param.length; k++) {
+                          roleAry[k] = param[k].nodeId;
+                      }
+                      if (param.length === 0){
+                          return layer.msg('请选择菜单',{
+                              icon: 5,
+                              time: 2000
+                          })
+                      }
 
-          // 绑定节点点击
-          dtree.on("node('role-select')" ,function(obj){
-              layer.msg(JSON.stringify(obj.param));
-          });
+                      $.ajax({
+                          url: setter.ctxPath + '/user/batchSetupRoles',
+                          method: 'post',
+                          traditional: true,
+                          data: {
+                              userId: id,
+                              roleIds: roleAry
+                          },
+                          success: function (res) {
+                              if (res.code === setter.response.statusCode.ok) {
+                                  layer.msg(res.msg,{
+                                      icon: 1,
+                                      time: 2000
+                                  });
+                                  layer.close(index);
+                                  table.reload('roleTable');
+                              }else {
+                                  layer.msg(res.msg,{
+                                      icon: 5,
+                                      time: 2000
+                                  });
+                              }
+                          }
+                      })
+                  }
+              })
+          }
+
+          var renderDtree = function(userId){
+              dtree.render({
+                  elem: "#role-select",
+                  // icon: ["-1","5"],   //二级图标
+                  // ficon: ["-1","5"],   //一级图标
+                  url: setter.ctxPath + "/role/userDtree.ajax?userId="+userId, // 使用url加载（可与data加载同时存在）
+                  // height: '150px',
+                  method: 'GET',
+                  dataStyle: "layuiStyle",  //使用layui风格的数据格式
+                  dataFormat: "list",  //配置data的风格为list
+                  accordion: false,  // 开启手风琴
+                  none: "提示说我没有数据？",
+                  line: true,  // 显示树线
+                  response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+                  checkbar:true //开启复选框
+              });
+          }
 
 
       });

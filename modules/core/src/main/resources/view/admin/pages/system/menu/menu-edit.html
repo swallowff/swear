@@ -31,14 +31,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">父级菜单</label>
         <div class="layui-input-inline">
-            <select id="pcode-select" data-placeholder="请选择" name="pcode" lay-search=""></select>
+            <select id="menu-select" data-placeholder="请选择" name="pid" lay-search=""></select>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">菜单图标</label>
         <div class="layui-input-inline">
             <input type="text" name="icon" placeholder="请输入菜单图标" autocomplete="off"
-                   class="layui-input"><a href="javascript:;">需要帮助?</a>
+                   class="layui-input"><a href="https://www.layui.com/doc/element/icon.html" target="_blank">需要帮助?</a>
         </div>
     </div>
     <div class="layui-form-item">
@@ -66,10 +66,15 @@
     <div class="layui-form-item">
         <label class="layui-form-label">是否菜单</label>
         <div class="layui-input-inline">
-            <!--开关-->
             <input type="radio" name="isMenu" value="false" title="否" checked>
             <input type="radio" name="isMenu" value="true" title="是">
-            <!--<input type="checkbox" lay-filter="isMenu" name="isMenu" lay-skin="switch" lay-text="是|否" value="true" checked="false">-->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否可展开</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="isExpandable" value="false" title="否" checked>
+            <input type="radio" name="isExpandable" value="true" title="是">
         </div>
     </div>
     <div class="layui-form-item">
@@ -103,12 +108,13 @@
             id: '${menu.id}',
             name: '${menu.name}',
             code: '${menu.code}',
-            pcode: '${menu.pcode}',
+            pid: '${menu.pid}',
             icon: '${menu.icon}',
             url: '${menu.url}',
             sort: '${menu.sort}',
             levels: '${menu.levels}',
             isMenu: '${menu.isMenu}',
+            isExpandable: '${menu.isExpandable}',
             tips: '${menu.tips}'
         })
 
@@ -139,21 +145,24 @@
         //渲染父级菜单下拉选择
         $.ajax({
             url: setter.ctxPath + '/menu/list.ajax',
-            data: '',
+            data: {
+                isMenu:true,
+                page: -1      //不分页
+            },
             method: 'GET',
             success: function (res) {
                 // console.log(res)
                 if (res.code == setter.response.statusCode.ok) {
                     var listData = res.data;
-                    var $select = $('#pcode-select');
+                    var $select = $('#menu-select');
                     $select.append('<option value="">请选择</option>')
                     for (var i in listData){
                         if (listData[i].id != '${menu.id}'){
-                            $select.append('<option value="'+listData[i].code+'">'+listData[i].name+'</option>')
+                            $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
                         }
                     }
                     form.val('LAYF-menu-form-edit',{
-                        pcode: '${menu.pcode}',
+                        pid: '${menu.pid}',
                     });
                     form.render('select','LAYF-menu-form-edit'); //刷新select选择框
                 }

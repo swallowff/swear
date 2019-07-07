@@ -47,7 +47,10 @@ public class GlobalController extends BaseController {
                 model.addAttribute("user",user);
             }
         }
-        List<Menu> list = menuService.findMenuTree();
+        Menu menu = new Menu();
+        menu.setId(Menu.ROOT_ID);
+        menu.setOrderBy("sort ASC");
+        List<Menu> list = menuService.findTree(menu).getChildren();
         model.addAttribute("menuList",list);
         return "admin/pages/index";
     }

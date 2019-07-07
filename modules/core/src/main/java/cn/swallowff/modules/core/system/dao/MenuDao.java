@@ -1,9 +1,13 @@
 package cn.swallowff.modules.core.system.dao;
 
-import cn.swallowff.modules.core.cmomon.dao.CrudDao;
+import cn.swallowff.modules.core.cmomon.dao.TreeDao;
+import cn.swallowff.modules.core.system.dto.DtreeNode;
 import cn.swallowff.modules.core.system.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -12,5 +16,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Mapper
-public interface MenuDao extends CrudDao<Menu> {
+public interface MenuDao extends TreeDao<Menu> {
+    List<DtreeNode> findMenuListWithRole(@Param(value = "menu") Menu menu, @Param(value = "roleId") String roleId);
 }

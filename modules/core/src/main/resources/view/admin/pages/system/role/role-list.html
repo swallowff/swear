@@ -9,12 +9,14 @@
               content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
         <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
+        <link rel="stylesheet" href="${static}/layuiadmin/style/dtree.css" media="all">
+        <link rel="stylesheet" href="${static}/fonts/dtreefont/dtreefont.css" media="all">
     </head>
     <body>
 
         <div class="layui-fluid">
             <div class="layui-card">
-                <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="LAYF-role-list-search">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <div class="layui-input-inline">
@@ -23,11 +25,11 @@
                         </div>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" name="deptId" placeholder="请选择部门" autocomplete="off" class="layui-input">
+                                <select id="dept-select" data-placeholder="请选择部门" name="deptId" lay-search=""></select>
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-role-list-search">
+                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-role-list-search-submit">
                                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                             </button>
                         </div>
@@ -38,6 +40,7 @@
                     <div style="padding-bottom: 10px;">
                         <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
                         <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                        <!--<button class="layui-btn layui-btn-warm layuiadmin-btn-list" data-type="auth">权限配置</button>-->
                     </div>
                     <table id="LAYF-list-table" lay-filter="LAYF-role-list-table"></table>
                 </div>
@@ -49,9 +52,10 @@
             layui.config({
                 base: '${static}/layuiadmin/' //静态资源所在路径
             }).extend({
-                index: 'lib/index' //主入口模块
-            }).use(['index', 'table', 'jquery', 'admin'], function () {
-                var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter;
+                index: 'lib/index', //主入口模块
+                dtree: 'tree/dtree'
+            }).use(['index', 'table', 'jquery', 'admin','dtree'], function () {
+                var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter,dtree = layui.dtree;
                 setter.serverUrl = '${serverUrl}';
                 setter.ctxPath = '${admin}';
 
@@ -97,14 +101,14 @@
                         {
                             title: '操作',
                             templet: operation,
-                            width: 120,
+                            width: 200,
                             align: 'center'
                         }
                     ]]
                 });
 
                 //监听搜索
-                form.on('submit(LAYF-role-list-search)', function (data) {
+                form.on('submit(LAYF-role-list-search-submit)', function (data) {
                     var field = data.field;
                     //执行重载
                     table.reload('roleTable', {
@@ -149,7 +153,7 @@
                     add: function () {
                         layer.open({
                             type: 2
-                            , title: '添加菜单'
+                            , title: '添加角色'
                             , content: setter.ctxPath + '/role/add.html'
                             , maxmin: true
                             , area: ['550px', '550px']
@@ -160,7 +164,81 @@
                                 submit.click();
                             }
                         });
-                    }
+                    },
+                    // auth: function () {
+                    //     layer.msg('setupAuth');
+                    //     console.log(11111)
+                    //     var menuIds = [];
+                    //     layer.open({
+                    //         type: 1,
+                    //         tittle: '选择菜单',
+                    //         area: ['390px', '460px'],
+                    //         shade: 0.4,
+                    //         btn: ['确定', '取消'],
+                    //         // content: $('#role-select'),
+                    //         content: '<ul id="auth-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;"></ul>',
+                    //         scrollbar: true,//屏蔽浏览器滚动条
+                    //         success: function(layero, index){
+                    //             renderDtree();
+                    //             // 绑定节点点击
+                    //             // dtree.on("node('role-select')" ,function(obj){
+                    //             //     // console.log(obj)
+                    //             //     selectedId = obj.param.nodeId;
+                    //             // });
+                    //         },
+                    //         yes: function (index) {
+                    //             var param = dtree.getCheckbarNodesParam("auth-select")   //获取复选框选中数据
+                    //             console.log(param)
+                    //             var menuIdAry = new Array();
+                    //             for (var k = 0; k < param.length; k++) {
+                    //                 menuIdAry[k] = param[k].nodeId;
+                    //             }
+                    //             if (param.length === 0){
+                    //                 return layer.msg('请选择菜单',{
+                    //                     icon: 5,
+                    //                     time: 2000
+                    //                 })
+                    //             }
+                    //             var checkStatus = table.checkStatus('roleTable')
+                    //                 , checkData = checkStatus.data;
+                    //             if (checkData.length === 0){
+                    //                 return layer.msg('请选择角色',{
+                    //                     icon: 5,
+                    //                     time: 2000
+                    //                 });
+                    //             }
+                    //             var roleIdAry = new Array();
+                    //             for (var i = 0; i < checkData.length; i++) {
+                    //                 roleIdAry[i] = checkData[i].id
+                    //             }
+                    //
+                    //             $.ajax({
+                    //                 url: setter.ctxPath + '/role/batchSetupAuth',
+                    //                 method: 'post',
+                    //                 traditional: true,
+                    //                 data: {
+                    //                     roleIds: roleIdAry,
+                    //                     menuIds: menuIdAry
+                    //                 },
+                    //                 success: function (res) {
+                    //                     if (res.code === setter.response.statusCode.ok) {
+                    //                         layer.msg(res.msg,{
+                    //                             icon: 1,
+                    //                             time: 2000
+                    //                         });
+                    //                         layer.close(index);
+                    //                         table.reload('userTable');
+                    //                     }else {
+                    //                         layer.msg(res.msg,{
+                    //                             icon: 5,
+                    //                             time: 2000
+                    //                         });
+                    //                     }
+                    //                 }
+                    //             })
+                    //         }
+                    //     })
+                    // }
                 };
 
                 $('.layui-btn.layuiadmin-btn-list').on('click', function () {
@@ -171,6 +249,7 @@
                 function operation(data) {
                     var id = data.id;
                     var btn = '';
+                    btn += '<button type="button" class="layui-btn layui-btn-xs layui-btn-warm" onclick="setupAuth(\'' + id + '\')">权限配置</button>'
                     btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="editRow(\'' + id + '\')"><i class="layui-icon">&#xe642;</i></button>'
                     btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
                     return btn;
@@ -198,7 +277,7 @@
                 window.editRow = function (id) {
                     layer.open({
                         type: 2
-                        , title: '編輯菜单'
+                        , title: '編輯角色'
                         , content: setter.ctxPath + '/role/edit.html?id=' + id
                         , maxmin: true
                         , area: ['550px', '550px']
@@ -210,6 +289,98 @@
                         }
                     });
                 };
+
+                window.setupAuth = function (id) {
+                    layer.open({
+                        type: 1,
+                        tittle: '选择菜单',
+                        area: ['390px', '460px'],
+                        shade: 0.4,
+                        btn: ['确定', '取消'],
+                        // content: $('#role-select'),
+                        content: '<ul id="auth-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;"></ul>',
+                        scrollbar: true,//屏蔽浏览器滚动条
+                        success: function(layero, index){
+                            renderRoleDtree(id);
+                        },
+                        yes: function (index) {
+                            var param = dtree.getCheckbarNodesParam("auth-select")   //获取复选框选中数据
+                            console.log(param)
+                            var menuIdAry = new Array();
+                            for (var k = 0; k < param.length; k++) {
+                                menuIdAry[k] = param[k].nodeId;
+                            }
+                            if (param.length === 0){
+                                return layer.msg('请选择菜单',{
+                                    icon: 5,
+                                    time: 2000
+                                })
+                            }
+
+                            $.ajax({
+                                url: setter.ctxPath + '/role/batchSetupAuth',
+                                method: 'post',
+                                traditional: true,
+                                data: {
+                                    roleId: id,
+                                    menuIds: menuIdAry
+                                },
+                                success: function (res) {
+                                    if (res.code === setter.response.statusCode.ok) {
+                                        layer.msg(res.msg,{
+                                            icon: 1,
+                                            time: 2000
+                                        });
+                                        layer.close(index);
+                                        table.reload('roleTable');
+                                    }else {
+                                        layer.msg(res.msg,{
+                                            icon: 5,
+                                            time: 2000
+                                        });
+                                    }
+                                }
+                            })
+                        }
+                    })
+                }
+
+                var renderRoleDtree = function(roleId){
+                    dtree.render({
+                        elem: "#auth-select",
+                        // icon: ["1","5"],   //二级图标
+                        // ficon: ["1","5"],   //一级图标
+                        url: setter.ctxPath + "/menu/roleDtree.ajax?roleId="+roleId, // 使用url加载（可与data加载同时存在）
+                        // height: '150px',
+                        method: 'GET',
+                        dataStyle: "layuiStyle",  //使用layui风格的数据格式
+                        dataFormat: "list",  //配置data的风格为list
+                        accordion: false,  // 开启手风琴
+                        none: "提示说我没有数据？",
+                        line: true,  // 显示树线
+                        response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
+                        checkbar:true //开启复选框
+                    });
+                }
+
+                //渲染部门下拉选择
+                $.ajax({
+                    url: setter.ctxPath + '/dept/list.ajax',
+                    data: '',
+                    method: 'GET',
+                    success: function (res) {
+                        // console.log(res)
+                        if (res.code == setter.response.statusCode.ok) {
+                            var listData = res.data;
+                            var $select = $('#dept-select');
+                            $select.append('<option value="">请选择部门</option>');
+                            for (var i in listData){
+                                $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
+                            }
+                            form.render('select','LAYF-role-list-search'); //刷新select选择框
+                        }
+                    }
+                });
 
             });
 

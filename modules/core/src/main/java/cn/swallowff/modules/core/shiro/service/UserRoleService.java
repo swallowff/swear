@@ -1,5 +1,9 @@
 package cn.swallowff.modules.core.shiro.service;
 
+import cn.swallowff.modules.core.system.entity.UserRoleRelation;
+
+import java.util.List;
+
 public interface UserRoleService {
 
     /**
@@ -7,7 +11,9 @@ public interface UserRoleService {
      * @param roleId
      * @return
      */
-    public String getRoleName(String roleId);
+    String getRoleName(String roleId);
+
+    List<UserRoleRelation> findRoleListByUserId(String userId);
 
 
 }

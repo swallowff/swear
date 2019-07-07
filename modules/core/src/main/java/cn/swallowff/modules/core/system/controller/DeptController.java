@@ -72,6 +72,7 @@ public class DeptController extends BaseController {
 
     @RequestMapping(value = "laytreeTable.ajax")
     @ResponseBody
+    @Deprecated
     public Object laytreeTable(Dept dept){
         BaseResp baseResp = BaseResp.newSuccess();
         List<Dept> deptList = deptService.findList(dept);
@@ -108,6 +109,16 @@ public class DeptController extends BaseController {
         int r = deptService.delete(id);
         if (r == 1){
             return baseResp;
+        }else return baseResp.putError();
+    }
+
+    @RequestMapping(value = "deleteTree")
+    @ResponseBody
+    public BaseResp deleteTree(String id){
+        BaseResp baseResp = BaseResp.newSuccess();
+        int r = deptService.deleteTree(id);
+        if (r > 0){
+            return baseResp.setData(r);
         }else return baseResp.putError();
     }
 
