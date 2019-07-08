@@ -20,8 +20,7 @@ public class MenuService extends TreeService<MenuDao,Menu> {
     public Menu selectByCode(String code){
         Menu menu = new Menu();
         menu.setCode(code);
-        List<Menu> list = super.findList(menu);
-        return CollectionUtils.isEmpty(list) ? null : list.get(0);
+        return super.findEntity(menu);
     }
 
     @Override

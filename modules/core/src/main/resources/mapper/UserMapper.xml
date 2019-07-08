@@ -37,6 +37,38 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="User">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user a
+        <include refid="sys_role_join"/>
+        <where>
+            a.delflag = 0
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="account != null and account != ''">
+                AND a.account = #{account}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="sex != null">
+                AND a.sex = #{sex}
+            </if>
+            <if test="email != null and email != ''">
+                AND a.email = #{email}
+            </if>
+            <if test="phone != null and phone != ''">
+                AND a.phone = #{phone}
+            </if>
+            <if test="status != null">
+                AND a.status = #{status}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="User">
         SELECT
         <include refid="baseColumns"/>

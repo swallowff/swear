@@ -23,6 +23,28 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="Notice">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice a
+        <where>
+            a.delflag = 0
+            <if test="type != null">
+                AND a.type = #{type}
+            </if>
+            <if test="tittle != null and tittle != ''">
+                AND a.tittle = #{tittle}
+            </if>
+            <if test="creator != null and creator != ''">
+                AND a.creator = #{creator}
+            </if>
+            <if test="toUser != null and toUser != ''">
+                AND a.to_user = #{toUser}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="Notice">
         SELECT
         <include refid="baseColumns"/>

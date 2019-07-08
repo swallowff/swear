@@ -25,6 +25,25 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="OperationLog">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_operation_log a
+        <where>
+            a.delflag = 0
+            <if test="logName != null and logName != ''">
+                AND a.log_name = #{logName}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="succeed != null">
+                AND a.succeed = #{succeed}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="OperationLog">
         SELECT
         <include refid="baseColumns"/>

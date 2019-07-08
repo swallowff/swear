@@ -116,7 +116,7 @@ public class UserController {
 
     @RequestMapping(value = "batchSetupRoles")
     @ResponseBody
-    public BaseResp batchSetupRoles(String userId,String[] roleIds){
+    public synchronized BaseResp batchSetupRoles(String userId,String[] roleIds){
         BaseResp baseResp = BaseResp.newSuccess();
         if (StringUtils.isBlank(userId)){
             return baseResp.putError("请选择用户");
@@ -137,6 +137,7 @@ public class UserController {
         if (count > 0){
             return baseResp;
         }else return baseResp.putError();
+
     }
 
     @RequestMapping(value = "batchDel")

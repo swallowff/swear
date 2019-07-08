@@ -9,6 +9,8 @@ public interface CrudDao<E extends BaseEntity> {
 
     List<E> findList(E entity);
 
+    E findEntity(E entity);
+
     int insert(E entity);
 
     int insertSelective(E entity);

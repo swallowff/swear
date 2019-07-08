@@ -5,6 +5,7 @@ import cn.swallowff.modules.core.system.dao.RoleAuthRelationDao;
 import cn.swallowff.modules.core.system.entity.RoleAuthRelation;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,11 +20,10 @@ public class RoleAuthRelationService extends CrudService<RoleAuthRelationDao,Rol
         RoleAuthRelation roleAuthRelation = new RoleAuthRelation();
         roleAuthRelation.setRoleId(roleId);
         roleAuthRelation.setMenuId(menuId);
-        List<RoleAuthRelation> list = crudDao.findList(roleAuthRelation);
-        return CollectionUtils.isEmpty(list) ? null : list.get(0);
+        return super.findEntity(roleAuthRelation);
     }
 
-
+    @Transactional
     public int delByRoleId(String roleId) {
         return crudDao.delByRoleId(roleId);
     }

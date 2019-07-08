@@ -31,6 +31,37 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="Menu">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_menu a
+        <where>
+            a.delflag = 0
+            <if test="code != null and code != ''">
+                AND a.code = #{code}
+            </if>
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name LIKE CONCAT('%',#{name},'%')
+            </if>
+            <if test="levels != null">
+                AND a.levels = #{levels}
+            </if>
+            <if test="isMenu != null">
+                AND a.is_menu = #{isMenu}
+            </if>
+            <if test="isExpandable != null">
+                AND a.is_expandable = #{isExpandable}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="Menu">
         SELECT
         <include refid="baseColumns"/>

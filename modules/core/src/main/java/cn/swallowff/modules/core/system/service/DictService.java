@@ -34,16 +34,15 @@ public class DictService extends CrudService<DictDao, Dict> {
         Dict dict = new Dict();
         dict.setCode(code);
         dict.setVal(val);
-        List<Dict> list = super.findList(dict);
-        return CollectionUtils.isEmpty(list) ? null : list.get(0);
+        return super.findEntity(dict);
     }
 
     public String getLabelName(String code,Integer val){
         Dict dict = new Dict();
         dict.setCode(code);
         dict.setVal(val);
-        List<Dict> list = super.findList(dict);
-        return CollectionUtils.isEmpty(list) ? "未知的字典数据" : list.get(0).getLabel();
+        dict = super.findEntity(dict);
+        return dict == null ? "未知" : dict.getLabel();
     }
 
     public List<DictCache> getDictCacheList(String code){

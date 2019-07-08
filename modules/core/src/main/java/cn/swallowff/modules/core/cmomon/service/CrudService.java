@@ -7,6 +7,7 @@ import cn.swallowff.modules.core.system.entity.User;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -24,6 +25,10 @@ public abstract class CrudService<M extends CrudDao<E>,E extends BaseEntity> {
         List<E> list = findList(entity);
         PageInfo<E> pageInfo = new PageInfo<>(list);
         return pageResp(pageInfo);
+    }
+
+    public E findEntity(E entity){
+        return crudDao.findEntity(entity);
     }
 
     public List<E> findList(E entity){

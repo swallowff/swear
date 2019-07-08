@@ -209,6 +209,7 @@ layui.config({
                 renderDtree(id);
             },
             yes: function (index) {
+                $('#layui-layer'+index).find('.layui-layer-btn0').addClass('swear-a-disabled');   //防止重复提交
                 var param = dtree.getCheckbarNodesParam("role-select")   //获取复选框选中数据
                 console.log(param)
                 var roleAry = new Array();
@@ -246,6 +247,7 @@ layui.config({
                         }
                     }
                 })
+                $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
             }
         })
     }

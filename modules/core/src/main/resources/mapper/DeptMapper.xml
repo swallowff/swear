@@ -25,6 +25,28 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="Dept">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dept a
+        <where>
+            a.delflag = 0
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
+            <if test="simpleName != null and simpleName != ''">
+                AND a.simple_name = #{simpleName}
+            </if>
+            <if test="fullName != null and fullName != ''">
+                AND a.full_name LIKE CONCAT('%',#{fullName},'%')
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="Dept">
         SELECT
         <include refid="baseColumns"/>

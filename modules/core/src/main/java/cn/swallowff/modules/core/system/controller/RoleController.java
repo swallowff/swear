@@ -17,6 +17,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,6 +91,10 @@ public class RoleController extends BaseController {
     @ResponseBody
     public BaseResp add(Role role){
         BaseResp baseResp = BaseResp.newSuccess();
+        Role existRole = roleService.selectByCode(role.getCode());
+        if (null != existRole){
+            return baseResp.putError("角色CODE已存在");
+        }
         roleService.save(role);
         return baseResp;
     }
@@ -139,8 +144,16 @@ public class RoleController extends BaseController {
         }else return baseResp.putError();
     }
 
+    /**
+     * 快速连点时,会重复创建很多数据
+     * 解决办法: 1.前端防止重复提交   2.使用synchronized
+     * @param roleId
+     * @param menuIds
+     * @return
+     */
     @RequestMapping(value = "batchSetupAuth")
     @ResponseBody
+    @Transactional(rollbackFor = Exception.class)
     public BaseResp batchSetupAuth(String roleId,String[] menuIds){
         BaseResp baseResp = BaseResp.newSuccess();
         if (StringUtils.isBlank(roleId)){
@@ -151,7 +164,6 @@ public class RoleController extends BaseController {
         }
         //删除角色原来的权限
         roleAuthRelationService.delByRoleId(roleId);
-
         int count = 0;
         for (int j = 0; j < menuIds.length; j++){
             //添加角色菜单数据
@@ -169,7 +181,6 @@ public class RoleController extends BaseController {
             roleAuthRelationService.save(roleAuthRelation);
             count ++;
         }
-
         if (count > 0){
             return baseResp;
         }else return baseResp.putError();

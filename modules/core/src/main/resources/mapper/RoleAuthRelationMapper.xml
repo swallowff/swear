@@ -21,6 +21,25 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="RoleAuthRelation">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role_auth_relation a
+        <where>
+            a.delflag = 0
+            <if test="roleId != null and roleId != ''">
+                AND a.role_id = #{roleId}
+            </if>
+            <if test="authCode != null and authCode != ''">
+                AND a.auth_code = #{authCode}
+            </if>
+            <if test="menuId != null and menuId != ''">
+                AND a.menu_id = #{menuId}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="RoleAuthRelation">
         SELECT
         <include refid="baseColumns"/>

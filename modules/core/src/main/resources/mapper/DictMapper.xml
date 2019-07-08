@@ -25,6 +25,28 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="Dict">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dict a
+        <where>
+            a.delflag = 0
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                AND a.code = #{code}
+            </if>
+            <if test="label != null and label != ''">
+                AND a.label = #{label}
+            </if>
+            <if test="val != null">
+                AND a.val = #{val}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="Dict">
         SELECT
         <include refid="baseColumns"/>

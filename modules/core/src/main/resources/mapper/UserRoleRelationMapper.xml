@@ -26,6 +26,23 @@
       </where>
     </select>
 
+    <select id="findEntity" resultType="UserRoleRelation">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user_role_relation a
+        <include refid="sys_role_join"/>
+        <where>
+            a.delflag = 0
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                AND a.role_id = #{roleId}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
     <select id="findList" resultType="UserRoleRelation">
         SELECT
         <include refid="baseColumns"/>
