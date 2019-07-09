@@ -1,15 +1,21 @@
 package cn.swallowff.modules.core.filter;
 
+import cn.swallowff.modules.core.cmomon.resp.BaseResp;
+import cn.swallowff.modules.core.constant.states.ResponseState;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
+import sun.security.provider.certpath.OCSPResponse;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 
 /**
  * 使用该过滤器拦截ajax请求, 同时解决session超时的问题
@@ -49,8 +55,20 @@ public class SystemUserFilter extends AccessControlFilter {
          */
         if (httpServletRequest.getHeader("x-requested-with") != null
                 && httpServletRequest.getHeader("x-requested-with").equalsIgnoreCase("XMLHttpRequest")) {
-            httpServletResponse.setHeader("sessionstatus", "timeout");
             //可以返回BaseResp格式错误信息
+            BaseResp baseResp = new BaseResp(ResponseState.SESSION_TIME_OUT);
+            httpServletResponse.setCharacterEncoding("utf-8");
+            PrintWriter writer = null;
+            try {
+                writer = httpServletResponse.getWriter();
+                writer.write(baseResp.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (null != writer){
+                    writer.close();
+                }
+            }
             return false;
         } else {
 
@@ -66,8 +84,7 @@ public class SystemUserFilter extends AccessControlFilter {
                  * 从别的页面跳转过来的
                  */
                 if (ShiroKit.getSession().getAttribute("sessionFlag") == null) {
-                    httpServletRequest.setAttribute("tips", "session超时");
-                    httpServletRequest.getRequestDispatcher("/a/login/login").forward(request, response);
+                    httpServletRequest.getRequestDispatcher("/a/login/login.html").forward(request, response);
                     return false;
                 } else {
                     saveRequestAndRedirectToLogin(request, response);

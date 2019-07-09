@@ -95,6 +95,7 @@ public class ShiroConfig2 {
         MySessionManager sessionManager = new MySessionManager();
         sessionManager.setSessionValidationInterval(coreProperties.getSessionValidationInterval() * 1000);
         sessionManager.setGlobalSessionTimeout(coreProperties.getSessionInvalidateTime() * 1000);
+//        sessionManager.setGlobalSessionTimeout(20 * 1000);
         //设置sessionDao对session查询，在查询在线用户service中用到了
         sessionManager.setSessionDAO(sessionDAO());
         sessionManager.setDeleteInvalidSessions(true);
