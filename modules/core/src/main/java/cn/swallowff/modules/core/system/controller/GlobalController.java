@@ -38,6 +38,9 @@ public class GlobalController extends BaseController {
     @RequestMapping("/a")
     public String aPath(){return REDIRECT + "/a/index";}
 
+    @RequestMapping("/a/home")
+    public String home(){return "admin/pages/homepage";}
+
     @RequestMapping("/a/index")
     public String index(Model model){
         ShiroUser shiroUser = ShiroKit.getUser();
