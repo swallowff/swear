@@ -3,7 +3,7 @@
 <mapper namespace="cn.swallowff.modules.core.system.dao.MenuDao">
 
     <sql id="baseColumns">
-        a.id AS id,
+        DISTINCT(a.id) AS id,
         a.code AS code,
         a.pid AS pid,
         a.pids AS pids,

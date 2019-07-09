@@ -29,7 +29,7 @@ layui.config({
             },
             {
                 field: 'code',
-                title: '角色CODE',
+                title: '角色码',
                 sort: true
             },
             {
@@ -184,12 +184,13 @@ layui.config({
             yes: function (index) {
                 $('#layui-layer'+index).find('.layui-layer-btn0').addClass('swear-a-disabled');   //防止重复提交
                 var param = dtree.getCheckbarNodesParam("auth-select")   //获取复选框选中数据
-                console.log(param)
+                // console.log(param)
                 var menuIdAry = new Array();
                 for (var k = 0; k < param.length; k++) {
                     menuIdAry[k] = param[k].nodeId;
                 }
                 if (param.length === 0){
+                    $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
                     return layer.msg('请选择菜单',{
                         icon: 5,
                         time: 2000
@@ -218,9 +219,9 @@ layui.config({
                                 time: 2000
                             });
                         }
-                        $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
                     }
-                })
+                });
+                $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
             }
         })
     }

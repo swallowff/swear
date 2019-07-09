@@ -1,5 +1,6 @@
 package cn.swallowff.modules.core.system.controller;
 
+import cn.swallowff.modules.core.cmomon.annotion.Permission;
 import cn.swallowff.modules.core.cmomon.controller.BaseController;
 import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
@@ -34,6 +35,7 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuService;
 
+    @Permission(value = "sys-menu-list")
     @RequestMapping(value = "list.html")
     public String listHtml(Menu menu,Model model){
         return "admin/pages/system/menu/menu-list";

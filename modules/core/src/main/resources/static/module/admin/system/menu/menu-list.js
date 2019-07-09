@@ -85,7 +85,10 @@ layui.config({
                 , checkData = checkStatus.data; //得到选中的数据
             console.log(checkData)
             if (checkData.length === 0) {
-                return layer.msg('请选择数据');
+                return layer.msg('请选择数据',{
+                    icon: 5,
+                    time: 1800
+                });
             }
 
             var idAry = new Array();
@@ -94,7 +97,6 @@ layui.config({
             }
 
             layer.confirm('确定删除吗？', function (index) {
-
                 //执行 Ajax 后重载
                 admin.req({
                     url: setter.ctxPath + '/menu/batchDel',
@@ -106,7 +108,10 @@ layui.config({
                     success: function (res) {
                         // console.log(res)
                         table.reload('menuTable');
-                        layer.msg('已删除');
+                        layer.msg('已删除',{
+                            icon: 1,
+                            time: 2000
+                        });
                     }
 
                 });
@@ -151,11 +156,17 @@ layui.config({
                 id: id
             },
             success: function (res) {
-                layer.msg(res.msg);
-                if (res.code == 0) {
+                if (res.code == setter.response.statusCode.ok) {
+                    layer.msg(res.msg,{
+                        icon: 1,
+                        time: 1800
+                    });
                     layui.table.reload('menuTable');
                 } else {
-
+                    layer.msg(res.msg,{
+                        icon: 5,
+                        time: 1800
+                    });
                 }
             }
         })

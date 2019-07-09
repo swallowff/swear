@@ -30,12 +30,18 @@ layui.config({
             method: 'POST',
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    parent.layer.msg(res.msg);
+                    parent.layer.msg(res.msg,{
+                        icon: 1,
+                        time: 1800
+                    });
                     // parent.layui.table.reload('deptTable'); //重载表格
                     parent.renderTable();
                     parent.layer.close(index); //再执行关闭
                 } else {
-                    layer.msg(res.msg);
+                    layer.msg(res.msg,{
+                        icon: 5,
+                        time: 1800
+                    });
                 }
 
             }

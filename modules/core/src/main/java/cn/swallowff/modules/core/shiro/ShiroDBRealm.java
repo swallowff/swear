@@ -56,7 +56,8 @@ public class ShiroDBRealm extends AuthorizingRealm {
         for (String roleId : roleList) {
             List<String> permissions = userAuthService.findPermissionsByRole(roleId);
             if (CollectionUtils.isNotEmpty(permissions)) {
-                permissionSet = permissions.stream().collect(Collectors.toSet());
+                Set<String> tempSet = permissions.stream().collect(Collectors.toSet());
+                permissionSet.addAll(tempSet);
             }
             roleNameSet = roleCodes.stream().collect(Collectors.toSet());
 //            String roleName = userAuthService.findRoleNameByRoleId(roleId);

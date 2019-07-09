@@ -75,7 +75,10 @@ layui.config({
                 , checkData = checkStatus.data; //得到选中的数据
             console.log(checkData)
             if (checkData.length === 0) {
-                return layer.msg('请选择数据');
+                return layer.msg('请选择数据',{
+                    icon: 5,
+                    time: 1800
+                });
             }
 
             var idAry = new Array();
@@ -96,7 +99,10 @@ layui.config({
                     success: function (res) {
                         // console.log(res)
                         table.reload('dictTable');
-                        layer.msg('已删除');
+                        layer.msg('已删除',{
+                            icon: 1,
+                            time: 1800
+                        });
                     }
 
                 });

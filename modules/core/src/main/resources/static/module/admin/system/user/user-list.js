@@ -217,6 +217,7 @@ layui.config({
                     roleAry[k] = param[k].nodeId;
                 }
                 if (param.length === 0){
+                    $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
                     return layer.msg('请选择菜单',{
                         icon: 5,
                         time: 2000
@@ -246,7 +247,7 @@ layui.config({
                             });
                         }
                     }
-                })
+                });
                 $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
             }
         })

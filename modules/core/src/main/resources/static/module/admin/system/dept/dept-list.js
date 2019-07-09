@@ -153,7 +153,10 @@ layui.config({
                     },
                     success: function (res) {
                         renderTable();
-                        layer.msg('已删除');
+                        layer.msg('已删除',{
+                            icon: 1,
+                            time: 1800
+                        });
                     }
 
                 });
