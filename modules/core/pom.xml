@@ -22,13 +22,18 @@
         <httpclient.version>4.5.3</httpclient.version>
         <pagehelper.version>1.2.3</pagehelper.version>
         <swagger.version>2.9.2</swagger.version>
-
+        <druid.version>1.1.10</druid.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.swallowff</groupId>
             <artifactId>common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.swallowff</groupId>
+            <artifactId>code</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
@@ -60,7 +65,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.10</version>
+            <version>${druid.version}</version>
         </dependency>
         <!--mysql-->
         <dependency>
@@ -157,7 +162,6 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
         </dependency>
-
 
     </dependencies>
 

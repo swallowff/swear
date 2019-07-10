@@ -39,7 +39,7 @@ public class BeetlConfiguration extends BeetlGroupUtilConfiguration {
         if (sharedVars == null){
             sharedVars = MapUtils.newHashMap();
         }
-        PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
+//        PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
         //通过读取配置文件获取项目根路径
         String ctx =  coreProperties.getCtx();
         String admin =  coreProperties.getAdminPath();

@@ -32,14 +32,6 @@ public enum ResponseState implements AbstractBaseExceptionEnum {
      */
     USER_ACCOUNT_EXISTS(1100,"用户名重复了哟，换一个试试吧"),
 
-    /**
-     * layui-table
-     */
-    LAYUI_TABLE_AJAX_SUCCESS(0,"操作成功"),
-
-
-
-
 
     ;
 

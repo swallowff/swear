@@ -26,7 +26,7 @@ public class LayPageResp<T> extends BaseResp {
     }
 
     public static LayPageResp newSuccess(){
-        return new LayPageResp(ResponseState.LAYUI_TABLE_AJAX_SUCCESS);
+        return new LayPageResp(ResponseState.SUCCESS);
     }
 
     public long getCount() {
