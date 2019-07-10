@@ -67,6 +67,7 @@
         <maven.test.skip>true</maven.test.skip>
         <eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
         <eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+        <beetl.version>2.9.3</beetl.version>
 
         <resource.delimiter>#</resource.delimiter>
     </properties>

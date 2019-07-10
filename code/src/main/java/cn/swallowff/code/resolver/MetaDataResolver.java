@@ -1,5 +1,6 @@
 package cn.swallowff.code.resolver;
 
+import cn.swallowff.code.config.GeneratorConfig;
 import cn.swallowff.code.entity.TableColumn;
 import cn.swallowff.common.lang.StringUtils;
 
@@ -18,20 +19,23 @@ import java.util.List;
 public class MetaDataResolver {
     private String tableName;
     private Connection connection;
+    private GeneratorConfig config;
 
-    public MetaDataResolver(Connection connection,String tableName) {
-        this.connection = connection;
-        this.tableName = tableName;
+    public MetaDataResolver(GeneratorConfig generatorConfig) {
+        this.connection = generatorConfig.getConnection();
+        this.tableName = generatorConfig.getTableName();
+        this.config = generatorConfig;
     }
 
-    public ResultSet getMetaData() throws SQLException {
+    private ResultSet getResultSet() throws SQLException {
         if (null != connection){
             DatabaseMetaData metaData = connection.getMetaData();
             return metaData.getColumns(null,"%",tableName,"%");
         }else return null;
     }
 
-    public List<TableColumn> resolveResultSet(ResultSet resultSet) throws SQLException{
+    public List<TableColumn> getTableColumns() throws SQLException{
+        ResultSet resultSet = getResultSet();
         List<TableColumn> columnList = new ArrayList<TableColumn>();
         while (resultSet.next()){
             String columnName = resultSet.getString("COLUMN_NAME");
@@ -51,9 +55,19 @@ public class MetaDataResolver {
         return columnList;
     }
 
+    public String getTableName() {
+        return tableName;
+    }
 
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
+    public GeneratorConfig getConfig() {
+        return config;
+    }
 
-
-
+    public void setConfig(GeneratorConfig config) {
+        this.config = config;
+    }
 }

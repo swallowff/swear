@@ -10,7 +10,7 @@ import java.util.List;
 public class ClassEntity {
     private String packageName;   //类的完整包名
     private List<String> importClasses;   //导入的类
-    private List<String> fields;       //属性列表
+    private List<ClassField> fields;       //属性列表
 
     public String getPackageName() {
         return packageName;
@@ -28,11 +28,11 @@ public class ClassEntity {
         this.importClasses = importClasses;
     }
 
-    public List<String> getFields() {
+    public List<ClassField> getFields() {
         return fields;
     }
 
-    public void setFields(List<String> fields) {
+    public void setFields(List<ClassField> fields) {
         this.fields = fields;
     }
 }

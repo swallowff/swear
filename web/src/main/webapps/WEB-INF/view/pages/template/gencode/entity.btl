@@ -1,0 +1,34 @@
+package ${basePackage}.entity;
+
+import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
+import java.io.Serializable;
+@for(importClasses in item.importClasses){
+${importClasses}
+@}
+
+/**
+ * \@author ${author}
+ * \@date ${date}
+ */
+
+ public class ${className} extends BaseEntity implements Serializable {
+
+     @for(field in item.fields){
+     private ${field.fieldClassName} ${field.fieldName};    //${field.remarks}
+     @}
+
+     @for(field in item.fields){
+     public ${field.fieldClassName} get${StringUtils.cap(field.fieldName)}(){
+        return ${field.fieldName};
+     }
+
+     public void set${StringUtils.cap(field.fieldName)}(${field.fieldClassName} ${field.fieldName}) {
+        this.${field.fieldName} = ${field.fieldName};
+     }
+
+     @}
+
+
+
+
+ }

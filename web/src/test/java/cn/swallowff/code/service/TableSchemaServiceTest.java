@@ -34,11 +34,11 @@ public class TableSchemaServiceTest {
 
     @Test
     public void testDataMetaResolver() throws Exception{
-        DataSource dataSource = SpringContextHolder2.getBean(DataSource.class);
-        MetaDataResolver metaDataResolver = new MetaDataResolver(dataSource.getConnection(),"test_gen");
-        ResultSet resultSet = metaDataResolver.getMetaData();
-        List<TableColumn> list = metaDataResolver.resolveResultSet(resultSet);
-        System.out.println(JacksonUtil.toJson(list));
+//        DataSource dataSource = SpringContextHolder2.getBean(DataSource.class);
+//        MetaDataResolver metaDataResolver = new MetaDataResolver(dataSource.getConnection(),"test_gen");
+//        ResultSet resultSet = metaDataResolver.getMetaData();
+//        List<TableColumn> list = metaDataResolver.resolveResultSet(resultSet);
+//        System.out.println(JacksonUtil.toJson(list));
     }
 
 }

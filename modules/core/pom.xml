@@ -16,7 +16,6 @@
     <description>core-module</description>
 
     <properties>
-        <beetl.version>2.9.3</beetl.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <jedis.version>2.9.0</jedis.version>
         <httpclient.version>4.5.3</httpclient.version>
