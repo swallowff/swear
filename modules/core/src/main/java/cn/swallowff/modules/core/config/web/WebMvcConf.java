@@ -40,7 +40,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/WEB-INF/static/");
+                .addResourceLocations("classpath:/static/");
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
         registry.addResourceHandler("/upload/**")

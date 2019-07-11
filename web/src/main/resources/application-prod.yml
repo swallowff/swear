@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8080
   servlet:
     context-path: /swear
 
@@ -46,7 +46,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
   type-aliases-package: cn.swallowff.modules.core.system.entity
-  mapper-locations: classpath:mapper/**/*Mapper.xml
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
 pagehelper:

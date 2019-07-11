@@ -10,30 +10,39 @@ layui.config({
     setter.serverUrl = Swear.serverUrl;
     setter.ctxPath = Swear.ctxPath;
 
+    form.val('LAYF-article-form-edit', {
+        id: Swear.formValue.id,
+        title: Swear.formValue.title,
+        author: Swear.formValue.author,
+        content: Swear.formValue.content,
+        star: Swear.formValue.star,
+    })
+
     //监听提交
-    form.on('submit(LAYF-${uncapClassName}-form-add-submit)', function (data) {
+    form.on('submit(LAYF-article-form-edit-submit)', function (data) {
         var field = data.field; //获取提交的字段
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 
         //提交 Ajax 成功后，关闭当前弹层并重载表格
         $.ajax({
-            url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/add.ajax',
+            url: setter.ctxPath + '/cms/article/edit.ajax',
             data: field,
             method: 'POST',
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
                     parent.layer.msg(res.msg,{
                         icon: 1,
-                        time: 1800
+                        time: 2000
                     });
-                    parent.layui.table.reload('${uncapClassName}Table'); //重载表格
+                    parent.layui.table.reload('articleTable'); //重载表格
                     parent.layer.close(index); //再执行关闭
                 } else {
                     layer.msg(res.msg,{
                         icon: 5,
-                        time: 1800
+                        time: 2000
                     });
                 }
+
             }
         });
 

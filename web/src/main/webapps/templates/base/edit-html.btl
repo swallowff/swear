@@ -42,7 +42,6 @@
             @for(field in item.fields){
             ${field.fieldName}: '\${${uncapClassName}.${field.fieldName}}',
             @}
-            }
         }
     }
 </script>

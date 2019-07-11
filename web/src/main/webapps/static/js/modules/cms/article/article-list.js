@@ -8,9 +8,9 @@ layui.config({
     setter.ctxPath = Swear.ctxPath;
 
     table.render({
-        id: "${uncapClassName}Table",
+        id: "articleTable",
         elem: '#LAYF-list-table',
-        url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/list.ajax',
+        url: setter.ctxPath + '/cms/article/list.ajax',
         cellMinWidth: 20
         , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
         , even: true    //隔行换色
@@ -21,13 +21,26 @@ layui.config({
         , cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            @for(field in item.fields){
             {
-                field: '${field.fieldName}',
-                title: '${field.remarks}',
+                field: 'title',
+                title: '标题',
                 sort: true
             },
-            @}
+            {
+                field: 'author',
+                title: '作者',
+                sort: true
+            },
+            {
+                field: 'content',
+                title: '内容',
+                sort: true
+            },
+            {
+                field: 'star',
+                title: '收藏数',
+                sort: true
+            },
             {
                 field: 'createTime',
                 title: '创建时间',
@@ -43,16 +56,16 @@ layui.config({
     });
 
     //监听搜索
-    form.on('submit(LAYF-${uncapClassName}-list-search)', function (data) {
+    form.on('submit(LAYF-article-list-search)', function (data) {
         var field = data.field;
-        table.reload('${uncapClassName}Table', {
+        table.reload('articleTable', {
             where: field
         });
     });
 
     var $ = layui.$, active = {
         batchdel: function () {
-            var checkStatus = table.checkStatus('${uncapClassName}Table')
+            var checkStatus = table.checkStatus('articleTable')
                 , checkData = checkStatus.data; //得到选中的数据
             console.log(checkData)
             if (checkData.length === 0) {
@@ -71,7 +84,7 @@ layui.config({
 
                 //执行 Ajax 后重载
                 admin.req({
-                    url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/batchDel',
+                    url: setter.ctxPath + '/cms/article/batchDel',
                     method: 'POST',
                     traditional: true,   //指定参数序列化时，不做深度序列化
                     data: {
@@ -79,7 +92,7 @@ layui.config({
                     },
                     success: function (res) {
                         // console.log(res)
-                        table.reload('${uncapClassName}Table');
+                        table.reload('articleTable');
                         layer.msg('已删除',{
                             icon: 1,
                             time: 1800
@@ -93,13 +106,13 @@ layui.config({
         add: function () {
             layer.open({
                 type: 2
-                , title: '添加${title}'
-                , content: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/add.html'
+                , title: '添加文章'
+                , content: setter.ctxPath + '/cms/article/add.html'
                 , maxmin: true
                 , area: ['550px', '550px']
                 , btn: ['确定', '取消']
                 , yes: function (index, layero) {
-                    var submit = layero.find('iframe').contents().find("#LAYF-${uncapClassName}-form-add-submit");
+                    var submit = layero.find('iframe').contents().find("#LAYF-article-form-add-submit");
                     submit.click();
                 }
             });
@@ -120,21 +133,24 @@ layui.config({
 
     window.deleteRow = function (id) {
         $.ajax({
-            url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/delete',
+            url: setter.ctxPath + '/cms/article/delete',
             method: 'POST',
             contentType: 'application/x-www-form-urlencoded',
             data: {
                 id: id
             },
             success: function (res) {
-                layer.msg(res.msg,{
-                    icon: 1
-                });
-                }
-                if (res.code == 0) {
-                    layui.table.reload('${uncapClassName}Table');
+                if (res.code == setter.response.statusCode.ok) {
+                    layer.msg(res.msg,{
+                        icon: 1,
+                        time: 2000
+                    });
+                    layui.table.reload('articleTable');
                 } else {
-
+                    layer.msg(res.msg,{
+                        icon: 5,
+                        time: 2000
+                    });
                 }
             }
         })
@@ -144,12 +160,12 @@ layui.config({
         layer.open({
             type: 2
             , title: '編輯字典'
-            , content: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/edit.html?id=' + id
+            , content: setter.ctxPath + '/cms/article/edit.html?id=' + id
             , maxmin: true
             , area: ['550px', '550px']
             , btn: ['确定', '取消']
             , yes: function (index, layero) {
-                var submit = layero.find('iframe').contents().find("#LAYF-${uncapClassName}-form-edit-submit");
+                var submit = layero.find('iframe').contents().find("#LAYF-article-form-edit-submit");
                 submit.click();
             }
         });

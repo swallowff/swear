@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ConditionalOnProperty(prefix = "swear.muti-datasource", name = "open", havingValue = "false")
-@MapperScan(basePackages = {"cn.swallowff.modules.**.dao"})
+@MapperScan(basePackages = {"cn.swallowff.**.dao"})
 public class SingleDataSourceConfig {
 
     @Bean

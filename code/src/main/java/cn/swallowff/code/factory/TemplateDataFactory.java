@@ -53,7 +53,7 @@ public class TemplateDataFactory {
         templateData.setTablePrefix(config.getTablePrefix());
         String htmlLocation = PathUtils.packageToRelativePath(config.getHtmlLocation()).replaceFirst("/WEB-INF/view","");
         templateData.setHtmlRelativePath(htmlLocation);
-        String jsLocation = PathUtils.packageToRelativePath(config.getJsLocation()).replaceFirst("/WEB-INF/static","");
+        String jsLocation = PathUtils.packageToRelativePath(config.getJsLocation()).replaceFirst("/static","");
 //        jsLocation = org.apache.commons.lang3.StringUtils.substringBeforeLast(jsLocation,".");
         templateData.setJsRelativePath(jsLocation);
         templateData.setItem(wrapClassEntity(tableColumns));
