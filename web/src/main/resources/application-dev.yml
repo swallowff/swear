@@ -17,7 +17,7 @@ logging:
 spring:
   mvc:
     view:
-      prefix: view
+      prefix: /WEB-INF/view
       suffix: .html
     static-path-pattern: /static/**
   datasource-master:

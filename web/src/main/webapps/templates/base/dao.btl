@@ -1,0 +1,12 @@
+package ${basePackage}.dao;
+
+import cn.swallowff.modules.core.cmomon.dao.CrudDao;
+import ${basePackage}.entity.${className};
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+\@Repository
+\@Mapper
+public interface ${className}Dao extends CrudDao<${className}> {
+
+}
