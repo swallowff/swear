@@ -14,13 +14,14 @@ public class GeneratorConfig {
     private String javaLocation;    //cn.swallowff.modules.system
     private String mapperLocation;  //mapper.system
     private String htmlLocation;    //WEB-INF.pages.admin.system
-    private String jsLocation;      //static.module.admin.system
+    private String jsLocation;      //js.module.admin.system
     private Connection connection;
     private String tableName;
     private List<FileType> genFiles;
     private String templatePath;
     private String tablePrefix;
     private String title;
+    private boolean forceCover;     //是否强制覆盖
 
     public List<FileType> getGenFiles() {
         return genFiles;
@@ -108,5 +109,13 @@ public class GeneratorConfig {
 
     public void setTablePrefix(String tablePrefix) {
         this.tablePrefix = tablePrefix;
+    }
+
+    public boolean isForceCover() {
+        return forceCover;
+    }
+
+    public void setForceCover(boolean forceCover) {
+        this.forceCover = forceCover;
     }
 }

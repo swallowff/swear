@@ -6,5 +6,4 @@ package cn.swallowff.modules.core.system.constant;
  */
 public interface UserAdminState {
 
-
 }

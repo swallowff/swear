@@ -147,11 +147,17 @@ layui.config({
                 id: id
             },
             success: function (res) {
-                layer.msg(res.msg);
-                if (res.code == 0) {
+                if (res.code == setter.response.statusCode.ok) {
+                    layer.msg(res.msg,{
+                        icon: 1,
+                        time: 1800
+                    });
                     layui.table.reload('dictTable');
                 } else {
-
+                    layer.msg(res.msg,{
+                        icon: 5,
+                        time: 1800
+                    });
                 }
             }
         })

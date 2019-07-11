@@ -10,8 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class GeneratorImplTest {
@@ -28,7 +26,7 @@ public class GeneratorImplTest {
         generatorConfig.setConnection(dataSource.getConnection());
         generatorConfig.setTemplatePath("/WEB-INF/view/pages/template/gencode/");
         IGenerator generator = new GeneratorImpl(generatorConfig);
-        generator.doGen();
+        generator.execute();
 
     }
 }

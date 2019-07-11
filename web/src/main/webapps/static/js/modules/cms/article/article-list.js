@@ -91,7 +91,6 @@ layui.config({
                         ids: idAry
                     },
                     success: function (res) {
-                        // console.log(res)
                         table.reload('articleTable');
                         layer.msg('已删除',{
                             icon: 1,
@@ -143,13 +142,14 @@ layui.config({
                 if (res.code == setter.response.statusCode.ok) {
                     layer.msg(res.msg,{
                         icon: 1,
-                        time: 2000
+                        time: 1800
                     });
+
                     layui.table.reload('articleTable');
                 } else {
                     layer.msg(res.msg,{
                         icon: 5,
-                        time: 2000
+                        time: 1800
                     });
                 }
             }

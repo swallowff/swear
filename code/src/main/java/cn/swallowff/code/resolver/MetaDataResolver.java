@@ -30,7 +30,7 @@ public class MetaDataResolver {
     private ResultSet getResultSet() throws SQLException {
         if (null != connection){
             DatabaseMetaData metaData = connection.getMetaData();
-            return metaData.getColumns(null,"%",tableName,"%");
+            return metaData.getColumns(connection.getCatalog(),"%",tableName,"%");
         }else return null;
     }
 

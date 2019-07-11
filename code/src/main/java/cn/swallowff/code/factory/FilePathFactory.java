@@ -101,7 +101,8 @@ public class FilePathFactory {
 
     public static void main(String[] args){
         GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setTableName("test_gen");
+        generatorConfig.setTableName("cms_article");
+        generatorConfig.setTablePrefix("cms");
         generatorConfig.setJavaLocation("cn.swallowff.modules.core.system");
         generatorConfig.setMapperLocation("mapper.system");
         generatorConfig.setHtmlLocation("WEB-INF.pages.admin.system");

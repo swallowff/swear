@@ -13,6 +13,7 @@ public class ClassField {
     private Class fieldType;       //属性类型
     private String fieldClassName;  //属性类型名
     private String remarks;      //属性注释
+    private String formType;       //TODO 表单类型  input-text  radio  select   switch
 
     public String getFieldClassName() {
         return fieldClassName;
@@ -52,5 +53,13 @@ public class ClassField {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getFormType() {
+        return formType;
+    }
+
+    public void setFormType(String formType) {
+        this.formType = formType;
     }
 }

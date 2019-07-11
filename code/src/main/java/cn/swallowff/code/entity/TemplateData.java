@@ -16,7 +16,7 @@ public class TemplateData {
     private String title;  //实体类名称
     private String htmlRelativePath;  //html相对webapps的路径
     private String jsRelativePath;  //js相对webapps的路径
-    private ClassEntity item;
+    private ClassEntity item;      //属性集
 
     public String getAuthor() {
         return author;

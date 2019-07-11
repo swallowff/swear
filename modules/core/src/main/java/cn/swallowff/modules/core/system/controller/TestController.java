@@ -46,7 +46,7 @@ public class TestController {
     @ResponseBody
     public BaseResp testGenCode() throws Exception{
         GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setTableName("cms_article");
+        generatorConfig.setTableName("cms_category");
         generatorConfig.setJavaLocation("cn.swallowff.web.cms");
         generatorConfig.setMapperLocation("mapper.cms");
         generatorConfig.setHtmlLocation("WEB-INF.view.pages.modules.cms");
@@ -58,7 +58,7 @@ public class TestController {
         generatorConfig.setTitle("文章");
         generatorConfig.setTablePrefix("cms");
         IGenerator generator = new GeneratorImpl(generatorConfig);
-        generator.doGen();
+        generator.execute();
         return BaseResp.newSuccess();
     }
 
