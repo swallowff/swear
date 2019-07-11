@@ -40,7 +40,7 @@ public class MetaDataResolver {
         while (resultSet.next()){
             String columnName = resultSet.getString("COLUMN_NAME");
             //id字段略过
-            if(columnName.equals("id")) continue;
+            if(StringUtils.equalsAny(columnName,"id","version","create_time","update_time","delflag")) continue;
             TableColumn tableColumn = new TableColumn();
             //获取字段名称
             tableColumn.setColumnName(resultSet.getString("COLUMN_NAME"));

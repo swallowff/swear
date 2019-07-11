@@ -39,6 +39,16 @@ public class GeneratorImpl implements IGenerator {
     public void doGen(){
         init();
         genEntity();
+        genDao();
+        genService();
+        genController();
+        genXmlMapper();
+        genListPage();
+        genAddPage();
+        genEditPage();
+        genListJs();
+        genAddJs();
+        genEditJs();
     }
 
     @Override
@@ -49,52 +59,52 @@ public class GeneratorImpl implements IGenerator {
 
     @Override
     public void genDao() {
-
+        writeFile(FileType.DAO);
     }
 
     @Override
     public void genService() {
-
+        writeFile(FileType.SERVICE);
     }
 
     @Override
     public void genController() {
-
+        writeFile(FileType.CONTROLLER);
     }
 
     @Override
     public void genXmlMapper() {
-
+        writeFile(FileType.MAPPER);
     }
 
     @Override
     public void genListPage() {
-
+        writeFile(FileType.LIST_HTML);
     }
 
     @Override
     public void genAddPage() {
-
+        writeFile(FileType.ADD_HTML);
     }
 
     @Override
     public void genEditPage() {
-
+        writeFile(FileType.EDIT_HTML);
     }
 
     @Override
     public void genListJs() {
-
+        writeFile(FileType.LIST_JS);
     }
 
     @Override
     public void genAddJs() {
-
+        writeFile(FileType.ADD_JS);
     }
 
     @Override
     public void genEditJs() {
-
+        writeFile(FileType.EDIT_JS);
     }
 
     public void writeFile(FileType fileType){

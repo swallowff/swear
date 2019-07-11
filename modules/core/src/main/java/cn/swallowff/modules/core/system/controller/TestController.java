@@ -46,15 +46,17 @@ public class TestController {
     @ResponseBody
     public BaseResp testGenCode() throws Exception{
         GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setTableName("test_gen");
-        generatorConfig.setJavaLocation("cn.swallowff.modules.core.system");
-        generatorConfig.setMapperLocation("mapper.system");
-        generatorConfig.setHtmlLocation("WEB-INF.pages.admin.system");
-        generatorConfig.setJsLocation("static.module.admin.system");
+        generatorConfig.setTableName("cms_article");
+        generatorConfig.setJavaLocation("cn.swallowff.web.cms");
+        generatorConfig.setMapperLocation("mapper.cms");
+        generatorConfig.setHtmlLocation("WEB-INF.view.pages.modules.cms");
+        generatorConfig.setJsLocation("static.js.modules.cms");
         generatorConfig.setModuleLocation("web");
         DataSource dataSource = SpringContextHolder.getBean(DataSource.class);
         generatorConfig.setConnection(dataSource.getConnection());
-        generatorConfig.setTemplatePath("/WEB-INF/view/pages/template/gencode/");
+        generatorConfig.setTemplatePath("/templates/base/");
+        generatorConfig.setTitle("文章");
+        generatorConfig.setTablePrefix("cms");
         IGenerator generator = new GeneratorImpl(generatorConfig);
         generator.doGen();
         return BaseResp.newSuccess();

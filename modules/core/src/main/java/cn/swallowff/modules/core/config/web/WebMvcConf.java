@@ -40,10 +40,11 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
-                .addResourceLocations("classpath:/static/");
+                .addResourceLocations("classpath:/WEB-INF/static/");
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
-        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+coreProperties.getFileUploadPath());
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:"+coreProperties.getFileUploadPath());
         if (coreProperties.isSwaggerOpen()) {
             registry.addResourceHandler("swagger-ui.html")
                     .addResourceLocations("classpath:/META-INF/resources/");

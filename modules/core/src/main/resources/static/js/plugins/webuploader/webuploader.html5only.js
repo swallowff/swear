@@ -6026,5 +6026,5 @@
     ], function( preset ) {
         return preset;
     });
-    return require('webuploader');
+    return require('static/js/plugins/webuploader/webuploader');
 });

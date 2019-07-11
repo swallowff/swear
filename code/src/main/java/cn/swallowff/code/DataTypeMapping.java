@@ -7,7 +7,7 @@ import java.util.Date;
  * @author shenyu
  * @create 2019/7/10
  */
-public enum  DataTypeMapping {
+public enum DataTypeMapping {
     INT("INT",Integer.class),
     TINY_INT("TINYINT",Integer.class),
     BIG_INT("BIGINT",Long.class),
@@ -17,7 +17,8 @@ public enum  DataTypeMapping {
     DECIMAL("DECIMAL",BigDecimal.class),
     DOUBLE("DOUBLE",Double.class),
     FLOAT("FLOAT",Float.class),
-    DATETIME("DATETIME",Date.class)
+    DATETIME("DATETIME",Date.class),
+    BIT("BIT",Boolean.class)
     ;
     private String mysqlType;
 

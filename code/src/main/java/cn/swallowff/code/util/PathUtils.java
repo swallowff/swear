@@ -29,5 +29,19 @@ public class PathUtils {
 
     }
 
+    public static String packageToRelativePath(String var1){
+        if (StringUtils.isBlank(var1)){
+            return "";
+        }
+        String[] a = var1.split("\\.");
+        StringBuilder sb = new StringBuilder();
+        for (String str : a){
+            sb.append("/");
+            sb.append(str);
+        }
+        return sb.toString();
+
+    }
+
 
 }

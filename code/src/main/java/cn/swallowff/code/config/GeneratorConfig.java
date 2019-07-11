@@ -19,6 +19,8 @@ public class GeneratorConfig {
     private String tableName;
     private List<FileType> genFiles;
     private String templatePath;
+    private String tablePrefix;
+    private String title;
 
     public List<FileType> getGenFiles() {
         return genFiles;
@@ -90,5 +92,21 @@ public class GeneratorConfig {
 
     public void setModuleLocation(String moduleLocation) {
         this.moduleLocation = moduleLocation;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTablePrefix() {
+        return tablePrefix;
+    }
+
+    public void setTablePrefix(String tablePrefix) {
+        this.tablePrefix = tablePrefix;
     }
 }

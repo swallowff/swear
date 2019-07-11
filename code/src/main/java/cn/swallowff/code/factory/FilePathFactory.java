@@ -22,7 +22,9 @@ public class FilePathFactory {
 
     public Map<FileType,String> createPathMap(){
         Map<FileType,String> pathMap = new HashMap<>();
-        String className = StringUtils.capCamelCase(config.getTableName());
+//        String className = StringUtils.capCamelCase(config.getTableName());
+        String className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix().concat("_"),""));
+
         String entity = getPath(FileType.ENTITY,className);
         String dao = getPath(FileType.DAO,className);
         String service = getPath(FileType.SERVICE,className);
@@ -51,6 +53,7 @@ public class FilePathFactory {
 
 
     private String getPath(FileType fileType,String className){
+        String uncapClassName = StringUtils.uncap(className);
         StringBuilder sb = new StringBuilder();
         sb.append(PathUtils.PROJECT_ROOT).append(PathUtils.packageToPath(config.getModuleLocation()));
         switch (fileType){
@@ -77,8 +80,8 @@ public class FilePathFactory {
             case EDIT_HTML:
                 sb.append(PathUtils.SRC_WEBAPPS)
                         .append(PathUtils.packageToPath(config.getHtmlLocation()))
-                        .append(File.separator).append(className).append(File.separator)
-                        .append(className)
+                        .append(File.separator).append(uncapClassName).append(File.separator)
+                        .append(uncapClassName)
                         .append(fileType.getNameSuffix())
                         .append(fileType.getSuffix());
                 break;
@@ -87,8 +90,8 @@ public class FilePathFactory {
             case EDIT_JS:
                 sb.append(PathUtils.SRC_WEBAPPS)
                         .append(PathUtils.packageToPath(config.getJsLocation()))
-                        .append(File.separator).append(className).append(File.separator)
-                        .append(className)
+                        .append(File.separator).append(uncapClassName).append(File.separator)
+                        .append(uncapClassName)
                         .append(fileType.getNameSuffix())
                         .append(fileType.getSuffix());
                 break;
