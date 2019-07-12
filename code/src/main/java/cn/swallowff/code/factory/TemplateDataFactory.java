@@ -60,10 +60,10 @@ public class TemplateDataFactory {
         templateData.setClassName(className);
         templateData.setUncapClassName(StringUtils.uncap(className));
         templateData.setTitle(config.getTitle());
-        String htmlLocation = PathUtils.packageToRelativePath(config.getHtmlLocation()).replaceFirst("/WEB-INF/view","");
-        templateData.setHtmlRelativePath(htmlLocation);
-        String jsLocation = PathUtils.packageToRelativePath(config.getJsLocation()).replaceFirst("/static","");
-        templateData.setJsRelativePath(jsLocation);
+        String htmlRelativePath = PathUtils.packageToRelativePath(config.getHtmlModules());
+        templateData.setHtmlRelativePath(htmlRelativePath);
+        String jsRelativePath = PathUtils.packageToRelativePath(config.getJsModules());
+        templateData.setJsRelativePath(jsRelativePath);
         templateData.setItem(wrapClassEntity(tableColumns));
         return templateData;
     }

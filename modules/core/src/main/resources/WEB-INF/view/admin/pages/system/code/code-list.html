@@ -19,45 +19,70 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">选择数据表</label>
                     <div class="layui-input-inline">
-                        <select id="table-select" data-placeholder="请选择数据表" name="table" lay-search=""></select>
+                        <select id="table-select" name="table" data-placeholder="请选择数据表" lay-search=""></select>
                     </div>
                 </div>
                 <div class="layui-inline">
+                    <label class="layui-form-label">模块名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="code" placeholder="请输入字典CODE" autocomplete="off" class="layui-input">
+                        <input type="text" name="rootModule" placeholder="例:web" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
+                    <label class="layui-form-label">包路径</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="label" placeholder="请输入标签名" autocomplete="off" class="layui-input">
+                        <input type="text" name="classPackage" placeholder="例:cn.swallowff.web" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-code-gen">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
+                    <label class="layui-form-label">mapper模块</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="mapperModules" placeholder="例:system" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">html模块</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="htmlModules" placeholder="例:pages.modules.cms" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">js模块</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="jsModules" placeholder="例:js.modules.cms" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">模板路径</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="templateDir" placeholder="例:/templates/base/" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">类名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="例:用户" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">表前缀</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="tablePrefix" placeholder="例:sys 或 sys_" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">强制覆盖</label>
+                    <div class="layui-input-inline">
+                        <input type="checkbox" lay-verify="required" lay-filter="status" name="forceCover" lay-skin="switch" lay-text="是|否" value="1">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-danger" lay-submit lay-filter="LAYF-code-gen">生成代码</button>
                 </div>
             </div>
         </div>
         <div class="layui-card-body">
-            <div style="padding-bottom: 10px;">
-                @if(shiro.hasPermission("sys-dict-delete")){
-                <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
-                @}
-                @if(shiro.hasPermission("sys-dict-add")){
-                <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
-                @}
-            </div>
-            <table id="LAYF-list-table" lay-filter="LAYF-dict-list-table"></table>
 
-            <script type="text/html" id="table-content-list-operation">
-                @if(shiro.hasPermission("sys-dict-edit")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i class="layui-icon">&#xe642;</i></button>
-                @}
-                @if(shiro.hasPermission("sys-dict-delete")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i class="layui-icon">&#xe640;</i></button>
-                @}
-            </script>
         </div>
     </div>
 </div>

@@ -54,9 +54,12 @@ public class TestController {
         GeneratorConfig generatorConfig = new GeneratorConfig();
         generatorConfig.setTableName("cms_article");
         generatorConfig.setJavaLocation("cn.swallowff.web.cms");
-        generatorConfig.setMapperLocation("mapper.cms");
-        generatorConfig.setHtmlLocation("WEB-INF.view.pages.modules.cms");
-        generatorConfig.setJsLocation("static.js.modules.cms");
+        generatorConfig.setMapperLocation("mapper");
+        generatorConfig.setMapperModules("cms");
+        generatorConfig.setHtmlLocation("WEB-INF.view");
+        generatorConfig.setHtmlModules("pages.modules.cms");
+        generatorConfig.setJsLocation("static");
+        generatorConfig.setJsModules("js.modules.cms");
         generatorConfig.setModuleLocation("web");
         DataSource dataSource = SpringContextHolder.getBean(DataSource.class);
         generatorConfig.setConnection(dataSource.getConnection());

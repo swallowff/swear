@@ -24,17 +24,20 @@ public class GeneratorConfig {
      * Mapper.xml文件包路径  相对于src/main/resources
      * @example mapper.cms
      */
-    private String mapperLocation;
+    private String mapperLocation = "mapper";
+    private String mapperModules;
     /**
      * .html文件包路径   相对于src/main/webapps
      * @example WEB-INF.view.pages.modules.cms
      */
-    private String htmlLocation;
+    private String htmlLocation = "WEB-INF.view";
+    private String htmlModules;
     /**
      * .js文件包路径 相对于src/main/webapps
      * @example static.js.modules.cms
      */
-    private String jsLocation;      //js.module.admin.system
+    private String jsLocation = "static";      //js.module.admin.system
+    private String jsModules;
     /**
      * 数据库连接
      */
@@ -169,5 +172,29 @@ public class GeneratorConfig {
 
     public void setForceCover(boolean forceCover) {
         this.forceCover = forceCover;
+    }
+
+    public String getMapperModules() {
+        return mapperModules;
+    }
+
+    public void setMapperModules(String mapperModules) {
+        this.mapperModules = mapperModules;
+    }
+
+    public String getHtmlModules() {
+        return htmlModules;
+    }
+
+    public void setHtmlModules(String htmlModules) {
+        this.htmlModules = htmlModules;
+    }
+
+    public String getJsModules() {
+        return jsModules;
+    }
+
+    public void setJsModules(String jsModules) {
+        this.jsModules = jsModules;
     }
 }

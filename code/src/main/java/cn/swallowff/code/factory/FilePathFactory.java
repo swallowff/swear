@@ -137,14 +137,14 @@ public class FilePathFactory {
                 break;
             case MAPPER:
                 sb.append(PathUtils.SRC_RESOURCES)
-                        .append(PathUtils.packageToPath(config.getMapperLocation()))
-                        .append(File.separator).append(generatorFile.getModuleName()).append(File.separator)
+                        .append(PathUtils.packageToPath(config.getMapperLocation() + "." + config.getMapperModules()))
+                        .append(File.separator)
                         .append(className).append(generatorFile.getNameSuffix())
                         .append(generatorFile.getFileSuffix());
                 break;
             case PAGE:
                 sb.append(PathUtils.SRC_WEBAPPS)
-                        .append(PathUtils.packageToPath(config.getHtmlLocation()))
+                        .append(PathUtils.packageToPath(config.getHtmlLocation() + "." + config.getHtmlModules()))
                         .append(File.separator).append(uncapClassName).append(File.separator)
                         .append(uncapClassName)
                         .append(generatorFile.getNameSuffix())
@@ -152,7 +152,7 @@ public class FilePathFactory {
                 break;
             case JAVASCRIPT:
                 sb.append(PathUtils.SRC_WEBAPPS)
-                        .append(PathUtils.packageToPath(config.getJsLocation()))
+                        .append(PathUtils.packageToPath(config.getJsLocation() + "." + config.getJsModules()))
                         .append(File.separator).append(uncapClassName).append(File.separator)
                         .append(uncapClassName)
                         .append(generatorFile.getNameSuffix())
