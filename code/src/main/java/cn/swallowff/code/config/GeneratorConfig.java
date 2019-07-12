@@ -10,18 +10,57 @@ import java.util.List;
  * @create 2019/7/10
  */
 public class GeneratorConfig {
-    private String moduleLocation;  //web  |  modules.core
-    private String javaLocation;    //cn.swallowff.modules.system
-    private String mapperLocation;  //mapper.system
-    private String htmlLocation;    //WEB-INF.pages.admin.system
+    /**
+     * 模块名,适用于多模块项目,指定代码生成的模块目录
+     */
+    private String moduleLocation;
+    /**
+     * .java文件完整包路径  相对于src/main/java
+     * @example cn.swallowff.web.cms
+     */
+    private String javaLocation;
+    /**
+     * Mapper.xml文件包路径  相对于src/main/resources
+     * @example mapper.cms
+     */
+    private String mapperLocation;
+    /**
+     * .html文件包路径   相对于src/main/webapps
+     * @example WEB-INF.view.pages.modules.cms
+     */
+    private String htmlLocation;
+    /**
+     * .js文件包路径 相对于src/main/webapps
+     * @example static.js.modules.cms
+     */
     private String jsLocation;      //js.module.admin.system
+    /**
+     * 数据库连接
+     */
     private Connection connection;
+    /**
+     * 表前缀
+     * @example cms , cms_
+     */
+    private String tablePrefix;
+    /**
+     * 完整表名 如: cms_article
+     */
     private String tableName;
     private List<FileType> genFiles;
+    /**
+     * 模板路径 相对于src/main/webapps
+     * @example /templates/base/
+     */
     private String templatePath;
-    private String tablePrefix;
+    /**
+     * 实体名称
+     */
     private String title;
-    private boolean forceCover;     //是否强制覆盖
+    /**
+     * 是否强制覆盖
+     */
+    private boolean forceCover;
 
     public List<FileType> getGenFiles() {
         return genFiles;

@@ -5,6 +5,7 @@ import cn.swallowff.code.entity.ClassEntity;
 import cn.swallowff.code.entity.ClassField;
 import cn.swallowff.code.entity.TableColumn;
 import cn.swallowff.code.entity.TemplateData;
+import cn.swallowff.code.exception.GenerationException;
 import cn.swallowff.code.resolver.ImportClassResolver;
 import cn.swallowff.code.resolver.MetaDataResolver;
 import cn.swallowff.code.resolver.TableColumnResolver;
@@ -12,6 +13,7 @@ import cn.swallowff.code.util.PathUtils;
 import cn.swallowff.common.lang.DateUtils;
 import cn.swallowff.common.lang.StringUtils;
 import javafx.util.Builder;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -33,7 +35,7 @@ public class TemplateDataFactory {
         this.metaDataResolver = metaDataResolver;
     }
 
-    public TemplateData createTemplateData(){
+    public TemplateData createTemplateData() throws GenerationException{
         try {
             tableColumns = metaDataResolver.getTableColumns();
         } catch (SQLException e) {
@@ -46,15 +48,21 @@ public class TemplateDataFactory {
         templateData.setDate(DateUtils.formatDate(new Date(),"yyyy/MM/dd"));
         templateData.setTableName(config.getTableName());
         templateData.setBasePackage(config.getJavaLocation());
-        String className = StringUtils.capCamelCase(tableName.replace(config.getTablePrefix().concat("_"),""));
+        String tablePrefix = config.getTablePrefix();
+        String className;
+        if (tablePrefix.endsWith("_")){
+            templateData.setTablePrefix(tablePrefix.replace("_",""));
+            className = StringUtils.capCamelCase(tableName.replace(config.getTablePrefix(),""));
+        }else {
+            templateData.setTablePrefix(tablePrefix);
+            className = StringUtils.capCamelCase(tableName.replace(config.getTablePrefix().concat("_"),""));
+        }
         templateData.setClassName(className);
         templateData.setUncapClassName(StringUtils.uncap(className));
         templateData.setTitle(config.getTitle());
-        templateData.setTablePrefix(config.getTablePrefix());
         String htmlLocation = PathUtils.packageToRelativePath(config.getHtmlLocation()).replaceFirst("/WEB-INF/view","");
         templateData.setHtmlRelativePath(htmlLocation);
         String jsLocation = PathUtils.packageToRelativePath(config.getJsLocation()).replaceFirst("/static","");
-//        jsLocation = org.apache.commons.lang3.StringUtils.substringBeforeLast(jsLocation,".");
         templateData.setJsRelativePath(jsLocation);
         templateData.setItem(wrapClassEntity(tableColumns));
         return templateData;

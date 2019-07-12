@@ -15,20 +15,24 @@ import java.io.IOException;
  * @create 2019/3/15
  */
 public class BeetlUtil {
+    private ClasspathResourceLoader classpathResourceLoader;
+    private Configuration configuration;
 
-    public static Template getTemplate(String templateName, String path, String charset) throws IOException {
-        ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader(path,charset);
-        Configuration configuration = Configuration.defaultConfiguration();
-        configuration.setStatementStart("@");
-        configuration.setStatementEnd(null);
+    public BeetlUtil (String templateDir,String charset){
+        this.classpathResourceLoader = new ClasspathResourceLoader(templateDir,charset);
+        try {
+            configuration = Configuration.defaultConfiguration();
+            configuration.setStatementStart("@");
+            configuration.setStatementEnd(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Template getTemplate(String templateName){
         GroupTemplate groupTemplate = new GroupTemplate(classpathResourceLoader,configuration);
         groupTemplate.registerFunctionPackage("StringUtils",new StringUtils());
         return groupTemplate.getTemplate(templateName);
     }
 
-    public static GroupTemplate getResourceGroupTemplate() throws IOException{
-        ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader("/view","utf-8");
-        Configuration configuration = Configuration.defaultConfiguration();
-        return new GroupTemplate(classpathResourceLoader,configuration);
-    }
 }

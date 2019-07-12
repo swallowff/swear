@@ -1,7 +1,9 @@
 package cn.swallowff.code.factory;
 
 import cn.swallowff.code.FileType;
+import cn.swallowff.code.GenFileType;
 import cn.swallowff.code.config.GeneratorConfig;
+import cn.swallowff.code.entity.GeneratorFile;
 import cn.swallowff.code.util.PathUtils;
 import cn.swallowff.common.lang.StringUtils;
 
@@ -51,11 +53,13 @@ public class FilePathFactory {
         return pathMap;
     }
 
-
     private String getPath(FileType fileType,String className){
         String uncapClassName = StringUtils.uncap(className);
         StringBuilder sb = new StringBuilder();
-        sb.append(PathUtils.PROJECT_ROOT).append(PathUtils.packageToPath(config.getModuleLocation()));
+        sb.append(PathUtils.PROJECT_ROOT);
+        if (StringUtils.isNotBlank(config.getModuleLocation())){
+            sb.append(PathUtils.packageToPath(config.getModuleLocation()));
+        }
         switch (fileType){
             case ENTITY:
             case DAO:
@@ -99,16 +103,48 @@ public class FilePathFactory {
         return sb.toString();
     }
 
-    public static void main(String[] args){
-        GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setTableName("cms_article");
-        generatorConfig.setTablePrefix("cms");
-        generatorConfig.setJavaLocation("cn.swallowff.modules.core.system");
-        generatorConfig.setMapperLocation("mapper.system");
-        generatorConfig.setHtmlLocation("WEB-INF.pages.admin.system");
-        generatorConfig.setJsLocation("static.module.admin.system");
-        FilePathFactory filePathFactory = new FilePathFactory(generatorConfig);
-        filePathFactory.createPathMap();
+    private String getPath2(GeneratorFile generatorFile, String className){
+        String uncapClassName = StringUtils.uncap(className);
+        StringBuilder sb = new StringBuilder();
+        sb.append(PathUtils.PROJECT_ROOT);
+        if (StringUtils.isNotBlank(config.getModuleLocation())){
+            sb.append(PathUtils.packageToPath(config.getModuleLocation()));
+        }
+        switch (generatorFile.getFileType()){
+            case JAVA:
+                sb.append(PathUtils.SRC_JAVA)
+                        .append(PathUtils.packageToPath(config.getJavaLocation()))
+                        .append(File.separator).append(generatorFile.).append(File.separator)
+                        .append(className).append(fileType.getNameSuffix())
+                        .append(fileType.getSuffix());
+                break;
+            case MAPPER:
+                sb.append(PathUtils.SRC_RESOURCES)
+                        .append(PathUtils.packageToPath(config.getMapperLocation()))
+                        .append(File.separator).append(fileType.getPackageName())
+                        .append(File.separator)
+                        .append(className).append(fileType.getNameSuffix())
+                        .append(fileType.getSuffix());
+                break;
+            case PAGE:
+                sb.append(PathUtils.SRC_WEBAPPS)
+                        .append(PathUtils.packageToPath(config.getHtmlLocation()))
+                        .append(File.separator).append(uncapClassName).append(File.separator)
+                        .append(uncapClassName)
+                        .append(fileType.getNameSuffix())
+                        .append(fileType.getSuffix());
+                break;
+            case JAVASCRIPT:
+                sb.append(PathUtils.SRC_WEBAPPS)
+                        .append(PathUtils.packageToPath(config.getJsLocation()))
+                        .append(File.separator).append(uncapClassName).append(File.separator)
+                        .append(uncapClassName)
+                        .append(fileType.getNameSuffix())
+                        .append(fileType.getSuffix());
+                break;
+        }
+        return sb.toString();
     }
+
 
 }

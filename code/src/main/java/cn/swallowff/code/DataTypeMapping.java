@@ -18,6 +18,7 @@ public enum DataTypeMapping {
     DOUBLE("DOUBLE",Double.class),
     FLOAT("FLOAT",Float.class),
     DATETIME("DATETIME",Date.class),
+    DATE("DATE",Date.class),
     BIT("BIT",Boolean.class)
     ;
     private String mysqlType;

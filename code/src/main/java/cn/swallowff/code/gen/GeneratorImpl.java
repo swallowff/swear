@@ -13,7 +13,9 @@ import cn.swallowff.code.util.PathUtils;
 import cn.swallowff.code.util.StreamUtil;
 import cn.swallowff.common.io.FileUtils;
 import cn.swallowff.common.mapper.BeanMapConvert;
+import org.apache.commons.collections.CollectionUtils;
 import org.beetl.core.Template;
+import org.beetl.core.exception.BeetlException;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -29,13 +31,15 @@ public class GeneratorImpl implements IGenerator {
     private TemplateData templateData;
     private Map<FileType,String> pathMap;
     private GeneratorConfig generatorConfig;
+    private BeetlUtil beetlUtil;
 
     public GeneratorImpl(GeneratorConfig generatorConfig) {
         this.generatorConfig = generatorConfig;
     }
 
-    protected void init() throws InvalidConfigException{
+    protected void init() throws GenerationException{
         checkConfig();
+        beetlUtil = new BeetlUtil(generatorConfig.getTemplatePath(),"utf-8");
         templateData = new TemplateDataFactory(new MetaDataResolver(generatorConfig)).createTemplateData();
         pathMap = new FilePathFactory(generatorConfig).createPathMap();
     }
@@ -46,6 +50,9 @@ public class GeneratorImpl implements IGenerator {
         if (!file.isDirectory()){
             throw new InvalidConfigException("module location must be a path where exist in your project path , make sure it is a effective directory ");
         }
+        if (CollectionUtils.isEmpty(generatorConfig.getGenFiles())){
+            throw new InvalidConfigException("gen files must not be empty");
+        }
 
     }
 
@@ -53,127 +60,43 @@ public class GeneratorImpl implements IGenerator {
     public void execute() throws GenerationException {
         init();
         List<FileType> genFiles = generatorConfig.getGenFiles();
-        if (genFiles.contains(FileType.ENTITY)){
-
-        }
-        if (genFiles.contains(FileType.DAO)){
-
-        }
-        if (genFiles.contains(FileType.SERVICE)){
-
-        }
-        if (genFiles.contains(FileType.CONTROLLER)){
-
-        }
-        if (genFiles.contains(FileType.MAPPER)){
-
-        }
-        if (genFiles.contains(FileType.LIST_HTML)){
-
-        }
-        if (genFiles.contains(FileType.ADD_HTML)){
-
-        }
-        if (genFiles.contains(FileType.EDIT_HTML)){
-
-        }
-        if (genFiles.contains(FileType.LIST_JS)){
-
-        }
-        if (genFiles.contains(FileType.ADD_JS)){
-
-        }
-        if (genFiles.contains(FileType.EDIT_JS)){
-
+        for (FileType fileType : genFiles){
+            writeFile(fileType);
         }
 
-        genEntity();
-        genDao();
-        genService();
-        genController();
-        genXmlMapper();
-        genListPage();
-        genAddPage();
-        genEditPage();
-        genListJs();
-        genAddJs();
-        genEditJs();
     }
 
-    protected void genEntity() {
-        writeFile(FileType.ENTITY);
-    }
-
-    protected void genDao() {
-        writeFile(FileType.DAO);
-    }
-
-    protected void genService() {
-        writeFile(FileType.SERVICE);
-    }
-
-    protected void genController() {
-        writeFile(FileType.CONTROLLER);
-    }
-
-    protected void genXmlMapper() {
-        writeFile(FileType.MAPPER);
-    }
-
-    protected void genListPage() {
-        writeFile(FileType.LIST_HTML);
-    }
-
-    protected void genAddPage() {
-        writeFile(FileType.ADD_HTML);
-    }
-
-    protected void genEditPage() {
-        writeFile(FileType.EDIT_HTML);
-    }
-
-    protected void genListJs() {
-        writeFile(FileType.LIST_JS);
-    }
-
-    protected void genAddJs() {
-        writeFile(FileType.ADD_JS);
-    }
-
-    protected void genEditJs() {
-        writeFile(FileType.EDIT_JS);
-    }
-
-    protected void writeFile(FileType fileType){
+    protected void writeFile(FileType fileType) throws GenerationException{
         FileOutputStream fos = null;
         OutputStreamWriter osw = null;
         BufferedWriter bw = null;
         try {
+            // 获取模板
+            Template template = getTemplate(fileType);
+            BeetlException beetlException = template.validate();
+            if (null != beetlException){
+                throw new GenerationException("beetl template file not exist : " + generatorConfig.getTemplatePath() + fileType.getTemplateName());
+            }
             boolean created = FileUtils.createFile(pathMap.get(fileType));
             if (!created && !generatorConfig.isForceCover()){
                 return;
             }
-//            FileUtils.createDirectory(StringUtils.substringBeforeLast(pathMap.get(fileType),"/"),);
             fos = new FileOutputStream(pathMap.get(fileType));
             osw = new OutputStreamWriter(fos,Charset.forName("utf-8"));
             bw = new BufferedWriter(osw,1024);
-            // 获取模板
-            Template template = getTemplate(fileType);
             // 数据绑定模板
             template.binding(BeanMapConvert.beanToMapObject(templateData));
             // 文件输出
             template.renderTo(bw);
         } catch (FileNotFoundException e1){
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            e1.printStackTrace();
         } finally {
             StreamUtil.close(fos,osw,bw);
         }
     }
 
-    protected Template getTemplate(FileType fileType) throws IOException {
-        return BeetlUtil.getTemplate(fileType.getTemplateName(),generatorConfig.getTemplatePath(),"utf-8");
+    protected Template getTemplate(FileType fileType) {
+        return beetlUtil.getTemplate(fileType.getTemplateName());
     }
 
 

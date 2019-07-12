@@ -102,8 +102,7 @@ public class ShiroConfig2 {
         sessionManager.setSessionValidationSchedulerEnabled(true);
         sessionManager.setSessionIdUrlRewritingEnabled(false);
 //        Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
-        Cookie cookie = new SimpleCookie("swearShiroCookie");
-        cookie.setName("swearShiroCookie");
+        Cookie cookie = new SimpleCookie("shiroCookie");
         cookie.setHttpOnly(true);
         sessionManager.setSessionIdCookie(cookie);
         return sessionManager;
@@ -171,7 +170,7 @@ public class ShiroConfig2 {
          * user  验证通过或RememberMe登录的都可以
          * 当应用开启了rememberMe时,用户下次访问时可以是一个user,但不会是authc,因为authc是需要重新认证的
          * 顺序从上到下,优先级依次降低
-         * openApi开头的接口，走rest api鉴权，不走shiro鉴权
+         * api开头的接口，走rest api鉴权，不走shiro鉴权
          *
          */
         Map<String, String> hashMap = new LinkedHashMap<>();

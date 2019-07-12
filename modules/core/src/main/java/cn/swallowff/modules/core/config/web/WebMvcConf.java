@@ -30,7 +30,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 自定义拦截器，添加拦截路径和排除拦截路径
-        registry.addInterceptor(new WebApiInterceptor()).addPathPatterns("/a/**");
+        registry.addInterceptor(new WebApiInterceptor()).addPathPatterns("/a/**","/api/**","/open/**","/openApi/**");
         super.addInterceptors(registry);
     }
 

@@ -2,7 +2,9 @@ package cn.swallowff.code.resolver;
 
 import cn.swallowff.code.config.GeneratorConfig;
 import cn.swallowff.code.entity.TableColumn;
+import cn.swallowff.code.exception.GenerationException;
 import cn.swallowff.common.lang.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -34,7 +36,7 @@ public class MetaDataResolver {
         }else return null;
     }
 
-    public List<TableColumn> getTableColumns() throws SQLException{
+    public List<TableColumn> getTableColumns() throws SQLException,GenerationException{
         ResultSet resultSet = getResultSet();
         List<TableColumn> columnList = new ArrayList<TableColumn>();
         while (resultSet.next()){
@@ -51,6 +53,9 @@ public class MetaDataResolver {
             //字段在数据库的注释
             tableColumn.setColumnComment(resultSet.getString("REMARKS"));
             columnList.add(tableColumn);
+        }
+        if (CollectionUtils.isEmpty(columnList)){
+            throw new GenerationException("table not found : "+ tableName);
         }
         return columnList;
     }

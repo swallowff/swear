@@ -10,26 +10,4 @@ public interface IGenerator {
 
     void execute() throws GenerationException;
 
-//    void genEntity();
-//
-//    void genDao();
-//
-//    void genService();
-//
-//    void genController();
-//
-//    void genXmlMapper();
-//
-//    void genListPage();
-//
-//    void genAddPage();
-//
-//    void genEditPage();
-//
-//    void genListJs();
-//
-//    void genAddJs();
-//
-//    void genEditJs();
-
 }

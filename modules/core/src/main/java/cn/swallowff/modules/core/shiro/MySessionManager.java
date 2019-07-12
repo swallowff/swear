@@ -1,12 +1,19 @@
 package cn.swallowff.modules.core.shiro;
 
 import cn.swallowff.common.lang.StringUtils;
+import cn.swallowff.common.web.http.ServletUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.UnknownSessionException;
+import org.apache.shiro.session.mgt.SessionKey;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
+import org.apache.tools.ant.taskdefs.condition.Http;
+import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 
 /**
@@ -41,4 +48,5 @@ public class MySessionManager extends DefaultWebSessionManager {
         }
 
     }
+
 }

@@ -1,6 +1,8 @@
 package cn.swallowff.modules.core.system.controller;
 
+import cn.swallowff.code.FileType;
 import cn.swallowff.code.config.GeneratorConfig;
+import cn.swallowff.code.exception.GenerationException;
 import cn.swallowff.code.gen.GeneratorImpl;
 import cn.swallowff.code.gen.IGenerator;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
@@ -14,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,9 +50,10 @@ public class TestController {
 
     @RequestMapping("testGenCode")
     @ResponseBody
-    public BaseResp testGenCode() throws Exception{
+    public BaseResp testGenCode() throws SQLException {
+        BaseResp baseResp = BaseResp.newSuccess();
         GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setTableName("cms_category");
+        generatorConfig.setTableName("cms_content");
         generatorConfig.setJavaLocation("cn.swallowff.web.cms");
         generatorConfig.setMapperLocation("mapper.cms");
         generatorConfig.setHtmlLocation("WEB-INF.view.pages.modules.cms");
@@ -57,8 +64,16 @@ public class TestController {
         generatorConfig.setTemplatePath("/templates/base/");
         generatorConfig.setTitle("文章");
         generatorConfig.setTablePrefix("cms");
+        generatorConfig.setForceCover(true);
+        List<FileType> list = Arrays.asList(FileType.values());
+        generatorConfig.setGenFiles(list);
         IGenerator generator = new GeneratorImpl(generatorConfig);
-        generator.execute();
+        try {
+            generator.execute();
+        } catch (GenerationException e) {
+            e.printStackTrace();
+            return baseResp.putError(e.getMessage());
+        }
         return BaseResp.newSuccess();
     }
 

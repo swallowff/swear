@@ -9,6 +9,7 @@ import cn.swallowff.modules.core.excepiton.InvalidKaptchaException;
 import cn.swallowff.modules.core.excepiton.ServiceException;
 import cn.swallowff.modules.core.logmgr.LogManager;
 import cn.swallowff.modules.core.logmgr.factory.LogTaskFactory;
+import cn.swallowff.modules.core.shiro.ShiroUser;
 import cn.swallowff.modules.core.util.HttpContext;
 import org.apache.shiro.authc.*;
 import org.slf4j.Logger;
@@ -154,6 +155,23 @@ public class GlobalExceptionHandler {
         LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
         HttpContext.getRequest().setAttribute("tips", "服务器未知运行时异常");
         log.error("运行时异常:", e);
+        return new BaseResp(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMsg());
+    }
+
+    /**
+     * 拦截未知的异常
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public BaseResp exception(Exception e) {
+        ShiroUser user = ShiroKit.getUser();
+        String userId = "";
+        if (null != user){
+            userId = user.getId();
+        }
+        LogManager.me().executeLog(LogTaskFactory.exceptionLog(userId, e));
+        log.error("系统异常:", e);
         return new BaseResp(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMsg());
     }
 
