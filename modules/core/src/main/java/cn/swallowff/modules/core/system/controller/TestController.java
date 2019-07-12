@@ -2,7 +2,9 @@ package cn.swallowff.modules.core.system.controller;
 
 import cn.swallowff.code.FileType;
 import cn.swallowff.code.config.GeneratorConfig;
+import cn.swallowff.code.entity.GeneratorFile;
 import cn.swallowff.code.exception.GenerationException;
+import cn.swallowff.code.factory.GeneratorFileFactory;
 import cn.swallowff.code.gen.GeneratorImpl;
 import cn.swallowff.code.gen.IGenerator;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
@@ -17,10 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author shenyu
@@ -53,7 +52,7 @@ public class TestController {
     public BaseResp testGenCode() throws SQLException {
         BaseResp baseResp = BaseResp.newSuccess();
         GeneratorConfig generatorConfig = new GeneratorConfig();
-        generatorConfig.setTableName("cms_content");
+        generatorConfig.setTableName("cms_article");
         generatorConfig.setJavaLocation("cn.swallowff.web.cms");
         generatorConfig.setMapperLocation("mapper.cms");
         generatorConfig.setHtmlLocation("WEB-INF.view.pages.modules.cms");
@@ -65,8 +64,20 @@ public class TestController {
         generatorConfig.setTitle("文章");
         generatorConfig.setTablePrefix("cms");
         generatorConfig.setForceCover(true);
-        List<FileType> list = Arrays.asList(FileType.values());
-        generatorConfig.setGenFiles(list);
+
+        Set<GeneratorFile> set = new HashSet<>();
+        set.add(GeneratorFileFactory.createEntity());
+        set.add(GeneratorFileFactory.createDao());
+        set.add(GeneratorFileFactory.createService());
+        set.add(GeneratorFileFactory.createController());
+        set.add(GeneratorFileFactory.createXmlMapper());
+        set.add(GeneratorFileFactory.createListHtml());
+        set.add(GeneratorFileFactory.createAddHtml());
+        set.add(GeneratorFileFactory.createEditHtml());
+        set.add(GeneratorFileFactory.createListJs());
+        set.add(GeneratorFileFactory.createAddJs());
+        set.add(GeneratorFileFactory.createEditJs());
+        generatorConfig.setGenFileSets(set);
         IGenerator generator = new GeneratorImpl(generatorConfig);
         try {
             generator.execute();

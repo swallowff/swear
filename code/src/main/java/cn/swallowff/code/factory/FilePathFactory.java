@@ -1,7 +1,6 @@
 package cn.swallowff.code.factory;
 
 import cn.swallowff.code.FileType;
-import cn.swallowff.code.GenFileType;
 import cn.swallowff.code.config.GeneratorConfig;
 import cn.swallowff.code.entity.GeneratorFile;
 import cn.swallowff.code.util.PathUtils;
@@ -10,6 +9,7 @@ import cn.swallowff.common.lang.StringUtils;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author shenyu
@@ -22,6 +22,7 @@ public class FilePathFactory {
         this.config = config;
     }
 
+    @Deprecated
     public Map<FileType,String> createPathMap(){
         Map<FileType,String> pathMap = new HashMap<>();
 //        String className = StringUtils.capCamelCase(config.getTableName());
@@ -53,6 +54,7 @@ public class FilePathFactory {
         return pathMap;
     }
 
+    @Deprecated
     private String getPath(FileType fileType,String className){
         String uncapClassName = StringUtils.uncap(className);
         StringBuilder sb = new StringBuilder();
@@ -103,7 +105,22 @@ public class FilePathFactory {
         return sb.toString();
     }
 
-    private String getPath2(GeneratorFile generatorFile, String className){
+    public Map<GeneratorFile,String> createPathMap(Set<GeneratorFile> genFiles){
+        Map<GeneratorFile,String> pathMap = new HashMap<>();
+        String className = "";
+        if (config.getTablePrefix().endsWith("_")){
+            className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix(),""));
+        }else {
+            className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix().concat("_"),""));
+        }
+
+        for (GeneratorFile generatorFile : genFiles){
+            pathMap.put(generatorFile,getPath(generatorFile,className));
+        }
+        return pathMap;
+    }
+
+    private String getPath(GeneratorFile generatorFile, String className){
         String uncapClassName = StringUtils.uncap(className);
         StringBuilder sb = new StringBuilder();
         sb.append(PathUtils.PROJECT_ROOT);
@@ -114,33 +131,32 @@ public class FilePathFactory {
             case JAVA:
                 sb.append(PathUtils.SRC_JAVA)
                         .append(PathUtils.packageToPath(config.getJavaLocation()))
-                        .append(File.separator).append(generatorFile.).append(File.separator)
-                        .append(className).append(fileType.getNameSuffix())
-                        .append(fileType.getSuffix());
+                        .append(File.separator).append(generatorFile.getModuleName()).append(File.separator)
+                        .append(className).append(generatorFile.getNameSuffix())
+                        .append(generatorFile.getFileSuffix());
                 break;
             case MAPPER:
                 sb.append(PathUtils.SRC_RESOURCES)
                         .append(PathUtils.packageToPath(config.getMapperLocation()))
-                        .append(File.separator).append(fileType.getPackageName())
-                        .append(File.separator)
-                        .append(className).append(fileType.getNameSuffix())
-                        .append(fileType.getSuffix());
+                        .append(File.separator).append(generatorFile.getModuleName()).append(File.separator)
+                        .append(className).append(generatorFile.getNameSuffix())
+                        .append(generatorFile.getFileSuffix());
                 break;
             case PAGE:
                 sb.append(PathUtils.SRC_WEBAPPS)
                         .append(PathUtils.packageToPath(config.getHtmlLocation()))
                         .append(File.separator).append(uncapClassName).append(File.separator)
                         .append(uncapClassName)
-                        .append(fileType.getNameSuffix())
-                        .append(fileType.getSuffix());
+                        .append(generatorFile.getNameSuffix())
+                        .append(generatorFile.getFileSuffix());
                 break;
             case JAVASCRIPT:
                 sb.append(PathUtils.SRC_WEBAPPS)
                         .append(PathUtils.packageToPath(config.getJsLocation()))
                         .append(File.separator).append(uncapClassName).append(File.separator)
                         .append(uncapClassName)
-                        .append(fileType.getNameSuffix())
-                        .append(fileType.getSuffix());
+                        .append(generatorFile.getNameSuffix())
+                        .append(generatorFile.getFileSuffix());
                 break;
         }
         return sb.toString();

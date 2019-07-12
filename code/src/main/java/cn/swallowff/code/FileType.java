@@ -4,6 +4,7 @@ package cn.swallowff.code;
  * @author shenyu
  * @create 2019/7/10
  */
+@Deprecated
 public enum  FileType {
     ENTITY(0,"实体类","",".java","entity","entity.btl"),
     DAO(1,"持久层","Dao",".java","dao","dao.btl"),

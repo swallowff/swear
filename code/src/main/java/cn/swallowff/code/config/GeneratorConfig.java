@@ -1,9 +1,10 @@
 package cn.swallowff.code.config;
 
 import cn.swallowff.code.FileType;
+import cn.swallowff.code.entity.GeneratorFile;
 
 import java.sql.Connection;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author shenyu
@@ -47,7 +48,11 @@ public class GeneratorConfig {
      * 完整表名 如: cms_article
      */
     private String tableName;
-    private List<FileType> genFiles;
+    /**
+     * 生成文件配置
+     */
+    private Set<FileType> genFiles;
+    private Set<GeneratorFile> genFileSets;
     /**
      * 模板路径 相对于src/main/webapps
      * @example /templates/base/
@@ -62,11 +67,19 @@ public class GeneratorConfig {
      */
     private boolean forceCover;
 
-    public List<FileType> getGenFiles() {
+    public Set<GeneratorFile> getGenFileSets() {
+        return genFileSets;
+    }
+
+    public void setGenFileSets(Set<GeneratorFile> genFileSets) {
+        this.genFileSets = genFileSets;
+    }
+
+    public Set<FileType> getGenFiles() {
         return genFiles;
     }
 
-    public void setGenFiles(List<FileType> genFiles) {
+    public void setGenFiles(Set<FileType> genFiles) {
         this.genFiles = genFiles;
     }
 
