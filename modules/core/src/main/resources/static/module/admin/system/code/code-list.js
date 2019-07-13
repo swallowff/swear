@@ -11,7 +11,7 @@ layui.config({
         url: setter.ctxPath + "/sys/code/tableList",
         method: 'GET',
         success: function (res) {
-            console.log(res)
+            // console.log(res)
             if (res.code == setter.response.statusCode.ok) {
                 var listData = res.data;
                 var $select = $('#table-select');
@@ -23,15 +23,33 @@ layui.config({
             }
         }
 
-    })
+    });
 
     //监听表单提交
     form.on('submit(LAYF-code-gen)', function (data) {
         var field = data.field;
-        //执行重载
-        // table.reload('dictTable', {
-        //     where: field
-        // });
+
+        $.ajax({
+            url: setter.ctxPath + "/sys/code/execute",
+            method: 'POST',
+            data: field,
+            success: function (res) {
+                console.log(res)
+                if (res.code == setter.response.statusCode.ok) {
+                    layer.msg(res.msg,{
+                        icon: 1,
+                        time: 1800
+                    })
+                }else {
+                    layer.msg(res.msg,{
+                        icon: 5,
+                        time: 1800
+                    })
+                }
+
+            }
+        })
+
     });
 
 

@@ -3,6 +3,9 @@ package cn.swallowff.code.factory;
 import cn.swallowff.code.GenFileType;
 import cn.swallowff.code.entity.GeneratorFile;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author shenyu
  * @create 2019/7/12
@@ -51,5 +54,21 @@ public class GeneratorFileFactory {
 
     public static GeneratorFile createEditJs(){
         return new GeneratorFile("修改页JS","-edit",".js","","edit-js.btl",GenFileType.JAVASCRIPT);
+    }
+
+    public static Set<GeneratorFile> createDefaultAll(){
+        Set<GeneratorFile> fileSets = new HashSet<>();
+        fileSets.add(createEntity());
+        fileSets.add(createDao());
+        fileSets.add(createService());
+        fileSets.add(createController());
+        fileSets.add(createXmlMapper());
+        fileSets.add(createListHtml());
+        fileSets.add(createAddHtml());
+        fileSets.add(createEditHtml());
+        fileSets.add(createListJs());
+        fileSets.add(createAddJs());
+        fileSets.add(createEditJs());
+        return fileSets;
     }
 }

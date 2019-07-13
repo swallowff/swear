@@ -29,11 +29,13 @@ public class MetaDataResolver {
         this.config = generatorConfig;
     }
 
-    private ResultSet getResultSet() throws SQLException {
+    private ResultSet getResultSet() throws SQLException,GenerationException {
         if (null != connection){
             DatabaseMetaData metaData = connection.getMetaData();
             return metaData.getColumns(connection.getCatalog(),"%",tableName,"%");
-        }else return null;
+        }else {
+            throw new GenerationException("connection can not be null");
+        }
     }
 
     public List<TableColumn> getTableColumns() throws SQLException,GenerationException{

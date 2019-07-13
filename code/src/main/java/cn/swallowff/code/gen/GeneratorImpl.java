@@ -53,7 +53,7 @@ public class GeneratorImpl implements IGenerator {
             throw new InvalidConfigException("module location must be a path where exist in your project path , make sure it is a effective directory ");
         }
         if (CollectionUtils.isEmpty(generatorConfig.getGenFileSets())){
-            throw new InvalidConfigException("gen files must not be empty");
+            throw new InvalidConfigException("gen files can not be not empty");
         }
 
     }

@@ -9,15 +9,15 @@ import javax.validation.constraints.NotBlank;
 public class GenCodeDto {
     @NotBlank(message = "请选择table")
     private String table;
-    private String module;
-
-    private String javaFileLocation;
-    private String mapperFileLocation;
-    private String htmlFileLocation;
-    private String jsFileLocation;
-
-    private boolean forceCover;
+    private String title;
     private String tablePrefix;
+    private String rootModule;
+
+    private String classPackage;
+    private String mapperModules;
+    private String htmlModules;
+    private String jsModules;
+    private boolean forceCover;
 
     public String getTable() {
         return table;
@@ -27,12 +27,12 @@ public class GenCodeDto {
         this.table = table;
     }
 
-    public boolean isForceCover() {
-        return forceCover;
+    public String getTitle() {
+        return title;
     }
 
-    public void setForceCover(boolean forceCover) {
-        this.forceCover = forceCover;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTablePrefix() {
@@ -43,43 +43,51 @@ public class GenCodeDto {
         this.tablePrefix = tablePrefix;
     }
 
-    public String getJavaFileLocation() {
-        return javaFileLocation;
+    public String getRootModule() {
+        return rootModule;
     }
 
-    public void setJavaFileLocation(String javaFileLocation) {
-        this.javaFileLocation = javaFileLocation;
+    public void setRootModule(String rootModule) {
+        this.rootModule = rootModule;
     }
 
-    public String getMapperFileLocation() {
-        return mapperFileLocation;
+    public String getClassPackage() {
+        return classPackage;
     }
 
-    public void setMapperFileLocation(String mapperFileLocation) {
-        this.mapperFileLocation = mapperFileLocation;
+    public void setClassPackage(String classPackage) {
+        this.classPackage = classPackage;
     }
 
-    public String getHtmlFileLocation() {
-        return htmlFileLocation;
+    public String getMapperModules() {
+        return mapperModules;
     }
 
-    public void setHtmlFileLocation(String htmlFileLocation) {
-        this.htmlFileLocation = htmlFileLocation;
+    public void setMapperModules(String mapperModules) {
+        this.mapperModules = mapperModules;
     }
 
-    public String getJsFileLocation() {
-        return jsFileLocation;
+    public String getHtmlModules() {
+        return htmlModules;
     }
 
-    public void setJsFileLocation(String jsFileLocation) {
-        this.jsFileLocation = jsFileLocation;
+    public void setHtmlModules(String htmlModules) {
+        this.htmlModules = htmlModules;
     }
 
-    public String getModule() {
-        return module;
+    public String getJsModules() {
+        return jsModules;
     }
 
-    public void setModule(String module) {
-        this.module = module;
+    public void setJsModules(String jsModules) {
+        this.jsModules = jsModules;
+    }
+
+    public boolean isForceCover() {
+        return forceCover;
+    }
+
+    public void setForceCover(boolean forceCover) {
+        this.forceCover = forceCover;
     }
 }
