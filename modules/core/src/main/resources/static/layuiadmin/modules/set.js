@@ -18,9 +18,20 @@
     });
 
     var r = i("#LAY_imgSrc");
+    var $thumbnail = i("#LAY_thumbnail")
     s.render({
         url: "/swear/a/upload/img", elem: "#LAY_imgUpload", done: function (t) {
-            0 == t.code ? r.val(t.data.src) : e.msg(t.msg, {icon: 5})
+            if (0 == t.code) {
+                r.val(t.data.src)
+                if ($thumbnail) {
+                    $thumbnail.val(t.data.thumbnail)
+                }
+            }else {
+                e.msg(t.msg,{
+                    icon: 5
+                })
+            }
+            0 == t.code ? r.val(t.data.src) : e.msg(t.msg, {icon: 5});
         }
     }), a.events.imgPreview = function (t) {
         var i = r.val();

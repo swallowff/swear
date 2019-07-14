@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑 iframe 框</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-form" lay-filter="LAYF-imageGallery-form-edit" id="LAYF-imageGallery-form-edit"
+     style="padding: 20px 30px 0 0;">
+    <input type="hidden" name="id">
+
+     <div class="layui-form-item">
+         <label class="layui-form-label">原始名称</label>
+         <div class="layui-input-inline">
+             <input type="text" name="originName" lay-verify="required" placeholder="原始名称" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">图片名称</label>
+         <div class="layui-input-inline">
+             <input type="text" name="imgName" lay-verify="required" placeholder="图片名称" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">图片地址</label>
+         <div class="layui-input-inline">
+             <input type="text" name="imgUrl" lay-verify="required" placeholder="图片地址" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">缩略图地址</label>
+         <div class="layui-input-inline">
+             <input type="text" name="thumbnail" lay-verify="required" placeholder="缩略图地址" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">图片格式(jpg; png; gif ; jpeg)</label>
+         <div class="layui-input-inline">
+             <input type="text" name="imgFormat" lay-verify="required" placeholder="图片格式(jpg; png; gif ; jpeg)" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">图片大小</label>
+         <div class="layui-input-inline">
+             <input type="text" name="size" lay-verify="required" placeholder="图片大小" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAYF-imageGallery-form-edit-submit" id="LAYF-imageGallery-form-edit-submit"
+               value="确认">
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    var Swear = {
+        serverUrl : '${serverUrl}',
+        ctxPath : '${admin}',
+        static : '${static}',
+
+        formValue: {
+            id: '${imageGallery.id}',
+            originName: '${imageGallery.originName}',
+            imgName: '${imageGallery.imgName}',
+            imgUrl: '${imageGallery.imgUrl}',
+            thumbnail: '${imageGallery.thumbnail}',
+            imgFormat: '${imageGallery.imgFormat}',
+            size: '${imageGallery.size}',
+        }
+    }
+</script>
+<script src="${static}/module/admin/system/imageGallery/imageGallery-edit.js"></script>
+<script>
+
+</script>
+</body>
+</html>

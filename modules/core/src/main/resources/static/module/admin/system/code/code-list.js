@@ -28,7 +28,21 @@ layui.config({
     //监听表单提交
     form.on('submit(LAYF-code-gen)', function (data) {
         var field = data.field;
+        if (field.forceCover == 1) {
+            layer.confirm("您已选择强制覆盖原文件,确定要继续此操作吗?",function (index) {
+                executeGenCode(field)
+            });
+        }else {
+            layer.confirm("即将生成代码,确认继续吗?",function (index) {
+                executeGenCode(field)
+            })
+        }
 
+
+
+    });
+
+    function executeGenCode(field) {
         $.ajax({
             url: setter.ctxPath + "/sys/code/execute",
             method: 'POST',
@@ -49,8 +63,7 @@ layui.config({
 
             }
         })
-
-    });
+    }
 
 
 

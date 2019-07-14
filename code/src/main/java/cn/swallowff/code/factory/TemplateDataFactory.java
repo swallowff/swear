@@ -50,12 +50,14 @@ public class TemplateDataFactory {
         templateData.setBasePackage(config.getJavaLocation());
         String tablePrefix = config.getTablePrefix();
         String className;
-        if (tablePrefix.endsWith("_")){
+        if (null == tablePrefix){
+            className = StringUtils.capCamelCase(tableName);
+        } else if (tablePrefix.endsWith("_")){
             templateData.setTablePrefix(tablePrefix.replace("_",""));
-            className = StringUtils.capCamelCase(tableName.replace(config.getTablePrefix(),""));
+            className = StringUtils.capCamelCase(tableName.replace(tablePrefix,""));
         }else {
             templateData.setTablePrefix(tablePrefix);
-            className = StringUtils.capCamelCase(tableName.replace(config.getTablePrefix().concat("_"),""));
+            className = StringUtils.capCamelCase(tableName.replace(tablePrefix.concat("_"),""));
         }
         templateData.setClassName(className);
         templateData.setUncapClassName(StringUtils.uncap(className));

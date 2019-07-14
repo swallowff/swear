@@ -108,7 +108,10 @@ public class FilePathFactory {
     public Map<GeneratorFile,String> createPathMap(Set<GeneratorFile> genFiles){
         Map<GeneratorFile,String> pathMap = new HashMap<>();
         String className = "";
-        if (config.getTablePrefix().endsWith("_")){
+        String tablePrefix = config.getTablePrefix();
+        if (null == tablePrefix){
+            className = StringUtils.capCamelCase(config.getTableName());
+        } else if (tablePrefix.endsWith("_")){
             className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix(),""));
         }else {
             className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix().concat("_"),""));
