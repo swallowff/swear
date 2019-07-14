@@ -10,7 +10,6 @@ ${importClasses}
  * \@author ${author}
  * \@date ${date}
  */
-
  public class ${className} extends BaseEntity implements Serializable {
 
      @for(field in item.fields){
@@ -27,8 +26,5 @@ ${importClasses}
      }
 
      @}
-
-
-
 
  }
