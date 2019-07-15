@@ -20,9 +20,9 @@ public class BaseResp implements Serializable {
         this.msg = msg;
     }
 
-    public BaseResp(ResponseState respResponseState){
-        this.code = respResponseState.getCode();
-        this.msg = respResponseState.getMsg();
+    public BaseResp(ResponseState stateEnum){
+        this.code = stateEnum.getCode();
+        this.msg = stateEnum.getMsg();
     }
 
     public BaseResp putState(AbstractState respState){

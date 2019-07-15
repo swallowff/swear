@@ -1,6 +1,7 @@
 package cn.swallowff.modules.core.config.web;
 
 import cn.swallowff.modules.core.config.properties.CoreProperties;
+import cn.swallowff.modules.core.filter.RestApiInteceptor;
 import cn.swallowff.modules.core.filter.WebApiInterceptor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,6 +32,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         // 自定义拦截器，添加拦截路径和排除拦截路径
         registry.addInterceptor(new WebApiInterceptor()).addPathPatterns("/a/**","/api/**","/open/**","/openApi/**");
+        registry.addInterceptor(new RestApiInteceptor()).addPathPatterns("/api/**");
         super.addInterceptors(registry);
     }
 

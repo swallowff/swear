@@ -149,6 +149,14 @@
             <version>${kaptcha.version}</version>
         </dependency>
 
+        <!--jwt-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+
         <!--swagger-->
         <dependency>
             <groupId>io.springfox</groupId>
