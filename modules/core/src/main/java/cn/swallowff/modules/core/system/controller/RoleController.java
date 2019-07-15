@@ -83,7 +83,6 @@ public class RoleController extends BaseController {
         Role role = new Role();
         role.setPids(TreeEntity.ROOT_ID);
         List<DtreeNode> list = roleService.findDtreeNodeListWithUid(role,userId);
-//        RoleDtreeNodeWrapper wrapper = new RoleDtreeNodeWrapper(list);
         return baseResp.setData(list);
     }
 

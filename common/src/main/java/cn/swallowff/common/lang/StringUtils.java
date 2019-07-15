@@ -5,6 +5,7 @@ package cn.swallowff.common.lang;
 
 import cn.swallowff.common.codec.EncodeUtils;
 import cn.swallowff.common.collect.ListUtils;
+import cn.swallowff.common.json.JacksonUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -404,5 +405,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 //		html = html.replaceAll("__eol__", "");
 //		System.out.println(replaceMobileHtml(html));
 //	}
+
+
+
 	
 }

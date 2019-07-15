@@ -49,4 +49,5 @@ public class WxUtils {
 //    public static void main(String[] args){
 //        System.out.println(EncryptAndDecryptUtils.md5Encrypt("appid=wx8e08b1b2d67b05b0&attach=218104094246878454&body=合业联盟收款218104094246878454&mch_id=1514874421&nonce_str=2147483647&notify_url=https://miniapp.98htcz.com:8443//yiye/pay/wxNotify&openid=otE3I5eSqwyAO2fsGsmTzxEMaXiM&out_trade_no=201906121424271806&spbill_create_ip=117.136.30.213&total_fee=1&trade_type=JSAPI&key=jojiffwe84854osd98kf8998kd90023l"));
 //    }
+
 }
