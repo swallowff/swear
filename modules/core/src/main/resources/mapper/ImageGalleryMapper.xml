@@ -60,19 +60,19 @@
         <where>
             a.delflag = 0
             <if test="originName != null and originName != ''">
-                AND a.originName = #{originName}
+                AND a.origin_name LIKE CONCAT('%',#{originName},'%')
             </if>
             <if test="imgName != null and imgName != ''">
-                AND a.imgName = #{imgName}
+                AND a.img_name LIKE CONCAT('%',#{imgName},'%')
             </if>
             <if test="imgUrl != null and imgUrl != ''">
-                AND a.imgUrl = #{imgUrl}
+                AND a.img_url = #{imgUrl}
             </if>
             <if test="thumbnail != null and thumbnail != ''">
                 AND a.thumbnail = #{thumbnail}
             </if>
             <if test="imgFormat != null and imgFormat != ''">
-                AND a.imgFormat = #{imgFormat}
+                AND a.img_format = #{imgFormat}
             </if>
             <if test="size != null">
                 AND a.size = #{size}

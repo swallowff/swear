@@ -9,6 +9,12 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
+    <style>
+        .layui-table-cell{
+            height: 100%;
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
 
@@ -16,21 +22,26 @@
     <div class="layui-card">
         <div class="layui-form layui-card-header layuiadmin-card-header-auto">
             <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name="originName" placeholder="请输入原始名称" autocomplete="off" class="layui-input">
-                        </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="originName" placeholder="请输入原始名称" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name="imgName" placeholder="请输入图片名称" autocomplete="off" class="layui-input">
-                        </div>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="imgName" placeholder="请输入图片名称" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-inline">
-                        <div class="layui-input-inline">
-                            <input type="text" name="imgFormat" placeholder="请输入图片格式(jpg; png; gif ; jpeg)" autocomplete="off" class="layui-input">
-                        </div>
+                </div>
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="imgFormat" placeholder="请输入图片格式" autocomplete="off" class="layui-input">
                     </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-imageGallery-list-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="layui-card-body">

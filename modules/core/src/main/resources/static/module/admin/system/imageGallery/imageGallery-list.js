@@ -32,6 +32,15 @@ layui.config({
                 sort: true
             },
             {
+                title: '图片预览',
+                style:'height:100px;',
+                templet: function (data) {
+                    var src = data.thumbnail;
+                    var img = '<img src="'+src+'" width="100px">'
+                    return img;
+                }
+            },
+            {
                 field: 'imgUrl',
                 title: '图片地址',
                 sort: true
@@ -43,12 +52,12 @@ layui.config({
             },
             {
                 field: 'imgFormat',
-                title: '图片格式(jpg; png; gif ; jpeg)',
+                title: '图片格式',
                 sort: true
             },
             {
                 field: 'size',
-                title: '图片大小',
+                title: '图片大小(字节)',
                 sort: true
             },
             {

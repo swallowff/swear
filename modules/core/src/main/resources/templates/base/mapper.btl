@@ -55,7 +55,7 @@
             @else{
             <if test="${field.fieldName} != null">
             @}
-                AND a.${field.fieldName} = #{${field.fieldName}}
+                AND a.${StringUtils.uncamelCase(field.fieldName)} = #{${field.fieldName}}
             </if>
            @}
         </where>

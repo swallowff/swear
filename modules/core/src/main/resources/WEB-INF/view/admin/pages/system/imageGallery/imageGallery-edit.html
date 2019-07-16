@@ -15,25 +15,9 @@
     <input type="hidden" name="id">
 
      <div class="layui-form-item">
-         <label class="layui-form-label">原始名称</label>
-         <div class="layui-input-inline">
-             <input type="text" name="originName" lay-verify="required" placeholder="原始名称" autocomplete="off"
-                    class="layui-input">
-         </div>
-     </div>
-     <div class="layui-form-item">
-         <label class="layui-form-label">图片名称</label>
-         <div class="layui-input-inline">
-             <input type="text" name="imgName" lay-verify="required" placeholder="图片名称" autocomplete="off"
-                    class="layui-input">
-         </div>
-     </div>
-     <div class="layui-form-item">
          <label class="layui-form-label">图片地址</label>
          <div class="layui-input-inline">
              <textarea id="image-src" placeholder="图片地址" class="layui-textarea" name="imgUrl" style="height:28px"></textarea>
-             <!--<input type="text" name="imgUrl" lay-verify="required" placeholder="图片地址" autocomplete="off"-->
-                    <!--class="layui-input">-->
          </div>
          <div class="layui-input-inline layui-btn-container" style="width: auto;">
              <button type="button" class="layui-btn layui-btn-primary" id="btn-image-upload">
@@ -46,19 +30,31 @@
          <label class="layui-form-label">缩略图地址</label>
          <div class="layui-input-inline">
              <textarea id="image-thumbnail" placeholder="图片地址" class="layui-textarea" name="thumbnail" style="height:28px"></textarea>
-             <!--<input type="text" name="thumbnail" lay-verify="required" placeholder="缩略图地址" autocomplete="off"-->
-                    <!--class="layui-input">-->
          </div>
      </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">原始名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="originName" lay-verify="required" placeholder="原始名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="imgName" lay-verify="required" placeholder="图片名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
      <div class="layui-form-item">
-         <label class="layui-form-label">图片格式(jpg; png; gif ; jpeg)</label>
+         <label class="layui-form-label">图片格式</label>
          <div class="layui-input-inline">
              <input type="text" name="imgFormat" lay-verify="required" placeholder="图片格式(jpg; png; gif ; jpeg)" autocomplete="off"
                     class="layui-input">
          </div>
      </div>
      <div class="layui-form-item">
-         <label class="layui-form-label">图片大小</label>
+         <label class="layui-form-label">图片大小(字节)</label>
          <div class="layui-input-inline">
              <input type="text" name="size" lay-verify="required" placeholder="图片大小" autocomplete="off"
                     class="layui-input">
