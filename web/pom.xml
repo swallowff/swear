@@ -12,7 +12,7 @@
     <artifactId>web</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>web-module</name>
+    <name>web</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -42,6 +42,7 @@
     <build>
         <plugins>
             <plugin>
+                <!--不是spring-boot项目的请勿配置-->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
