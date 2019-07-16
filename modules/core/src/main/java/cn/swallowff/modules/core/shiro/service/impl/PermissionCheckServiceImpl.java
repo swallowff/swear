@@ -15,16 +15,11 @@
  */
 package cn.swallowff.modules.core.shiro.service.impl;
 
-import cn.swallowff.modules.core.listener.ConfigListener;
 import cn.swallowff.modules.core.shiro.ShiroKit;
 import cn.swallowff.modules.core.shiro.ShiroUser;
 import cn.swallowff.modules.core.shiro.service.PermissionCheckService;
-import cn.swallowff.modules.core.util.HttpContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 权限自定义检查

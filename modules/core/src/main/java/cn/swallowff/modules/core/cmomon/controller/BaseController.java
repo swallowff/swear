@@ -2,6 +2,7 @@ package cn.swallowff.modules.core.cmomon.controller;
 
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.constant.states.ResponseState;
+import cn.swallowff.modules.core.excepiton.BizException;
 import cn.swallowff.modules.core.util.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,5 +55,17 @@ public abstract class BaseController {
             baseResp.setMsg(sb.toString());
             return false;
         }else return true;
+    }
+
+    protected void validateBindingResult(BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            StringBuilder sb = new StringBuilder();
+            for (ObjectError error : errors){
+                sb.append(error.getDefaultMessage());
+                sb.append(";");
+            }
+            throw new BizException(ResponseState.ILLEGAL_PARAMS.getCode(),sb.toString());
+        }
     }
 }

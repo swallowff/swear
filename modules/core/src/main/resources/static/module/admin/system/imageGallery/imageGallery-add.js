@@ -25,7 +25,7 @@ layui.config({
                 form.val('LAYF-imageGallery-form-add', {
                     originName: res.data.originName,
                     imgName: res.data.imgName,
-                    imgSrc: res.data.src,
+                    imgUrl: res.data.src,
                     thumbnail: res.data.thumbnail,
                     imgFormat: res.data.imgFormat,
                     size: res.data.size,

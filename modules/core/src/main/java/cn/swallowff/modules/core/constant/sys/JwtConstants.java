@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cn.swallowff.modules.core.constant;
+package cn.swallowff.modules.core.constant.sys;
 
 /**
  * jwt相关配置
@@ -25,10 +25,10 @@ public interface JwtConstants {
 
     String AUTH_HEADER = "Authorization";
 
-    String SECRET = "defaultSecret";
+    String SECRET = "Swearuylsfdson";
 
     Long EXPIRATION = 604800L;
 
-    String AUTH_PATH = "/gunsApi/auth";
+    String AUTH_PATH = "/api/auth";
 
 }

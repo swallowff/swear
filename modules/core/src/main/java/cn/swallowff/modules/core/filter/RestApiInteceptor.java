@@ -17,7 +17,7 @@ package cn.swallowff.modules.core.filter;
 
 import cn.swallowff.common.json.JacksonUtil;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
-import cn.swallowff.modules.core.constant.JwtConstants;
+import cn.swallowff.modules.core.constant.sys.JwtConstants;
 import cn.swallowff.modules.core.constant.exceptionenum.BizExceptionEnum;
 import cn.swallowff.modules.core.constant.states.ResponseState;
 import cn.swallowff.modules.core.excepiton.ServiceException;

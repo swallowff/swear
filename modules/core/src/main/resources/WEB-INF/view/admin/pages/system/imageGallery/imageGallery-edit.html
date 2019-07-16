@@ -31,15 +31,23 @@
      <div class="layui-form-item">
          <label class="layui-form-label">图片地址</label>
          <div class="layui-input-inline">
-             <input type="text" name="imgUrl" lay-verify="required" placeholder="图片地址" autocomplete="off"
-                    class="layui-input">
+             <textarea id="image-src" placeholder="图片地址" class="layui-textarea" name="imgUrl" style="height:28px"></textarea>
+             <!--<input type="text" name="imgUrl" lay-verify="required" placeholder="图片地址" autocomplete="off"-->
+                    <!--class="layui-input">-->
+         </div>
+         <div class="layui-input-inline layui-btn-container" style="width: auto;">
+             <button type="button" class="layui-btn layui-btn-primary" id="btn-image-upload">
+                 <i class="layui-icon">&#xe67c;</i>上传图片
+             </button>
+             <button class="layui-btn layui-btn-primary" layadmin-event="imagePreview">查看图片</button >
          </div>
      </div>
      <div class="layui-form-item">
          <label class="layui-form-label">缩略图地址</label>
          <div class="layui-input-inline">
-             <input type="text" name="thumbnail" lay-verify="required" placeholder="缩略图地址" autocomplete="off"
-                    class="layui-input">
+             <textarea id="image-thumbnail" placeholder="图片地址" class="layui-textarea" name="thumbnail" style="height:28px"></textarea>
+             <!--<input type="text" name="thumbnail" lay-verify="required" placeholder="缩略图地址" autocomplete="off"-->
+                    <!--class="layui-input">-->
          </div>
      </div>
      <div class="layui-form-item">

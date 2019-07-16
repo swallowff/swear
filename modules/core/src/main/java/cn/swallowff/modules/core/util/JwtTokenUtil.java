@@ -16,7 +16,7 @@
 package cn.swallowff.modules.core.util;
 
 import cn.swallowff.common.lang.StringUtils;
-import cn.swallowff.modules.core.constant.JwtConstants;
+import cn.swallowff.modules.core.constant.sys.JwtConstants;
 import io.jsonwebtoken.*;
 
 import java.util.Date;
@@ -127,7 +127,7 @@ public class JwtTokenUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(createdDate)
-                .setExpiration(expirationDate)
+                .setExpiration(expirationDate)  //过期时间7天
                 .signWith(SignatureAlgorithm.HS512, JwtConstants.SECRET)
                 .compact();
     }

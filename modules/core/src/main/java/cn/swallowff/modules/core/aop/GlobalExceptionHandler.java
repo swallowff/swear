@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.naming.NoPermissionException;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.UndeclaredThrowableException;
+import java.security.SignatureException;
 
 /**
  * @author shenyu
@@ -58,8 +59,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public BaseResp bizException(ServiceException e, HttpServletRequest request){
-        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
-//        request.setAttribute("tip",e.getMessage());
+//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
 //        log.error("业务异常:",e);
         return new BaseResp(e.getCode(),e.getErrorMessage());
     }
@@ -152,8 +152,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public BaseResp notFount(RuntimeException e) {
-        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
-        HttpContext.getRequest().setAttribute("tips", "服务器未知运行时异常");
+//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+//        HttpContext.getRequest().setAttribute("tips", "服务器未知运行时异常");
         log.error("运行时异常:", e);
         return new BaseResp(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMsg());
     }

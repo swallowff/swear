@@ -115,7 +115,7 @@ layui.config({
         add: function () {
             layer.open({
                 type: 2
-                , title: '添加'
+                , title: '添加图片库'
                 , content: setter.ctxPath + '/sys/imageGallery/add.html'
                 , maxmin: true
                 , area: ['800px', '550px']
@@ -169,10 +169,10 @@ layui.config({
     window.editRow = function (id) {
         layer.open({
             type: 2
-            , title: '編輯字典'
+            , title: '編輯图片库'
             , content: setter.ctxPath + '/sys/imageGallery/edit.html?id=' + id
             , maxmin: true
-            , area: ['550px', '550px']
+            , area: ['800px', '550px']
             , btn: ['确定', '取消']
             , yes: function (index, layero) {
                 var submit = layero.find('iframe').contents().find("#LAYF-imageGallery-form-edit-submit");

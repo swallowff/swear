@@ -13,7 +13,6 @@ public class StreamUtil {
             if (null != c){
                 try {
                     c.close();
-                    c = null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
