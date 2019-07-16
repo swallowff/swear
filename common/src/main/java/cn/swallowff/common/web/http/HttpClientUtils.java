@@ -76,20 +76,20 @@ public class HttpClientUtils {
 	/**
 	 * http的post请求，传递map格式参数
 	 */
-	public static String post(String url, Map<String, String> dataMap) {
+	public static String post(String url, Map<String, Object> dataMap) {
 		return post(url, dataMap, "UTF-8");
 	}
 
 	/**
 	 * http的post请求，传递map格式参数
 	 */
-	public static String post(String url, Map<String, String> dataMap, String charset) {
+	public static String post(String url, Map<String, Object> dataMap, String charset) {
 		HttpPost httpPost = new HttpPost(url);
 		try {
 			if (dataMap != null){
 				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+				for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
 				}
 				UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(nvps, charset);
 				formEntity.setContentEncoding(charset);
@@ -104,21 +104,21 @@ public class HttpClientUtils {
 	/**
 	 * http的post请求，增加异步请求头参数，传递map格式参数
 	 */
-	public static String ajaxPost(String url, Map<String, String> dataMap) {
+	public static String ajaxPost(String url, Map<String, Object> dataMap) {
 		return ajaxPost(url, dataMap, "UTF-8");
 	}
 
 	/**
 	 * http的post请求，增加异步请求头参数，传递map格式参数
 	 */
-	public static String ajaxPost(String url, Map<String, String> dataMap, String charset) {
+	public static String ajaxPost(String url, Map<String, Object> dataMap, String charset) {
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
 		try {
 			if (dataMap != null){
 				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-				for (Map.Entry<String, String> entry : dataMap.entrySet()) {
-					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+				for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
 				}
 				UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(nvps, charset);
 				formEntity.setContentEncoding(charset);

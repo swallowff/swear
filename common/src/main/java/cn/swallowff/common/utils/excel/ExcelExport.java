@@ -30,7 +30,7 @@ import java.util.*;
 
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）
- * @author ThinkGem
+ * @author swallowff
  * @version 2018-08-11
  */
 public class ExcelExport implements Closeable{
@@ -162,7 +162,7 @@ public class ExcelExport implements Closeable{
 
 	/**
 	 * 获取当前工作薄
-	 * @author ThinkGem
+	 * @author swallowff
 	 */
 	public Workbook getWorkbook() {
 		return wb;

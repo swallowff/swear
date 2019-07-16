@@ -34,8 +34,8 @@ import java.io.PrintWriter;
 /**
  * Rest Api接口鉴权
  *
- * @author stylefeng
- * @Date 2018/7/20 23:11
+ * @author swallowff
+ * @Date 2019/7/20 23:11
  */
 public class RestApiInteceptor extends HandlerInterceptorAdapter {
 

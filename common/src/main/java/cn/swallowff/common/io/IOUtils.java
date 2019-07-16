@@ -21,7 +21,7 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
 		try {
 			fileInputStream = new FileInputStream(filepath);
 		} catch (FileNotFoundException e) {
-			System.out.println("错误信息:文件不存在");
+			System.err.println("错误信息:文件不存在");
 			e.printStackTrace();
 		}
 		return fileInputStream;

@@ -31,7 +31,7 @@ public class PropertyLoader implements org.springframework.boot.env.PropertySour
 		if (!isLoadPropertySource){
 			isLoadPropertySource = true;
 			Properties properties = PropertiesUtils.getInstance().getProperties();
-			return Collections.singletonList(new OriginTrackedMapPropertySource("jeesite", properties));
+			return Collections.singletonList(new OriginTrackedMapPropertySource("swear", properties));
 		}
 		return Collections.emptyList();
 	}

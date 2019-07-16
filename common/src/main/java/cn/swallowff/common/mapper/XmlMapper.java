@@ -16,8 +16,8 @@ import java.util.*;
 
 /**
  * XML <-> Map、Object
- * @author ThinkGem
- * @version 2016-9-2
+ * @author swallowff
+ * @version 2018-9-2
  */
 public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 	

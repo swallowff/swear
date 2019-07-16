@@ -6,7 +6,7 @@ package cn.swallowff.common.exec;
 import java.io.*;
 
 /**
- * Command
+ * Command 系统命令行工具
  * @author swallowff
  * @version 2019年2月17日
  */
