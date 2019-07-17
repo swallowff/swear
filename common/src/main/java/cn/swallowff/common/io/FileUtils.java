@@ -343,17 +343,17 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 创建单个文件
-	 * @param descFileName 文件名，包含路径
+	 * @param destFileName 文件名，包含路径
 	 * @return 如果创建成功，则返回true，否则返回false
 	 */
-	public static boolean createFile(String descFileName) {
-		File file = new File(descFileName);
+	public static boolean createFile(String destFileName) {
+		File file = new File(destFileName);
 		if (file.exists()) {
-			logger.debug("文件 " + descFileName + " 已存在!");
+			logger.debug("文件 " + destFileName + " 已存在!");
 			return false;
 		}
-		if (descFileName.endsWith(File.separator)) {
-			logger.debug(descFileName + " 为目录，不能创建目录!");
+		if (destFileName.endsWith(File.separator)) {
+			logger.debug(destFileName + " 为目录，不能创建目录!");
 			return false;
 		}
 		if (!file.getParentFile().exists()) {
@@ -367,15 +367,15 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 		// 创建文件
 		try {
 			if (file.createNewFile()) {
-				logger.debug(descFileName + " 文件创建成功!");
+				logger.debug(destFileName + " 文件创建成功!");
 				return true;
 			} else {
-				logger.debug(descFileName + " 文件创建失败!");
+				logger.debug(destFileName + " 文件创建失败!");
 				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.debug(descFileName + " 文件创建失败!");
+			logger.debug(destFileName + " 文件创建失败!");
 			return false;
 		}
 
