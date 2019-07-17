@@ -29,33 +29,33 @@ public class DeptController extends BaseController {
     private DeptService deptService;
 
     @RequestMapping(value = "list.html")
-    public String listHtml(){
+    public String listHtml() {
         return "admin/pages/system/dept/dept-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String addHtml(){
+    public String addHtml() {
         return "admin/pages/system/dept/dept-add";
     }
 
     @RequestMapping(value = "edit.html")
-    public String editHtml(@RequestParam("id") String id, Model model){
+    public String editHtml(@RequestParam("id") String id, Model model) {
         Dept dept = deptService.selectById(id);
-        model.addAttribute("dept",dept);
+        model.addAttribute("dept", dept);
         return "admin/pages/system/dept/dept-edit";
     }
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object ajaxList(Dept dept){
+    public Object ajaxList(Dept dept) {
         PageResp<Dept> pageResp = deptService.findPage(dept);
-        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
+        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(), pageResp.getTotalRows());
         return layPageResp;
     }
 
     @RequestMapping(value = "dtree.ajax")
     @ResponseBody
-    public Object dtree(Dept dept){
+    public Object dtree(Dept dept) {
         BaseResp baseResp = BaseResp.newSuccess();
         dept.setPids(Dept.ROOT_ID);
         List<Dept> deptList = deptService.findList(dept);
@@ -65,7 +65,7 @@ public class DeptController extends BaseController {
 
     @RequestMapping(value = "treeTable.ajax")
     @ResponseBody
-    public Object treeTable(Dept dept){
+    public Object treeTable(Dept dept) {
         List<Dept> deptList = deptService.findList(dept);
         return deptList;
     }
@@ -73,7 +73,7 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "laytreeTable.ajax")
     @ResponseBody
     @Deprecated
-    public Object laytreeTable(Dept dept){
+    public Object laytreeTable(Dept dept) {
         BaseResp baseResp = BaseResp.newSuccess();
         List<Dept> deptList = deptService.findList(dept);
         baseResp.setData(deptList);
@@ -83,7 +83,7 @@ public class DeptController extends BaseController {
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
-    public BaseResp add(Dept dept){
+    public BaseResp add(Dept dept) {
         BaseResp baseResp = BaseResp.newSuccess();
         deptService.save(dept);
         return baseResp;
@@ -91,50 +91,50 @@ public class DeptController extends BaseController {
 
     @RequestMapping(value = "edit.ajax")
     @ResponseBody
-    public BaseResp edit(Dept dept){
+    public BaseResp edit(Dept dept) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (null == dept || StringUtils.isBlank(dept.getId())){
+        if (null == dept || StringUtils.isBlank(dept.getId())) {
             return baseResp.paramsError();
         }
         int r = deptService.updateSelective(dept);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "delete")
     @ResponseBody
-    public BaseResp delete(String id){
+    public BaseResp delete(String id) {
         BaseResp baseResp = BaseResp.newSuccess();
         int r = deptService.delete(id);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "deleteTree")
     @ResponseBody
-    public BaseResp deleteTree(String id){
+    public BaseResp deleteTree(String id) {
         BaseResp baseResp = BaseResp.newSuccess();
         int r = deptService.deleteTree(id);
-        if (r > 0){
+        if (r > 0) {
             return baseResp.setData(r);
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "batchDel")
     @ResponseBody
-    public BaseResp batchDel(String[] ids){
+    public BaseResp batchDel(String[] ids) {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
-        for (String id : ids){
+        for (String id : ids) {
             int r = deptService.delete(id);
-            if (r == 1){
-                count ++;
+            if (r == 1) {
+                count++;
             }
         }
-        if (count > 0){
+        if (count > 0) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 }

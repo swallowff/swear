@@ -25,7 +25,7 @@ public class HttpClientConfig {
     private int socketTimeout = 2000;
 
     @Bean
-    public PooledHttpClientAdaptor pooledHttpClientAdaptor(){
-        return new PooledHttpClientAdaptor(maxTotal,maxPerRoute,connectTimeout,connectRequestTimeout,socketTimeout);
+    public PooledHttpClientAdaptor pooledHttpClientAdaptor() {
+        return new PooledHttpClientAdaptor(maxTotal, maxPerRoute, connectTimeout, connectRequestTimeout, socketTimeout);
     }
 }

@@ -14,7 +14,7 @@ public class MyRoutingDataSource extends AbstractRoutingDataSource {
 
         if (type.equals(DataSourceType.WRITE.getType())) {
             return DataSourceType.WRITE.getType();
-        }else {
+        } else {
             return DataSourceType.READ.getType();
         }
 //        // 读简单负载均衡

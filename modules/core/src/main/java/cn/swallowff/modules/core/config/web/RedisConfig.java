@@ -33,11 +33,11 @@ public class RedisConfig {
     private int poolMaxIdle = 200;
     private int poolMaxTotal = 200;
     private int database = 0;
-    private long maxWaitMillis=1500;
-    private boolean testOnBorrow=true;
-    private boolean testOnReturn=true;
+    private long maxWaitMillis = 1500;
+    private boolean testOnBorrow = true;
+    private boolean testOnReturn = true;
 
-    private JedisPoolConfig jedisPoolConfig(){
+    private JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(poolMaxIdle);
         config.setMaxTotal(poolMaxTotal);
@@ -53,7 +53,7 @@ public class RedisConfig {
         return (StringRedisTemplate) getRedisTemplate(template);
     }
 
-    public RedisTemplate getRedisTemplate(RedisTemplate template){
+    public RedisTemplate getRedisTemplate(RedisTemplate template) {
         template.setConnectionFactory(connectionFactory());
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper om = new ObjectMapper();
@@ -83,12 +83,12 @@ public class RedisConfig {
         return factory;
     }
 
-    public JedisPool getJedisPool(){
-        return new JedisPool(jedisPoolConfig(),host,port,timeout);
+    public JedisPool getJedisPool() {
+        return new JedisPool(jedisPoolConfig(), host, port, timeout);
     }
 
-    public JedisPool getJedisPool(int database){
-        return new JedisPool(jedisPoolConfig(),host,port,timeout,password,database);
+    public JedisPool getJedisPool(int database) {
+        return new JedisPool(jedisPoolConfig(), host, port, timeout, password, database);
     }
 
     public void setHost(String host) {

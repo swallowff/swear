@@ -2,7 +2,7 @@ layui.config({
     base: Swear.static + '/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use(['index', 'form','set','upload'], function () {
+}).use(['index', 'form', 'set', 'upload'], function () {
     var $ = layui.$,
         form = layui.form,
         setter = layui.setter,
@@ -29,19 +29,19 @@ layui.config({
 
         //提交 Ajax 成功后，关闭当前弹层并重载表格
         $.ajax({
-            url: setter.ctxPath + '/sys/imageGallery/edit.ajax',
+            url: setter.ctxPath + '/cloud/imageGallery/edit.ajax',
             data: field,
             method: 'POST',
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    parent.layer.msg(res.msg,{
+                    parent.layer.msg(res.msg, {
                         icon: 1,
                         time: 2000
                     });
                     parent.layui.table.reload('imageGalleryTable'); //重载表格
                     parent.layer.close(index); //再执行关闭
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 2000
                     });
@@ -55,9 +55,9 @@ layui.config({
     var $imageSrc = $('#image-src')
     var $imageThumbnail = $('#image-thumbnail')
     upload.render({
-        url: setter.ctxPath + "/sys/imageGallery/upload", elem: "#btn-image-upload", done: function (res) {
+        url: setter.ctxPath + "/cloud/imageGallery/upload", elem: "#btn-image-upload", done: function (res) {
             if (res.code == setter.response.statusCode.ok) {
-                layer.msg("上传成功",{
+                layer.msg("上传成功", {
                     icon: 1,
                     time: 1200
                 })
@@ -73,8 +73,8 @@ layui.config({
                     imgFormat: res.data.imgFormat,
                     size: res.data.size,
                 })
-            }else {
-                layer.msg(res.msg,{
+            } else {
+                layer.msg(res.msg, {
                     icon: 5
                 })
             }

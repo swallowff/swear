@@ -14,7 +14,7 @@ import java.util.List;
  * @create 2019/7/7
  */
 @Service
-public class RoleAuthRelationService extends CrudService<RoleAuthRelationDao,RoleAuthRelation> {
+public class RoleAuthRelationService extends CrudService<RoleAuthRelationDao, RoleAuthRelation> {
 
     public RoleAuthRelation selectByRoleIdAndMenuId(String roleId, String menuId) {
         RoleAuthRelation roleAuthRelation = new RoleAuthRelation();

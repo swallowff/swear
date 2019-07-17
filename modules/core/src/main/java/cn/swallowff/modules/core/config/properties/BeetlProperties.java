@@ -56,8 +56,8 @@ public class BeetlProperties {
         if (StringUtils.isNotEmpty(resourceAutoCheck)) {
             properties.setProperty("RESOURCE.autoCheck", resourceAutoCheck);
         }
-        if (StringUtils.isNotEmpty(htmlTagFlag)){
-            properties.setProperty("HTML_TAG_FLAG",htmlTagFlag);
+        if (StringUtils.isNotEmpty(htmlTagFlag)) {
+            properties.setProperty("HTML_TAG_FLAG", htmlTagFlag);
         }
 
         return properties;

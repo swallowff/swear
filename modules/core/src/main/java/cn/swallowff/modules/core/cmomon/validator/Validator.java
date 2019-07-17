@@ -16,8 +16,9 @@ import java.util.Objects;
  */
 public class Validator {
 
-    public static boolean kaptcha(String kaptcha) throws InvalidKaptchaException{
-        HttpSession httpSession = ((HttpServletRequest) Objects.requireNonNull(HttpContext.getRequest())).getSession();;
+    public static boolean kaptcha(String kaptcha) throws InvalidKaptchaException {
+        HttpSession httpSession = ((HttpServletRequest) Objects.requireNonNull(HttpContext.getRequest())).getSession();
+        ;
         kaptcha = kaptcha.trim();
         String code = (String) httpSession.getAttribute(Constants.KAPTCHA_SESSION_KEY);
         if (StringUtils.isBlank(kaptcha) || !kaptcha.equalsIgnoreCase(code)) {

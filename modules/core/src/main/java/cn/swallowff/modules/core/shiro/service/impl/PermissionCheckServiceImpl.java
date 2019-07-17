@@ -34,8 +34,8 @@ public class PermissionCheckServiceImpl implements PermissionCheckService {
         if (null == user) {
             return false;
         }
-        for (String permission : permissions){
-            if (!ShiroKit.hasPermission(permission)){
+        for (String permission : permissions) {
+            if (!ShiroKit.hasPermission(permission)) {
                 //如果任一权限值校验失败,则验证失败
                 return false;
             }

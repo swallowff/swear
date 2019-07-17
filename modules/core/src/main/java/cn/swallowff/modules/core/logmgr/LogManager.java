@@ -15,13 +15,16 @@ public class LogManager {
     //异步操作记录日志的线程池
     private ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(10);
 
-    private LogManager(){}
+    private LogManager() {
+    }
 
     public static LogManager logManager = new LogManager();
 
-    public static LogManager me(){return logManager;}
+    public static LogManager me() {
+        return logManager;
+    }
 
-    public void executeLog(TimerTask task){
-        executor.schedule(task,OPERATE_DELAY_MILLIS,TimeUnit.MICROSECONDS);
+    public void executeLog(TimerTask task) {
+        executor.schedule(task, OPERATE_DELAY_MILLIS, TimeUnit.MICROSECONDS);
     }
 }

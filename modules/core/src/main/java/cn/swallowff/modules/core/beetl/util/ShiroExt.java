@@ -7,6 +7,7 @@ import org.apache.shiro.subject.Subject;
 
 /**
  * shiro对外工具
+ *
  * @author shenyu
  * @create 2019/3/15
  */
@@ -103,7 +104,7 @@ public class ShiroExt {
      * @return 拥有权限：true，否则false
      */
     public boolean hasPermission(String permission) {
-        if (ShiroKit.isAdmin())return true;
+        if (ShiroKit.isAdmin()) return true;
         return getSubject() != null && permission != null
                 && permission.length() > 0
                 && getSubject().isPermitted(permission);

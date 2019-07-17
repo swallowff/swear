@@ -31,7 +31,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 自定义拦截器，添加拦截路径和排除拦截路径
-        registry.addInterceptor(new WebApiInterceptor()).addPathPatterns("/a/**","/api/**","/open/**","/openApi/**");
+        registry.addInterceptor(new WebApiInterceptor()).addPathPatterns("/a/**", "/api/**", "/open/**", "/openApi/**");
         registry.addInterceptor(new RestApiInteceptor()).addPathPatterns("/api/**");
         super.addInterceptors(registry);
     }
@@ -46,7 +46,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/templates/**")
                 .addResourceLocations("classpath:/templates/");
         registry.addResourceHandler("/upload/**")
-                .addResourceLocations("file:"+coreProperties.getFileUploadPath());
+                .addResourceLocations("file:" + coreProperties.getFileUploadPath());
         if (coreProperties.isSwaggerOpen()) {
             registry.addResourceHandler("swagger-ui.html")
                     .addResourceLocations("classpath:/META-INF/resources/");
@@ -69,5 +69,6 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
         jackson2HttpMessageConverter.setObjectMapper(objectMapper);
-        converters.add(jackson2HttpMessageConverter);    }
+        converters.add(jackson2HttpMessageConverter);
+    }
 }

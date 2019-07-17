@@ -1,4 +1,4 @@
-package cn.swallowff.modules.core.module.pay.response;
+package cn.swallowff.modules.cloud.weixin.pay.response;
 
 import java.io.Serializable;
 
@@ -16,14 +16,14 @@ public class WxPayBaseResponse<T extends WxPayBaseResponse> implements Serializa
     private String errCode;
     private String errCodeDes;
 
-    public boolean isReturnSuccess(){
+    public boolean isReturnSuccess() {
         return "SUCCESS".equalsIgnoreCase(returnCode);
     }
 
-    public boolean isResultSuccess(){
-        if (isReturnSuccess()){
+    public boolean isResultSuccess() {
+        if (isReturnSuccess()) {
             return "SUCCESS".equalsIgnoreCase(resultCode);
-        }else return false;
+        } else return false;
     }
 
     public String getReturnCode() {

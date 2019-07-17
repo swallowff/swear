@@ -23,8 +23,8 @@ public class UserDateFormatWrapper extends BaseWrapper<User> {
 
     @Override
     protected <R> R wrapEntity(User user) {
-        Map<String,Object> map = BeanMapConvert.beanToMapObject(user);
-        map.put("birthday",DateUtils.formatDate(user.getBirthday(),"yyyy/MM/dd"));
+        Map<String, Object> map = BeanMapConvert.beanToMapObject(user);
+        map.put("birthday", DateUtils.formatDate(user.getBirthday(), "yyyy/MM/dd"));
         return (R) map;
     }
 }

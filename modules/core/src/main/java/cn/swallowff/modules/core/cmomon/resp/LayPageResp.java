@@ -11,7 +11,7 @@ import java.util.List;
 public class LayPageResp<T> extends BaseResp {
     private long count;  //总数据
 
-    public LayPageResp(List<T> dataList,long count){
+    public LayPageResp(List<T> dataList, long count) {
         super(ResponseState.SUCCESS);
         this.setData(dataList);
         this.setCount(count);
@@ -25,7 +25,7 @@ public class LayPageResp<T> extends BaseResp {
         super(respResponseState);
     }
 
-    public static LayPageResp newSuccess(){
+    public static LayPageResp newSuccess() {
         return new LayPageResp(ResponseState.SUCCESS);
     }
 

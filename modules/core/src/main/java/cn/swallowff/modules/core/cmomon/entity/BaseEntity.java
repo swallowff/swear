@@ -93,6 +93,7 @@ public class BaseEntity {
     /**
      * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
      * 设置为true后强制执行插入语句，ID不会自动生成，需从手动传入。
+     *
      * @return
      */
     public boolean getIsNewRecord() {
@@ -107,16 +108,16 @@ public class BaseEntity {
         this.isNewRecord = isNewRecord;
     }
 
-    public void preInsert(){
+    public void preInsert() {
         // 不限制ID为UUID，调用setIsNewRecord()使用自定义ID
-        if (!this.isNewRecord){
+        if (!this.isNewRecord) {
             this.setId(IdGenerate.nextId());
         }
         this.updateTime = new Date();
         this.createTime = this.updateTime;
     }
 
-    public void preUpdate(){
+    public void preUpdate() {
         this.updateTime = new Date();
     }
 }

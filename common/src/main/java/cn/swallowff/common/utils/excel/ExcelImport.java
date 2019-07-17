@@ -383,7 +383,7 @@ public class ExcelImport implements Closeable {
 					// If is dict type, get dict value
 					if (StringUtils.isNotBlank(ef.dictType())){
 						try{
-							Class<?> dictUtils = Class.forName("com.jeesite.modules.sys.utils.DictUtils");
+							Class<?> dictUtils = Class.forName("com.jeesite.modules.cloud.utils.DictUtils");
 							val = dictUtils.getMethod("getDictValue", String.class, String.class,
 										String.class).invoke(null, ef.dictType(), val.toString(), "");
 						} catch (Exception ex) {

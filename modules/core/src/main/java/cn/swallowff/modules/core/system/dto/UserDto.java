@@ -14,7 +14,7 @@ public class UserDto implements Serializable {
     private String password; //密码
     @NotBlank(message = "miss param name")
     private String name;    //姓名
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;  //出生日期
     private Integer sex;    //性别
     private String email;   //电子邮箱

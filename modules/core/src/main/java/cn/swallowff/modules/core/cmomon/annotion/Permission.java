@@ -30,12 +30,14 @@ public @interface Permission {
 
     /**
      * 权限值
+     *
      * @return
      */
     String[] value() default {};
 
     /**
      * 角色CODE
+     *
      * @return
      */
     String[] roleCode() default {};

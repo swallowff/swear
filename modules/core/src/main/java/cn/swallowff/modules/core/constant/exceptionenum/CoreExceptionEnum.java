@@ -6,7 +6,7 @@ import cn.swallowff.modules.core.excepiton.AbstractBaseExceptionEnum;
  * @author shenyu
  * @create 2019/3/15
  */
-public enum  CoreExceptionEnum implements AbstractBaseExceptionEnum {
+public enum CoreExceptionEnum implements AbstractBaseExceptionEnum {
     INVLIDE_DATE_STRING(400, "输入日期格式不对"),
     NO_CURRENT_USER(700, "当前没有登录的用户"),
     INIT_TABLE_EMPTY_PARAMS(701, "初始化数据库，存在为空的字段"),

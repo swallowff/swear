@@ -30,7 +30,7 @@ public class RespBodyAdvice implements ResponseBodyAdvice<Object> {
                                   ServerHttpResponse response) {
         //获取在WebApiInterceptor对指定请求参数放如到线程局部变量的对象
         RequestModel model = RequestModel.getRequestModel();
-        if(null != model) {
+        if (null != model) {
             model.setRespParams(body);
         }
         return body;

@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
  * @create 2019/3/15
  */
 @Service
-public class OperationLogService extends CrudService<OperationLogDao,OperationLog> {
+public class OperationLogService extends CrudService<OperationLogDao, OperationLog> {
 }

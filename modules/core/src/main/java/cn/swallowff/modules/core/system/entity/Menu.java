@@ -4,6 +4,7 @@ import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 
 /**
  * 菜单DO
+ *
  * @author shenyu
  * @create 2019/5/6
  */

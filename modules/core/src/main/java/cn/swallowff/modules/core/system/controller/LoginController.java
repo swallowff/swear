@@ -29,70 +29,73 @@ public class LoginController extends BaseController {
 
     /**
      * 登录页面跳转
+     *
      * @return
      */
-    @RequestMapping(value = "login.html",method = RequestMethod.GET)
-    public String loginHtml(HttpServletRequest request){
+    @RequestMapping(value = "login.html", method = RequestMethod.GET)
+    public String loginHtml(HttpServletRequest request) {
         Subject subject = ShiroKit.getSubject();
-        if (subject.isAuthenticated()){
+        if (subject.isAuthenticated()) {
             return REDIRECT + "/a/index";
-        }else {
+        } else {
             return "admin/pages/login";
         }
     }
 
     /**
      * form登录请求
+     *
      * @param account
      * @param password
      * @param rememberme
      * @param kaptcha
      * @return
      */
-    @RequestMapping(value = "login.form",method = RequestMethod.POST)
+    @RequestMapping(value = "login.form", method = RequestMethod.POST)
     public String formLogin(@RequestParam(value = "account") String account,
-                          @RequestParam(value = "password") String password, Boolean rememberme, String kaptcha, RedirectAttributes redirectAttributes, Model model){
+                            @RequestParam(value = "password") String password, Boolean rememberme, String kaptcha, RedirectAttributes redirectAttributes, Model model) {
         if (KaptchaUtil.getKaptchaOnOff()) {
             Validator.kaptcha(kaptcha);
         }
         Subject subject = ShiroKit.getSubject();
-        subject.login(new UsernamePasswordToken(account.trim(),password.trim(),rememberme == null ? false : rememberme));
+        subject.login(new UsernamePasswordToken(account.trim(), password.trim(), rememberme == null ? false : rememberme));
         return REDIRECT + "/a/index";
     }
 
     /**
      * ajax登录请求
+     *
      * @param account
      * @param password
      * @param kaptcha
      * @return
      */
-    @RequestMapping(value = "login.ajax",method = RequestMethod.POST)
+    @RequestMapping(value = "login.ajax", method = RequestMethod.POST)
     @ResponseBody
     public BaseResp ajaxLogin(@RequestParam(value = "account") String account,
-                              @RequestParam(value = "password") String password, String kaptcha,boolean rememberme){
+                              @RequestParam(value = "password") String password, String kaptcha, boolean rememberme) {
         try {
             if (KaptchaUtil.getKaptchaOnOff()) {
                 Validator.kaptcha(kaptcha);
             }
             Subject subject = ShiroKit.getSubject();
-            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account.trim(),password.trim(),rememberme);
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account.trim(), password.trim(), rememberme);
             subject.login(usernamePasswordToken);
         } catch (AuthenticationException e) {
 //            e.printStackTrace();
             return new BaseResp(ResponseState.INCORRECT_PASSWORD);
-        } catch (InvalidKaptchaException e2){
+        } catch (InvalidKaptchaException e2) {
 //            e2.printStackTrace();
             return new BaseResp(ResponseState.INVALID_KAPTCHA);
         }
-        Map<String,Object> respMap = new HashMap<>();
-        respMap.put("accessToken",getSession().getId());
+        Map<String, Object> respMap = new HashMap<>();
+        respMap.put("accessToken", getSession().getId());
         return BaseResp.newSuccess().setData(respMap);
     }
 
     @RequestMapping(value = "logout")
     @ResponseBody
-    public BaseResp logout(){
+    public BaseResp logout() {
         Subject subject = ShiroKit.getSubject();
         subject.logout();
         return BaseResp.newSuccess();

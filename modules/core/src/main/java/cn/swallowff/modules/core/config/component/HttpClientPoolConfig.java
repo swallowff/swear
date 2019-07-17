@@ -28,14 +28,14 @@ public class HttpClientPoolConfig {
 
     @Bean
     @Qualifier("defaultHttpClientPool")
-    public PooledHttpClientAdaptor defaultHttpClientPool(){
-        return new PooledHttpClientAdaptor(maxTotal,maxPerRoute,connectTimeout,connectRequestTimeout,socketTimeout);
+    public PooledHttpClientAdaptor defaultHttpClientPool() {
+        return new PooledHttpClientAdaptor(maxTotal, maxPerRoute, connectTimeout, connectRequestTimeout, socketTimeout);
     }
 
     @Bean
     @Qualifier("wxSSLHttpClientPool")
-    public PooledHttpClientAdaptor wxSSLHttpClientPool(){
+    public PooledHttpClientAdaptor wxSSLHttpClientPool() {
 //        return new PooledHttpClientAdaptor(new File(HttpClientPoolConfig.class.getResource("/pay/").getPath().concat("apiclient_cert.p12")),50,50,200,200,2000);
-        return new PooledHttpClientAdaptor(10,10,connectTimeout,connectRequestTimeout,socketTimeout);
+        return new PooledHttpClientAdaptor(10, 10, connectTimeout, connectRequestTimeout, socketTimeout);
     }
 }

@@ -2,7 +2,7 @@ layui.config({
     base: Swear.static + '/layuiadmin/' //静态资源所在路径
 }).extend({
     index: 'lib/index' //主入口模块
-}).use(['index', 'form' ,'admin','element'], function () {
+}).use(['index', 'form', 'admin', 'element'], function () {
     var $ = layui.$, form = layui.form,
         layer = layui.layer, setter = layui.setter,
         admin = layui.admin;
@@ -23,14 +23,14 @@ layui.config({
             success: function (res) {
                 // console.log(res);
                 if (res.code == setter.response.statusCode.ok) {
-                    parent.layer.msg(res.msg,{
+                    parent.layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
                     parent.layui.table.reload('roleTable'); //重载表格
                     parent.layer.close(index); //再执行关闭
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -50,10 +50,10 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#dept-select');
                 $select.append('<option value="">请选择</option>')
-                for (var i in listData){
-                    $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].fullName + '</option>')
                 }
-                form.render('select','LAYF-role-form-add'); //刷新select选择框
+                form.render('select', 'LAYF-role-form-add'); //刷新select选择框
             }
         }
     });
@@ -68,10 +68,10 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#prole-select');
                 $select.append('<option value="">请选择</option>');
-                for (var i in listData){
-                    $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].name + '</option>')
                 }
-                form.render('select','LAYF-role-form-add'); //刷新select选择框
+                form.render('select', 'LAYF-role-form-add'); //刷新select选择框
             }
         }
     });

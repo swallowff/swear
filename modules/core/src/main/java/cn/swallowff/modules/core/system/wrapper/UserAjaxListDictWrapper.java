@@ -21,8 +21,8 @@ public class UserAjaxListDictWrapper extends BaseWrapper<User> {
 
     @Override
     protected <R> R wrapEntity(User user) {
-        Map<String,Object> map = BeanMapConvert.beanToMapObject(user);
-        map.put("sex",DictUtils.getLabel("sex",user.getSex()));
+        Map<String, Object> map = BeanMapConvert.beanToMapObject(user);
+        map.put("sex", DictUtils.getLabel("sex", user.getSex()));
         return (R) map;
     }
 }

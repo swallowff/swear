@@ -16,13 +16,13 @@
     </sql>
 
     <select id="selectById" resultType="Dept">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_dept a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dept a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="Dept">
@@ -54,7 +54,7 @@
         <where>
             a.delflag = 0
             <if test="parent != null and parent.id != null and parent.id != ''">
-              AND a.pid = #{parent.id}
+                AND a.pid = #{parent.id}
             </if>
             <if test="pids != null and pids != ''">
                 AND a.pids LIKE CONCAT('%',#{pids},'%')
@@ -89,39 +89,39 @@
 
     <insert id="insert">
         INSERT INTO sys_dept(
-          id,
-          sort,
-          pid,
-          pids,
-          simple_name,
-          full_name,
-          tips,
-          update_time,
-          create_time,
-          delflag
+        id,
+        sort,
+        pid,
+        pids,
+        simple_name,
+        full_name,
+        tips,
+        update_time,
+        create_time,
+        delflag
         ) VALUES (
-          #{id},
-          #{sort},
-          #{parent.id},
-          #{pids},
-          #{simpleName},
-          #{fullName},
-          #{tips},
-          #{updateTime},
-          #{createTime},
-          #{delflag}
+        #{id},
+        #{sort},
+        #{parent.id},
+        #{pids},
+        #{simpleName},
+        #{fullName},
+        #{tips},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_dept SET
-            sort = #{sort},
-            pid = #{parent.id},
-            pids = #{pids},
-            simple_name = #{simpleName},
-            full_name = #{fullName},
-            tips = #{tips},
-            update_time = #{updateTime}
+        sort = #{sort},
+        pid = #{parent.id},
+        pids = #{pids},
+        simple_name = #{simpleName},
+        full_name = #{fullName},
+        tips = #{tips},
+        update_time = #{updateTime}
         <where>
             delflag = 0
             AND id = #{id}

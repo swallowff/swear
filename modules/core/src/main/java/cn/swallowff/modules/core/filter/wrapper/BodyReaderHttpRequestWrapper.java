@@ -8,7 +8,7 @@ import java.io.*;
 
 /**
  * @author Administrator
- * @description 解决从request中获取body数据后,数据丢失的问题
+ * @description 解决从request中获取body数据后, 数据丢失的问题
  * @create 2019/5/15
  */
 public class BodyReaderHttpRequestWrapper extends HttpServletRequestWrapper {
@@ -24,7 +24,7 @@ public class BodyReaderHttpRequestWrapper extends HttpServletRequestWrapper {
             baos.write(buffer, 0, len);
         }
         bytes = baos.toByteArray();
-        
+
 //        String body = new String(bytes);
 //        System.out.println(body);
     }

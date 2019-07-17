@@ -13,7 +13,7 @@ import java.util.List;
 public class RoleService extends TreeService<RoleDao, Role> {
 
     public List<DtreeNode> findDtreeNodeListWithUid(Role role, String userId) {
-        return crudDao.findDtreeNodeListWithUid(role,userId);
+        return crudDao.findDtreeNodeListWithUid(role, userId);
     }
 
     public Role selectByCode(String code) {

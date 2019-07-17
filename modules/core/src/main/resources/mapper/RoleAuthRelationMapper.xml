@@ -12,13 +12,13 @@
     </sql>
 
     <select id="selectById" resultType="RoleAuthRelation">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_role_auth_relation a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role_auth_relation a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="RoleAuthRelation">
@@ -47,7 +47,7 @@
         <where>
             a.delflag = 0
             <if test="roleId != null and roleId != ''">
-              AND a.role_id = #{roleId}
+                AND a.role_id = #{roleId}
             </if>
             <if test="authCode != null and authCode != ''">
                 AND a.auth_code = #{authCode}
@@ -78,37 +78,37 @@
 
     <insert id="insert">
         INSERT INTO sys_role_auth_relation(
-          id,
-          role_id,
-          auth_code,
-          menu_id,
-          create_time,
-          update_time,
-          version,
-          delflag
+        id,
+        role_id,
+        auth_code,
+        menu_id,
+        create_time,
+        update_time,
+        version,
+        delflag
         ) VALUES (
-          #{id},
-          #{roleId},
-          #{authCode},
-          #{menuId},
-          #{createTime},
-          #{updateTime},
-          #{version},
-          #{delflag}
+        #{id},
+        #{roleId},
+        #{authCode},
+        #{menuId},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_role_auth_relation SET
-          role_id = #{roleId},
-          auth_code = #{authCode},
-          menu_id = #{menuId},
-          update_time = #{updateTime},
-          version = #{version}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        role_id = #{roleId},
+        auth_code = #{authCode},
+        menu_id = #{menuId},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">
@@ -144,7 +144,7 @@
             AND a.id = #{id}
         </where>
     </update>
-    
+
     <delete id="delByRoleId">
         DELETE FROM sys_role_auth_relation
         <where>

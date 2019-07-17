@@ -26,8 +26,8 @@
                 if ($thumbnail) {
                     $thumbnail.val(t.data.thumbnail)
                 }
-            }else {
-                e.msg(t.msg,{
+            } else {
+                e.msg(t.msg, {
                     icon: 5
                 })
             }

@@ -61,7 +61,7 @@ public class PermissionAop {
         if (permissions.length > 0) {
             checkPermissions(permissions);
         }
-        if (roleCodes.length > 0){
+        if (roleCodes.length > 0) {
             checkRoleCodes(roleCodes);
         }
         try {
@@ -72,16 +72,16 @@ public class PermissionAop {
         }
     }
 
-    private void checkPermissions(String[] permissons) throws NoPermissionsException{
+    private void checkPermissions(String[] permissons) throws NoPermissionsException {
         boolean flag = check.check(permissons);
-        if (!flag){
+        if (!flag) {
             throw new NoPermissionsException(BizExceptionEnum.NO_PERMITION);
         }
     }
 
-    private void checkRoleCodes(String[] roleCodes) throws NoPermissionsException{
+    private void checkRoleCodes(String[] roleCodes) throws NoPermissionsException {
         boolean flag = check.checkRole(roleCodes);
-        if (!flag){
+        if (!flag) {
             throw new NoPermissionsException(BizExceptionEnum.NO_PERMITION);
         }
     }

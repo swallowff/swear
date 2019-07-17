@@ -10,12 +10,14 @@ public interface UserAuthService {
 
     /**
      * 根据账户获取用户
+     *
      * @return
      */
     User user(String account);
 
     /**
      * 根据系统用户获取Shiro用户
+     *
      * @param user
      * @return
      */
@@ -23,6 +25,7 @@ public interface UserAuthService {
 
     /**
      * 获取角色的权限列表
+     *
      * @param roleId
      * @return
      */
@@ -30,6 +33,7 @@ public interface UserAuthService {
 
     /**
      * 获取Shiro认证信息
+     *
      * @param shiroUser
      * @param user
      * @param realName

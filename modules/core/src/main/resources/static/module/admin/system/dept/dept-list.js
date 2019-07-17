@@ -4,13 +4,13 @@ layui.config({
     index: 'lib/index', //主入口模块
     treeTable: 'tree/treeTable',
     treetable: 'treetable-lay/treetable'
-}).use(['index', 'table', 'jquery', 'admin' ,'treeTable','treetable'], function () {
+}).use(['index', 'table', 'jquery', 'admin', 'treeTable', 'treetable'], function () {
     var table = layui.table,
         form = layui.form,
         $ = layui.jquery,
         admin = layui.admin,
         setter = layui.setter,
-        treeTable = layui.treeTable ,
+        treeTable = layui.treeTable,
         treetable = layui.treetable;
 
     setter.serverUrl = Swear.serverUrl;
@@ -59,7 +59,7 @@ layui.config({
     //     ]]
     // });
 
-    window.renderTable = function (){
+    window.renderTable = function () {
         return treeTable.render({
             elem: '#LAYF-list-table',
             url: setter.ctxPath + '/dept/treeTable.ajax',
@@ -80,7 +80,7 @@ layui.config({
             //     key: 'id',
             //     data: [0,1,4,10,11,5,2,6,7,3,8,9],
             // },
-            end: function(e){
+            end: function (e) {
                 // console.log(e.data)
                 // form.render();
             },
@@ -136,12 +136,12 @@ layui.config({
         batchdel: function () {
             var checkedIds = treeTable.checked(re)
             // console.log(checkedIds)
-            if (checkedIds.length === 0){
+            if (checkedIds.length === 0) {
                 return layer.msg('请选择数据')
             }
 
-            layer.confirm('确定删除吗？',{
-                btn: ['删除','容朕想想'] //按钮
+            layer.confirm('确定删除吗？', {
+                btn: ['删除', '容朕想想'] //按钮
             }, function (index) {
                 //执行 Ajax 后重载
                 admin.req({
@@ -153,7 +153,7 @@ layui.config({
                     },
                     success: function (res) {
                         renderTable();
-                        layer.msg('已删除',{
+                        layer.msg('已删除', {
                             icon: 1,
                             time: 1800
                         });
@@ -189,15 +189,15 @@ layui.config({
     function operation(data) {
         var id = data.id;
         var btn = $('#table-content-list-operation').html()
-        btn = btn.replace(new RegExp('replacement','gm'),id)
+        btn = btn.replace(new RegExp('replacement', 'gm'), id)
         return btn
     }
 
     window.deleteRow = function (id) {
         // console.log(re.childs[id])
         layer.confirm('将删除该节点及其所有下属节点,确定要删除吗?', {
-            btn: ['删除','容朕想想'] //按钮
-        }, function(){
+            btn: ['删除', '容朕想想'] //按钮
+        }, function () {
             //确定删除
             $.ajax({
                 url: setter.ctxPath + '/dept/deleteTree',
@@ -208,14 +208,14 @@ layui.config({
                 },
                 success: function (res) {
                     if (res.code == 0) {
-                        layer.msg('成功删除'+res.data+'条数据');
+                        layer.msg('成功删除' + res.data + '条数据');
                         renderTable();
                     } else {
                         layer.msg(res.msg)
                     }
                 }
             })
-        }, function(){
+        }, function () {
 
         });
 

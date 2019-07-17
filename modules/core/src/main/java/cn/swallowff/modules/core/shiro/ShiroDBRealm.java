@@ -22,6 +22,7 @@ public class ShiroDBRealm extends AuthorizingRealm {
 
     /**
      * 登录认证
+     *
      * @param authenticationToken
      * @return
      * @throws AuthenticationException
@@ -31,15 +32,16 @@ public class ShiroDBRealm extends AuthorizingRealm {
         UserAuthService userAuthService = UserAuthServiceImpl.me();
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         User user = userAuthService.user(token.getUsername());
-        if (null == user){
+        if (null == user) {
             throw new UnknownAccountException("用户名不存在");
         }
         ShiroUser shiroUser = ShiroUser.fromSysUser(user);
-        return userAuthService.info(shiroUser,user,super.getName());
+        return userAuthService.info(shiroUser, user, super.getName());
     }
 
     /**
      * 权限认证
+     *
      * @param principalCollection
      * @return
      */

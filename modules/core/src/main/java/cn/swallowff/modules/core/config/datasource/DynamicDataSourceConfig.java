@@ -34,7 +34,7 @@ public class DynamicDataSourceConfig {
     @Value("${mybatis.mapper-locations}")
     private String mapperLocations;
 
-//    master数据源配置
+    //    master数据源配置
     @Bean(name = "masterDruidProperties")
     @ConfigurationProperties(prefix = "spring.datasource-master")
     public DruidProperties druidProperties() {
@@ -44,7 +44,7 @@ public class DynamicDataSourceConfig {
     //slave数据源配置
     @Bean(name = "slaveDruidProperties")
     @ConfigurationProperties(prefix = "spring.datasource-slave")
-    public DruidProperties slaveDruidProperties(){
+    public DruidProperties slaveDruidProperties() {
         return new DruidProperties();
     }
 
@@ -54,7 +54,7 @@ public class DynamicDataSourceConfig {
         return dataSource;
     }
 
-    public DruidDataSource readDataSource(@Qualifier("slaveDruidProperties") DruidProperties slaveProperties){
+    public DruidDataSource readDataSource(@Qualifier("slaveDruidProperties") DruidProperties slaveProperties) {
         DruidDataSource readDataSource = new DruidDataSource();
         slaveProperties.config(readDataSource);
         return readDataSource;
@@ -62,13 +62,14 @@ public class DynamicDataSourceConfig {
 
     /**
      * dataSource路由,配合Spring-aop使不同的mapper方法使用不同的数据源
+     *
      * @return
      */
     @Bean
-    public MyRoutingDataSource routingDataSource(){
+    public MyRoutingDataSource routingDataSource() {
         MyRoutingDataSource myRoutingDataSource = new MyRoutingDataSource();
-        Map<Object,Object> dataSourceMap = new HashMap<>();
-        dataSourceMap.put(DataSourceType.READ.getType(),readDataSource(slaveDruidProperties()));
+        Map<Object, Object> dataSourceMap = new HashMap<>();
+        dataSourceMap.put(DataSourceType.READ.getType(), readDataSource(slaveDruidProperties()));
         dataSourceMap.put(DataSourceType.WRITE.getType(), writedataSource(druidProperties()));
         myRoutingDataSource.setTargetDataSources(dataSourceMap);
 //        DataSource writedataSource = DataSourceBuilder.create().type(dataSourceType).build();
@@ -77,11 +78,12 @@ public class DynamicDataSourceConfig {
 
     /**
      * 多数据源情况下需要手动配置sqlSessionFactory
+     *
      * @return
      * @throws Exception
      */
     @Bean
-    public SqlSessionFactory sqlSessionFactory() throws Exception{
+    public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(routingDataSource());
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();

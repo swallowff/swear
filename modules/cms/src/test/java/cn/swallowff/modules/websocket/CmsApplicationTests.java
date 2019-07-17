@@ -1,4 +1,4 @@
-package cn.swallowff.modules.cms;
+package cn.swallowff.modules.websocket;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

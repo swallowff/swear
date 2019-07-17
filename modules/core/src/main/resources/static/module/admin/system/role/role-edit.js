@@ -32,14 +32,14 @@ layui.config({
             method: 'POST',
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    parent.layer.msg(res.msg,{
+                    parent.layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
                     parent.layui.table.reload('roleTable'); //重载表格
                     parent.layer.close(index); //再执行关闭
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -60,13 +60,13 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#dept-select');
                 $select.append('<option value="">请选择</option>');
-                for (var i in listData){
-                    $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].fullName + '</option>')
                 }
-                form.val('LAYF-role-form-edit',{
+                form.val('LAYF-role-form-edit', {
                     deptId: Swear.formValue.deptId,
                 });
-                form.render('select','LAYF-role-form-edit'); //刷新select选择框
+                form.render('select', 'LAYF-role-form-edit'); //刷新select选择框
             }
         }
     });
@@ -82,15 +82,15 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#prole-select');
                 $select.append('<option value="">请选择</option>');
-                for (var i in listData){
-                    if (listData[i].id != '${role.id}'){
-                        $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
+                for (var i in listData) {
+                    if (listData[i].id != '${role.id}') {
+                        $select.append('<option value="' + listData[i].id + '">' + listData[i].name + '</option>')
                     }
                 }
-                form.val('LAYF-role-form-edit',{
+                form.val('LAYF-role-form-edit', {
                     pid: Swear.formValue.pid,
                 });
-                form.render('select','LAYF-role-form-edit'); //刷新select选择框
+                form.render('select', 'LAYF-role-form-edit'); //刷新select选择框
             }
         }
     });

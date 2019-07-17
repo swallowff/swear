@@ -1,4 +1,4 @@
-package cn.swallowff.modules.core.module.pay.exception;
+package cn.swallowff.modules.cloud.weixin.pay.exception;
 
 /**
  * @author Administrator

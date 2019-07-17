@@ -15,9 +15,9 @@ import java.util.List;
  * @create 2019/6/29
  */
 @Service
-public class MenuService extends TreeService<MenuDao,Menu> {
+public class MenuService extends TreeService<MenuDao, Menu> {
 
-    public Menu selectByCode(String code){
+    public Menu selectByCode(String code) {
         Menu menu = new Menu();
         menu.setCode(code);
         return super.findEntity(menu);
@@ -25,19 +25,19 @@ public class MenuService extends TreeService<MenuDao,Menu> {
 
     @Override
     protected void updateChildrenNode(List<Menu> treeNodeList, Menu parent) {
-        for (int i = 0; i < treeNodeList.size() ; i++){
+        for (int i = 0; i < treeNodeList.size(); i++) {
             Menu menu = treeNodeList.get(i);
             menu.setOrderBy(parent.getOrderBy());
             menu.setUserId(parent.getUserId());
             List<Menu> children = crudDao.findChildren(menu);
-            if (null != children && children.size() != 0){
-                updateChildrenNode(children,parent);
+            if (null != children && children.size() != 0) {
+                updateChildrenNode(children, parent);
                 menu.setChildren(children);
             }
         }
     }
 
     public List<DtreeNode> findMenuListWithRole(Menu menu, String roleId) {
-        return crudDao.findMenuListWithRole(menu,roleId);
+        return crudDao.findMenuListWithRole(menu, roleId);
     }
 }

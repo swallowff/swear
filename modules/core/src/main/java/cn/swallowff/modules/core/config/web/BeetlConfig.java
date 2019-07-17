@@ -19,15 +19,15 @@ public class BeetlConfig {
     BeetlProperties beetlProperties;
 
     @Bean(initMethod = "init")
-    public BeetlConfiguration beetlConfiguration(){
+    public BeetlConfiguration beetlConfiguration() {
         BeetlConfiguration beetlConfiguration = new BeetlConfiguration();
-        beetlConfiguration.setResourceLoader(new ClasspathResourceLoader(BeetlConfig.class.getClassLoader(),beetlProperties.getPrefix()));
+        beetlConfiguration.setResourceLoader(new ClasspathResourceLoader(BeetlConfig.class.getClassLoader(), beetlProperties.getPrefix()));
         beetlConfiguration.setConfigProperties(beetlProperties.getProperties());
         return beetlConfiguration;
     }
 
     @Bean
-    public BeetlSpringViewResolver beetlViewResolver(){
+    public BeetlSpringViewResolver beetlViewResolver() {
         BeetlSpringViewResolver beetlSpringViewResolver = new BeetlSpringViewResolver();
         beetlSpringViewResolver.setConfig(beetlConfiguration());
         beetlSpringViewResolver.setSuffix(".html");

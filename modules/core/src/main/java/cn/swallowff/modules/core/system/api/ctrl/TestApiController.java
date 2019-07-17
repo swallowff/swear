@@ -19,7 +19,7 @@ import java.util.Date;
 public class TestApiController {
 
     @PostMapping(value = "test")
-    public Object testToken(String token){
+    public Object testToken(String token) {
         Claims claims = JwtTokenUtil.getClaimFromToken(token);
         Date expiredDate = JwtTokenUtil.getExpirationDateFromToken(token);
         String audience = JwtTokenUtil.getAudienceFromToken(token);
@@ -27,7 +27,6 @@ public class TestApiController {
         String userName = JwtTokenUtil.getUsernameFromToken(token);
         return BaseResp.newSuccess();
     }
-
 
 
 }

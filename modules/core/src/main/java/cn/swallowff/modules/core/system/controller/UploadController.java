@@ -35,31 +35,31 @@ public class UploadController {
 
     @RequestMapping(value = "img")
     @ResponseBody
-    public BaseResp uploadImg(MultipartFile file, HttpServletRequest request){
+    public BaseResp uploadImg(MultipartFile file, HttpServletRequest request) {
         BaseResp baseResp = BaseResp.newSuccess();
 
-        String imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() +"/upload/img/";//url访问路径
+        String imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
         String realPath = coreProperties.getFileUploadPath() + "img"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
-        String suffix = orgFileName.substring(orgFileName.lastIndexOf("."),orgFileName.length());
-        String dateStr = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
+        String suffix = orgFileName.substring(orgFileName.lastIndexOf("."), orgFileName.length());
+        String dateStr = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
         String fileDir = realPath + File.separator + dateStr + File.separator;
         FileUtils.createDirectory(fileDir);
         String fileName = String.valueOf(IdGenerate.uuid()) + suffix;
         File imgFile = new File(fileDir + fileName);
-        try{
+        try {
             imgFile.createNewFile();
             file.transferTo(imgFile.getAbsoluteFile());
-            ImageUtils.thumbnails(imgFile,720,720,IMG_COMPRESS_FORMAT);
-        }catch (IOException e){
+            ImageUtils.thumbnails(imgFile, 720, 720, IMG_COMPRESS_FORMAT);
+        } catch (IOException e) {
             e.printStackTrace();
             return baseResp.putError("文件保存失败");
         }
         String targetPath = imgBaseUrl + dateStr + "/";
-        Map<String,Object> respMap = new HashMap<>(3);
-        respMap.put("src",targetPath + fileName);
-        respMap.put("thumbnail",targetPath + fileName + "." + IMG_COMPRESS_FORMAT);
+        Map<String, Object> respMap = new HashMap<>(3);
+        respMap.put("src", targetPath + fileName);
+        respMap.put("thumbnail", targetPath + fileName + "." + IMG_COMPRESS_FORMAT);
         return baseResp.putSuccess(respMap);
     }
 

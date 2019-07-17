@@ -1,4 +1,4 @@
-package cn.swallowff.modules.core.module.pay.request;
+package cn.swallowff.modules.cloud.weixin.pay.request;
 
 /**
  * @author Administrator

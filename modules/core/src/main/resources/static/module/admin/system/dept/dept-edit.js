@@ -30,7 +30,7 @@ layui.config({
             method: 'POST',
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    parent.layer.msg(res.msg,{
+                    parent.layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
@@ -38,7 +38,7 @@ layui.config({
                     parent.renderTable();
                     parent.layer.close(index); //再执行关闭
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -59,15 +59,15 @@ layui.config({
                 var list = res.data;
                 var $select = $('#parent-dept-select');
                 $select.append('<option value="">请选择</option>')
-                for (var i in list){
+                for (var i in list) {
                     if (list[i].id != Swear.formValue.id) {
                         $select.append('<option value="' + list[i].id + '">' + list[i].fullName + '</option>')
                     }
                 }
-                form.val('LAYF-dept-form-edit',{
+                form.val('LAYF-dept-form-edit', {
                     pid: Swear.formValue.pid
                 });
-                form.render('select','LAYF-dept-form-edit'); //刷新select选择框
+                form.render('select', 'LAYF-dept-form-edit'); //刷新select选择框
             }
         }
     });

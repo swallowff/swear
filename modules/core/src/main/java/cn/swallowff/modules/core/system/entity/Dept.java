@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 部门
  */
 public class Dept extends TreeEntity<Dept> implements Serializable {
-//    private String pid;
+    //    private String pid;
     private Integer sort;   //排序
     private String simpleName;  //简称
     private String fullName;    //全称

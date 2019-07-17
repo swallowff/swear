@@ -24,9 +24,9 @@ public class CommonUtil {
             try {
                 fs = new FileInputStream(f);
                 channel = fs.getChannel();
-                ByteBuffer byteBuffer = ByteBuffer.allocate((int)channel.size());
+                ByteBuffer byteBuffer = ByteBuffer.allocate((int) channel.size());
 
-                while(channel.read(byteBuffer) > 0) {
+                while (channel.read(byteBuffer) > 0) {
                     ;
                 }
 

@@ -42,23 +42,23 @@ public class CodeController extends BaseController {
     private String mapperLoation = "mapper";
 
     @RequestMapping(value = "list.html")
-    public String listHtml(){
+    public String listHtml() {
         return "admin/pages/system/code/code-list";
     }
 
     @RequestMapping(value = "tableList")
     @ResponseBody
-    public Object tableList(){
+    public Object tableList() {
         BaseResp baseResp = BaseResp.newSuccess();
-        List<Map<String,Object>> respMap = codeService.getAllTables();
+        List<Map<String, Object>> respMap = codeService.getAllTables();
         return baseResp.putSuccess(respMap);
     }
 
     @PostMapping(value = "execute")
     @ResponseBody
-    public Object execute(@Validated GenCodeDto genCodeDto, BindingResult bindingResult) throws Exception{
+    public Object execute(@Validated GenCodeDto genCodeDto, BindingResult bindingResult) throws Exception {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (!validateBindingResult(bindingResult,baseResp)){
+        if (!validateBindingResult(bindingResult, baseResp)) {
             return baseResp;
         }
         GeneratorConfig generatorConfig = new GeneratorConfig();

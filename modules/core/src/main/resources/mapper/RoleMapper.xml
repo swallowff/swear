@@ -17,13 +17,13 @@
     </sql>
 
     <select id="selectById" resultType="Role">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_role a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="Role">
@@ -58,7 +58,7 @@
         <where>
             a.delflag = 0
             <if test="parent != null and parent.id != null and parent.id != ''">
-              AND a.pid = #{parent.id}
+                AND a.pid = #{parent.id}
             </if>
             <if test="pids != null and pids != ''">
                 AND a.pids LIKE CONCAT('%',#{pids},'%')
@@ -120,29 +120,29 @@
 
     <insert id="insert">
         INSERT INTO sys_role(
-          id,
-          sort,
-          name,
-          code,
-          pid,
-          pids,
-          dept_id,
-          tips,
-          update_time,
-          create_time,
-          delflag
+        id,
+        sort,
+        name,
+        code,
+        pid,
+        pids,
+        dept_id,
+        tips,
+        update_time,
+        create_time,
+        delflag
         ) VALUES (
-          #{id},
-          #{sort},
-          #{name},
-          #{code},
-          #{parent.id},
-          #{pids},
-          #{deptId},
-          #{tips},
-          #{updateTime},
-          #{createTime},
-          #{delflag}
+        #{id},
+        #{sort},
+        #{name},
+        #{code},
+        #{parent.id},
+        #{pids},
+        #{deptId},
+        #{tips},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
         )
     </insert>
 
@@ -223,18 +223,18 @@
 
     <update id="update">
         UPDATE sys_role SET
-          sort = #{sort},
-          name = #{name},
-          code = #{code},
-          pid = #{parent.id},
-          pids = #{pids},
-          dept_id = #{deptId},
-          tips = #{tips},
-          update_time = #{updateTime}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        sort = #{sort},
+        name = #{name},
+        code = #{code},
+        pid = #{parent.id},
+        pids = #{pids},
+        dept_id = #{deptId},
+        tips = #{tips},
+        update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">

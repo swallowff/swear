@@ -85,7 +85,7 @@ layui.config({
                 , checkData = checkStatus.data; //得到选中的数据
             console.log(checkData)
             if (checkData.length === 0) {
-                return layer.msg('请选择数据',{
+                return layer.msg('请选择数据', {
                     icon: 5,
                     time: 1800
                 });
@@ -108,7 +108,7 @@ layui.config({
                     success: function (res) {
                         // console.log(res)
                         table.reload('menuTable');
-                        layer.msg('已删除',{
+                        layer.msg('已删除', {
                             icon: 1,
                             time: 2000
                         });
@@ -143,7 +143,7 @@ layui.config({
     function operation(data) {
         var id = data.id;
         var btn = $('#table-content-list-operation').html()
-        btn = btn.replace(new RegExp('replacement','gm'),id)
+        btn = btn.replace(new RegExp('replacement', 'gm'), id)
         return btn
     }
 
@@ -157,13 +157,13 @@ layui.config({
             },
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
                     layui.table.reload('menuTable');
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -192,7 +192,7 @@ layui.config({
     $.ajax({
         url: setter.ctxPath + '/menu/list.ajax',
         data: {
-            isMenu:true,
+            isMenu: true,
             page: -1      //不分页
         },
         method: 'GET',
@@ -202,10 +202,10 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#menu-select');
                 $select.append('<option value="">请选择父级菜单</option>');
-                for (var i in listData){
-                    $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].name + '</option>')
                 }
-                form.render('select','LAYF-menu-list-search'); //刷新select选择框
+                form.render('select', 'LAYF-menu-list-search'); //刷新select选择框
             }
         }
     });

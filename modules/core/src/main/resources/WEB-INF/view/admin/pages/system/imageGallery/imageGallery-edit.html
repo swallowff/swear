@@ -14,24 +14,26 @@
      style="padding: 20px 30px 0 0;">
     <input type="hidden" name="id">
 
-     <div class="layui-form-item">
-         <label class="layui-form-label">图片地址</label>
-         <div class="layui-input-inline">
-             <textarea id="image-src" placeholder="图片地址" class="layui-textarea" name="imgUrl" style="height:28px"></textarea>
-         </div>
-         <div class="layui-input-inline layui-btn-container" style="width: auto;">
-             <button type="button" class="layui-btn layui-btn-primary" id="btn-image-upload">
-                 <i class="layui-icon">&#xe67c;</i>上传图片
-             </button>
-             <button class="layui-btn layui-btn-primary" layadmin-event="imagePreview">查看图片</button >
-         </div>
-     </div>
-     <div class="layui-form-item">
-         <label class="layui-form-label">缩略图地址</label>
-         <div class="layui-input-inline">
-             <textarea id="image-thumbnail" placeholder="图片地址" class="layui-textarea" name="thumbnail" style="height:28px"></textarea>
-         </div>
-     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片地址</label>
+        <div class="layui-input-inline">
+            <textarea id="image-src" placeholder="图片地址" class="layui-textarea" name="imgUrl"
+                      style="height:28px"></textarea>
+        </div>
+        <div class="layui-input-inline layui-btn-container" style="width: auto;">
+            <button type="button" class="layui-btn layui-btn-primary" id="btn-image-upload">
+                <i class="layui-icon">&#xe67c;</i>上传图片
+            </button>
+            <button class="layui-btn layui-btn-primary" layadmin-event="imagePreview">查看图片</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">缩略图地址</label>
+        <div class="layui-input-inline">
+            <textarea id="image-thumbnail" placeholder="图片地址" class="layui-textarea" name="thumbnail"
+                      style="height:28px"></textarea>
+        </div>
+    </div>
     <div class="layui-form-item">
         <label class="layui-form-label">原始名称</label>
         <div class="layui-input-inline">
@@ -46,23 +48,25 @@
                    class="layui-input">
         </div>
     </div>
-     <div class="layui-form-item">
-         <label class="layui-form-label">图片格式</label>
-         <div class="layui-input-inline">
-             <input type="text" name="imgFormat" lay-verify="required" placeholder="图片格式(jpg; png; gif ; jpeg)" autocomplete="off"
-                    class="layui-input">
-         </div>
-     </div>
-     <div class="layui-form-item">
-         <label class="layui-form-label">图片大小(字节)</label>
-         <div class="layui-input-inline">
-             <input type="text" name="size" lay-verify="required" placeholder="图片大小" autocomplete="off"
-                    class="layui-input">
-         </div>
-     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片格式</label>
+        <div class="layui-input-inline">
+            <input type="text" name="imgFormat" lay-verify="required" placeholder="图片格式(jpg; png; gif ; jpeg)"
+                   autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">图片大小(字节)</label>
+        <div class="layui-input-inline">
+            <input type="text" name="size" lay-verify="required" placeholder="图片大小" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
 
     <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="LAYF-imageGallery-form-edit-submit" id="LAYF-imageGallery-form-edit-submit"
+        <input type="button" lay-submit lay-filter="LAYF-imageGallery-form-edit-submit"
+               id="LAYF-imageGallery-form-edit-submit"
                value="确认">
     </div>
 </div>
@@ -70,9 +74,9 @@
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
     var Swear = {
-        serverUrl : '${serverUrl}',
-        ctxPath : '${admin}',
-        static : '${static}',
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}',
 
         formValue: {
             id: '${imageGallery.id}',

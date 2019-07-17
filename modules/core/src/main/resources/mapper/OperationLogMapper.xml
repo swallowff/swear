@@ -16,13 +16,13 @@
     </sql>
 
     <select id="selectById" resultType="OperationLog">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_operation_log a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_operation_log a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="OperationLog">
@@ -51,7 +51,7 @@
         <where>
             a.delflag = 0
             <if test="logName != null and logName != ''">
-              AND a.log_name = #{logName}
+                AND a.log_name = #{logName}
             </if>
             <if test="userId != null and userId != ''">
                 AND a.user_id = #{userId}
@@ -72,49 +72,49 @@
 
     <insert id="insert">
         INSERT INTO sys_operation_log(
-          id,
-          log_name,
-          log_type,
-          user_id,
-          class_name,
-          method,
-          succeed,
-          message,
-          create_time,
-          update_time,
-          version,
-          delflag
+        id,
+        log_name,
+        log_type,
+        user_id,
+        class_name,
+        method,
+        succeed,
+        message,
+        create_time,
+        update_time,
+        version,
+        delflag
         ) VALUES (
-          #{id},
-          #{logName},
-          #{logType},
-          #{userId},
-          #{className},
-          #{method},
-          #{succeed},
-          #{message},
-          #{createTime},
-          #{updateTime},
-          #{version},
-          #{delflag}
+        #{id},
+        #{logName},
+        #{logType},
+        #{userId},
+        #{className},
+        #{method},
+        #{succeed},
+        #{message},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_operation_log SET
-          log_type = #{logType},
-          log_name = #{logName},
-          user_id = #{userId},
-          class_name = #{className},
-          method = #{method},
-          succeed = #{succeed},
-          message = #{message},
-          update_time = #{updateTime},
-          version = #{version}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        log_type = #{logType},
+        log_name = #{logName},
+        user_id = #{userId},
+        class_name = #{className},
+        method = #{method},
+        succeed = #{succeed},
+        message = #{message},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">

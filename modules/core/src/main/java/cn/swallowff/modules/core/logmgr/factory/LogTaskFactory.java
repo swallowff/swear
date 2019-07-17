@@ -25,14 +25,14 @@ public class LogTaskFactory {
     private static LoginLogService loginLogService = SpringContextHolder.getBean(LoginLogService.class);
     private static OperationLogService operationLogService = SpringContextHolder.getBean(OperationLogService.class);
 
-    public static TimerTask loginLog(final String userId, final String ip){
+    public static TimerTask loginLog(final String userId, final String ip) {
         return new TimerTask() {
             @Override
             public void run() {
-                try{
-                    LoginLog loginLog = LogFactory.createLoginLog(LogType.LOGIN,userId,null,ip);
+                try {
+                    LoginLog loginLog = LogFactory.createLoginLog(LogType.LOGIN, userId, null, ip);
                     loginLogService.insert(loginLog);
-                }catch (Exception e){
+                } catch (Exception e) {
                     logger.error("创建登录日志失败");
                 }
             }

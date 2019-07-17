@@ -30,14 +30,14 @@ public class DictService extends CrudService<DictDao, Dict> {
         return super.findList(dict);
     }
 
-    public Dict selectByCodeAndVal(String code,Integer val){
+    public Dict selectByCodeAndVal(String code, Integer val) {
         Dict dict = new Dict();
         dict.setCode(code);
         dict.setVal(val);
         return super.findEntity(dict);
     }
 
-    public String getLabelName(String code,Integer val){
+    public String getLabelName(String code, Integer val) {
         Dict dict = new Dict();
         dict.setCode(code);
         dict.setVal(val);
@@ -45,15 +45,15 @@ public class DictService extends CrudService<DictDao, Dict> {
         return dict == null ? "未知" : dict.getLabel();
     }
 
-    public List<DictCache> getDictCacheList(String code){
-        logger.info("初始化字典数据：code[{}]",code);
+    public List<DictCache> getDictCacheList(String code) {
+        logger.info("初始化字典数据：code[{}]", code);
         return dictDao.getDictCacheList(code);
     }
 
     @Override
     public int save(Dict entity) {
         int r = super.save(entity);
-        if (r == 1){
+        if (r == 1) {
             DictUtils.delKey(entity.getCode());
         }
         return r;
@@ -62,7 +62,7 @@ public class DictService extends CrudService<DictDao, Dict> {
     @Override
     public int update(Dict entity) {
         int r = super.update(entity);
-        if (r == 1){
+        if (r == 1) {
             DictUtils.delKey(entity.getCode());
         }
         return r;
@@ -71,7 +71,7 @@ public class DictService extends CrudService<DictDao, Dict> {
     @Override
     public int updateSelective(Dict entity) {
         int r = super.updateSelective(entity);
-        if (r == 1){
+        if (r == 1) {
             DictUtils.delKey(entity.getCode());
         }
         return r;

@@ -10,7 +10,7 @@ layui.config({
     table.render({
         id: "imageGalleryTable",
         elem: '#LAYF-list-table',
-        url: setter.ctxPath + '/sys/imageGallery/list.ajax',
+        url: setter.ctxPath + '/cloud/imageGallery/list.ajax',
         cellMinWidth: 20
         , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
         , even: true    //隔行换色
@@ -33,10 +33,10 @@ layui.config({
             },
             {
                 title: '图片预览',
-                style:'height:100px;',
+                style: 'height:100px;',
                 templet: function (data) {
                     var src = data.thumbnail;
-                    var img = '<img src="'+src+'" width="100px">'
+                    var img = '<img src="' + src + '" width="100px">'
                     return img;
                 }
             },
@@ -88,7 +88,7 @@ layui.config({
                 , checkData = checkStatus.data; //得到选中的数据
             console.log(checkData)
             if (checkData.length === 0) {
-                return layer.msg('请选择数据',{
+                return layer.msg('请选择数据', {
                     icon: 5,
                     time: 1800
                 });
@@ -103,7 +103,7 @@ layui.config({
 
                 //执行 Ajax 后重载
                 admin.req({
-                    url: setter.ctxPath + '/sys/imageGallery/batchDel',
+                    url: setter.ctxPath + '/cloud/imageGallery/batchDel',
                     method: 'POST',
                     traditional: true,   //指定参数序列化时，不做深度序列化
                     data: {
@@ -111,7 +111,7 @@ layui.config({
                     },
                     success: function (res) {
                         table.reload('imageGalleryTable');
-                        layer.msg('已删除',{
+                        layer.msg('已删除', {
                             icon: 1,
                             time: 1800
                         });
@@ -125,7 +125,7 @@ layui.config({
             layer.open({
                 type: 2
                 , title: '添加图片库'
-                , content: setter.ctxPath + '/sys/imageGallery/add.html'
+                , content: setter.ctxPath + '/cloud/imageGallery/add.html'
                 , maxmin: true
                 , area: ['800px', '550px']
                 , btn: ['确定', '取消']
@@ -145,13 +145,13 @@ layui.config({
     function operation(data) {
         var id = data.id;
         var btn = $('#table-content-list-operation').html()
-        btn = btn.replace(new RegExp('replacement','gm'),id)
+        btn = btn.replace(new RegExp('replacement', 'gm'), id)
         return btn
     }
 
     window.deleteRow = function (id) {
         $.ajax({
-            url: setter.ctxPath + '/sys/imageGallery/delete',
+            url: setter.ctxPath + '/cloud/imageGallery/delete',
             method: 'POST',
             contentType: 'application/x-www-form-urlencoded',
             data: {
@@ -159,14 +159,14 @@ layui.config({
             },
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
 
                     layui.table.reload('imageGalleryTable');
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -179,7 +179,7 @@ layui.config({
         layer.open({
             type: 2
             , title: '編輯图片库'
-            , content: setter.ctxPath + '/sys/imageGallery/edit.html?id=' + id
+            , content: setter.ctxPath + '/cloud/imageGallery/edit.html?id=' + id
             , maxmin: true
             , area: ['800px', '550px']
             , btn: ['确定', '取消']

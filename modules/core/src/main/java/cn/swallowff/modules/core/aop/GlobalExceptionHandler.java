@@ -42,15 +42,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ServiceException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public BaseResp serviceException(ServiceException e, HttpServletRequest request){
-        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
-        request.setAttribute("tip",e.getMessage());
-        log.error("业务异常:",e);
-        return new BaseResp(e.getCode(),e.getErrorMessage());
+    public BaseResp serviceException(ServiceException e, HttpServletRequest request) {
+        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+        request.setAttribute("tip", e.getMessage());
+        log.error("业务异常:", e);
+        return new BaseResp(e.getCode(), e.getErrorMessage());
     }
 
     /**
      * 拦截抛出的正常业务异常
+     *
      * @param e
      * @param request
      * @return
@@ -58,16 +59,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BizException.class)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public BaseResp bizException(ServiceException e, HttpServletRequest request){
+    public BaseResp bizException(ServiceException e, HttpServletRequest request) {
 //        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
 //        log.error("业务异常:",e);
-        return new BaseResp(e.getCode(),e.getErrorMessage());
+        return new BaseResp(e.getCode(), e.getErrorMessage());
     }
 
     @ExceptionHandler(NoPermissionsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String noPermission(NoPermissionsException e, HttpServletRequest request){
-        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),e));
+    public String noPermission(NoPermissionsException e, HttpServletRequest request) {
+        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
 //        log.error("业务异常:",e);
 //        return new BaseResp(e.getCode(),e.getErrorMessage());
         return "error/404";
@@ -90,13 +91,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String account(AccountException e, Model model, HttpServletRequest request) {
         String account = request.getParameter("account");
-        if (e instanceof DisabledAccountException){
+        if (e instanceof DisabledAccountException) {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "账号被冻结", HttpContext.getIp()));
             model.addAttribute("tips", "账号被冻结");
-        }else if (e instanceof UnknownAccountException){
+        } else if (e instanceof UnknownAccountException) {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "账户不存在", HttpContext.getIp()));
             model.addAttribute("tips", "账户不存在");
-        }else{
+        } else {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "账户未知", HttpContext.getIp()));
             model.addAttribute("tips", "账户未知");
         }
@@ -111,10 +112,10 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String credentials(CredentialsException e, Model model) {
         String account = HttpContext.getRequest().getParameter("account");
-        if (e instanceof ExpiredCredentialsException){
+        if (e instanceof ExpiredCredentialsException) {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "凭证过期", HttpContext.getIp()));
             model.addAttribute("tips", "凭证过期");
-        }else if (e instanceof IncorrectCredentialsException){
+        } else if (e instanceof IncorrectCredentialsException) {
             LogManager.me().executeLog(LogTaskFactory.loginLog(account, "密码错误", HttpContext.getIp()));
             model.addAttribute("tips", "密码错误");
         }
@@ -167,7 +168,7 @@ public class GlobalExceptionHandler {
     public BaseResp exception(Exception e) {
         ShiroUser user = ShiroKit.getUser();
         String userId = "";
-        if (null != user){
+        if (null != user) {
             userId = user.getId();
         }
         LogManager.me().executeLog(LogTaskFactory.exceptionLog(userId, e));

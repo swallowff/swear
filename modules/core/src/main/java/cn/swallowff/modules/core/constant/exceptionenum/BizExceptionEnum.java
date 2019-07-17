@@ -60,7 +60,7 @@ public enum BizExceptionEnum implements AbstractBaseExceptionEnum {
      */
     TOKEN_EXPIRED(700, "token过期"),
     TOKEN_ERROR(700, "token验证失败"),
-    TOKEN_FAKE(701,"伪造的token请求"),
+    TOKEN_FAKE(701, "伪造的token请求"),
 
     /**
      * 签名异常

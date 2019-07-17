@@ -34,7 +34,7 @@ public class TestController {
 
     @RequestMapping("testOptional")
     @ResponseBody
-    public BaseResp testOp(String userId){
+    public BaseResp testOp(String userId) {
         final BaseResp baseResp = BaseResp.newError();
         User user = userService.selectById(userId);
 

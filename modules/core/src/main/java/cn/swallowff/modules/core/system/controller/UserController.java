@@ -38,45 +38,45 @@ public class UserController {
     private UserRoleRelationService userRoleRelationService;
 
     @RequestMapping(value = "list.html")
-    public String listHtml(){
+    public String listHtml() {
         return "admin/pages/system/user/user-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String addHtml(){
+    public String addHtml() {
         return "admin/pages/system/user/user-add";
     }
 
     @RequestMapping(value = "edit.html")
-    public String editHtml(@RequestParam("id") String id, Model model){
+    public String editHtml(@RequestParam("id") String id, Model model) {
         User user = userService.selectById(id);
         UserDateFormatWrapper wrapper = new UserDateFormatWrapper(user);
-        model.addAttribute("user",wrapper.wrap());
+        model.addAttribute("user", wrapper.wrap());
         return "admin/pages/system/user/user-edit";
     }
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object ajaxList(User user){
+    public Object ajaxList(User user) {
         PageResp<User> pageResp = userService.findPage(user);
         UserAjaxListDictWrapper wrapper = new UserAjaxListDictWrapper(pageResp.getDataList());
-        List<Map<String,Object>> wrapList = wrapper.wrapList();
-        LayPageResp layPageResp = new LayPageResp(wrapList,pageResp.getTotalRows());
+        List<Map<String, Object>> wrapList = wrapper.wrapList();
+        LayPageResp layPageResp = new LayPageResp(wrapList, pageResp.getTotalRows());
         return layPageResp;
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
-    public BaseResp add(User user){
+    public BaseResp add(User user) {
         BaseResp baseResp = BaseResp.newSuccess();
         User existUser = userService.selectByAccount(user.getAccount());
-        if (null != existUser){
+        if (null != existUser) {
             throw new BizException(ResponseState.USER_ACCOUNT_EXISTS);
         }
-        if (StringUtils.isNotBlank(user.getPassword())){
+        if (StringUtils.isNotBlank(user.getPassword())) {
             String salt = ShiroKit.getRandomSalt(8);
             user.setSalt(salt);
-            user.setPassword(ShiroKit.md5(user.getPassword(),salt));
+            user.setPassword(ShiroKit.md5(user.getPassword(), salt));
         }
         userService.save(user);
         return baseResp;
@@ -84,79 +84,79 @@ public class UserController {
 
     @RequestMapping(value = "edit.ajax")
     @ResponseBody
-    public BaseResp edit(User user){
+    public BaseResp edit(User user) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (null == user || StringUtils.isBlank(user.getId())){
+        if (null == user || StringUtils.isBlank(user.getId())) {
             return baseResp.paramsError();
         }
-        if (StringUtils.isNotBlank(user.getPassword()) && user.getPassword().length() <= 16){
+        if (StringUtils.isNotBlank(user.getPassword()) && user.getPassword().length() <= 16) {
             String salt = ShiroKit.getRandomSalt(8);
             user.setSalt(salt);
-            user.setPassword(ShiroKit.md5(user.getPassword(),salt));
+            user.setPassword(ShiroKit.md5(user.getPassword(), salt));
         }
         int r = userService.updateSelective(user);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
 
     @RequestMapping(value = "delete")
     @ResponseBody
-    public BaseResp delete(String id){
+    public BaseResp delete(String id) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if ("0".equals(id)){
+        if ("0".equals(id)) {
             return baseResp.putError("无法删除超级管理员");
         }
         int r = userService.delete(id);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "batchSetupRoles")
     @ResponseBody
-    public synchronized BaseResp batchSetupRoles(String userId,String[] roleIds){
+    public synchronized BaseResp batchSetupRoles(String userId, String[] roleIds) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (StringUtils.isBlank(userId)){
+        if (StringUtils.isBlank(userId)) {
             return baseResp.putError("请选择用户");
         }
-        if (ArrayUtils.isEmpty(roleIds)){
+        if (ArrayUtils.isEmpty(roleIds)) {
             return baseResp.putError("请选择角色");
         }
         int count = 0;
         userRoleRelationService.delByUserId(userId);
-        for (String roleId : roleIds){
+        for (String roleId : roleIds) {
             UserRoleRelation userRoleRelation = new UserRoleRelation();
             userRoleRelation.setUserId(userId);
             userRoleRelation.setRoleId(roleId);
             userRoleRelationService.save(userRoleRelation);
-            count ++ ;
+            count++;
         }
 
-        if (count > 0){
+        if (count > 0) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
 
     }
 
     @RequestMapping(value = "batchDel")
     @ResponseBody
-    public BaseResp batchDel(String[] ids){
+    public BaseResp batchDel(String[] ids) {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
-        for (String id : ids){
-            if ("0".equals(id)){
+        for (String id : ids) {
+            if ("0".equals(id)) {
                 continue;
             }
             int r = userService.delete(id);
-            if (r == 1){
-                count ++;
+            if (r == 1) {
+                count++;
             }
         }
-        if (count == ids.length){
+        if (count == ids.length) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
 

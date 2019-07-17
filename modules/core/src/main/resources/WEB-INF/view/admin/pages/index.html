@@ -98,102 +98,102 @@
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                     lay-filter="layadmin-system-side-menu">
                     @if(isNotEmpty(menuList)){
-                        @for(menu in menuList){
-                        <li data-name="first-level-menu-${menuLP.index}" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="${menu.name}">
-                                @if(isNotEmpty(menu.icon)){
-                                <i class="layui-icon ${menu.icon}"></i>
-                                @}
-                                @else{
-                                <i class="layui-icon layui-icon-spread-left"></i>
-                                @}
-                                <cite>${menu.name}</cite>
-                            </a>
-                            @if(isNotEmpty(menu.children)){
-                            <dl class="layui-nav-child">
-                                @for(subMenu in menu.children){
-                                @if(subMenu.isExpandable){
-                                <dd data-name="second-level-menu-${subMenuLP.index}">
-                                    <a href="javascript:;">
-                                        @if(isNotEmpty(subMenu.icon)){
-                                        <i class="layui-icon ${subMenu.icon}"></i>
-                                        @}
-                                        @else{
-                                        <i class="layui-icon layui-icon-fonts-code"></i>
-                                        @}
-                                        <cite>${subMenu.name}</cite>
-                                    </a>
-                                    @if(isNotEmpty(subMenu.children)){
-                                    <dl class="layui-nav-child">
-                                        @for(thirdMenu in subMenu.children){
-                                        <dd data-name="second-level-menu-${thirdMenuLP.index}">
-                                            <a lay-href="${admin}${thirdMenu.url}">
-                                                @if(isNotEmpty(thirdMenu.icon)){
-                                                <i class="layui-icon ${thirdMenu.icon}"></i>
-                                                @}
-                                                @else{
-                                                <i class="layui-icon layui-icon-fonts-code"></i>
-                                                @}
-                                                <cite>${thirdMenu.name}</cite>
-                                            </a>
-                                        </dd>
-                                        @}
-                                    </dl>
-                                    @}
-                                </dd>
-                                @}
-                                @else{
-                                <dd data-name="second-level-menu-${subMenuLP.index}">
-                                    <a lay-href="${admin}${subMenu.url}">
-                                        @if(isNotEmpty(subMenu.icon)){
-                                        <i class="layui-icon ${subMenu.icon}"></i>
-                                        @}
-                                        @else{
-                                        <i class="layui-icon layui-icon-fonts-code"></i>
-                                        @}
-                                        <cite>${subMenu.name}</cite>
-                                    </a>
-                                </dd>
-                                @}
-                                @}
-                            </dl>
+                    @for(menu in menuList){
+                    <li data-name="first-level-menu-${menuLP.index}" class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;" lay-tips="${menu.name}">
+                            @if(isNotEmpty(menu.icon)){
+                            <i class="layui-icon ${menu.icon}"></i>
                             @}
-                        </li>
+                            @else{
+                            <i class="layui-icon layui-icon-spread-left"></i>
+                            @}
+                            <cite>${menu.name}</cite>
+                        </a>
+                        @if(isNotEmpty(menu.children)){
+                        <dl class="layui-nav-child">
+                            @for(subMenu in menu.children){
+                            @if(subMenu.isExpandable){
+                            <dd data-name="second-level-menu-${subMenuLP.index}">
+                                <a href="javascript:;">
+                                    @if(isNotEmpty(subMenu.icon)){
+                                    <i class="layui-icon ${subMenu.icon}"></i>
+                                    @}
+                                    @else{
+                                    <i class="layui-icon layui-icon-fonts-code"></i>
+                                    @}
+                                    <cite>${subMenu.name}</cite>
+                                </a>
+                                @if(isNotEmpty(subMenu.children)){
+                                <dl class="layui-nav-child">
+                                    @for(thirdMenu in subMenu.children){
+                                    <dd data-name="second-level-menu-${thirdMenuLP.index}">
+                                        <a lay-href="${admin}${thirdMenu.url}">
+                                            @if(isNotEmpty(thirdMenu.icon)){
+                                            <i class="layui-icon ${thirdMenu.icon}"></i>
+                                            @}
+                                            @else{
+                                            <i class="layui-icon layui-icon-fonts-code"></i>
+                                            @}
+                                            <cite>${thirdMenu.name}</cite>
+                                        </a>
+                                    </dd>
+                                    @}
+                                </dl>
+                                @}
+                            </dd>
+                            @}
+                            @else{
+                            <dd data-name="second-level-menu-${subMenuLP.index}">
+                                <a lay-href="${admin}${subMenu.url}">
+                                    @if(isNotEmpty(subMenu.icon)){
+                                    <i class="layui-icon ${subMenu.icon}"></i>
+                                    @}
+                                    @else{
+                                    <i class="layui-icon layui-icon-fonts-code"></i>
+                                    @}
+                                    <cite>${subMenu.name}</cite>
+                                </a>
+                            </dd>
+                            @}
+                            @}
+                        </dl>
                         @}
+                    </li>
+                    @}
                     @}
 
                     <!-- 菜单主体部分 -->
                     <!--<li data-name="home" class="layui-nav-item layui-nav-itemed">-->
-                        <!--<a href="javascript:;" lay-tips="主页" lay-direction="2">-->
-                            <!--<i class="layui-icon layui-icon-home"></i>-->
-                            <!--<cite>系统管理</cite>-->
-                        <!--</a>-->
-                        <!--<dl class="layui-nav-child">-->
-                            <!--<dd data-name="console" class="layui-this">-->
-                                <!--<a lay-href="${admin}/user/list.html">用户管理</a>-->
-                            <!--</dd>-->
-                            <!--<dd data-name="console">-->
-                                <!--<a lay-href="${admin}/menu/list.html">菜单管理</a>-->
-                            <!--</dd>-->
-                            <!--<dd data-name="console">-->
-                                <!--<a lay-href="${admin}/dict/list.html">字典管理</a>-->
-                            <!--</dd>-->
+                    <!--<a href="javascript:;" lay-tips="主页" lay-direction="2">-->
+                    <!--<i class="layui-icon layui-icon-home"></i>-->
+                    <!--<cite>系统管理</cite>-->
+                    <!--</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                    <!--<dd data-name="console" class="layui-this">-->
+                    <!--<a lay-href="${admin}/user/list.html">用户管理</a>-->
+                    <!--</dd>-->
+                    <!--<dd data-name="console">-->
+                    <!--<a lay-href="${admin}/menu/list.html">菜单管理</a>-->
+                    <!--</dd>-->
+                    <!--<dd data-name="console">-->
+                    <!--<a lay-href="${admin}/dict/list.html">字典管理</a>-->
+                    <!--</dd>-->
 
-                            <!--<dd data-name="second-level">-->
-                                <!--<a href="javascript:;">二级菜单</a>-->
-                                <!--<dl class="layui-nav-child">-->
-                                    <!--<dd data-name="third-level">-->
-                                        <!--<a href="javascript:;">三级菜单</a>-->
-                                        <!--<dl class="layui-nav-child">-->
-                                            <!--<dd data-name="fourth-level">-->
-                                                <!--<a href="javascript:;">四级菜单</a>-->
-                                            <!--</dd>-->
-                                        <!--</dl>-->
-                                    <!--</dd>-->
-                                <!--</dl>-->
-                            <!--</dd>-->
+                    <!--<dd data-name="second-level">-->
+                    <!--<a href="javascript:;">二级菜单</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                    <!--<dd data-name="third-level">-->
+                    <!--<a href="javascript:;">三级菜单</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                    <!--<dd data-name="fourth-level">-->
+                    <!--<a href="javascript:;">四级菜单</a>-->
+                    <!--</dd>-->
+                    <!--</dl>-->
+                    <!--</dd>-->
+                    <!--</dl>-->
+                    <!--</dd>-->
 
-                        <!--</dl>-->
+                    <!--</dl>-->
                     <!--</li>-->
 
                 </ul>

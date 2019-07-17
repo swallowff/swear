@@ -31,7 +31,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         return userRoleRelationService.findByUserId(userId);
     }
 
-    public static UserRoleService me(){
+    public static UserRoleService me() {
         return SpringContextHolder.getBean(UserRoleService.class);
     }
 

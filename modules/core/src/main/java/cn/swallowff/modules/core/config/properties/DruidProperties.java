@@ -31,9 +31,9 @@ public class DruidProperties {
         dataSource.setInitialSize(this.initialSize);
         dataSource.setMinIdle(this.minIdle);
         dataSource.setMaxActive(this.maxActive);
-        dataSource.setMaxWait((long)this.maxWait);
-        dataSource.setTimeBetweenEvictionRunsMillis((long)this.timeBetweenEvictionRunsMillis);
-        dataSource.setMinEvictableIdleTimeMillis((long)this.minEvictableIdleTimeMillis);
+        dataSource.setMaxWait((long) this.maxWait);
+        dataSource.setTimeBetweenEvictionRunsMillis((long) this.timeBetweenEvictionRunsMillis);
+        dataSource.setMinEvictableIdleTimeMillis((long) this.minEvictableIdleTimeMillis);
         dataSource.setValidationQuery(this.validationQuery);
         dataSource.setTestWhileIdle(this.testWhileIdle);
         dataSource.setTestOnBorrow(this.testOnBorrow);
@@ -194,11 +194,12 @@ public class DruidProperties {
         } else if (!(o instanceof DruidProperties)) {
             return false;
         } else {
-            DruidProperties other = (DruidProperties)o;
+            DruidProperties other = (DruidProperties) o;
             if (!other.canEqual(this)) {
                 return false;
             } else {
-                label215: {
+                label215:
+                {
                     Object this$url = this.getUrl();
                     Object other$url = other.getUrl();
                     if (this$url == null) {
@@ -222,7 +223,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label201: {
+                label201:
+                {
                     Object this$password = this.getPassword();
                     Object other$password = other.getPassword();
                     if (this$password == null) {
@@ -246,7 +248,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label187: {
+                label187:
+                {
                     Object this$initialSize = this.getInitialSize();
                     Object other$initialSize = other.getInitialSize();
                     if (this$initialSize == null) {
@@ -270,7 +273,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label173: {
+                label173:
+                {
                     Object this$maxActive = this.getMaxActive();
                     Object other$maxActive = other.getMaxActive();
                     if (this$maxActive == null) {
@@ -284,7 +288,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label166: {
+                label166:
+                {
                     Object this$maxWait = this.getMaxWait();
                     Object other$maxWait = other.getMaxWait();
                     if (this$maxWait == null) {
@@ -308,7 +313,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label152: {
+                label152:
+                {
                     Object this$minEvictableIdleTimeMillis = this.getMinEvictableIdleTimeMillis();
                     Object other$minEvictableIdleTimeMillis = other.getMinEvictableIdleTimeMillis();
                     if (this$minEvictableIdleTimeMillis == null) {
@@ -322,7 +328,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label145: {
+                label145:
+                {
                     Object this$validationQuery = this.getValidationQuery();
                     Object other$validationQuery = other.getValidationQuery();
                     if (this$validationQuery == null) {
@@ -356,7 +363,8 @@ public class DruidProperties {
                     return false;
                 }
 
-                label124: {
+                label124:
+                {
                     Object this$testOnReturn = this.getTestOnReturn();
                     Object other$testOnReturn = other.getTestOnReturn();
                     if (this$testOnReturn == null) {

@@ -1,11 +1,11 @@
-package cn.swallowff.modules.core.module.pay.request;
+package cn.swallowff.modules.cloud.weixin.pay.request;
 
 /**
  * @author Administrator
  * @description 微信公众号支付请求参数
  * @create 2019/5/10
  */
-public class WxMpPayRequest extends WxPayBaseRequest{
+public class WxMpPayRequest extends WxPayBaseRequest {
     private String attach;      //no 附加数据
     private String body;        //yes 商品描述
     private String notifyUrl;  //yes 回调地址

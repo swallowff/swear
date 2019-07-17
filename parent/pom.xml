@@ -13,7 +13,8 @@
         <module>../common</module>
         <module>../modules/cms</module>
         <module>../modules/core</module>
-        <module>../modules/sys</module>
+        <module>../modules/cloud</module>
+        <module>../modules/websocket</module>
         <module>../web</module>
         <module>../code</module>
     </modules>

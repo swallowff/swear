@@ -16,13 +16,13 @@
     </sql>
 
     <select id="selectById" resultType="Dict">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_dict a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dict a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="Dict">
@@ -78,54 +78,54 @@
 
     <select id="getDictCacheList" resultType="cn.swallowff.modules.core.cache.DictCache">
         SELECT
-          a.val AS val,
-          a.label AS label
+        a.val AS val,
+        a.label AS label
         FROM sys_dict a
         WHERE
-          a.delflag = 0
-          AND a.code = #{arg0}
+        a.delflag = 0
+        AND a.code = #{arg0}
         ORDER BY a.sort ASC
     </select>
 
     <insert id="insert">
         INSERT INTO sys_dict(
-          id,
-          name,
-          code,
-          label,
-          val,
-          sort,
-          tips,
-          update_time,
-          create_time,
-          delflag
+        id,
+        name,
+        code,
+        label,
+        val,
+        sort,
+        tips,
+        update_time,
+        create_time,
+        delflag
         ) VALUES (
-          #{id},
-          #{name},
-          #{code},
-          #{label},
-          #{val},
-          #{sort},
-          #{tips},
-          #{updateTime},
-          #{createTime},
-          #{delflag}
+        #{id},
+        #{name},
+        #{code},
+        #{label},
+        #{val},
+        #{sort},
+        #{tips},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_dict SET
-          name = #{name},
-          code = #{code},
-          label = #{label},
-          val = #{val},
-          sort = #{sort},
-          tips = #{tips},
-          update_time = #{updateTime}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        name = #{name},
+        code = #{code},
+        label = #{label},
+        val = #{val},
+        sort = #{sort},
+        tips = #{tips},
+        update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">
@@ -163,8 +163,8 @@
         UPDATE sys_dict a
         SET a.delflag = 1
         <where>
-          a.delflag = 0
-          AND a.id = #{id}
+            a.delflag = 0
+            AND a.id = #{id}
         </where>
     </update>
 

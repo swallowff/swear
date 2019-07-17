@@ -16,13 +16,13 @@
     </sql>
 
     <select id="selectById" resultType="LoginLog">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_login_log a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_login_log a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="LoginLog">
@@ -54,7 +54,7 @@
         <where>
             a.delflag = 0
             <if test="logName != null and logName != ''">
-              AND a.log_name = #{logName}
+                AND a.log_name = #{logName}
             </if>
             <if test="userId != null and userId != ''">
                 AND a.user_id = #{userId}
@@ -78,44 +78,44 @@
 
     <insert id="insert">
         INSERT INTO sys_login_log(
-          id,
-          log_name,
-          user_id,
-          succeed,
-          message,
-          ip,
-          create_time,
-          update_time,
-          version,
-          delflag
+        id,
+        log_name,
+        user_id,
+        succeed,
+        message,
+        ip,
+        create_time,
+        update_time,
+        version,
+        delflag
         ) VALUES (
-          #{id},
-          #{logName},
-          #{userId},
-          #{succeed},
-          #{message},
-          #{ip},
-          #{createTime},
-          #{updateTime},
-          #{version},
-          #{delfalg}
+        #{id},
+        #{logName},
+        #{userId},
+        #{succeed},
+        #{message},
+        #{ip},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delfalg}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_login_log SET
-          log_name = #{logName},
-          user_id = #{userId},
-          succeed = #{succeed},
-          message = #{message},
-          ip = #{ip},
-          create_time = #{createTime},
-          update_time = #{updateTime},
-          version = #{version}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        log_name = #{logName},
+        user_id = #{userId},
+        succeed = #{succeed},
+        message = #{message},
+        ip = #{ip},
+        create_time = #{createTime},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">

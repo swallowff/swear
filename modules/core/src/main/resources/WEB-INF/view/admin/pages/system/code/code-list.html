@@ -25,38 +25,43 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">模块名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="rootModule" placeholder="例:web" value="web" autocomplete="off" class="layui-input">
+                        <input type="text" name="rootModule" placeholder="例:web" value="web" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">包路径</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="classPackage" placeholder="例:cn.swallowff.web" lay-verify="required" value="cn.swallowff.web" autocomplete="off" class="layui-input">
+                        <input type="text" name="classPackage" placeholder="例:cn.swallowff.web" lay-verify="required"
+                               value="cn.swallowff.web" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">mapper模块</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="mapperModules" placeholder="例:system" value="system" autocomplete="off" class="layui-input">
+                        <input type="text" name="mapperModules" placeholder="例:system" value="system" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">html模块</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="htmlModules" placeholder="例:pages.modules.cms" lay-verify="required" value="pages.modules.system" autocomplete="off" class="layui-input">
+                        <input type="text" name="htmlModules" placeholder="例:pages.modules.cms" lay-verify="required"
+                               value="pages.modules.system" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">js模块</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="jsModules" placeholder="例:js.modules.cms" lay-verify="required" value="js.modules.system" autocomplete="off" class="layui-input">
+                        <input type="text" name="jsModules" placeholder="例:js.modules.cms" lay-verify="required"
+                               value="js.modules.system" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <!--<div class="layui-inline">-->
-                    <!--<label class="layui-form-label">模板路径</label>-->
-                    <!--<div class="layui-input-inline">-->
-                        <!--<input type="text" name="templateDir" placeholder="例:/templates/base/" autocomplete="off" class="layui-input">-->
-                    <!--</div>-->
+                <!--<label class="layui-form-label">模板路径</label>-->
+                <!--<div class="layui-input-inline">-->
+                <!--<input type="text" name="templateDir" placeholder="例:/templates/base/" autocomplete="off" class="layui-input">-->
+                <!--</div>-->
                 <!--</div>-->
                 <div class="layui-inline">
                     <label class="layui-form-label">类名</label>
@@ -67,13 +72,15 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">表前缀</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="tablePrefix" placeholder="例:sys 或 sys_" value="sys_" autocomplete="off" class="layui-input">
+                        <input type="text" name="tablePrefix" placeholder="例:sys 或 sys_" value="sys_" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">强制覆盖</label>
                     <div class="layui-input-inline">
-                        <input type="checkbox" lay-verify="required" lay-filter="status" name="forceCover" lay-skin="switch" lay-text="是|否" value="1">
+                        <input type="checkbox" lay-verify="required" lay-filter="status" name="forceCover"
+                               lay-skin="switch" lay-text="是|否" value="1">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -90,9 +97,9 @@
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
     var Swear = {
-        serverUrl : '${serverUrl}',
-        ctxPath : '${admin}',
-        static : '${static}'
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
     }
 </script>
 <script src="${static}/module/admin/system/code/code-list.js"></script>

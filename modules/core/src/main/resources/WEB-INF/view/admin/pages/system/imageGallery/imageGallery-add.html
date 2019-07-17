@@ -14,23 +14,25 @@
      style="padding: 20px 30px 0 0;">
     <input type="hidden" name="id">
 
-    <div class="layui-form-item" >
+    <div class="layui-form-item">
         <label class="layui-form-label">图片地址</label>
         <div class="layui-input-inline" style="width: 250px">
-            <textarea id="image-src" placeholder="图片地址" class="layui-textarea" name="imgUrl" style="height:28px"></textarea>
+            <textarea id="image-src" placeholder="图片地址" class="layui-textarea" name="imgUrl"
+                      style="height:28px"></textarea>
         </div>
         <div class="layui-input-inline layui-btn-container" style="width: auto;">
             <button type="button" class="layui-btn layui-btn-primary" id="btn-image-upload">
                 <i class="layui-icon">&#xe67c;</i>上传图片
             </button>
-            <button class="layui-btn layui-btn-primary" layadmin-event="imagePreview">查看图片</button >
+            <button class="layui-btn layui-btn-primary" layadmin-event="imagePreview">查看图片</button>
         </div>
     </div>
     <div class="layui-form-item">
-         <label class="layui-form-label">缩略图地址</label>
-         <div class="layui-input-inline" style="width: 250px">
-             <textarea id="image-thumbnail" placeholder="图片地址" class="layui-textarea" name="thumbnail" style="height:28px"></textarea>
-         </div>
+        <label class="layui-form-label">缩略图地址</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <textarea id="image-thumbnail" placeholder="图片地址" class="layui-textarea" name="thumbnail"
+                      style="height:28px"></textarea>
+        </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">原始名称</label>
@@ -62,7 +64,8 @@
     </div>
 
     <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="LAYF-imageGallery-form-add-submit" id="LAYF-imageGallery-form-add-submit"
+        <input type="button" lay-submit lay-filter="LAYF-imageGallery-form-add-submit"
+               id="LAYF-imageGallery-form-add-submit"
                value="确认">
     </div>
 </div>
@@ -70,9 +73,9 @@
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
     var Swear = {
-        serverUrl : '${serverUrl}',
-        ctxPath : '${admin}',
-        static : '${static}'
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
     }
 
 </script>

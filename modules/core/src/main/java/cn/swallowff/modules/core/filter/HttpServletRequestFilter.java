@@ -25,8 +25,8 @@ public class HttpServletRequestFilter implements Filter {
         if (servletRequest instanceof HttpServletRequest) {
             // 过滤有body的请求
             if (StringUtils.equalsAnyIgnoreCase(servletRequest.getContentType(), MediaType.APPLICATION_JSON_VALUE,
-                    MediaType.APPLICATION_JSON_UTF8_VALUE,MediaType.APPLICATION_XML_VALUE,
-                    MediaType.TEXT_XML_VALUE,MediaType.APPLICATION_XML_VALUE)) {
+                    MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.APPLICATION_XML_VALUE,
+                    MediaType.TEXT_XML_VALUE, MediaType.APPLICATION_XML_VALUE)) {
                 requestWrapper = new BodyReaderHttpRequestWrapper((HttpServletRequest) servletRequest);
             }
         }

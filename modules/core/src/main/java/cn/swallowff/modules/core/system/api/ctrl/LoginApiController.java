@@ -29,13 +29,13 @@ public class LoginApiController extends BaseController {
     private UserAuthService userAuthService;
 
     @PostMapping(value = "")
-    public Object auth(@Validated LoginApiReq loginApiReq, BindingResult bindingResult){
+    public Object auth(@Validated LoginApiReq loginApiReq, BindingResult bindingResult) {
         validateBindingResult(bindingResult);
         User user = userAuthService.user(loginApiReq.getAccount());
-        if (null == user){
+        if (null == user) {
             throw new BizException(BizExceptionEnum.NO_THIS_USER);
         }
-        if (!StringUtils.equals(user.getPassword(),ShiroKit.md5(loginApiReq.getPassword(),user.getSalt()))){
+        if (!StringUtils.equals(user.getPassword(), ShiroKit.md5(loginApiReq.getPassword(), user.getSalt()))) {
             throw new BizException(BizExceptionEnum.AUTH_REQUEST_ERROR);
         }
 

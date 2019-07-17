@@ -16,12 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 public class CommonController {
 
     @RequestMapping("demo.html")
-    public String index(){
+    public String index() {
         return "admin/pages/system/demo";
     }
-
-
-
 
 
 }

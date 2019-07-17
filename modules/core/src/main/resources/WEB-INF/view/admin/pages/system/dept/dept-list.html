@@ -36,15 +36,18 @@
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
                 @}
             </div>
-            <table id="LAYF-list-table" lay-filter="LAYF-list-table" class="layui-table layui-form" lay-size="sm"></table>
+            <table id="LAYF-list-table" lay-filter="LAYF-list-table" class="layui-table layui-form"
+                   lay-size="sm"></table>
             <!--<table id="LAYF-list-table" lay-filter="LAYF-list-table"></table>-->
 
             <script type="text/html" id="table-content-list-operation">
                 @if(shiro.hasPermission("sys-dept-edit")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i class="layui-icon">&#xe642;</i></button>
+                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i
+                        class="layui-icon">&#xe642;</i></button>
                 @}
                 @if(shiro.hasPermission("sys-dept-delete")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i class="layui-icon">&#xe640;</i></button>
+                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i
+                        class="layui-icon">&#xe640;</i></button>
                 @}
             </script>
         </div>
@@ -54,9 +57,9 @@
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
     var Swear = {
-        serverUrl : '${serverUrl}',
-        ctxPath : '${admin}',
-        static : '${static}'
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
     }
 </script>
 <script src="${static}/module/admin/system/dept/dept-list.js"></script>

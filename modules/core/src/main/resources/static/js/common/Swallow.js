@@ -188,7 +188,7 @@ var Swallow = {
             parent.$('.J_menuTab').removeClass('active');
             parent.$('.J_menuTabs .page-tabs-content').append(tabLink);
 
-            var iframeContent = '<iframe class="J_iframe" name="iframe' + Swallow.randomNum(100,999) + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
+            var iframeContent = '<iframe class="J_iframe" name="iframe' + Swallow.randomNum(100, 999) + '" width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
             parent.$('.J_mainContent').find('iframe.J_iframe').hide().parents('.J_mainContent').append(iframeContent);
             parent.MyCrontab.scrollToTab($('.J_menuTab.active'));
         }

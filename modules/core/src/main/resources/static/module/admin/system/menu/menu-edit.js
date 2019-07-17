@@ -36,14 +36,14 @@ layui.config({
             method: 'POST',
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    parent.layer.msg(res.msg,{
+                    parent.layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
                     parent.layui.table.reload('menuTable'); //重载表格
                     parent.layer.close(index); //再执行关闭
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -57,7 +57,7 @@ layui.config({
     $.ajax({
         url: setter.ctxPath + '/menu/list.ajax',
         data: {
-            isMenu:true,
+            isMenu: true,
             page: -1      //不分页
         },
         method: 'GET',
@@ -67,15 +67,15 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#menu-select');
                 $select.append('<option value="">请选择</option>')
-                for (var i in listData){
-                    if (listData[i].id != Swear.formValue.id){
-                        $select.append('<option value="'+listData[i].id+'">'+listData[i].name+'</option>')
+                for (var i in listData) {
+                    if (listData[i].id != Swear.formValue.id) {
+                        $select.append('<option value="' + listData[i].id + '">' + listData[i].name + '</option>')
                     }
                 }
-                form.val('LAYF-menu-form-edit',{
+                form.val('LAYF-menu-form-edit', {
                     pid: Swear.formValue.pid,
                 });
-                form.render('select','LAYF-menu-form-edit'); //刷新select选择框
+                form.render('select', 'LAYF-menu-form-edit'); //刷新select选择框
             }
         }
     });

@@ -28,9 +28,9 @@ public class WebApiInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
-        if (logger.isDebugEnabled()){
+        if (logger.isDebugEnabled()) {
             long beginTime = System.currentTimeMillis();//开始时间
-            startTimeThreadLocal.set(beginTime);		//线程绑定变量（该数据只有当前请求的线程可见）
+            startTimeThreadLocal.set(beginTime);        //线程绑定变量（该数据只有当前请求的线程可见）
             logger.debug("开始计时: {}  URI: {}", new SimpleDateFormat("hh:mm:ss.SSS")
                     .format(beginTime), request.getRequestURI());
         }
@@ -46,7 +46,7 @@ public class WebApiInterceptor implements HandlerInterceptor {
                 MediaType.TEXT_XML_VALUE,
                 MediaType.APPLICATION_JSON_VALUE,
                 MediaType.APPLICATION_JSON_UTF8_VALUE,
-                MediaType.TEXT_PLAIN_VALUE)){
+                MediaType.TEXT_PLAIN_VALUE)) {
             String reqBody = ServletUtils.getRequestBody(request);
             reqParams.append("\nBody:");
             reqParams.append(reqBody);
@@ -59,7 +59,7 @@ public class WebApiInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        if (modelAndView != null){
+        if (modelAndView != null) {
             RequestModel.getRequestModel().setView(true);
             logger.info("ViewName: " + modelAndView.getViewName());
         }
@@ -73,16 +73,16 @@ public class WebApiInterceptor implements HandlerInterceptor {
         try {
             RequestModel requestModel = RequestModel.getRequestModel();
             if (logger.isDebugEnabled() && requestModel != null) {
-                if (!requestModel.isView()){  //页面请求不打印日志
-                    logger.debug("\n\n==START==\n接口请求\nURI:{}\nMethod:{}\nContentType:{}\nParam:{}\n",requestModel.getReqUri(),requestModel.getHttpMethod(),requestModel.getReqContentType(),requestModel.getReqParams());
+                if (!requestModel.isView()) {  //页面请求不打印日志
+                    logger.debug("\n\n==START==\n接口请求\nURI:{}\nMethod:{}\nContentType:{}\nParam:{}\n", requestModel.getReqUri(), requestModel.getHttpMethod(), requestModel.getReqContentType(), requestModel.getReqParams());
                     if (response != null) {
                         String responseContent = null;
-                        if (StringUtils.containsAny(response.getContentType(),MediaType.APPLICATION_XML_VALUE,MediaType.TEXT_XML_VALUE)){
-                            responseContent = XmlMapper.toXml(requestModel.getRespParams(),true);
-                        }else if(StringUtils.containsIgnoreCase(response.getContentType(),MediaType.APPLICATION_JSON_VALUE)){
+                        if (StringUtils.containsAny(response.getContentType(), MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_XML_VALUE)) {
+                            responseContent = XmlMapper.toXml(requestModel.getRespParams(), true);
+                        } else if (StringUtils.containsIgnoreCase(response.getContentType(), MediaType.APPLICATION_JSON_VALUE)) {
                             responseContent = JacksonUtil.toJson(requestModel.getRespParams());
                         }
-                        logger.debug("\n接口响应\nContentType:{}\nBody:{}\n==THE END==", response.getContentType(),responseContent);
+                        logger.debug("\n接口响应\nContentType:{}\nBody:{}\n==THE END==", response.getContentType(), responseContent);
                     }
                 }
                 long beginTime = startTimeThreadLocal.get(); //得到线程绑定的局部变量（开始时间）

@@ -24,6 +24,7 @@ public class SystemUserFilter extends AccessControlFilter {
 
     /**
      * 已登录或user存在的,放行
+     *
      * @param request
      * @param response
      * @param mappedValue
@@ -41,6 +42,7 @@ public class SystemUserFilter extends AccessControlFilter {
 
     /**
      * 未获取到subject时执行
+     *
      * @param request
      * @param response
      * @return
@@ -65,7 +67,7 @@ public class SystemUserFilter extends AccessControlFilter {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                if (null != writer){
+                if (null != writer) {
                     writer.close();
                 }
             }

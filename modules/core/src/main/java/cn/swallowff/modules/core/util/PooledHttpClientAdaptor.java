@@ -41,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * httpClient连接池适配器
+ *
  * @author shenyu
  * @create 2019/5/9
  */
@@ -74,11 +75,11 @@ public class PooledHttpClientAdaptor {
 
     public PooledHttpClientAdaptor() {
         this(
-            PooledHttpClientAdaptor.DEFAULT_POOL_MAX_TOTAL,
-            PooledHttpClientAdaptor.DEFAULT_POOL_MAX_PER_ROUTE,
-            PooledHttpClientAdaptor.DEFAULT_CONNECT_TIMEOUT,
-            PooledHttpClientAdaptor.DEFAULT_CONNECT_REQUEST_TIMEOUT,
-            PooledHttpClientAdaptor.DEFAULT_SOCKET_TIMEOUT
+                PooledHttpClientAdaptor.DEFAULT_POOL_MAX_TOTAL,
+                PooledHttpClientAdaptor.DEFAULT_POOL_MAX_PER_ROUTE,
+                PooledHttpClientAdaptor.DEFAULT_CONNECT_TIMEOUT,
+                PooledHttpClientAdaptor.DEFAULT_CONNECT_REQUEST_TIMEOUT,
+                PooledHttpClientAdaptor.DEFAULT_SOCKET_TIMEOUT
         );
     }
 
@@ -117,6 +118,7 @@ public class PooledHttpClientAdaptor {
 
     /**
      * 自定义加密httpClient构造方法
+     *
      * @param certFile
      * @param maxTotal
      * @param maxPerRoute
@@ -124,19 +126,19 @@ public class PooledHttpClientAdaptor {
      * @param connectRequestTimeout
      * @param socketTimeout
      */
-    public PooledHttpClientAdaptor(File certFile,String password, int maxTotal, int maxPerRoute, int connectTimeout, int connectRequestTimeout, int socketTimeout) {
+    public PooledHttpClientAdaptor(File certFile, String password, int maxTotal, int maxPerRoute, int connectTimeout, int connectRequestTimeout, int socketTimeout) {
         SSLConnectionSocketFactory sslfactory = null;
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(certFile);
             KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            keyStore.load(inputStream,password.toCharArray());
-            SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(keyStore,password.toCharArray()).build();
-            sslfactory = new SSLConnectionSocketFactory(sslContext,new String[]{"TLSv1"},null, new DefaultHostnameVerifier());
+            keyStore.load(inputStream, password.toCharArray());
+            SSLContext sslContext = SSLContexts.custom().loadKeyMaterial(keyStore, password.toCharArray()).build();
+            sslfactory = new SSLConnectionSocketFactory(sslContext, new String[]{"TLSv1"}, null, new DefaultHostnameVerifier());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (null != inputStream){
+            if (null != inputStream) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
@@ -153,8 +155,8 @@ public class PooledHttpClientAdaptor {
 
         RegistryBuilder<ConnectionSocketFactory> registryBuilder = RegistryBuilder.create();
         registryBuilder.register("http", PlainConnectionSocketFactory.getSocketFactory());
-        if (null != sslfactory){
-            registryBuilder.register("https",sslfactory);
+        if (null != sslfactory) {
+            registryBuilder.register("https", sslfactory);
         }
         Registry<ConnectionSocketFactory> registry = registryBuilder.build();
 
@@ -197,7 +199,7 @@ public class PooledHttpClientAdaptor {
         HttpGet httpGet = new HttpGet(apiUrl);
 
         // 设置header信息
-        if ( headers != null && headers.size() > 0 ) {
+        if (headers != null && headers.size() > 0) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpGet.addHeader(entry.getKey(), entry.getValue());
             }
@@ -215,7 +217,7 @@ public class PooledHttpClientAdaptor {
 
 //            logger.info("\n--http-response--响应状态码:"+statusCode);
 
-            if ( statusCode == HttpStatus.SC_OK ) {
+            if (statusCode == HttpStatus.SC_OK) {
                 HttpEntity entityRes = response.getEntity();
                 if (entityRes != null) {
                     String result = EntityUtils.toString(entityRes, "UTF-8");
@@ -227,8 +229,8 @@ public class PooledHttpClientAdaptor {
             return null;
         } catch (IOException e) {
         } finally {
-            logger.info("HTTP log Messages:{}",logStr);
-            if ( response != null ) {
+            logger.info("HTTP log Messages:{}", logStr);
+            if (response != null) {
                 try {
                     response.close();
                 } catch (IOException e) {
@@ -242,7 +244,7 @@ public class PooledHttpClientAdaptor {
         return this.doPost(apiUrl, Collections.EMPTY_MAP, params);
     }
 
-    public String doPost(String apiUrl, Map<String, String> headers, String reqParams){
+    public String doPost(String apiUrl, Map<String, String> headers, String reqParams) {
         StringBuilder logStr = new StringBuilder();
         logStr.append("\n===HTTP请求===").append("\nMethod:").append("POST")
                 .append("\nURL:").append(apiUrl).append("\nHeaders:").append(JacksonUtil.toJson(headers))
@@ -251,7 +253,7 @@ public class PooledHttpClientAdaptor {
         HttpPost httpPost = new HttpPost(apiUrl);
 
         // 配置请求headers
-        if ( headers != null && headers.size() > 0 ) {
+        if (headers != null && headers.size() > 0) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpPost.addHeader(entry.getKey(), entry.getValue());
             }
@@ -259,9 +261,9 @@ public class PooledHttpClientAdaptor {
 
         // 配置请求参数
 //        if ( params != null && params.size() > 0 ) {
-        HttpEntity httpEntity = new StringEntity(reqParams,Charset.forName("UTF-8"));
+        HttpEntity httpEntity = new StringEntity(reqParams, Charset.forName("UTF-8"));
 //            HttpEntity entityReq = getUrlEncodedFormEntity(params);
-            httpPost.setEntity(httpEntity);
+        httpPost.setEntity(httpEntity);
 //        }
 
 
@@ -276,9 +278,9 @@ public class PooledHttpClientAdaptor {
             logStr.append("\n===HTTP响应===").append("\n状态码:").append(statusCode);
 //            logger.info("\n--http-response--响应状态码:"+statusCode);
 
-            if ( statusCode == HttpStatus.SC_OK ) {
+            if (statusCode == HttpStatus.SC_OK) {
                 HttpEntity entityRes = response.getEntity();
-                if ( entityRes != null ) {
+                if (entityRes != null) {
                     String result = EntityUtils.toString(entityRes, "UTF-8");
 //                    logger.info("\n--http-response--响应内容: \n"+result);
                     logStr.append("\n响应内容:").append(result);
@@ -288,7 +290,7 @@ public class PooledHttpClientAdaptor {
             return null;
         } catch (IOException e) {
         } finally {
-            logger.info("HTTP log Messages:{}",logStr);
+            logger.info("HTTP log Messages:{}", logStr);
             if (response != null) {
                 try {
                     response.close();
@@ -308,14 +310,14 @@ public class PooledHttpClientAdaptor {
         HttpPost httpPost = new HttpPost(apiUrl);
 
         // 配置请求headers
-        if ( headers != null && headers.size() > 0 ) {
+        if (headers != null && headers.size() > 0) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpPost.addHeader(entry.getKey(), entry.getValue());
             }
         }
 
         // 配置请求参数
-        if ( params != null && params.size() > 0 ) {
+        if (params != null && params.size() > 0) {
             HttpEntity entityReq = getUrlEncodedFormEntity(params);
             httpPost.setEntity(entityReq);
         }
@@ -332,9 +334,9 @@ public class PooledHttpClientAdaptor {
             logStr.append("\n===HTTP响应===").append("\n状态码:").append(statusCode);
 //            logger.info("\n--http-response--响应状态码:"+statusCode);
 
-            if ( statusCode == HttpStatus.SC_OK ) {
+            if (statusCode == HttpStatus.SC_OK) {
                 HttpEntity entityRes = response.getEntity();
-                if ( entityRes != null ) {
+                if (entityRes != null) {
                     String result = EntityUtils.toString(entityRes, "UTF-8");
                     logStr.append("\n响应内容 :").append(result);
 //                    logger.info("\n--http-response--响应内容 :\n"+result);
@@ -344,7 +346,7 @@ public class PooledHttpClientAdaptor {
             return null;
         } catch (IOException e) {
         } finally {
-            logger.info("HTTP log Messages:{}",logStr);
+            logger.info("HTTP log Messages:{}", logStr);
             if (response != null) {
                 try {
                     response.close();
@@ -356,18 +358,18 @@ public class PooledHttpClientAdaptor {
 
     }
 
-    public String doPostBase64(String apiUrl, Map<String, String> headers, String reqParams){
+    public String doPostBase64(String apiUrl, Map<String, String> headers, String reqParams) {
         HttpPost httpPost = new HttpPost(apiUrl);
 
         // 配置请求headers
-        if ( headers != null && headers.size() > 0 ) {
+        if (headers != null && headers.size() > 0) {
             for (Map.Entry<String, String> entry : headers.entrySet()) {
                 httpPost.addHeader(entry.getKey(), entry.getValue());
             }
         }
 
         // 配置请求参数
-        HttpEntity httpEntity = new StringEntity(reqParams,Charset.forName("UTF-8"));
+        HttpEntity httpEntity = new StringEntity(reqParams, Charset.forName("UTF-8"));
         httpPost.setEntity(httpEntity);
 
         CloseableHttpResponse response = null;
@@ -380,9 +382,9 @@ public class PooledHttpClientAdaptor {
             int statusCode = response.getStatusLine().getStatusCode();
 //            logger.info("\n--http-response--响应状态码:"+statusCode);
 
-            if ( statusCode == HttpStatus.SC_OK ) {
+            if (statusCode == HttpStatus.SC_OK) {
                 HttpEntity entityRes = response.getEntity();
-                if ( entityRes != null ) {
+                if (entityRes != null) {
 //                    String result = EntityUtils.toString(entityRes, "UTF-8");
                     InputStream inputStream = entityRes.getContent();
                     ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
@@ -479,7 +481,6 @@ public class PooledHttpClientAdaptor {
         }
 
     }
-
 
 
 }

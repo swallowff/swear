@@ -10,7 +10,7 @@ import java.util.List;
  * @author shenyu
  * @create 2019/7/4
  */
-public class TreeEntity<E extends TreeEntity> extends BaseEntity{
+public class TreeEntity<E extends TreeEntity> extends BaseEntity {
     public static final String ROOT_ID = "0";
     public static final String ROOT_NAME = "顶级";
 
@@ -50,15 +50,15 @@ public class TreeEntity<E extends TreeEntity> extends BaseEntity{
     }
 
     public String getPid() {
-        if (null == getParent()){
+        if (null == getParent()) {
             return null;
-        }else {
+        } else {
             return getParent().getId();
         }
     }
 
     public void setPid(String pid) {
-        if (null == getParent()){
+        if (null == getParent()) {
             Class<E> entityClass = ReflectUtils.getClassGenricType(getClass(), 0);
             try {
                 E parent = entityClass.getConstructor().newInstance();
@@ -67,7 +67,7 @@ public class TreeEntity<E extends TreeEntity> extends BaseEntity{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             parent.setId(pid);
         }
     }

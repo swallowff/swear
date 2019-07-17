@@ -15,59 +15,59 @@ public class BaseResp implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Object data;
 
-    public BaseResp(Integer code, String msg){
+    public BaseResp(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public BaseResp(ResponseState stateEnum){
+    public BaseResp(ResponseState stateEnum) {
         this.code = stateEnum.getCode();
         this.msg = stateEnum.getMsg();
     }
 
-    public BaseResp putState(AbstractState respState){
+    public BaseResp putState(AbstractState respState) {
         this.code = respState.getCode();
         this.msg = respState.getMsg();
         return this;
     }
 
-    public BaseResp emptyData(){
+    public BaseResp emptyData() {
         return putState(ResponseState.EMPTY_DATA);
     }
 
-    public BaseResp putError(){
+    public BaseResp putError() {
         return putState(ResponseState.FAIL);
     }
 
-    public BaseResp putError(String tips){
+    public BaseResp putError(String tips) {
         this.code = ResponseState.FAIL.getCode();
         this.msg = tips;
         return this;
     }
 
-    public BaseResp paramsError(){
+    public BaseResp paramsError() {
         return putState(ResponseState.ILLEGAL_PARAMS);
     }
 
-    public BaseResp putSuccess(){
+    public BaseResp putSuccess() {
         return putState(ResponseState.SUCCESS);
     }
 
-    public BaseResp putSuccess(Object obj){
+    public BaseResp putSuccess(Object obj) {
         putState(ResponseState.SUCCESS);
         this.data = obj;
         return this;
     }
 
-    public static BaseResp newSuccess(){
+    public static BaseResp newSuccess() {
         return new BaseResp(ResponseState.SUCCESS);
     }
 
-    public boolean success(){
+    public boolean success() {
         return SUCCESS == this.getCode();
     }
 
-    public static BaseResp newError(){
+    public static BaseResp newError() {
         return new BaseResp(ResponseState.SYSTEM_ERROR);
     }
 

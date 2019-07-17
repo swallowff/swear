@@ -12,7 +12,7 @@ import java.util.*;
 public class WxUtils {
 
     //生成签名
-    public static String getSign(Map<String,Object> paramsMap,String partnerkey){
+    public static String getSign(Map<String, Object> paramsMap, String partnerkey) {
         String result = "";
         try {
             List<Map.Entry<String, Object>> entryList = new ArrayList<Map.Entry<String, Object>>(paramsMap.entrySet());
@@ -29,12 +29,12 @@ public class WxUtils {
                     String key = item.getKey();
                     Object val = item.getValue();
                     // 过滤空值和sign
-                    if (!("".equals(val) || val == null || "sign".equals(key) )) {
+                    if (!("".equals(val) || val == null || "sign".equals(key))) {
                         sb.append(key + "=" + val + "&");
                     }
                 }
             }
-            sb.append("key="+partnerkey);
+            sb.append("key=" + partnerkey);
 
             //MD5加密
             result = EncryptAndDecryptUtils.md5Encrypt(sb.toString());

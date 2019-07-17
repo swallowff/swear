@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * shiro工具包
+ *
  * @author yushen
  */
 public class ShiroKit {
@@ -34,11 +35,11 @@ public class ShiroKit {
         return SecurityUtils.getSubject();
     }
 
-    public static Boolean isAuthenticated(){
+    public static Boolean isAuthenticated() {
         return getSubject() != null && getSubject().isAuthenticated();
     }
 
-    public static Session getSession(){
+    public static Session getSession() {
         return getSubject().getSession();
     }
 
@@ -90,7 +91,7 @@ public class ShiroKit {
         return getSubject() != null && getSubject().getPrincipal() != null;
     }
 
-    public static boolean isAdmin(){
+    public static boolean isAdmin() {
         return getUser() != null && "0".equals(getUser().id);
     }
 
@@ -101,7 +102,7 @@ public class ShiroKit {
      * @return 拥有权限：true，否则false
      */
     public static boolean hasPermission(String permission) {
-        if (ShiroKit.isAdmin())return true;
+        if (ShiroKit.isAdmin()) return true;
         return getSubject() != null && permission != null
                 && permission.length() > 0
                 && getSubject().isPermitted(permission);
@@ -114,7 +115,7 @@ public class ShiroKit {
      * @return 属于该角色：true，否则false
      */
     public static boolean hasRole(String roleName) {
-        if (ShiroKit.isAdmin())return true;
+        if (ShiroKit.isAdmin()) return true;
         return getSubject() != null && roleName != null
                 && roleName.length() > 0 && getSubject().hasRole(roleName);
     }
@@ -126,7 +127,7 @@ public class ShiroKit {
      * @return 属于:true,否则false
      */
     public static boolean hasAnyRoles(String[] roles) {
-        if (ShiroKit.isAdmin())return true;
+        if (ShiroKit.isAdmin()) return true;
         boolean hasAnyRole = false;
         Subject subject = getSubject();
         if (subject != null && ArrayUtils.isNotEmpty(roles)) {
@@ -147,7 +148,7 @@ public class ShiroKit {
      * @return 属于:true,否则false
      */
     public static boolean hasAllRoles(String roleNames) {
-        if (ShiroKit.isAdmin())return true;
+        if (ShiroKit.isAdmin()) return true;
         boolean hasAllRole = true;
         Subject subject = getSubject();
         if (subject != null && roleNames != null && roleNames.length() > 0) {

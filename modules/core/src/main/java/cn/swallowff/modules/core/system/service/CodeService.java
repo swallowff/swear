@@ -18,11 +18,11 @@ public class CodeService {
     @Value("${spring.datasource-default.db-name}")
     private String dbName;
 
-    public List<Map<String,Object>> getAllTables(){
+    public List<Map<String, Object>> getAllTables() {
         String sql = "select TABLE_NAME as tableName,TABLE_COMMENT as tableComment from information_schema.`TABLES` where TABLE_SCHEMA = '" + this.dbName + "'";
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(SpringContextHolder.getBean(DataSource.class),true);
-        List<Map<String,Object>> result = jdbcTemplate.queryForList(sql);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(SpringContextHolder.getBean(DataSource.class), true);
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
         return result;
     }
 

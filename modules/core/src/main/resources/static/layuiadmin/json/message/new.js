@@ -1,7 +1,15 @@
 {
-  "code": 0
-  ,"msg": ""
-  ,"data": {
-    "newmsg": 3
-  }
+    "code"
+:
+    0
+        , "msg"
+:
+    ""
+        , "data"
+:
+    {
+        "newmsg"
+    :
+        3
+    }
 }

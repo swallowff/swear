@@ -27,37 +27,37 @@ public class DictController extends BaseController {
     private DictService dictService;
 
     @RequestMapping(value = "list.html")
-    @Permission(value = "sys-dict-list")
-    public String listHtml(){
+    @Permission(value = "cloud-dict-list")
+    public String listHtml() {
         return "admin/pages/system/dict/dict-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String addHtml(){
+    public String addHtml() {
         return "admin/pages/system/dict/dict-add";
     }
 
     @RequestMapping(value = "edit.html")
-    public String editHtml(@RequestParam("id") String id, Model model){
+    public String editHtml(@RequestParam("id") String id, Model model) {
         Dict dict = dictService.selectById(id);
-        model.addAttribute("dict",dict);
+        model.addAttribute("dict", dict);
         return "admin/pages/system/dict/dict-edit";
     }
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object ajaxList(Dict dict){
+    public Object ajaxList(Dict dict) {
         PageResp<Dict> pageResp = dictService.findPage(dict);
-        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
+        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(), pageResp.getTotalRows());
         return layPageResp;
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
-    public BaseResp add(Dict dict){
+    public BaseResp add(Dict dict) {
         BaseResp baseResp = BaseResp.newSuccess();
-        Dict existDict = dictService.selectByCodeAndVal(dict.getCode(),dict.getVal());
-        if (null != existDict){
+        Dict existDict = dictService.selectByCodeAndVal(dict.getCode(), dict.getVal());
+        if (null != existDict) {
             return baseResp.putError("字典已存在");
         }
         dictService.save(dict);
@@ -66,40 +66,40 @@ public class DictController extends BaseController {
 
     @RequestMapping(value = "edit.ajax")
     @ResponseBody
-    public BaseResp edit(Dict dict){
+    public BaseResp edit(Dict dict) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (null == dict || StringUtils.isBlank(dict.getId())){
+        if (null == dict || StringUtils.isBlank(dict.getId())) {
             return baseResp.paramsError();
         }
         int r = dictService.updateSelective(dict);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "delete")
     @ResponseBody
-    public BaseResp delete(String id){
+    public BaseResp delete(String id) {
         BaseResp baseResp = BaseResp.newSuccess();
         int r = dictService.delete(id);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "batchDel")
     @ResponseBody
-    public BaseResp batchDel(String[] ids){
+    public BaseResp batchDel(String[] ids) {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
-        for (String id : ids){
+        for (String id : ids) {
             int r = dictService.delete(id);
-            if (r == 1){
-                count ++;
+            if (r == 1) {
+                count++;
             }
         }
-        if (count == ids.length){
+        if (count == ids.length) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 }

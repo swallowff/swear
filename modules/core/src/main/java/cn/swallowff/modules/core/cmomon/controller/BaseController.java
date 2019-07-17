@@ -28,44 +28,44 @@ public abstract class BaseController {
     }
 
     protected HttpSession getSession(Boolean flag) {
-        return ((HttpServletRequest)Objects.requireNonNull(HttpContext.getRequest())).getSession(flag);
+        return ((HttpServletRequest) Objects.requireNonNull(HttpContext.getRequest())).getSession(flag);
     }
 
     protected String getPara(String name) {
-        return ((HttpServletRequest)Objects.requireNonNull(HttpContext.getRequest())).getParameter(name);
+        return ((HttpServletRequest) Objects.requireNonNull(HttpContext.getRequest())).getParameter(name);
     }
 
     protected void setAttr(String name, Object value) {
-        ((HttpServletRequest)Objects.requireNonNull(HttpContext.getRequest())).setAttribute(name, value);
+        ((HttpServletRequest) Objects.requireNonNull(HttpContext.getRequest())).setAttribute(name, value);
     }
 
-    protected Map<String,?> getInputFlashMap(HttpServletRequest request){
+    protected Map<String, ?> getInputFlashMap(HttpServletRequest request) {
         return RequestContextUtils.getInputFlashMap(request);
     }
 
-    protected Boolean validateBindingResult(BindingResult bindingResult, BaseResp baseResp){
-        if (bindingResult.hasErrors()){
+    protected Boolean validateBindingResult(BindingResult bindingResult, BaseResp baseResp) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             StringBuilder sb = new StringBuilder();
-            for (ObjectError error : errors){
+            for (ObjectError error : errors) {
                 sb.append(error.getDefaultMessage());
                 sb.append(";");
             }
             baseResp.putState(ResponseState.ILLEGAL_PARAMS);
             baseResp.setMsg(sb.toString());
             return false;
-        }else return true;
+        } else return true;
     }
 
-    protected void validateBindingResult(BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    protected void validateBindingResult(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             StringBuilder sb = new StringBuilder();
-            for (ObjectError error : errors){
+            for (ObjectError error : errors) {
                 sb.append(error.getDefaultMessage());
                 sb.append(";");
             }
-            throw new BizException(ResponseState.ILLEGAL_PARAMS.getCode(),sb.toString());
+            throw new BizException(ResponseState.ILLEGAL_PARAMS.getCode(), sb.toString());
         }
     }
 }

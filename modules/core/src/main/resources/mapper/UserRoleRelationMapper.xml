@@ -10,20 +10,20 @@
         a.version AS version,
         r.code AS roleCode
     </sql>
-    
+
     <sql id="sys_role_join">
         LEFT JOIN sys_role r ON r.delflag = 0 AND r.id = a.role_id
     </sql>
 
     <select id="selectById" resultType="UserRoleRelation">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_user_role_relation a
-      <include refid="sys_role_join"/>
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user_role_relation a
+        <include refid="sys_role_join"/>
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="UserRoleRelation">
@@ -51,7 +51,7 @@
         <where>
             a.delflag = 0
             <if test="userId != null and userId != ''">
-              AND a.user_id = #{userId}
+                AND a.user_id = #{userId}
             </if>
             <if test="roleId != null and roleId != ''">
                 AND a.role_id = #{roleId}
@@ -69,34 +69,34 @@
 
     <insert id="insert">
         INSERT INTO sys_user_role_relation(
-          id,
-          user_id,
-          role_id,
-          create_time,
-          update_time,
-          version,
-          delflag
+        id,
+        user_id,
+        role_id,
+        create_time,
+        update_time,
+        version,
+        delflag
         ) VALUES (
-          #{id},
-          #{userId},
-          #{roleId},
-          #{createTime},
-          #{updateTime},
-          #{version},
-          #{delflag}
+        #{id},
+        #{userId},
+        #{roleId},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_user_role_relation SET
-          user_id = #{userId},
-          role_id = #{roleId},
-          update_time = #{updateTime},
-          version = #{version}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        user_id = #{userId},
+        role_id = #{roleId},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">
@@ -129,7 +129,7 @@
             AND a.id = #{id}
         </where>
     </update>
-    
+
     <delete id="delByUserId">
         DELETE FROM sys_user_role_relation
         <where>

@@ -16,13 +16,13 @@
     </sql>
 
     <select id="selectById" resultType="ImageGallery">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_image_gallery a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_image_gallery a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="ImageGallery">
@@ -90,43 +90,43 @@
 
     <insert id="insert">
         INSERT INTO sys_image_gallery(
-          id,
-          origin_name,
-          img_name,
-          img_url,
-          thumbnail,
-          img_format,
-          size,
-          update_time,
-          create_time,
-          delflag
+        id,
+        origin_name,
+        img_name,
+        img_url,
+        thumbnail,
+        img_format,
+        size,
+        update_time,
+        create_time,
+        delflag
         ) VALUES (
-          #{id},
-          #{originName},
-          #{imgName},
-          #{imgUrl},
-          #{thumbnail},
-          #{imgFormat},
-          #{size},
-          #{updateTime},
-          #{createTime},
-          #{delflag}
+        #{id},
+        #{originName},
+        #{imgName},
+        #{imgUrl},
+        #{thumbnail},
+        #{imgFormat},
+        #{size},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_image_gallery SET
-          origin_name = #{originName},
-          img_name = #{imgName},
-          img_url = #{imgUrl},
-          thumbnail = #{thumbnail},
-          img_format = #{imgFormat},
-          size = #{size},
-          update_time = #{updateTime}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        origin_name = #{originName},
+        img_name = #{imgName},
+        img_url = #{imgUrl},
+        thumbnail = #{thumbnail},
+        img_format = #{imgFormat},
+        size = #{size},
+        update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">
@@ -164,8 +164,8 @@
         UPDATE sys_image_gallery a
         SET a.delflag = 1
         <where>
-          a.delflag = 0
-          AND a.id = #{id}
+            a.delflag = 0
+            AND a.id = #{id}
         </where>
     </update>
 

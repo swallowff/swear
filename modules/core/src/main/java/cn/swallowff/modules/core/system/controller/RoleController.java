@@ -41,34 +41,34 @@ public class RoleController extends BaseController {
     private MenuService menuService;
 
     @RequestMapping(value = "list.html")
-    public String listHtml(Role role,Model model){
+    public String listHtml(Role role, Model model) {
         return "admin/pages/system/role/role-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String addHtml(Role role,Model model){
+    public String addHtml(Role role, Model model) {
         return "admin/pages/system/role/role-add";
     }
 
     @RequestMapping(value = "edit.html")
-    public String editHtml(@RequestParam("id") String id, Model model){
+    public String editHtml(@RequestParam("id") String id, Model model) {
         Role role = roleService.selectById(id);
-        model.addAttribute("role",role);
+        model.addAttribute("role", role);
         return "admin/pages/system/role/role-edit";
     }
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object ajaxList(Role role){
+    public Object ajaxList(Role role) {
         role.setOrderBy("sort ASC");
         PageResp<Role> pageResp = roleService.findPage(role);
-        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
+        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(), pageResp.getTotalRows());
         return layPageResp;
     }
 
     @RequestMapping(value = "dtree.ajax")
     @ResponseBody
-    public Object dtree(Role role){
+    public Object dtree(Role role) {
         BaseResp baseResp = BaseResp.newSuccess();
         role.setPids(TreeEntity.ROOT_ID);
         List<Role> list = roleService.findList(role);
@@ -78,20 +78,20 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "userDtree.ajax")
     @ResponseBody
-    public Object userDtree(String userId){
+    public Object userDtree(String userId) {
         BaseResp baseResp = BaseResp.newSuccess();
         Role role = new Role();
         role.setPids(TreeEntity.ROOT_ID);
-        List<DtreeNode> list = roleService.findDtreeNodeListWithUid(role,userId);
+        List<DtreeNode> list = roleService.findDtreeNodeListWithUid(role, userId);
         return baseResp.setData(list);
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
-    public BaseResp add(Role role){
+    public BaseResp add(Role role) {
         BaseResp baseResp = BaseResp.newSuccess();
         Role existRole = roleService.selectByCode(role.getCode());
-        if (null != existRole){
+        if (null != existRole) {
             return baseResp.putError("角色CODE已存在");
         }
         roleService.save(role);
@@ -100,52 +100,53 @@ public class RoleController extends BaseController {
 
     @RequestMapping(value = "edit.ajax")
     @ResponseBody
-    public BaseResp edit(Role role){
+    public BaseResp edit(Role role) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (null == role || StringUtils.isBlank(role.getId())){
+        if (null == role || StringUtils.isBlank(role.getId())) {
             return baseResp.paramsError();
         }
         int r = roleService.update(role);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "delete")
     @ResponseBody
-    public BaseResp delete(String id){
+    public BaseResp delete(String id) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if ("1".equals(id)){
+        if ("1".equals(id)) {
             return baseResp.putError("无法删除超级管理员角色");
         }
         int r = roleService.delete(id);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "batchDel")
     @ResponseBody
-    public BaseResp batchDel(String[] ids){
+    public BaseResp batchDel(String[] ids) {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
-        for (String id : ids){
-            if ("1".equals(id)){
+        for (String id : ids) {
+            if ("1".equals(id)) {
                 continue;
             }
             int r = roleService.delete(id);
-            if (r == 1){
-                count ++;
+            if (r == 1) {
+                count++;
             }
         }
-        if (count == ids.length){
+        if (count == ids.length) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     /**
      * 快速连点时,会重复创建很多数据
      * 解决办法: 1.前端防止重复提交   2.使用synchronized
+     *
      * @param roleId
      * @param menuIds
      * @return
@@ -153,36 +154,36 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "batchSetupAuth")
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
-    public BaseResp batchSetupAuth(String roleId,String[] menuIds){
+    public BaseResp batchSetupAuth(String roleId, String[] menuIds) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (StringUtils.isBlank(roleId)){
+        if (StringUtils.isBlank(roleId)) {
             return baseResp.putError("请选择角色");
         }
-        if (ArrayUtils.isEmpty(menuIds)){
+        if (ArrayUtils.isEmpty(menuIds)) {
             return baseResp.putError("请选择菜单");
         }
         //删除角色原来的权限
         roleAuthRelationService.delByRoleId(roleId);
         int count = 0;
-        for (int j = 0; j < menuIds.length; j++){
+        for (int j = 0; j < menuIds.length; j++) {
             //添加角色菜单数据
             String menuId = menuIds[j];
-            RoleAuthRelation roleAuthRelation = roleAuthRelationService.selectByRoleIdAndMenuId(roleId,menuId);
-            if (null == roleAuthRelation){
+            RoleAuthRelation roleAuthRelation = roleAuthRelationService.selectByRoleIdAndMenuId(roleId, menuId);
+            if (null == roleAuthRelation) {
                 roleAuthRelation = new RoleAuthRelation();
             }
             roleAuthRelation.setRoleId(roleId);
             roleAuthRelation.setMenuId(menuId);
             Menu menu = menuService.selectById(menuId);
-            if (null != menu){
+            if (null != menu) {
                 roleAuthRelation.setAuthCode(menu.getCode());
             }
             roleAuthRelationService.save(roleAuthRelation);
-            count ++;
+            count++;
         }
-        if (count > 0){
+        if (count > 0) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
 }

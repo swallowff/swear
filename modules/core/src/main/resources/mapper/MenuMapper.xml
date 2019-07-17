@@ -22,13 +22,13 @@
     </sql>
 
     <select id="selectById" resultType="Menu">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_menu a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_menu a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="Menu">
@@ -69,7 +69,7 @@
         <where>
             a.delflag = 0
             <if test="code != null and code != ''">
-              AND a.code = #{code}
+                AND a.code = #{code}
             </if>
             <if test="parent != null and parent.id != null and parent.id != ''">
                 AND a.pid = #{parent.id}
@@ -136,7 +136,7 @@
             a.delflag = 0
             AND a.pid = #{id}
             <if test="isMenu != null">
-              AND a.is_menu = #{isMenu}
+                AND a.is_menu = #{isMenu}
             </if>
         </where>
         <choose>
@@ -151,57 +151,57 @@
 
     <insert id="insert">
         INSERT INTO sys_menu(
-          id,
-          code,
-          pid,
-          pids,
-          name,
-          icon,
-          url,
-          sort,
-          levels,
-          is_menu,
-          is_expandable,
-          tips,
-          is_open,
-          update_time,
-          create_time,
-          delflag
+        id,
+        code,
+        pid,
+        pids,
+        name,
+        icon,
+        url,
+        sort,
+        levels,
+        is_menu,
+        is_expandable,
+        tips,
+        is_open,
+        update_time,
+        create_time,
+        delflag
         ) VALUES (
-          #{id},
-          #{code},
-          #{pid},
-          #{pids},
-          #{name},
-          #{icon},
-          #{url},
-          #{sort},
-          #{levels},
-          #{isMenu},
-          #{isExpandable},
-          #{tips},
-          #{isOpen},
-          #{updateTime},
-          #{createTime},
-          #{delflag}
+        #{id},
+        #{code},
+        #{pid},
+        #{pids},
+        #{name},
+        #{icon},
+        #{url},
+        #{sort},
+        #{levels},
+        #{isMenu},
+        #{isExpandable},
+        #{tips},
+        #{isOpen},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_menu SET
-            code = #{code},
-            pid = #{pid},
-            pids = #{pids},
-            name = #{name},
-            icon = #{icon},
-            url = #{url},
-            sort = #{sort},
-            levels = #{levels},
-            is_menu = #{isMenu},
-            is_expandable = #{isExpandable},
-            tips = #{tips},
-            is_open = #{isOpen},
-            update_time = #{updateTime}
+        code = #{code},
+        pid = #{pid},
+        pids = #{pids},
+        name = #{name},
+        icon = #{icon},
+        url = #{url},
+        sort = #{sort},
+        levels = #{levels},
+        is_menu = #{isMenu},
+        is_expandable = #{isExpandable},
+        tips = #{tips},
+        is_open = #{isOpen},
+        update_time = #{updateTime}
         <where>
             delflag = 0
             AND id = #{id}

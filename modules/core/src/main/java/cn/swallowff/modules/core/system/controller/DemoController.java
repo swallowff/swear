@@ -26,22 +26,22 @@ public class DemoController {
 
     @RequestMapping(value = "treeTableList.ajax")
     @ResponseBody
-    public Object treeTableList(Dept dept){
+    public Object treeTableList(Dept dept) {
         List<Dept> deptList = deptService.findList(new Dept());
         return deptList;
     }
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object ajaxList(Dept dept){
+    public Object ajaxList(Dept dept) {
         PageResp<Dept> pageResp = deptService.findPage(dept);
-        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
+        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(), pageResp.getTotalRows());
         return layPageResp;
     }
 
     @RequestMapping(value = "dtree.ajax")
     @ResponseBody
-    public Object dtree(Dept dept){
+    public Object dtree(Dept dept) {
         BaseResp baseResp = BaseResp.newSuccess();
         dept.setPids(TreeEntity.ROOT_ID);
         List<Dept> deptList = deptService.findList(dept);
@@ -51,7 +51,7 @@ public class DemoController {
 
     @RequestMapping(value = "eleTree.ajax")
     @ResponseBody
-    public Object eleTree(){
+    public Object eleTree() {
         BaseResp baseResp = BaseResp.newSuccess();
         Dept dept = deptService.findAllTree();
         return baseResp.setData(dept);

@@ -14,18 +14,21 @@
 
         <div class="layui-fluid">
             <div class="layui-card">
-                <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="LAYF-menu-list-search">
+                <div class="layui-form layui-card-header layuiadmin-card-header-auto"
+                     lay-filter="LAYF-menu-list-search">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <!--<label class="layui-form-label">菜单名称</label>-->
                             <div class="layui-input-inline">
-                                <input type="text" name="name" placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
+                                <input type="text" name="name" placeholder="请输入菜单名称" autocomplete="off"
+                                       class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <!--<label class="layui-form-label">菜单编号</label>-->
                             <div class="layui-input-inline">
-                                <input type="text" name="code" placeholder="请输入权限CODE" autocomplete="off" class="layui-input">
+                                <input type="text" name="code" placeholder="请输入权限CODE" autocomplete="off"
+                                       class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -36,7 +39,8 @@
                         </div>
                         <#dictSelector name="isMenu" label="" code="yes_no" placeholder="是否菜单"/>
                         <div class="layui-inline">
-                            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-menu-list-search-submit">
+                            <button class="layui-btn layuiadmin-btn-list" lay-submit
+                                    lay-filter="LAYF-menu-list-search-submit">
                                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                             </button>
                         </div>
@@ -56,10 +60,14 @@
 
                     <script type="text/html" id="table-content-list-operation">
                         @if(shiro.hasPermission("sys-menu-edit")){
-                        <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i class="layui-icon">&#xe642;</i></button>
+                        <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')">
+                            <i class="layui-icon">&#xe642;</i>
+                        </button>
                         @}
                         @if(shiro.hasPermission("sys-menu-delete")){
-                        <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i class="layui-icon">&#xe640;</i></button>
+                        <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')">
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
                         @}
                     </script>
                 </div>
@@ -69,9 +77,9 @@
         <script src="${static}/layuiadmin/layui/layui.js"></script>
         <script>
             var Swear = {
-                serverUrl : '${serverUrl}',
-                ctxPath : '${admin}',
-                static : '${static}'
+                serverUrl: '${serverUrl}',
+                ctxPath: '${admin}',
+                static: '${static}'
             }
         </script>
         <script src="${static}/module/admin/system/menu/menu-list.js"></script>

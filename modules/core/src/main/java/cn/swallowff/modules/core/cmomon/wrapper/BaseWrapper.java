@@ -22,21 +22,21 @@ public abstract class BaseWrapper<T> {
         this.entityList = entityList;
     }
 
-    public <R> R wrap(){
-        if (null != t){
+    public <R> R wrap() {
+        if (null != t) {
             return wrapEntity(t);
-        }else return null;
+        } else return null;
     }
 
-    public <R> List<R> wrapList(){
-        if (CollectionUtils.isNotEmpty(entityList)){
+    public <R> List<R> wrapList() {
+        if (CollectionUtils.isNotEmpty(entityList)) {
             Iterator<T> iterator = entityList.iterator();
             List<R> resList = new LinkedList<>();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 resList.add(wrapEntity(iterator.next()));
             }
             return resList;
-        }else return Collections.EMPTY_LIST;
+        } else return Collections.EMPTY_LIST;
     }
 
     protected abstract <R> R wrapEntity(T t);

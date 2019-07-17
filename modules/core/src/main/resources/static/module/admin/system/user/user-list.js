@@ -3,7 +3,7 @@ layui.config({
 }).extend({
     index: 'lib/index', //主入口模块
     dtree: 'tree/dtree'
-}).use(['index', 'contlist', 'table', 'jquery', 'admin' ,'dtree'], function () {
+}).use(['index', 'contlist', 'table', 'jquery', 'admin', 'dtree'], function () {
     var table = layui.table,
         form = layui.form,
         $ = layui.jquery,
@@ -21,7 +21,7 @@ layui.config({
         url: setter.ctxPath + '/user/list.ajax',  //请求路径
         cellMinWidth: 20 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
-        ,even: true    //隔行换色
+        , even: true    //隔行换色
         , page: true  //开启分页
         , limits: [10, 20, 50]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
         , limit: 10 //每页默认显示的数量
@@ -107,13 +107,13 @@ layui.config({
                     },
                     success: function (res) {
                         if (res.code == setter.response.statusCode.ok) {
-                            layer.msg(res.msg,{
+                            layer.msg(res.msg, {
                                 icon: 1,
                                 time: 2000
                             });
                             table.reload('userTable');
-                        }else {
-                            layer.msg(res.msg,{
+                        } else {
+                            layer.msg(res.msg, {
                                 icon: 5,
                                 time: 2000
                             });
@@ -150,7 +150,7 @@ layui.config({
     function operation(data) {
         var id = data.id;
         var btn = $('#table-content-list-operation').html()
-        btn = btn.replace(new RegExp('replacement','gm'),id)
+        btn = btn.replace(new RegExp('replacement', 'gm'), id)
         return btn
     }
 
@@ -164,13 +164,13 @@ layui.config({
             },
             success: function (res) {
                 if (res.code == setter.response.statusCode.ok) {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     });
                     layui.table.reload('userTable');
                 } else {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     });
@@ -205,20 +205,20 @@ layui.config({
             // content: $('#role-select'),
             content: '<ul id="role-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;"></ul>',
             scrollbar: true,//屏蔽浏览器滚动条
-            success: function(layero, index){
+            success: function (layero, index) {
                 renderDtree(id);
             },
             yes: function (index) {
-                $('#layui-layer'+index).find('.layui-layer-btn0').addClass('swear-a-disabled');   //防止重复提交
+                $('#layui-layer' + index).find('.layui-layer-btn0').addClass('swear-a-disabled');   //防止重复提交
                 var param = dtree.getCheckbarNodesParam("role-select")   //获取复选框选中数据
                 console.log(param)
                 var roleAry = new Array();
                 for (var k = 0; k < param.length; k++) {
                     roleAry[k] = param[k].nodeId;
                 }
-                if (param.length === 0){
-                    $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
-                    return layer.msg('请选择菜单',{
+                if (param.length === 0) {
+                    $('#layui-layer' + index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
+                    return layer.msg('请选择菜单', {
                         icon: 5,
                         time: 2000
                     })
@@ -234,31 +234,31 @@ layui.config({
                     },
                     success: function (res) {
                         if (res.code === setter.response.statusCode.ok) {
-                            layer.msg(res.msg,{
+                            layer.msg(res.msg, {
                                 icon: 1,
                                 time: 2000
                             });
                             layer.close(index);
                             table.reload('roleTable');
-                        }else {
-                            layer.msg(res.msg,{
+                        } else {
+                            layer.msg(res.msg, {
                                 icon: 5,
                                 time: 2000
                             });
                         }
                     }
                 });
-                $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
+                $('#layui-layer' + index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
             }
         })
     }
 
-    var renderDtree = function(userId){
+    var renderDtree = function (userId) {
         dtree.render({
             elem: "#role-select",
             // icon: ["-1","5"],   //二级图标
             // ficon: ["-1","5"],   //一级图标
-            url: setter.ctxPath + "/role/userDtree.ajax?userId="+userId, // 使用url加载（可与data加载同时存在）
+            url: setter.ctxPath + "/role/userDtree.ajax?userId=" + userId, // 使用url加载（可与data加载同时存在）
             // height: '150px',
             method: 'GET',
             dataStyle: "layuiStyle",  //使用layui风格的数据格式
@@ -266,8 +266,8 @@ layui.config({
             accordion: false,  // 开启手风琴
             none: "提示说我没有数据？",
             line: true,  // 显示树线
-            response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
-            checkbar:true //开启复选框
+            response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
+            checkbar: true //开启复选框
         });
     }
 

@@ -35,9 +35,9 @@ public class CoreProperties {
     private Integer sessionValidationInterval = 15 * 60;
 
     public String getFileUploadPath() {
-        if (fileUploadPath.endsWith(File.separator)){
+        if (fileUploadPath.endsWith(File.separator)) {
             return fileUploadPath;
-        }else {
+        } else {
             return fileUploadPath.concat(File.separator);
         }
     }

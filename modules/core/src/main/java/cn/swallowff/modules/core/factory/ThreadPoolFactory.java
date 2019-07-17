@@ -11,37 +11,37 @@ public class ThreadPoolFactory {
     private static ExecutorService CACHED_POOL_INSTANCE = null;
     private static ExecutorService CUSTOM_POOL_INSTANCE = null;
 
-    private ThreadPoolFactory(){
+    private ThreadPoolFactory() {
     }
 
-    public static ExecutorService cachedExecutorService(){
-        if (null == CACHED_POOL_INSTANCE){
-            synchronized (ThreadPoolFactory.class){
+    public static ExecutorService cachedExecutorService() {
+        if (null == CACHED_POOL_INSTANCE) {
+            synchronized (ThreadPoolFactory.class) {
                 CACHED_POOL_INSTANCE = cachedThreadPool();
                 return CACHED_POOL_INSTANCE;
             }
-        }else {
+        } else {
             return CACHED_POOL_INSTANCE;
         }
     }
 
-    public static ExecutorService customExecutorService(){
-        if (null == CUSTOM_POOL_INSTANCE){
-            synchronized (ThreadPoolFactory.class){
+    public static ExecutorService customExecutorService() {
+        if (null == CUSTOM_POOL_INSTANCE) {
+            synchronized (ThreadPoolFactory.class) {
                 CUSTOM_POOL_INSTANCE = customThreadPool();
                 return CUSTOM_POOL_INSTANCE;
             }
-        }else {
+        } else {
             return CUSTOM_POOL_INSTANCE;
         }
     }
 
-    private static ExecutorService cachedThreadPool(){
+    private static ExecutorService cachedThreadPool() {
         return Executors.newCachedThreadPool();
     }
 
-    private static ExecutorService customThreadPool(){
-        return new ThreadPoolExecutor(5,10,30L,TimeUnit.SECONDS,new LinkedBlockingQueue<>());
+    private static ExecutorService customThreadPool() {
+        return new ThreadPoolExecutor(5, 10, 30L, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
     }
 
 }

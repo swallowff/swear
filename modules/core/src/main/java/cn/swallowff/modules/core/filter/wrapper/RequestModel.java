@@ -108,11 +108,11 @@ public class RequestModel {
         return REQUEST_MODEL.get();
     }
 
-    public static void setRequestModel(RequestModel request){
+    public static void setRequestModel(RequestModel request) {
         REQUEST_MODEL.set(request);
     }
 
-    public static void removeRequestModel(){
+    public static void removeRequestModel() {
         REQUEST_MODEL.remove();
     }
 

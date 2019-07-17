@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@DependsOn({"springContextHolder","userService"})
+@DependsOn({"springContextHolder", "userService"})
 public class UserAuthServiceImpl implements UserAuthService {
     @Autowired
     private UserService userService;
@@ -45,10 +45,10 @@ public class UserAuthServiceImpl implements UserAuthService {
         //密码加盐处理
         String salt = user.getSalt();
         ByteSource credentialsSalt = new Md5Hash(salt);
-        return new SimpleAuthenticationInfo(shiroUser,credentials,credentialsSalt,realName);
+        return new SimpleAuthenticationInfo(shiroUser, credentials, credentialsSalt, realName);
     }
 
-    public static UserAuthService me(){
+    public static UserAuthService me() {
         return SpringContextHolder.getBean(UserAuthServiceImpl.class);
     }
 }

@@ -36,8 +36,8 @@ public class HttpContext {
         } else {
             Enumeration enums = request.getParameterNames();
 
-            while(enums.hasMoreElements()) {
-                String paramName = (String)enums.nextElement();
+            while (enums.hasMoreElements()) {
+                String paramName = (String) enums.nextElement();
                 String paramValue = request.getParameter(paramName);
                 values.put(paramName, paramValue);
             }

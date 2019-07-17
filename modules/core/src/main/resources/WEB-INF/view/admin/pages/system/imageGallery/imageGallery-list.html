@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
     <style>
-        .layui-table-cell{
+        .layui-table-cell {
             height: 100%;
             max-width: 100%;
         }
@@ -24,7 +24,8 @@
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" name="originName" placeholder="请输入原始名称" autocomplete="off" class="layui-input">
+                        <input type="text" name="originName" placeholder="请输入原始名称" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -34,7 +35,8 @@
                 </div>
                 <div class="layui-inline">
                     <div class="layui-input-inline">
-                        <input type="text" name="imgFormat" placeholder="请输入图片格式" autocomplete="off" class="layui-input">
+                        <input type="text" name="imgFormat" placeholder="请输入图片格式" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -58,10 +60,12 @@
 
             <script type="text/html" id="table-content-list-operation">
                 @if(shiro.hasPermission("sys-imageGallery-edit")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i class="layui-icon">&#xe642;</i></button>
+                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i
+                        class="layui-icon">&#xe642;</i></button>
                 @}
                 @if(shiro.hasPermission("sys-imageGallery-delete")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i class="layui-icon">&#xe640;</i></button>
+                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i
+                        class="layui-icon">&#xe640;</i></button>
                 @}
             </script>
         </div>
@@ -71,9 +75,9 @@
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
     var Swear = {
-        serverUrl : '${serverUrl}',
-        ctxPath : '${admin}',
-        static : '${static}'
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
     }
 </script>
 <script src="${static}/module/admin/system/imageGallery/imageGallery-list.js"></script>

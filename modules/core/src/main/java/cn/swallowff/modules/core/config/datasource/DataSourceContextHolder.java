@@ -11,7 +11,7 @@ public class DataSourceContextHolder {
     private static Logger logger = LoggerFactory.getLogger(DataSourceContextHolder.class);
 
     // 数据源名称线程池
-    private static final ThreadLocal<String> local = new ThreadLocal<String>(){
+    private static final ThreadLocal<String> local = new ThreadLocal<String>() {
         @Override
         protected String initialValue() {
             logger.info("初始化Write数据源-----");

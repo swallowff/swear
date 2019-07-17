@@ -17,12 +17,12 @@ public class SpringContextHolder implements ApplicationContextAware {
         context = applicationContext;
     }
 
-    public static ApplicationContext getApplicationContext(){
+    public static ApplicationContext getApplicationContext() {
         assertApplicationContext();
         return context;
     }
 
-    public static Object getBean(String beanName){
+    public static Object getBean(String beanName) {
         assertApplicationContext();
         return context.getBean(beanName);
     }
@@ -33,8 +33,8 @@ public class SpringContextHolder implements ApplicationContextAware {
     }
 
 
-    public static void assertApplicationContext(){
-        if (null == context){
+    public static void assertApplicationContext() {
+        if (null == context) {
             throw new RuntimeException("application context inject fail");
         }
     }

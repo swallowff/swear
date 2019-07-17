@@ -12,13 +12,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 数据源切换Aop
+ *
  * @author shenyu
  * @create 2019/4/8
  */
 @Aspect
 @Order(-1)
 @Component
-@ConditionalOnProperty(prefix = "swear.muti-datasource",name = "open",havingValue = "true")
+@ConditionalOnProperty(prefix = "swear.muti-datasource", name = "open", havingValue = "true")
 public class DataSourceAop {
     private static Logger logger = LoggerFactory.getLogger(DataSourceAop.class);
 
@@ -26,12 +27,14 @@ public class DataSourceAop {
             "execution(* cn.swallowff.modules..dao..*.get*(..)) || " +
             "execution(* cn.swallowff.modules..dao..*.query*(..)) || " +
             "execution(* cn.swallowff.modules..dao..*.find*(..))")
-    public void readDataSourcePointCut(){}
+    public void readDataSourcePointCut() {
+    }
 
     @Pointcut("execution(* cn.swallowff.modules..dao..*.insert*(..)) || " +
             "execution(* cn.swallowff.modules..dao..*.update*(..)) || " +
             "execution(* cn.swallowff.modules..dao..*.delete*(..))")
-    public void writeDataSourcePointCut(){}
+    public void writeDataSourcePointCut() {
+    }
 
     @Before("readDataSourcePointCut()")
     public void setReadDataSourceType() {

@@ -43,8 +43,8 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager,EhCacheManager shiroEhCacheManager, SessionManager sessionManager){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, EhCacheManager shiroEhCacheManager, SessionManager sessionManager) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRememberMeManager(rememberMeManager);
         //设置realm.
         securityManager.setRealm(shiroDBRealm());
@@ -55,14 +55,14 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public EhCacheManager shiroEhCacheManager(CacheManager cacheManager){
+    public EhCacheManager shiroEhCacheManager(CacheManager cacheManager) {
         EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManager(cacheManager);
         return ehCacheManager;
     }
 
     @Bean
-    public CookieRememberMeManager rememberMeManager(SimpleCookie cookie){
+    public CookieRememberMeManager rememberMeManager(SimpleCookie cookie) {
         CookieRememberMeManager manager = new CookieRememberMeManager();
         manager.setCipherKey(Base64.decode("3AvVhmFLUs0KTA3Kprsdag=="));
         manager.setCookie(cookie);
@@ -109,12 +109,12 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public SessionDAO sessionDAO(){
+    public SessionDAO sessionDAO() {
         return new MemorySessionDAO();
     }
 
     @Bean
-    public SimpleCookie simpleCookie(){
+    public SimpleCookie simpleCookie() {
         SimpleCookie cookie = new SimpleCookie("rememberme");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(7 * 24 * 60 * 60);
@@ -122,18 +122,19 @@ public class ShiroConfig2 {
     }
 
     @Bean
-    public ShiroDBRealm shiroDBRealm(){
+    public ShiroDBRealm shiroDBRealm() {
         return new ShiroDBRealm();
     }
 
     /**
-     *  开启shiro aop注解支持.
-     *  使用代理方式;所以需要开启代码支持;
+     * 开启shiro aop注解支持.
+     * 使用代理方式;所以需要开启代码支持;
+     *
      * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
@@ -175,15 +176,15 @@ public class ShiroConfig2 {
          */
         Map<String, String> hashMap = new LinkedHashMap<>();
         hashMap.put("/static/**", "anon");
-        hashMap.put("/upload/**","anon");
-        hashMap.put("/a/test/**","anon");
+        hashMap.put("/upload/**", "anon");
+        hashMap.put("/a/test/**", "anon");
         hashMap.put("/api/**", "anon");
         hashMap.put("/a/login/**", "anon");
         //放行swagger2
-        hashMap.put("/swagger-ui.html","anon");
-        hashMap.put("/swagger-resources","anon");
-        hashMap.put("/v2/api-docs","anon");
-        hashMap.put("/webjars/springfox-swagger-ui/**","anon");
+        hashMap.put("/swagger-ui.html", "anon");
+        hashMap.put("/swagger-resources", "anon");
+        hashMap.put("/v2/api-docs", "anon");
+        hashMap.put("/webjars/springfox-swagger-ui/**", "anon");
 
 //        hashMap.put("/global/**", "anon");
         hashMap.put("/a/kaptcha/**", "anon");
@@ -191,8 +192,6 @@ public class ShiroConfig2 {
         shiroFilter.setFilterChainDefinitionMap(hashMap);
         return shiroFilter;
     }
-
-
 
 
 }

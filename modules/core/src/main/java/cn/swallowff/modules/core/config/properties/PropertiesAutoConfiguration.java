@@ -5,6 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 
 /**
  * 加载自定义的properties文件
+ *
  * @author shenyu
  * @create 2019/3/15
  */

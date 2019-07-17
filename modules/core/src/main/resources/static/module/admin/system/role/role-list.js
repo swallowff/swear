@@ -3,8 +3,9 @@ layui.config({
 }).extend({
     index: 'lib/index', //主入口模块
     dtree: 'tree/dtree'
-}).use(['index', 'table', 'jquery', 'admin','dtree'], function () {
-    var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter,dtree = layui.dtree;
+}).use(['index', 'table', 'jquery', 'admin', 'dtree'], function () {
+    var table = layui.table, form = layui.form, $ = layui.jquery, admin = layui.admin, setter = layui.setter,
+        dtree = layui.dtree;
     setter.serverUrl = Swear.serverUrl;
     setter.ctxPath = Swear.ctxPath;
 
@@ -129,7 +130,7 @@ layui.config({
     function operation(data) {
         var id = data.id;
         var btn = $('#table-content-list-operation').html()
-        btn = btn.replace(new RegExp('replacement','gm'),id)
+        btn = btn.replace(new RegExp('replacement', 'gm'), id)
         return btn
     }
 
@@ -178,20 +179,20 @@ layui.config({
             // content: $('#role-select'),
             content: '<ul id="auth-select" class="dtree" data-id="0" style="margin-left: 50px;margin-top: 20px;"></ul>',
             scrollbar: true,//屏蔽浏览器滚动条
-            success: function(layero, index){
+            success: function (layero, index) {
                 renderRoleDtree(id);
             },
             yes: function (index) {
-                $('#layui-layer'+index).find('.layui-layer-btn0').addClass('swear-a-disabled');   //防止重复提交
+                $('#layui-layer' + index).find('.layui-layer-btn0').addClass('swear-a-disabled');   //防止重复提交
                 var param = dtree.getCheckbarNodesParam("auth-select")   //获取复选框选中数据
                 // console.log(param)
                 var menuIdAry = new Array();
                 for (var k = 0; k < param.length; k++) {
                     menuIdAry[k] = param[k].nodeId;
                 }
-                if (param.length === 0){
-                    $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
-                    return layer.msg('请选择菜单',{
+                if (param.length === 0) {
+                    $('#layui-layer' + index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
+                    return layer.msg('请选择菜单', {
                         icon: 5,
                         time: 2000
                     })
@@ -207,31 +208,31 @@ layui.config({
                     },
                     success: function (res) {
                         if (res.code === setter.response.statusCode.ok) {
-                            layer.msg(res.msg,{
+                            layer.msg(res.msg, {
                                 icon: 1,
                                 time: 2000
                             });
                             layer.close(index);
                             table.reload('roleTable');
-                        }else {
-                            layer.msg(res.msg,{
+                        } else {
+                            layer.msg(res.msg, {
                                 icon: 5,
                                 time: 2000
                             });
                         }
                     }
                 });
-                $('#layui-layer'+index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
+                $('#layui-layer' + index).find('.layui-layer-btn0').removeClass('swear-a-disabled');
             }
         })
     }
 
-    var renderRoleDtree = function(roleId){
+    var renderRoleDtree = function (roleId) {
         dtree.render({
             elem: "#auth-select",
             // icon: ["1","5"],   //二级图标
             // ficon: ["1","5"],   //一级图标
-            url: setter.ctxPath + "/menu/roleDtree.ajax?roleId="+roleId, // 使用url加载（可与data加载同时存在）
+            url: setter.ctxPath + "/menu/roleDtree.ajax?roleId=" + roleId, // 使用url加载（可与data加载同时存在）
             // height: '150px',
             method: 'GET',
             dataStyle: "layuiStyle",  //使用layui风格的数据格式
@@ -239,8 +240,8 @@ layui.config({
             accordion: false,  // 开启手风琴
             none: "提示说我没有数据？",
             line: true,  // 显示树线
-            response:{message:"msg",statusCode:0},  //修改response中返回数据的定义
-            checkbar:true //开启复选框
+            response: {message: "msg", statusCode: 0},  //修改response中返回数据的定义
+            checkbar: true //开启复选框
         });
     }
 
@@ -255,10 +256,10 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#dept-select');
                 $select.append('<option value="">请选择部门</option>');
-                for (var i in listData){
-                    $select.append('<option value="'+listData[i].id+'">'+listData[i].fullName+'</option>')
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].fullName + '</option>')
                 }
-                form.render('select','LAYF-role-list-search'); //刷新select选择框
+                form.render('select', 'LAYF-role-list-search'); //刷新select选择框
             }
         }
     });

@@ -52,10 +52,12 @@
 
             <script type="text/html" id="table-content-list-operation">
                 @if(shiro.hasPermission("sys-dict-edit")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i class="layui-icon">&#xe642;</i></button>
+                <button type="button" class="layui-btn layui-btn-xs" onclick="editRow('replacement')"><i
+                        class="layui-icon">&#xe642;</i></button>
                 @}
                 @if(shiro.hasPermission("sys-dict-delete")){
-                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i class="layui-icon">&#xe640;</i></button>
+                <button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow('replacement')"><i
+                        class="layui-icon">&#xe640;</i></button>
                 @}
             </script>
         </div>
@@ -65,9 +67,9 @@
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script>
     var Swear = {
-        serverUrl : '${serverUrl}',
-        ctxPath : '${admin}',
-        static : '${static}'
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
     }
 </script>
 <script src="${static}/module/admin/system/dict/dict-list.js"></script>

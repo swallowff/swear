@@ -31,23 +31,27 @@ public class GlobalController extends BaseController {
     private UserService userService;
 
     @RequestMapping("")
-    public String nonPath(){
+    public String nonPath() {
         return REDIRECT + "/a/index";
     }
 
     @RequestMapping("/a")
-    public String aPath(){return REDIRECT + "/a/index";}
+    public String aPath() {
+        return REDIRECT + "/a/index";
+    }
 
     @RequestMapping("/a/home")
-    public String home(){return "admin/pages/homepage";}
+    public String home() {
+        return "admin/pages/homepage";
+    }
 
     @RequestMapping("/a/index")
-    public String index(Model model){
+    public String index(Model model) {
         ShiroUser shiroUser = ShiroKit.getUser();
-        if (null != shiroUser){
+        if (null != shiroUser) {
             User user = userService.selectById(shiroUser.getId());
-            if (null != user){
-                model.addAttribute("user",user);
+            if (null != user) {
+                model.addAttribute("user", user);
             }
         }
         Menu menu = new Menu();
@@ -55,7 +59,7 @@ public class GlobalController extends BaseController {
         menu.setOrderBy("sort ASC");
         menu.setUserId(shiroUser.id);
         List<Menu> list = menuService.findTree(menu).getChildren();
-        model.addAttribute("menuList",list);
+        model.addAttribute("menuList", list);
         return "admin/pages/index";
     }
 

@@ -42,34 +42,34 @@ public class ImageGalleryController extends BaseController {
     private CoreProperties coreProperties;
 
     @RequestMapping(value = "list.html")
-    @Permission(value = "sys-imageGallery-list")
-    public String listHtml(){
+    @Permission(value = "cloud-imageGallery-list")
+    public String listHtml() {
         return "/admin/pages/system/imageGallery/imageGallery-list";
     }
 
     @RequestMapping(value = "add.html")
-    public String addHtml(){
+    public String addHtml() {
         return "/admin/pages/system/imageGallery/imageGallery-add";
     }
 
     @RequestMapping(value = "edit.html")
-    public String editHtml(@RequestParam("id") String id, Model model){
+    public String editHtml(@RequestParam("id") String id, Model model) {
         ImageGallery imageGallery = imageGalleryService.selectById(id);
-        model.addAttribute("imageGallery",imageGallery);
+        model.addAttribute("imageGallery", imageGallery);
         return "/admin/pages/system/imageGallery/imageGallery-edit";
     }
 
     @RequestMapping(value = "list.ajax")
     @ResponseBody
-    public Object ajaxList(ImageGallery imageGallery){
+    public Object ajaxList(ImageGallery imageGallery) {
         PageResp<ImageGallery> pageResp = imageGalleryService.findPage(imageGallery);
-        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
+        LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(), pageResp.getTotalRows());
         return layPageResp;
     }
 
     @RequestMapping(value = "add.ajax")
     @ResponseBody
-    public BaseResp add(ImageGallery imageGallery){
+    public BaseResp add(ImageGallery imageGallery) {
         BaseResp baseResp = BaseResp.newSuccess();
         imageGalleryService.save(imageGallery);
         return baseResp;
@@ -77,74 +77,74 @@ public class ImageGalleryController extends BaseController {
 
     @RequestMapping(value = "edit.ajax")
     @ResponseBody
-    public BaseResp edit(ImageGallery imageGallery){
+    public BaseResp edit(ImageGallery imageGallery) {
         BaseResp baseResp = BaseResp.newSuccess();
-        if (null == imageGallery || StringUtils.isBlank(imageGallery.getId())){
+        if (null == imageGallery || StringUtils.isBlank(imageGallery.getId())) {
             return baseResp.paramsError();
         }
         int r = imageGalleryService.updateSelective(imageGallery);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "delete")
     @ResponseBody
-    public BaseResp delete(String id){
+    public BaseResp delete(String id) {
         BaseResp baseResp = BaseResp.newSuccess();
         int r = imageGalleryService.delete(id);
-        if (r == 1){
+        if (r == 1) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "batchDel")
     @ResponseBody
-    public BaseResp batchDel(String[] ids){
+    public BaseResp batchDel(String[] ids) {
         BaseResp baseResp = BaseResp.newSuccess();
         int count = 0;
-        for (String id : ids){
+        for (String id : ids) {
             int r = imageGalleryService.delete(id);
-            if (r == 1){
-                count ++;
+            if (r == 1) {
+                count++;
             }
         }
-        if (count == ids.length){
+        if (count == ids.length) {
             return baseResp;
-        }else return baseResp.putError();
+        } else return baseResp.putError();
     }
 
     @RequestMapping(value = "upload")
     @ResponseBody
-    public BaseResp uploadImg(MultipartFile file, HttpServletRequest request){
+    public BaseResp uploadImg(MultipartFile file, HttpServletRequest request) {
         BaseResp baseResp = BaseResp.newSuccess();
 
-        String imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() +"/upload/img/";//url访问路径
+        String imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
         String realPath = coreProperties.getFileUploadPath() + "img"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
-        String suffix = orgFileName.substring(orgFileName.lastIndexOf("."),orgFileName.length());
-        String dateStr = DateUtils.formatDate(new Date(),"yyyy-MM-dd");
+        String suffix = orgFileName.substring(orgFileName.lastIndexOf("."), orgFileName.length());
+        String dateStr = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
         String fileDir = realPath + File.separator + dateStr + File.separator;
         FileUtils.createDirectory(fileDir);
         String fileName = String.valueOf(IdGenerate.uuid()) + suffix;
         File imgFile = new File(fileDir + fileName);
-        try{
+        try {
             imgFile.createNewFile();
             file.transferTo(imgFile.getAbsoluteFile());
-            ImageUtils.thumbnails(imgFile,720,720,UploadController.IMG_COMPRESS_FORMAT);
-        }catch (IOException e){
+            ImageUtils.thumbnails(imgFile, 720, 720, UploadController.IMG_COMPRESS_FORMAT);
+        } catch (IOException e) {
             e.printStackTrace();
             return baseResp.putError("文件保存失败");
         }
         String targetPath = imgBaseUrl + dateStr + "/";
-        Map<String,Object> respMap = new HashMap<>();
-        respMap.put("src",targetPath + fileName);
-        respMap.put("thumbnail",targetPath + fileName + "." + UploadController.IMG_COMPRESS_FORMAT);
-        respMap.put("originName",orgFileName);
-        respMap.put("imgName",fileName);
-        respMap.put("size",file.getSize());
-        respMap.put("imgFormat",file.getContentType());
+        Map<String, Object> respMap = new HashMap<>();
+        respMap.put("src", targetPath + fileName);
+        respMap.put("thumbnail", targetPath + fileName + "." + UploadController.IMG_COMPRESS_FORMAT);
+        respMap.put("originName", orgFileName);
+        respMap.put("imgName", fileName);
+        respMap.put("size", file.getSize());
+        respMap.put("imgFormat", file.getContentType());
         return baseResp.putSuccess(respMap);
     }
 }

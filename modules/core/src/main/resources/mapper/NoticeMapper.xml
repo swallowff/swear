@@ -14,13 +14,13 @@
     </sql>
 
     <select id="selectById" resultType="Notice">
-      SELECT
-      <include refid="baseColumns"/>
-      FROM sys_notice a
-      <where>
-          a.delflag = 0
-          AND a.id = #{id}
-      </where>
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
     </select>
 
     <select id="findEntity" resultType="Notice">
@@ -52,7 +52,7 @@
         <where>
             a.delflag = 0
             <if test="type != null">
-              AND a.type = #{type}
+                AND a.type = #{type}
             </if>
             <if test="tittle != null and tittle != ''">
                 AND a.tittle = #{tittle}
@@ -76,43 +76,43 @@
 
     <insert id="insert">
         INSERT INTO sys_notice(
-          id,
-          tittle,
-          type,
-          content,
-          creator,
-          to_user,
-          create_time,
-          update_time,
-          version,
-          delflag
+        id,
+        tittle,
+        type,
+        content,
+        creator,
+        to_user,
+        create_time,
+        update_time,
+        version,
+        delflag
         ) VALUES (
-          #{id},
-          #{tittle},
-          #{type},
-          #{content},
-          #{creator},
-          #{toUser},
-          #{createTime},
-          #{updateTime},
-          #{version},
-          #{delflag}
+        #{id},
+        #{tittle},
+        #{type},
+        #{content},
+        #{creator},
+        #{toUser},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delflag}
         )
     </insert>
 
     <update id="update">
         UPDATE sys_notice SET
-          tittle = #{tittle},
-          type = #{type},
-          content = #{content},
-          creator = #{creator},
-          to_user = #{toUser},
-          update_time = #{updateTime},
-          version = #{version}
-          <where>
-              delflag = 0
-              AND id = #{id}
-          </where>
+        tittle = #{tittle},
+        type = #{type},
+        content = #{content},
+        creator = #{creator},
+        to_user = #{toUser},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
     </update>
 
     <update id="updateSelective">

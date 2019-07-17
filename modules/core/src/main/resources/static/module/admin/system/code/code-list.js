@@ -8,7 +8,7 @@ layui.config({
     setter.ctxPath = Swear.ctxPath;
 
     $.ajax({
-        url: setter.ctxPath + "/sys/code/tableList",
+        url: setter.ctxPath + "/cloud/code/tableList",
         method: 'GET',
         success: function (res) {
             // console.log(res)
@@ -16,10 +16,10 @@ layui.config({
                 var listData = res.data;
                 var $select = $('#table-select');
                 $select.append('<option value="">请选择数据表</option>');
-                for (var i in listData){
-                    $select.append('<option value="'+listData[i].tableName+'">'+listData[i].tableName+'</option>')
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].tableName + '">' + listData[i].tableName + '</option>')
                 }
-                form.render('select','LAYF-code-gen-form'); //刷新select选择框
+                form.render('select', 'LAYF-code-gen-form'); //刷新select选择框
             }
         }
 
@@ -29,33 +29,32 @@ layui.config({
     form.on('submit(LAYF-code-gen)', function (data) {
         var field = data.field;
         if (field.forceCover == 1) {
-            layer.confirm("您已选择强制覆盖原文件,确定要继续此操作吗?",function (index) {
+            layer.confirm("您已选择强制覆盖原文件,确定要继续此操作吗?", function (index) {
                 executeGenCode(field)
             });
-        }else {
-            layer.confirm("即将生成代码,确认继续吗?",function (index) {
+        } else {
+            layer.confirm("即将生成代码,确认继续吗?", function (index) {
                 executeGenCode(field)
             })
         }
-
 
 
     });
 
     function executeGenCode(field) {
         $.ajax({
-            url: setter.ctxPath + "/sys/code/execute",
+            url: setter.ctxPath + "/cloud/code/execute",
             method: 'POST',
             data: field,
             success: function (res) {
                 console.log(res)
                 if (res.code == setter.response.statusCode.ok) {
-                    layer.msg(res.msg,{
+                    layer.msg(res.msg, {
                         icon: 1,
                         time: 1800
                     })
-                }else {
-                    layer.msg(res.msg,{
+                } else {
+                    layer.msg(res.msg, {
                         icon: 5,
                         time: 1800
                     })
@@ -64,11 +63,6 @@ layui.config({
             }
         })
     }
-
-
-
-
-
 
 
 });
