@@ -324,7 +324,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 //		System.out.println(time/(24*60*60*1000));
 //		System.out.println(getWeekOfYear(new Date()));
 //		System.out.println(formatDate(getOfDayFirst(parseDate("2015/3/6")),"yyyy-MM-dd HH:mm:ss.sss"));
-//		System.out.println(formatDate(getOfDayLast(parseDate("2015/6/6")),"yyyy-MM-dd HH:mm:ss.sss"));
+//		System.out.println(formatDate(getOfDayLast(parseDate("2015/9/6")),"yyyy-MM-dd HH:mm:ss.sss"));
 //	}
 	
 }

@@ -24,7 +24,7 @@
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>parent</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Swear parent module</description>
 
     <properties>
 
