@@ -1,6 +1,7 @@
-package cn.swallowff.modules.websocket.nio.channel.demo;
+package cn.swallowff.modules.websocket.nio.channel.demo.server;
 
-import org.apache.commons.lang3.StringUtils;
+import cn.swallowff.modules.websocket.nio.MessageProcesser;
+import cn.swallowff.modules.websocket.nio.SelectionKeyHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -9,7 +10,6 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -18,21 +18,27 @@ import java.util.Set;
  * @description
  * @create 2019/7/17
  */
-public class MultiplexerTimeServer implements Runnable {
+public class CoreSocketServer implements Runnable {
 
     private Selector selector;
 
+    private volatile boolean stop;
+
     private ServerSocketChannel servChannel;
 
-    private volatile boolean stop;
+    private SelectionKeyHandler selectionKeyHandler;
+
+    private MessageProcesser messageProcesser;
 
     /**
      * 初始化多路复用器、绑定监听端口
      *
      * @param port
      */
-    public MultiplexerTimeServer(int port) {
+    public CoreSocketServer(int port, SelectionKeyHandler selectionKeyHandler, MessageProcesser messageProcesser) {
         try {
+            this.selectionKeyHandler = selectionKeyHandler;
+            this.messageProcesser = messageProcesser;
             // 创建多路复用器Selector、ServerSocketChannel
             selector = Selector.open();
             servChannel = ServerSocketChannel.open();
@@ -42,7 +48,7 @@ public class MultiplexerTimeServer implements Runnable {
             servChannel.socket().bind(new InetSocketAddress(port), 1024);
             // 系统资源初始化成功后，把serverSocketChannel注册到Selector，监听SelectionKey.OP_ACCEPT操作位
             servChannel.register(selector, SelectionKey.OP_ACCEPT);
-            System.out.println("The time server is start in port : " + port);
+            System.out.println("The socket server started in port : " + port);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -53,11 +59,6 @@ public class MultiplexerTimeServer implements Runnable {
         this.stop = true;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Runnable#run()
-     */
     @Override
     public void run() {
         while (!stop) {
@@ -71,7 +72,7 @@ public class MultiplexerTimeServer implements Runnable {
                     key = it.next();
                     it.remove();
                     try {
-                        handleInput(key);
+                        selectionKeyHandler.handleSelectionKey(key,selector,messageProcesser);
                     } catch (Exception e) {
                         if (key != null) {
                             key.cancel();
@@ -94,45 +95,6 @@ public class MultiplexerTimeServer implements Runnable {
             }
     }
 
-    private void handleInput(SelectionKey key) throws IOException {
-
-        if (key.isValid()) {
-            // 处理新接入的请求消息
-            // 根据操作位判断网络类型。
-            if (key.isAcceptable()) {
-                // Accept the new connection
-                ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
-                SocketChannel sc = ssc.accept();
-                sc.configureBlocking(false);
-                // Add the new connection to the selector
-                sc.register(selector, SelectionKey.OP_READ);
-            }
-            if (key.isReadable()) {
-                // 读取客户端的消息
-                SocketChannel sc = (SocketChannel) key.channel();
-                ByteBuffer readBuffer = ByteBuffer.allocate(1024);
-                int readBytes = sc.read(readBuffer);
-                if (readBytes > 0) {
-                    readBuffer.flip();
-                    byte[] bytes = new byte[readBuffer.remaining()];
-                    readBuffer.get(bytes);
-                    String body = new String(bytes, "UTF-8");
-                    System.out.println("The time server receive order : "
-                            + body);
-                    String currentTime = "QUERY TIME ORDER"
-                            .equalsIgnoreCase(body) ? new java.util.Date(
-                            System.currentTimeMillis()).toString()
-                            : "BAD ORDER";
-                    doWrite(sc, currentTime);
-                } else if (readBytes < 0) {
-                    // 对端链路关闭
-                    key.cancel();
-                    sc.close();
-                } else
-                    ; // 读到0字节，忽略
-            }
-        }
-    }
 
     // 发送消息异步发给客户端。
     private void doWrite(SocketChannel channel, String response)

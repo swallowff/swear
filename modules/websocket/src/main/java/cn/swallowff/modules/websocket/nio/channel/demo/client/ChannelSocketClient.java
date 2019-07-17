@@ -1,4 +1,7 @@
-package cn.swallowff.modules.websocket.nio.channel.demo;
+package cn.swallowff.modules.websocket.nio.channel.demo.client;
+
+import cn.swallowff.modules.websocket.nio.MessageProcesser;
+import cn.swallowff.modules.websocket.nio.SelectionKeyHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -7,6 +10,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -14,16 +18,19 @@ import java.util.Set;
  * @description
  * @create 2019/7/17
  */
-public class TimeClientHandler implements Runnable{
+public class ChannelSocketClient implements Runnable{
     private String host;
     private int port;
-
     private Selector selector;
     private SocketChannel socketChannel;
+    private SelectionKeyHandler selectionKeyHandler;
+    private MessageProcesser messageProcesser;
 
     private volatile boolean stop;
 
-    public TimeClientHandler(String host, int port) {
+    public ChannelSocketClient(String host, int port,SelectionKeyHandler selectionKeyHandler, MessageProcesser messageProcesser) {
+        this.selectionKeyHandler = selectionKeyHandler;
+        this.messageProcesser = messageProcesser;
         this.host = host == null ? "127.0.0.1" : host;
         this.port = port;
         try {
@@ -38,11 +45,6 @@ public class TimeClientHandler implements Runnable{
         }
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Runnable#run()
-     */
     @Override
     public void run() {
         try {
@@ -51,10 +53,26 @@ public class TimeClientHandler implements Runnable{
             e.printStackTrace();
             System.exit(1);
         }
+
+        Thread scannerThread = new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("请输入消息:");
+            try {
+                while (scanner.hasNext()){
+                    write(scanner.nextLine());
+                    System.out.println("请输入消息:");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        scannerThread.start();
+
+
         while (!stop) {
             try {
                 // 轮询Key
-                selector.select(1000);
+                selector.select(1200);
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 Iterator<SelectionKey> it = selectedKeys.iterator();
                 SelectionKey key = null;
@@ -62,7 +80,7 @@ public class TimeClientHandler implements Runnable{
                     key = it.next();
                     it.remove();
                     try {
-                        handleInput(key);
+                        selectionKeyHandler.handleSelectionKey(key,selector,messageProcesser);
                     } catch (Exception e) {
                         if (key != null) {
                             key.cancel();
@@ -94,8 +112,9 @@ public class TimeClientHandler implements Runnable{
             SocketChannel sc = (SocketChannel) key.channel();
             if (key.isConnectable()) {
                 if (sc.finishConnect()) {
+                    System.out.println("connect server success");
                     sc.register(selector, SelectionKey.OP_READ);
-                    doWrite(sc);
+                    write("发送心跳包");
                 } else
                     System.exit(1);// 连接失败，进程退出
             }
@@ -123,19 +142,29 @@ public class TimeClientHandler implements Runnable{
     private void doConnect() throws IOException {
         // 如果直接连接成功，则注册到多路复用器上，发送请求消息，读应答
         if (socketChannel.connect(new InetSocketAddress(host, port))) {
+            System.out.println("connect server success");
             socketChannel.register(selector, SelectionKey.OP_READ);
-            doWrite(socketChannel);
+            write("heart package");
         } else
             socketChannel.register(selector, SelectionKey.OP_CONNECT);
     }
 
-    private void doWrite(SocketChannel sc) throws IOException {
-        byte[] req = "QUERY TIME ORDER".getBytes();
+//    private void doWrite(SocketChannel sc) throws IOException {
+//        byte[] req = "QUERY TIME ORDER".getBytes();
+//        ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);
+//        writeBuffer.put(req);
+//        writeBuffer.flip();
+//        sc.write(writeBuffer);
+//        if (!writeBuffer.hasRemaining())
+//            System.out.println("Send order 2 server succeed.");
+//    }
+
+    private void write(String msg) throws IOException{
+        byte[] req = msg.getBytes();
         ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);
         writeBuffer.put(req);
         writeBuffer.flip();
-        sc.write(writeBuffer);
-        if (!writeBuffer.hasRemaining())
-            System.out.println("Send order 2 server succeed.");
+        int r = socketChannel.write(writeBuffer);
+        System.out.println("消息发送成功");
     }
 }
