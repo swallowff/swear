@@ -35,7 +35,7 @@ public class MenuController extends BaseController {
     @Autowired
     private MenuService menuService;
 
-    @Permission(value = "cloud-menu-list")
+    @Permission(value = "sys-menu-list")
     @RequestMapping(value = "list.html")
     public String listHtml(Menu menu, Model model) {
         return "admin/pages/system/menu/menu-list";

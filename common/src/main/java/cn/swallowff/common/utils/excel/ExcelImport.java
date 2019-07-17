@@ -383,9 +383,8 @@ public class ExcelImport implements Closeable {
 					// If is dict type, get dict value
 					if (StringUtils.isNotBlank(ef.dictType())){
 						try{
-							Class<?> dictUtils = Class.forName("com.jeesite.modules.cloud.utils.DictUtils");
-							val = dictUtils.getMethod("getDictValue", String.class, String.class,
-										String.class).invoke(null, ef.dictType(), val.toString(), "");
+							Class<?> dictUtils = Class.forName("cn.swallowff.modules.core.util.DictUtils");
+							val = dictUtils.getMethod("getLabel", String.class, Integer.class).invoke(null, ef.dictType(), val.toString(), "");
 						} catch (Exception ex) {
 							log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
 							val = null;

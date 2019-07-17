@@ -8,7 +8,7 @@ layui.config({
     setter.ctxPath = Swear.ctxPath;
 
     $.ajax({
-        url: setter.ctxPath + "/cloud/code/tableList",
+        url: setter.ctxPath + "/sys/code/tableList",
         method: 'GET',
         success: function (res) {
             // console.log(res)
@@ -43,7 +43,7 @@ layui.config({
 
     function executeGenCode(field) {
         $.ajax({
-            url: setter.ctxPath + "/cloud/code/execute",
+            url: setter.ctxPath + "/sys/code/execute",
             method: 'POST',
             data: field,
             success: function (res) {

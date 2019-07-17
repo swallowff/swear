@@ -42,7 +42,7 @@ public class ImageGalleryController extends BaseController {
     private CoreProperties coreProperties;
 
     @RequestMapping(value = "list.html")
-    @Permission(value = "cloud-imageGallery-list")
+    @Permission(value = "sys-imageGallery-list")
     public String listHtml() {
         return "/admin/pages/system/imageGallery/imageGallery-list";
     }

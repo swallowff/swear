@@ -16,7 +16,7 @@ layui.config({
     var $imageSrc = $('#image-src')
     var $imageThumbnail = $('#image-thumbnail')
     upload.render({
-        url: setter.ctxPath + "/cloud/imageGallery/upload", elem: "#btn-image-upload", done: function (res) {
+        url: setter.ctxPath + "/sys/imageGallery/upload", elem: "#btn-image-upload", done: function (res) {
             if (res.code == setter.response.statusCode.ok) {
                 $imageSrc.val(res.data.src)
                 if ($imageThumbnail) {
@@ -48,7 +48,7 @@ layui.config({
 
         //提交 Ajax 成功后，关闭当前弹层并重载表格
         $.ajax({
-            url: setter.ctxPath + '/cloud/imageGallery/add.ajax',
+            url: setter.ctxPath + '/sys/imageGallery/add.ajax',
             data: field,
             method: 'POST',
             success: function (res) {
