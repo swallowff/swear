@@ -381,6 +381,41 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
 	}
 
+	public static File createFile2(String destFileName) {
+		File file = new File(destFileName);
+		if (file.exists()) {
+			logger.debug("文件 " + destFileName + " 已存在!");
+			return null;
+		}
+		if (destFileName.endsWith(File.separator)) {
+			logger.debug(destFileName + " 为目录，不能创建目录!");
+			return null;
+		}
+		if (!file.getParentFile().exists()) {
+			// 如果文件所在的目录不存在，则创建目录
+			if (!file.getParentFile().mkdirs()) {
+				logger.debug("创建文件所在的目录失败!");
+				return null;
+			}
+		}
+
+		// 创建文件
+		try {
+			if (file.createNewFile()) {
+				logger.debug(destFileName + " 文件创建成功!");
+				return file;
+			} else {
+				logger.debug(destFileName + " 文件创建失败!");
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug(destFileName + " 文件创建失败!");
+			return null;
+		}
+
+	}
+
 	/**
 	 * 创建目录
 	 * @param descDirName 目录名,包含路径
