@@ -17,7 +17,7 @@ public class CommonController {
 
     @RequestMapping("demo.html")
     public String index() {
-        return "admin/pages/system/demo";
+        return "admin/pages/system/demo/demo";
     }
 
 

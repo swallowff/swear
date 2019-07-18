@@ -51,7 +51,7 @@ public abstract class AbstractSelectionKeyHandler implements SelectionKeyHandler
     public void onReadable(SelectionKey key, Selector selector, MessageProcesser messageProcesser) throws IOException {
         // 读取客户端的消息
         SocketChannel sc = (SocketChannel) key.channel();
-        ByteBuffer readBuffer = ByteBuffer.allocate(32);
+        ByteBuffer readBuffer = ByteBuffer.allocate(1024);
         int readBytes = sc.read(readBuffer);
         if (readBytes > 0) {
             readBuffer.flip();
