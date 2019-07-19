@@ -47,7 +47,9 @@ public class JacksonUtil {
             T t = mapper.readValue(jsonStr, clazz);
             return t;
         } catch (Exception e) {
-            logger.error(e.getMessage() + " json[" + jsonStr + "]", new Throwable(e));
+            if (logger.isErrorEnabled()){
+                logger.error(e.getMessage() + " json[" + jsonStr + "]", new Throwable(e));
+            }
         }
         return null;
     }

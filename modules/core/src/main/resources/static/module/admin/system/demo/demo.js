@@ -260,7 +260,7 @@ layui.config({
                     icon: 5
                 });
             }
-            socket = new WebSocket('ws://127.0.0.1:9999?name=shenyu');
+            socket = new WebSocket('ws://127.0.0.1:9999?userid=10000000');
 
             //监听open事件
             socket.onopen = () => {

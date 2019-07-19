@@ -1,6 +1,10 @@
 package cn.swallowff.modules.niospringboot.server;
 
+import cn.swallowff.common.json.JacksonUtil;
 import cn.swallowff.modules.niospringboot.common.Const;
+import cn.swallowff.modules.niospringboot.common.WebSocketRequest;
+import cn.swallowff.modules.niospringboot.common.WebSocketResponse;
+import com.fasterxml.jackson.core.JsonParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
@@ -36,7 +40,7 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 		String userid = request.getParam("userid");
 		
 		Tio.bindUser(channelContext, userid);
-//		channelContext.setUserid(myname);
+		channelContext.setUserid(userid);
 		log.info("收到来自{}的ws握手包 \r\n{}", clientip, request.toString());
 		return httpResponse;
 	}
@@ -53,12 +57,14 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 		//绑定到群组，后面会有群发
 		Tio.bindGroup(channelContext, Const.GROUP_ID);
 		int count = Tio.getAllChannelContexts(channelContext.groupContext).getObj().size();
-
-		String msg = "{name:'admin',message:'" + channelContext.userid + " 进来了，共【" + count + "】人在线" + "'}";
+//		String msg = "{name:'admin',message:'" + channelContext.userid + " 进来了，共【" + count + "】人在线" + "'}";
+		WebSocketResponse webSocketResp = WebSocketResponse.newSuccess();
+//		webSocketResp.putData(msg);
 		//用tio-websocket，服务器发送到客户端的Packet都是WsResponse
-		WsResponse wsResponse = WsResponse.fromText(msg, "UTF-8");
+		WsResponse wsResponse = WsResponse.fromText(webSocketResp.toJson(), "UTF-8");
+		Tio.send(channelContext,wsResponse);
 		//群发
-		Tio.sendToGroup(channelContext.groupContext, Const.GROUP_ID, wsResponse);
+//		Tio.sendToGroup(channelContext.groupContext, Const.GROUP_ID, wsResponse);
 	}
 
 	/**
@@ -86,27 +92,26 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 	@Override
 	public Object onText(WsRequest wsRequest, String text, ChannelContext channelContext) throws Exception {
 		WsSessionContext wsSessionContext = (WsSessionContext) channelContext.get();
-		HttpRequest httpRequest = wsSessionContext.getHandshakeRequest();//获取websocket握手包
-		if (log.isDebugEnabled()) {
-			log.debug("握手包:{}", httpRequest);
+		HttpRequest httpRequest = wsSessionContext.getHandshakeRequest();
+
+		if (log.isInfoEnabled()){
+			log.info("收到客户端{}消息:{}",channelContext.userid, text);
 		}
-
-		log.info("收到客户端{}消息:{}",channelContext.userid, text);
-
+		//心跳消息直接返回
 		if (Objects.equals("Heartbeat", text)) {
 			return null;
 		}
-		if ("mchid".equals(text)){
-			WsResponse response = WsResponse.fromText("mchid123456789","UTF-8");
+
+		//非心跳消息,解析成约定的请求格式
+		WebSocketRequest<String> socketRequest = JacksonUtil.readValue(text,WebSocketRequest.class);
+		if (null == socketRequest){
+			WsResponse response = WsResponse.fromText(WebSocketResponse.newError().toJson(),"UTF-8");
 			return response;
 		}
+
 //		channelContext.getToken();
-		//String msg = channelContext.getClientNode().toString() + " 说：" + text;
-		String msg = "{name:'" + channelContext.userid + "',message:'" + text + "'}";
-		//用tio-websocket，服务器发送到客户端的Packet都是WsResponse
-		WsResponse wsResponse = WsResponse.fromText(msg, "UTF-8");
 		//群发
-		Tio.sendToGroup(channelContext.groupContext, Const.GROUP_ID, wsResponse);
+//		Tio.sendToGroup(channelContext.groupContext, Const.GROUP_ID, wsResponse);
 
 		//返回值是要发送给客户端的内容，一般都是返回null
 		return null;
