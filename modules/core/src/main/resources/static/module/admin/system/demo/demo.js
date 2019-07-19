@@ -1,9 +1,9 @@
 layui.config({
-    base: '${static}/layuiadmin/', //静态资源所在路径
+    base: Swear.static + '/layuiadmin/', //静态资源所在路径
 }).extend({
     index: 'lib/index', //主入口模块
     eleTree: 'tree/eleTree',
-    mod2: '{/}${static}/layuiadmin/lib/extend/echarts',    //{/}的意思即代表采用自有路径，即不跟随 base 路径
+    mod2: '{/}'+Swear.static+'/layuiadmin/lib/extend/echarts',    //{/}的意思即代表采用自有路径，即不跟随 base 路径
     dtree: 'tree/dtree',
     treeTable: 'tree/treeTable',
     treetable: 'treetable-lay/treetable'
@@ -19,8 +19,8 @@ layui.config({
         treetable = layui.treetable,
         treeTable = layui.treeTable;
 
-    setter.serverUrl = '${serverUrl}';
-    setter.ctxPath = '${admin}';
+    setter.serverUrl = Swear.serverUrl;
+    setter.ctxPath = Swear.ctxPath;
 
     //富文本编辑器
     var E = window.wangEditor
@@ -255,14 +255,20 @@ layui.config({
 
         },
         websocket: function () {
+            if (socket && socket.readyState === WebSocket.OPEN){
+                return layer.msg('已连接服务器',{
+                    icon: 5
+                });
+            }
             socket = new WebSocket('ws://127.0.0.1:9999?name=shenyu');
-            // socket.binaryType = 'arraybuffer';
 
             //监听open事件
             socket.onopen = () => {
                 if (socket.readyState === WebSocket.OPEN){
-                    socket.send("hello")
+                    layer.msg("连接服务器成功",{icon: 1})
+                    socket.send('hello')
                 }
+                // socket.binaryType = 'arraybuffer';
             }
 
             //监听messaeg事件
@@ -272,7 +278,9 @@ layui.config({
             }
 
             socket.onerror = () => {
-                layer.msg('connect error')
+                layer.msg('connect error',{
+                    icon: 5
+                })
             }
 
             socket.onclose = e => {
@@ -283,15 +291,36 @@ layui.config({
 
 
         },
-        sendMsg: function () {
+        sendTextMsg: function () {
             var content = $('#msgContent').val();
-            if (!socket){
-                return layer.msg("未连接服务器")
+            if (!content){
+                return layer.msg("请输入消息",{
+                    icon: 5
+                })
             }
-            var byte = [] ;
-            // byte = strToBytes(content);
-            // console.log(byte);
-            socket.send(byte);
+            if (!socket || socket.readyState != WebSocket.OPEN){
+                return layer.msg("未连接服务器",{icon: 5})
+            }
+            socket.binaryType = 'blob';
+            // let arrayBuffer = new Uint8Array(strToBytes(content)).buffer;
+            // var bytes = CommonUtil.stringToArrayBuffer(content)
+            socket.send(content);
+        },
+        sendBinaryMsg: function () {
+            var content = $('#msgContent').val();
+            if (!content){
+                return layer.msg("请输入消息",{icon: 5})
+            }
+            if (!socket || socket.readyState != WebSocket.OPEN){
+                return layer.msg("未连接服务器",{icon: 5})
+            }
+            socket.binaryType = 'arraybuffer';
+            var bytes = CommonUtil.stringToArrayBuffer(content)
+            socket.send(bytes);
+        },
+        offLine: function () {
+            socket.close();
+            layer.msg("已断开连接",{icon: 1})
         }
 
     };
@@ -310,31 +339,6 @@ layui.config({
         btn += '<button type="button" class="layui-btn layui-btn-xs" onclick="deleteRow(\'' + id + '\')"><i class="layui-icon">&#xe640;</i></button>'
         return btn;
     };
-
-    function strToBytes(str){
-        var bytes = new Array();
-        var len, c;
-        len = str.length;
-        for(var i = 0; i < len; i++) {
-            c = str.charCodeAt(i);
-            if(c >= 0x010000 && c <= 0x10FFFF) {
-                bytes.push(((c >> 18) & 0x07) | 0xF0);
-                bytes.push(((c >> 12) & 0x3F) | 0x80);
-                bytes.push(((c >> 6) & 0x3F) | 0x80);
-                bytes.push((c & 0x3F) | 0x80);
-            } else if(c >= 0x000800 && c <= 0x00FFFF) {
-                bytes.push(((c >> 12) & 0x0F) | 0xE0);
-                bytes.push(((c >> 6) & 0x3F) | 0x80);
-                bytes.push((c & 0x3F) | 0x80);
-            } else if(c >= 0x000080 && c <= 0x0007FF) {
-                bytes.push(((c >> 6) & 0x1F) | 0xC0);
-                bytes.push((c & 0x3F) | 0x80);
-            } else {
-                bytes.push(c & 0xFF);
-            }
-        }
-        return bytes;
-    }
 
     //外部调用的方法必须使用window.funcName定义
     window.deleteRow = function (id) {
@@ -398,10 +402,7 @@ layui.config({
             layer.closeAll('tips');
             //如果上传失败
             if (res.code != setter.response.statusCode.ok) {
-                return layer.msg('上传失败', {
-                    icon: 2,
-                    time: 3000
-                });
+                return layer.msg('上传失败', {icon: 2, time: 3000});
             } else {
                 //上传成功
                 // console.log(res)

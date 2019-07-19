@@ -21,6 +21,7 @@
             overflow: hidden;
         }
     </style>
+    <script src="${static}/js/util/CommonUtil.js"></script>
 </head>
 <body>
 
@@ -59,10 +60,18 @@
                         <!--开关-->
                         <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch"
                                lay-text="启用|停用" value="1">
-                        <button class="layui-btn layui-btn-warm layuiadmin-btn-list" data-type="websocket">链接服务器</button>
-                        <input id="msgContent" type="text" name="message" placeholder="请输入消息" autocomplete="off" class="layui-input">
-                        <button class="layui-btn layuiadmin-btn-list" data-type="sendMsg">发送消息</button>
 
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">websocket</label>
+                    <button class="layui-btn layui-btn-warm layuiadmin-btn-list" data-type="websocket">连接服务器</button>
+                    <button class="layui-btn layui-btn-warm layuiadmin-btn-list" data-type="offLine">断开连接</button>
+                    <button class="layui-btn layuiadmin-btn-list" data-type="sendTextMsg">发送文本消息</button>
+                    <button class="layui-btn layuiadmin-btn-list" data-type="sendBinaryMsg">发送byte消息</button>
+                    <div class="layui-input-inline">
+                        <input id="msgContent" type="text" name="message" placeholder="请输入消息" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -141,6 +150,13 @@
     </div>
 </div>
 
+<script>
+    var Swear = {
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
+    }
+</script>
 <script src="${static}/layuiadmin/layui/layui.js"></script>
 <script src="${static}/js/plugins/wangEditor/wangEditor.js"></script>
 <script src="${static}/module/admin/system/demo/demo.js"></script>

@@ -33,9 +33,9 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 	@Override
 	public HttpResponse handshake(HttpRequest request, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
 		String clientip = request.getClientIp();
-		String myname = request.getParam("name");
+		String userid = request.getParam("userid");
 		
-		Tio.bindUser(channelContext, myname);
+		Tio.bindUser(channelContext, userid);
 //		channelContext.setUserid(myname);
 		log.info("收到来自{}的ws握手包 \r\n{}", clientip, request.toString());
 		return httpResponse;
@@ -67,6 +67,7 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 	@Override
 	public Object onBytes(WsRequest wsRequest, byte[] bytes, ChannelContext channelContext) throws Exception {
 		String str = new String(bytes);
+		log.info("收到byte消息{},消息解析后为{}",bytes,str);
 		return null;
 	}
 
