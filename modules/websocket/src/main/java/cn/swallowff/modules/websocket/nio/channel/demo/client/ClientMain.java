@@ -14,4 +14,5 @@ public class ClientMain {
         ChannelSocketClient client = new ChannelSocketClient(null,port,new ClientSelectionKeyHandler(),new ClientMessageProcesser());
         new Thread(client,"channelSocketClient").start();
     }
+
 }

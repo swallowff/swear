@@ -10,8 +10,12 @@ import java.nio.charset.Charset;
  * @create 2019/7/17
  */
 public class ClientMessageProcesser implements MessageProcesser {
+
     @Override
     public void process(SocketChannel socketChannel, byte[] bytes, Charset charset) {
         String message = new String(bytes,charset);
-        System.out.println("client process message success : "+message);    }
+        System.out.println("client process message success : "+message);
+    }
+
+
 }
