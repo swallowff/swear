@@ -14,8 +14,7 @@
         <module>../modules/cms</module>
         <module>../modules/core</module>
         <module>../modules/cloud</module>
-        <module>../modules/websocket</module>
-        <module>../modules/nio-springboot</module>
+        <module>../modules/demo</module>
         <module>../web</module>
         <module>../code</module>
     </modules>

@@ -1,13 +1,16 @@
 package cn.swallowff.modules.demo.io.tio.usecase.common;
 
+import java.io.Serializable;
+import java.util.Map;
+
 /**
  * @author shenyu
  * @create 2019/7/19
  */
-public class WebSocketRequest<T> {
+public class WebSocketRequest implements Serializable {
     private String action;
     private String contentType;
-    private T body;
+    private Map<String,Object> body;
 
     public String getAction() {
         return action;
@@ -25,11 +28,11 @@ public class WebSocketRequest<T> {
         this.contentType = contentType;
     }
 
-    public T getBody() {
+    public Map<String, Object> getBody() {
         return body;
     }
 
-    public void setBody(T body) {
+    public void setBody(Map<String, Object> body) {
         this.body = body;
     }
 }

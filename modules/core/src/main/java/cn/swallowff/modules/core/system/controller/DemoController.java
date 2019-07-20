@@ -24,6 +24,16 @@ public class DemoController {
     @Autowired
     private DeptService deptService;
 
+    @RequestMapping("list.html")
+    public String demoListHtml() {
+        return "admin/pages/system/demo/demo";
+    }
+
+    @RequestMapping("layim.html")
+    public String layimHtml() {
+        return "admin/pages/system/demo/layim";
+    }
+
     @RequestMapping(value = "treeTableList.ajax")
     @ResponseBody
     public Object treeTableList(Dept dept) {

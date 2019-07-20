@@ -22,6 +22,12 @@ layui.config({
     setter.serverUrl = Swear.serverUrl;
     setter.ctxPath = Swear.ctxPath;
 
+    layui.data('test',{
+        key:'name',
+        value:'tom'
+    })
+    console.log(layui.data('test').name)
+
     //富文本编辑器
     var E = window.wangEditor
     var editor = new E('#contentEditor')
@@ -104,7 +110,6 @@ layui.config({
             data: [0, 1, 4, 10, 11, 5, 2, 6, 7, 3, 8, 9],
         },
         end: function (e) {
-            console.log(1)
             console.log(e.data)
             form.render();
         },

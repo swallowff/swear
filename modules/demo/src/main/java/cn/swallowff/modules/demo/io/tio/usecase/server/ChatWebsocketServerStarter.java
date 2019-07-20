@@ -10,7 +10,7 @@ import java.io.IOException;
  * @author tanyaowu
  * 2017年6月28日 下午5:34:04
  */
-public class HelloWebsocketServerStarter {
+public class ChatWebsocketServerStarter {
 
 	private WsServerStarter wsServerStarter;
 	private ServerGroupContext serverGroupContext;
@@ -19,15 +19,15 @@ public class HelloWebsocketServerStarter {
 	 *
 	 * @author tanyaowu
 	 */
-	public HelloWebsocketServerStarter(int port, ServerWsMsgHandler wsMsgHandler) throws Exception {
+	public ChatWebsocketServerStarter(int port, ChatWsMsgHandler wsMsgHandler) throws Exception {
 		wsServerStarter = new WsServerStarter(port, wsMsgHandler);
 
 		serverGroupContext = wsServerStarter.getServerGroupContext();
 		serverGroupContext.setName(ServerConfig.PROTOCOL_NAME);
-		serverGroupContext.setServerAioListener(HelloServerAioListener.me);
+		serverGroupContext.setServerAioListener(ChatServerAioListener.me);
 
 		//设置ip监控
-		serverGroupContext.setIpStatListener(HelloIpStatListener.me);
+		serverGroupContext.setIpStatListener(ChatIpStatListener.me);
 		//设置ip统计时间段
 		serverGroupContext.ipStats.addDurations(ServerConfig.IpStatDuration.IPSTAT_DURATIONS);
 		
@@ -53,7 +53,7 @@ public class HelloWebsocketServerStarter {
 	 * @throws IOException
 	 */
 	public static void start() throws Exception {
-		HelloWebsocketServerStarter appStarter = new HelloWebsocketServerStarter(ServerConfig.SERVER_PORT, ServerWsMsgHandler.me);
+		ChatWebsocketServerStarter appStarter = new ChatWebsocketServerStarter(ServerConfig.SERVER_PORT, ChatWsMsgHandler.me);
 		appStarter.wsServerStarter.start();
 	}
 

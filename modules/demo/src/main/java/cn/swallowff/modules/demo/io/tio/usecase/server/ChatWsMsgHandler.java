@@ -1,9 +1,10 @@
 package cn.swallowff.modules.demo.io.tio.usecase.server;
 
-import cn.swallowff.common.json.JacksonUtil;
+import cn.swallowff.common.json.GsonHelper;
 import cn.swallowff.modules.demo.io.tio.usecase.common.Const;
 import cn.swallowff.modules.demo.io.tio.usecase.common.WebSocketRequest;
 import cn.swallowff.modules.demo.io.tio.usecase.common.WebSocketResponse;
+import cn.swallowff.modules.demo.io.tio.usecase.server.pack.RespMsgPack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
@@ -18,15 +19,15 @@ import org.tio.websocket.server.handler.IWsMsgHandler;
 import java.util.Objects;
 
 /**
- * @author tanyaowu
- * 2017年6月28日 下午5:32:38
+ * @author swallowff
+ * @created 2019年6月28日
  */
-public class ServerWsMsgHandler implements IWsMsgHandler {
-	private static Logger log = LoggerFactory.getLogger(ServerWsMsgHandler.class);
+public class ChatWsMsgHandler implements IWsMsgHandler {
+	private static Logger log = LoggerFactory.getLogger(ChatWsMsgHandler.class);
 
-	public static final ServerWsMsgHandler me = new ServerWsMsgHandler();
+	public static final ChatWsMsgHandler me = new ChatWsMsgHandler();
 
-	private ServerWsMsgHandler() {
+	private ChatWsMsgHandler() {
 
 	}
 
@@ -44,13 +45,6 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 		return httpResponse;
 	}
 
-	/** 
-	 * @param httpRequest
-	 * @param httpResponse
-	 * @param channelContext
-	 * @throws Exception
-	 * @author tanyaowu
-	 */
 	@Override
 	public void onAfterHandshaked(HttpRequest httpRequest, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
 		//绑定到群组，后面会有群发
@@ -102,12 +96,21 @@ public class ServerWsMsgHandler implements IWsMsgHandler {
 		}
 
 		//非心跳消息,解析成约定的请求格式
-		WebSocketRequest<String> socketRequest = JacksonUtil.readValue(text,WebSocketRequest.class);
+		WsResponse wsResponse = null;
+		WebSocketRequest socketRequest = GsonHelper.parseJson(text,WebSocketRequest.class);
 		if (null == socketRequest){
-			WsResponse response = WsResponse.fromText(WebSocketResponse.newError().toJson(),"UTF-8");
-			return response;
+			wsResponse = WsResponse.fromText(WebSocketResponse.newError().toJson(),ServerConfig.CHARSET);
+			return wsResponse;
 		}
-
+//		String touser = socketRequest.getBody().getTo();
+		//模拟响应数据
+		String touser = "221341842032168960";
+		String content = (String) socketRequest.getBody().get("content");
+		WebSocketResponse webSocketResponse = WebSocketResponse.newSuccess();
+		RespMsgPack respMsgPack = new RespMsgPack(touser,"text",content);
+		webSocketResponse.setData(respMsgPack);
+		wsResponse = WsResponse.fromText(webSocketResponse.toJson(),ServerConfig.CHARSET);
+		Tio.sendToUser(channelContext.getGroupContext(),touser,wsResponse);
 //		channelContext.getToken();
 		//群发
 //		Tio.sendToGroup(channelContext.groupContext, Const.GROUP_ID, wsResponse);

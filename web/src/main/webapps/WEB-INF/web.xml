@@ -4,15 +4,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
-	<display-name>JeeSite</display-name>
+	<display-name>Swear</display-name>
 	
 	<error-page>
 		<error-code>500</error-code>
-		<location>/error/500</location>
+		<location>/WEB-INF/view/error/500.html</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error/404</location>
+		<location>/WEB-INF/view/error/404.html</location>
 	</error-page>
 
 </web-app>

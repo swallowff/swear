@@ -17,12 +17,12 @@ import org.tio.websocket.server.WsServerAioListener;
  * @author tanyaowu
  * 用户根据情况来完成该类的实现
  */
-public class HelloServerAioListener extends WsServerAioListener {
-	private static Logger log = LoggerFactory.getLogger(HelloServerAioListener.class);
+public class ChatServerAioListener extends WsServerAioListener {
+	private static Logger log = LoggerFactory.getLogger(ChatServerAioListener.class);
 
-	public static final HelloServerAioListener me = new HelloServerAioListener();
+	public static final ChatServerAioListener me = new ChatServerAioListener();
 
-	private HelloServerAioListener() {
+	private ChatServerAioListener() {
 
 	}
 

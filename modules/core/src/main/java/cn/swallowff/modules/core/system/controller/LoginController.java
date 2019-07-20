@@ -82,10 +82,10 @@ public class LoginController extends BaseController {
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account.trim(), password.trim(), rememberme);
             subject.login(usernamePasswordToken);
         } catch (AuthenticationException e) {
-//            e.printStackTrace();
+//            logger.error("login error",e);
             return new BaseResp(ResponseState.INCORRECT_PASSWORD);
         } catch (InvalidKaptchaException e2) {
-//            e2.printStackTrace();
+//            logger.error("kaptcha error",e2);
             return new BaseResp(ResponseState.INVALID_KAPTCHA);
         }
         Map<String, Object> respMap = new HashMap<>();

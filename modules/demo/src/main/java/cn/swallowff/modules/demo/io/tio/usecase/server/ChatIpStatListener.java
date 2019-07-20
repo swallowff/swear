@@ -16,16 +16,16 @@ import org.tio.core.stat.IpStatListener;
  * @author tanyaowu
  *
  */
-public class HelloIpStatListener implements IpStatListener {
+public class ChatIpStatListener implements IpStatListener {
 	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(HelloIpStatListener.class);
+	private static Logger log = LoggerFactory.getLogger(ChatIpStatListener.class);
 
-	public static final HelloIpStatListener me = new HelloIpStatListener();
+	public static final ChatIpStatListener me = new ChatIpStatListener();
 
 	/**
 	 *
 	 */
-	private HelloIpStatListener() {
+	private ChatIpStatListener() {
 	}
 
 	@Override
