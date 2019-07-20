@@ -260,13 +260,13 @@ layui.config({
                     icon: 5
                 });
             }
-            socket = new WebSocket('ws://127.0.0.1:9999?userid=10000000');
+            socket = new WebSocket('ws://127.0.0.1:9999?userid=221341842032168960&subscription=orderPush');
 
             //监听open事件
             socket.onopen = () => {
                 if (socket.readyState === WebSocket.OPEN){
                     layer.msg("连接服务器成功",{icon: 1})
-                    socket.send('hello')
+                    // socket.send('hello')
                 }
                 // socket.binaryType = 'arraybuffer';
             }
@@ -319,6 +319,9 @@ layui.config({
             socket.send(bytes);
         },
         offLine: function () {
+            if (!socket || socket.readyState != WebSocket.OPEN){
+                return layer.msg("还没有连接服务器哟",{icon: 5})
+            }
             socket.close();
             layer.msg("已断开连接",{icon: 1})
         }

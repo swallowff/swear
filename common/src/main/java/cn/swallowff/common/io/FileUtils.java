@@ -21,8 +21,6 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.Enumeration;
 import java.util.List;
 
