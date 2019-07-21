@@ -2,7 +2,7 @@ package cn.swallowff.modules.core.shiro;
 
 import cn.swallowff.modules.core.shiro.service.UserAuthService;
 import cn.swallowff.modules.core.shiro.service.impl.UserAuthServiceImpl;
-import cn.swallowff.modules.core.system.entity.User;
+import cn.swallowff.modules.core.modules.system.entity.User;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;

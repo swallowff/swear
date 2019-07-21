@@ -13,11 +13,11 @@ public class ErrorController {
 
     @RequestMapping("404")
     public String page404() {
-        return "error/404";
+        return "pages/error/404";
     }
 
     @RequestMapping("500")
     public String page500() {
-        return "error/500";
+        return "pages/error/500";
     }
 }

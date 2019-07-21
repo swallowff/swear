@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.modules.cs.dao.CsUserFriendDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.cs_uid AS csUid,
+        a.fuid AS fuid,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="cn.swallowff.modules.core.modules.cs.entity.CsUserFriend">
+      SELECT
+      <include refid="baseColumns"/>
+      FROM cs_user_friend a
+      <where>
+          a.delflag = 0
+          AND a.id = #{id}
+      </where>
+    </select>
+
+    <select id="findEntity" resultType="cn.swallowff.modules.core.modules.cs.entity.CsUserFriend">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM cs_user_friend a
+        <where>
+            a.delflag = 0
+            <if test="csUid != null and csUid != ''">
+                AND a.cs_uid = #{csUid}
+            </if>
+            <if test="fuid != null and fuid != ''">
+                AND a.fuid = #{fuid}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="cn.swallowff.modules.core.modules.cs.entity.CsUserFriend">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM cs_user_friend a
+        <where>
+            a.delflag = 0
+            <if test="csUid != null and csUid != ''">
+                AND a.cs_uid = #{csUid}
+            </if>
+            <if test="fuid != null and fuid != ''">
+                AND a.fuid = #{fuid}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cs_user_friend(
+          id,
+          cs_uid,
+          fuid,
+          update_time,
+          create_time,
+          delflag
+        ) VALUES (
+          #{id},
+          #{csUid},
+          #{fuid},
+          #{updateTime},
+          #{createTime},
+          #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cs_user_friend SET
+          cs_uid = #{csUid},
+          fuid = #{fuid},
+          update_time = #{updateTime}
+          <where>
+              delflag = 0
+              AND id = #{id}
+          </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE cs_user_friend
+        <set>
+            <if test="csUid != null and csUid != ''">
+                cs_uid = #{csUid},
+            </if>
+            <if test="fuid != null and fuid != ''">
+                fuid = #{fuid},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE cs_user_friend a
+        SET a.delflag = 1
+        <where>
+          a.delflag = 0
+          AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

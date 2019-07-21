@@ -67,15 +67,24 @@ public class FilePathFactory {
             case DAO:
             case SERVICE:
             case CONTROLLER:
-                sb.append(PathUtils.SRC_JAVA)
-                        .append(PathUtils.packageToPath(config.getJavaLocation()))
-                        .append(File.separator).append(fileType.getPackageName()).append(File.separator)
-                        .append(className).append(fileType.getNameSuffix())
-                        .append(fileType.getSuffix());
+                if (StringUtils.isNotBlank(config.getJavaRoot())){
+                    sb.append(config.getJavaRoot());
+                }else {
+                    sb.append(PathUtils.SRC_JAVA);
+                }
+                sb.append(config.getJavaRelaPath())
+                    .append(File.separator).append(fileType.getPackageName()).append(File.separator)
+                    .append(className).append(fileType.getNameSuffix())
+                    .append(fileType.getSuffix());
                 break;
             case MAPPER:
+                if (StringUtils.isNotBlank(config.getMapperRoot())){
+                    sb.append(config.getMapperRoot());
+                }else {
+                    sb.append(PathUtils.SRC_RESOURCES);
+                }
                 sb.append(PathUtils.SRC_RESOURCES)
-                        .append(PathUtils.packageToPath(config.getMapperLocation()))
+                        .append(config.getMapperRelaPath())
                         .append(File.separator).append(fileType.getPackageName())
                         .append(File.separator)
                         .append(className).append(fileType.getNameSuffix())
@@ -85,7 +94,7 @@ public class FilePathFactory {
             case ADD_HTML:
             case EDIT_HTML:
                 sb.append(PathUtils.SRC_WEBAPPS)
-                        .append(PathUtils.packageToPath(config.getHtmlLocation()))
+                        .append(config.getHtmlRelaPath())
                         .append(File.separator).append(uncapClassName).append(File.separator)
                         .append(uncapClassName)
                         .append(fileType.getNameSuffix())
@@ -95,7 +104,7 @@ public class FilePathFactory {
             case ADD_JS:
             case EDIT_JS:
                 sb.append(PathUtils.SRC_WEBAPPS)
-                        .append(PathUtils.packageToPath(config.getJsLocation()))
+                        .append(config.getJsRelaPath())
                         .append(File.separator).append(uncapClassName).append(File.separator)
                         .append(uncapClassName)
                         .append(fileType.getNameSuffix())
@@ -105,18 +114,8 @@ public class FilePathFactory {
         return sb.toString();
     }
 
-    public Map<GeneratorFile,String> createPathMap(Set<GeneratorFile> genFiles){
+    public Map<GeneratorFile,String> createPathMap(Set<GeneratorFile> genFiles,String className){
         Map<GeneratorFile,String> pathMap = new HashMap<>();
-        String className = "";
-        String tablePrefix = config.getTablePrefix();
-        if (null == tablePrefix){
-            className = StringUtils.capCamelCase(config.getTableName());
-        } else if (tablePrefix.endsWith("_")){
-            className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix(),""));
-        }else {
-            className = StringUtils.capCamelCase(config.getTableName().replace(config.getTablePrefix().concat("_"),""));
-        }
-
         for (GeneratorFile generatorFile : genFiles){
             pathMap.put(generatorFile,getPath(generatorFile,className));
         }
@@ -128,38 +127,54 @@ public class FilePathFactory {
         StringBuilder sb = new StringBuilder();
         sb.append(PathUtils.PROJECT_ROOT);
         if (StringUtils.isNotBlank(config.getModuleLocation())){
-            sb.append(PathUtils.packageToPath(config.getModuleLocation()));
+            sb.append(config.getModuleLocation());
         }
         switch (generatorFile.getFileType()){
             case JAVA:
-                sb.append(PathUtils.SRC_JAVA)
-                        .append(PathUtils.packageToPath(config.getJavaLocation()))
-                        .append(File.separator).append(generatorFile.getModuleName()).append(File.separator)
-                        .append(className).append(generatorFile.getNameSuffix())
-                        .append(generatorFile.getFileSuffix());
+                if (StringUtils.isNotBlank(config.getJavaRoot())){
+                    sb.append(config.getJavaRoot());
+                }else {
+                    sb.append(PathUtils.SRC_JAVA);
+                }
+                sb.append(config.getJavaRelaPath())
+                    .append(File.separator).append(generatorFile.getModuleName()).append(File.separator)
+                    .append(className).append(generatorFile.getNameSuffix())
+                    .append(generatorFile.getFileSuffix());
                 break;
             case MAPPER:
-                sb.append(PathUtils.SRC_RESOURCES)
-                        .append(PathUtils.packageToPath(config.getMapperLocation() + "." + config.getMapperModules()))
-                        .append(File.separator)
-                        .append(className).append(generatorFile.getNameSuffix())
-                        .append(generatorFile.getFileSuffix());
+                if (StringUtils.isNotBlank(config.getMapperRoot())){
+                    sb.append(config.getMapperRoot());
+                }else {
+                    sb.append(PathUtils.SRC_RESOURCES);
+                }
+                sb.append(config.getMapperRelaPath())
+                    .append(File.separator)
+                    .append(className).append(generatorFile.getNameSuffix())
+                    .append(generatorFile.getFileSuffix());
                 break;
             case PAGE:
-                sb.append(PathUtils.SRC_WEBAPPS)
-                        .append(PathUtils.packageToPath(config.getHtmlLocation() + "." + config.getHtmlModules()))
-                        .append(File.separator).append(uncapClassName).append(File.separator)
-                        .append(uncapClassName)
-                        .append(generatorFile.getNameSuffix())
-                        .append(generatorFile.getFileSuffix());
+                if (StringUtils.isNotBlank(config.getHtmlRoot())){
+                    sb.append(config.getHtmlRoot());
+                }else {
+                    sb.append(PathUtils.SRC_WEBAPPS);
+                }
+                sb.append(config.getHtmlRelaPath())
+                    .append(File.separator).append(uncapClassName).append(File.separator)
+                    .append(uncapClassName)
+                    .append(generatorFile.getNameSuffix())
+                    .append(generatorFile.getFileSuffix());
                 break;
             case JAVASCRIPT:
-                sb.append(PathUtils.SRC_WEBAPPS)
-                        .append(PathUtils.packageToPath(config.getJsLocation() + "." + config.getJsModules()))
-                        .append(File.separator).append(uncapClassName).append(File.separator)
-                        .append(uncapClassName)
-                        .append(generatorFile.getNameSuffix())
-                        .append(generatorFile.getFileSuffix());
+                if (StringUtils.isNotBlank(config.getJsRoot())){
+                    sb.append(config.getJsRoot());
+                }else {
+                    sb.append(PathUtils.SRC_WEBAPPS);
+                }
+                sb.append(config.getJsRelaPath())
+                    .append(File.separator).append(uncapClassName).append(File.separator)
+                    .append(uncapClassName)
+                    .append(generatorFile.getNameSuffix())
+                    .append(generatorFile.getFileSuffix());
                 break;
         }
         return sb.toString();

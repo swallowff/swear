@@ -43,7 +43,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/templates/**")
+        registry.addResourceHandler("/src/main/webapps/templates/**")
                 .addResourceLocations("classpath:/templates/");
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + coreProperties.getFileUploadPath());

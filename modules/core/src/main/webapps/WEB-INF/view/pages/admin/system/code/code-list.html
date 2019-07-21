@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>系统管理 - 代码生成</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="${static}/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="LAYF-code-gen-form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">选择数据表</label>
+                    <div class="layui-input-inline">
+                        <select id="table-select" name="table" data-placeholder="请选择数据表" lay-search=""></select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">模块名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="rootModule" placeholder="例:/modules/core" value="/modules/core" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">Class路径</label>-->
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input type="text" name="javaRoot" placeholder="例:/src/main/java" lay-verify="required"-->
+                               <!--value="/src/main/java" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">Class相对路径</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="relaClassPath" placeholder="例:/cn/swallowff/modules/core/modules/cs" lay-verify="required"
+                               value="/cn/swallowff/modules/core/modules/cs" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">mapper路径</label>-->
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input type="text" name="mapperRoot" placeholder="例:/src/main/resources/mapper" value="/src/main/resources/mapper" autocomplete="off"-->
+                               <!--class="layui-input">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">mapper相对路径</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="relaMapperPath" placeholder="例:/sys" value="/sys" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">html路径</label>-->
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input type="text" name="htmlRoot" placeholder="例:/src/main/webapps/WEB-INF/view" lay-verify="required"-->
+                               <!--value="/src/main/webapps/WEB-INF/view" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">html相对路径</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="relaHtmlPath" placeholder="例:/pages/admin/system" lay-verify="required"
+                               value="/pages/admin/system" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">js路径</label>-->
+                    <!--<div class="layui-input-inline">-->
+                        <!--<input type="text" name="jsRoot" placeholder="例:/src/main/webapps/static" lay-verify="required"-->
+                               <!--value="/src/main/webapps/static" autocomplete="off" class="layui-input">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">js相对路径</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="relaJsPath" placeholder="例:/modules/admin/system" lay-verify="required"
+                               value="/modules/admin/system" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label">模板路径</label>-->
+                <!--<div class="layui-input-inline">-->
+                <!--<input type="text" name="templateDir" placeholder="例:/templates/base/" autocomplete="off" class="layui-input">-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">实体名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="title" placeholder="例:用户" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">类名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="entityClassName" placeholder="例:ChatUser" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">表前缀</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="tablePrefix" placeholder="例:sys 或 sys_" value="sys_" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">强制覆盖</label>
+                    <div class="layui-input-inline">
+                        <input type="checkbox" lay-verify="required" lay-filter="status" name="forceCover"
+                               lay-skin="switch" lay-text="是|否" value="1">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-danger" lay-submit lay-filter="LAYF-code-gen">生成代码</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-card-body">
+
+        </div>
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    var Swear = {
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
+    }
+</script>
+<script src="${static}/modules/admin/system/code/code-list.js"></script>
+</body>
+</html>

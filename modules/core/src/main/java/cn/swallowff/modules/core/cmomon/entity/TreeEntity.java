@@ -1,7 +1,7 @@
 package cn.swallowff.modules.core.cmomon.entity;
 
 import cn.swallowff.common.reflect.ReflectUtils;
-import cn.swallowff.modules.core.system.entity.Dept;
+import cn.swallowff.modules.core.modules.system.entity.Dept;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;

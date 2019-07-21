@@ -1,6 +1,5 @@
 package cn.swallowff.code.config;
 
-import cn.swallowff.code.FileType;
 import cn.swallowff.code.entity.GeneratorFile;
 
 import java.sql.Connection;
@@ -19,25 +18,26 @@ public class GeneratorConfig {
      * .java文件完整包路径  相对于src/main/java
      * @example cn.swallowff.web.cms
      */
-    private String javaLocation;
+    private String javaRoot = "/src/main/java";     //默认 /src/main/java
+    private String javaRelaPath = "/cn/swallowff/modules/core/modules/system";
     /**
      * Mapper.xml文件包路径  相对于src/main/resources
      * @example mapper.cms
      */
-    private String mapperLocation = "mapper";
-    private String mapperModules;
+    private String mapperRoot = "/src/main/resources/mapper";   //默认 /src/main/resources/mapper
+    private String mapperRelaPath = "/sys";
     /**
      * .html文件包路径   相对于src/main/webapps
      * @example WEB-INF.view.pages.modules.cms
      */
-    private String htmlLocation = "WEB-INF.view";
-    private String htmlModules;
+    private String htmlRoot = "/src/main/webapps/WEB-INF/view";     //默认  /src/main/webapps/WEB-INF/view
+    private String htmlRelaPath = "/pages/admin/system";
     /**
      * .js文件包路径 相对于src/main/webapps
      * @example static.js.modules.cms
      */
-    private String jsLocation = "static";      //js.module.admin.system
-    private String jsModules;
+    private String jsRoot = "/src/main/webapps/static";      //默认   /src/main/webapps/static
+    private String jsRelaPath = "/modules/admin/system";
     /**
      * 数据库连接
      */
@@ -54,7 +54,6 @@ public class GeneratorConfig {
     /**
      * 生成文件配置
      */
-    private Set<FileType> genFiles;
     private Set<GeneratorFile> genFileSets;
     /**
      * 模板路径 相对于src/main/webapps
@@ -65,6 +64,8 @@ public class GeneratorConfig {
      * 实体名称
      */
     private String title;
+
+    private String customEntityName;
     /**
      * 是否强制覆盖
      */
@@ -78,52 +79,12 @@ public class GeneratorConfig {
         this.genFileSets = genFileSets;
     }
 
-    public Set<FileType> getGenFiles() {
-        return genFiles;
-    }
-
-    public void setGenFiles(Set<FileType> genFiles) {
-        this.genFiles = genFiles;
-    }
-
     public Connection getConnection() {
         return connection;
     }
 
     public void setConnection(Connection connection) {
         this.connection = connection;
-    }
-
-    public String getJavaLocation() {
-        return javaLocation;
-    }
-
-    public void setJavaLocation(String javaLocation) {
-        this.javaLocation = javaLocation;
-    }
-
-    public String getMapperLocation() {
-        return mapperLocation;
-    }
-
-    public void setMapperLocation(String mapperLocation) {
-        this.mapperLocation = mapperLocation;
-    }
-
-    public String getHtmlLocation() {
-        return htmlLocation;
-    }
-
-    public void setHtmlLocation(String htmlLocation) {
-        this.htmlLocation = htmlLocation;
-    }
-
-    public String getJsLocation() {
-        return jsLocation;
-    }
-
-    public void setJsLocation(String jsLocation) {
-        this.jsLocation = jsLocation;
     }
 
     public String getTableName() {
@@ -174,27 +135,75 @@ public class GeneratorConfig {
         this.forceCover = forceCover;
     }
 
-    public String getMapperModules() {
-        return mapperModules;
+    public String getJavaRelaPath() {
+        return javaRelaPath;
     }
 
-    public void setMapperModules(String mapperModules) {
-        this.mapperModules = mapperModules;
+    public void setJavaRelaPath(String javaRelaPath) {
+        this.javaRelaPath = javaRelaPath;
     }
 
-    public String getHtmlModules() {
-        return htmlModules;
+    public String getMapperRelaPath() {
+        return mapperRelaPath;
     }
 
-    public void setHtmlModules(String htmlModules) {
-        this.htmlModules = htmlModules;
+    public void setMapperRelaPath(String mapperRelaPath) {
+        this.mapperRelaPath = mapperRelaPath;
     }
 
-    public String getJsModules() {
-        return jsModules;
+    public String getHtmlRelaPath() {
+        return htmlRelaPath;
     }
 
-    public void setJsModules(String jsModules) {
-        this.jsModules = jsModules;
+    public void setHtmlRelaPath(String htmlRelaPath) {
+        this.htmlRelaPath = htmlRelaPath;
+    }
+
+    public String getJsRelaPath() {
+        return jsRelaPath;
+    }
+
+    public void setJsRelaPath(String jsRelaPath) {
+        this.jsRelaPath = jsRelaPath;
+    }
+
+    public String getCustomEntityName() {
+        return customEntityName;
+    }
+
+    public void setCustomEntityName(String customEntityName) {
+        this.customEntityName = customEntityName;
+    }
+
+    public String getJavaRoot() {
+        return javaRoot;
+    }
+
+    public void setJavaRoot(String javaRoot) {
+        this.javaRoot = javaRoot;
+    }
+
+    public String getMapperRoot() {
+        return mapperRoot;
+    }
+
+    public void setMapperRoot(String mapperRoot) {
+        this.mapperRoot = mapperRoot;
+    }
+
+    public String getHtmlRoot() {
+        return htmlRoot;
+    }
+
+    public void setHtmlRoot(String htmlRoot) {
+        this.htmlRoot = htmlRoot;
+    }
+
+    public String getJsRoot() {
+        return jsRoot;
+    }
+
+    public void setJsRoot(String jsRoot) {
+        this.jsRoot = jsRoot;
     }
 }

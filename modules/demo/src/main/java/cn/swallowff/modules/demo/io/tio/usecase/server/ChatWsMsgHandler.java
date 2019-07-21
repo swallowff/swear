@@ -2,6 +2,7 @@ package cn.swallowff.modules.demo.io.tio.usecase.server;
 
 import cn.swallowff.common.json.GsonHelper;
 import cn.swallowff.modules.demo.io.tio.usecase.common.Const;
+import cn.swallowff.modules.demo.io.tio.usecase.common.User;
 import cn.swallowff.modules.demo.io.tio.usecase.common.WebSocketRequest;
 import cn.swallowff.modules.demo.io.tio.usecase.common.WebSocketResponse;
 import cn.swallowff.modules.demo.io.tio.usecase.server.pack.RespMsgPack;
@@ -25,10 +26,14 @@ import java.util.Objects;
 public class ChatWsMsgHandler implements IWsMsgHandler {
 	private static Logger log = LoggerFactory.getLogger(ChatWsMsgHandler.class);
 
+	private IUserService userService;   //由客户端实现
+
 	public static final ChatWsMsgHandler me = new ChatWsMsgHandler();
 
-	private ChatWsMsgHandler() {
+	private ChatWsMsgHandler() {}
 
+	public void registerUserService(IUserService service){
+		this.userService = service;
 	}
 
 	/**
@@ -92,6 +97,7 @@ public class ChatWsMsgHandler implements IWsMsgHandler {
 		}
 		//心跳消息直接返回
 		if (Objects.equals("Heartbeat", text)) {
+			log.info("{}心跳正常",channelContext.userid);
 			return null;
 		}
 
@@ -102,13 +108,21 @@ public class ChatWsMsgHandler implements IWsMsgHandler {
 			wsResponse = WsResponse.fromText(WebSocketResponse.newError().toJson(),ServerConfig.CHARSET);
 			return wsResponse;
 		}
-//		String touser = socketRequest.getBody().getTo();
 		//模拟响应数据
-		String touser = "221341842032168960";
+		String touser = (String) socketRequest.getBody().get("to");
+//		User targetUser = userService.getUser(touser);
+		User sender = userService.getUser(channelContext.userid);
+
 		String content = (String) socketRequest.getBody().get("content");
 		WebSocketResponse webSocketResponse = WebSocketResponse.newSuccess();
-		RespMsgPack respMsgPack = new RespMsgPack(touser,"text",content);
+		RespMsgPack respMsgPack = new RespMsgPack(touser,"friend",content);
+		if (null != sender){
+			respMsgPack.setAvatar(sender.getAvatar());
+		}
+		respMsgPack.setFrom(channelContext.userid);
+		respMsgPack.setUsername(sender.getUsername());
 		webSocketResponse.setData(respMsgPack);
+
 		wsResponse = WsResponse.fromText(webSocketResponse.toJson(),ServerConfig.CHARSET);
 		Tio.sendToUser(channelContext.getGroupContext(),touser,wsResponse);
 //		channelContext.getToken();

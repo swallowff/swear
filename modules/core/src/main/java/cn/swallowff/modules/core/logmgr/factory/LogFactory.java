@@ -1,7 +1,7 @@
 package cn.swallowff.modules.core.logmgr.factory;
 
-import cn.swallowff.modules.core.system.entity.LoginLog;
-import cn.swallowff.modules.core.system.entity.OperationLog;
+import cn.swallowff.modules.core.modules.system.entity.LoginLog;
+import cn.swallowff.modules.core.modules.system.entity.OperationLog;
 import cn.swallowff.modules.core.logmgr.LogSucceed;
 import cn.swallowff.modules.core.logmgr.LogType;
 

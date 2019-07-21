@@ -3,7 +3,7 @@ package cn.swallowff.modules.core.cmomon.service;
 import cn.swallowff.modules.core.cmomon.dao.CrudDao;
 import cn.swallowff.modules.core.cmomon.entity.BaseEntity;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
-import cn.swallowff.modules.core.system.entity.User;
+import cn.swallowff.modules.core.modules.system.entity.User;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;

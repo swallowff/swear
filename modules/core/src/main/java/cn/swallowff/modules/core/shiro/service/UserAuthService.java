@@ -1,7 +1,7 @@
 package cn.swallowff.modules.core.shiro.service;
 
 import cn.swallowff.modules.core.shiro.ShiroUser;
-import cn.swallowff.modules.core.system.entity.User;
+import cn.swallowff.modules.core.modules.system.entity.User;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 
 import java.util.List;

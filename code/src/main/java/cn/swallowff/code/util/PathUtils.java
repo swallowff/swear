@@ -44,4 +44,22 @@ public class PathUtils {
     }
 
 
+    public static String pathToPackage(String path) {
+        if (StringUtils.isBlank(path)){
+            return "";
+        }
+        path = path.replaceAll("//|/|\\\\\\\\|\\\\","\\.");
+        if (path.startsWith(".")){
+            path = path.substring(1);
+        }
+        if (path.endsWith(".")){
+            path = path.substring(0,path.length() -1);
+        }
+        return path;
+
+    }
+
+    public static void main(String[] args){
+        System.out.println(pathToPackage("//test\\\\test"));
+    }
 }

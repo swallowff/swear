@@ -45,7 +45,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
-  type-aliases-package: cn.swallowff.modules.core.system.entity
+  type-aliases-package: cn.swallowff.modules.core.modules.system.entity
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true

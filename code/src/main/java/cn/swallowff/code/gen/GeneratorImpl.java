@@ -43,7 +43,7 @@ public class GeneratorImpl implements IGenerator {
         checkConfig();
         beetlUtil = new BeetlUtil(generatorConfig.getTemplatePath(),"utf-8");
         templateData = new TemplateDataFactory(new MetaDataResolver(generatorConfig)).createTemplateData();
-        pathMap = new FilePathFactory(generatorConfig).createPathMap(generatorConfig.getGenFileSets());
+        pathMap = new FilePathFactory(generatorConfig).createPathMap(generatorConfig.getGenFileSets(),templateData.getClassName());
     }
 
     //TODO 验证配置文件

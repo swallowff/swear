@@ -1,6 +1,6 @@
 package cn.swallowff.modules.core.shiro.service;
 
-import cn.swallowff.modules.core.system.entity.UserRoleRelation;
+import cn.swallowff.modules.core.modules.system.entity.UserRoleRelation;
 
 import java.util.List;
 

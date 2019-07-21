@@ -18,10 +18,10 @@ public class GeneratorImplTest {
     public void genEntity() throws Exception{
         GeneratorConfig generatorConfig = new GeneratorConfig();
         generatorConfig.setTableName("test_gen");
-        generatorConfig.setJavaLocation("cn.swallowff.modules.core.system");
-        generatorConfig.setMapperLocation("mapper.system");
-        generatorConfig.setHtmlLocation("WEB-INF.pages.admin.system");
-        generatorConfig.setJsLocation("static.module.admin.system");
+//        generatorConfig.setJavaLocation("cn.swallowff.modules.core.modules.system");
+//        generatorConfig.setMapperLocation("mapper.system");
+//        generatorConfig.setHtmlLocation("WEB-INF.pages.admin.system");
+//        generatorConfig.setJsLocation("static.module.admin.system");
         DataSource dataSource = SpringContextHolder.getBean(DataSource.class);
         generatorConfig.setConnection(dataSource.getConnection());
         generatorConfig.setTemplatePath("/WEB-INF/view/pages/template/gencode/");

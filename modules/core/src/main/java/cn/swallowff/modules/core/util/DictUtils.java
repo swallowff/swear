@@ -1,7 +1,7 @@
 package cn.swallowff.modules.core.util;
 
 import cn.swallowff.modules.core.cache.DictCache;
-import cn.swallowff.modules.core.system.service.DictService;
+import cn.swallowff.modules.core.modules.system.service.DictService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.Assert;
 

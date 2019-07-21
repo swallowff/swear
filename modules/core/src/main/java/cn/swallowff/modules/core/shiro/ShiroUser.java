@@ -1,8 +1,8 @@
 package cn.swallowff.modules.core.shiro;
 
 import cn.swallowff.modules.core.shiro.service.impl.UserRoleServiceImpl;
-import cn.swallowff.modules.core.system.entity.User;
-import cn.swallowff.modules.core.system.entity.UserRoleRelation;
+import cn.swallowff.modules.core.modules.system.entity.User;
+import cn.swallowff.modules.core.modules.system.entity.UserRoleRelation;
 
 import java.io.Serializable;
 import java.util.ArrayList;

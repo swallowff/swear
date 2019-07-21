@@ -1,10 +1,10 @@
 package cn.swallowff.modules.core.shiro.service.impl;
 
 import cn.swallowff.modules.core.shiro.service.UserRoleService;
-import cn.swallowff.modules.core.system.entity.Role;
-import cn.swallowff.modules.core.system.entity.UserRoleRelation;
-import cn.swallowff.modules.core.system.service.RoleService;
-import cn.swallowff.modules.core.system.service.UserRoleRelationService;
+import cn.swallowff.modules.core.modules.system.entity.Role;
+import cn.swallowff.modules.core.modules.system.entity.UserRoleRelation;
+import cn.swallowff.modules.core.modules.system.service.RoleService;
+import cn.swallowff.modules.core.modules.system.service.UserRoleRelationService;
 import cn.swallowff.modules.core.util.SpringContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;

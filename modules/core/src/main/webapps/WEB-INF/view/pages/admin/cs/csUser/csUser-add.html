@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>聊天系统用户添加 iframe 框</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-form" lay-filter="LAYF-csUser-form-add" id="LAYF-csUser-form-add"
+     style="padding: 20px 30px 0 0;">
+     <div class="layui-form-item">
+         <label class="layui-form-label">系统用户id</label>
+         <div class="layui-input-inline">
+             <input type="text" name="sysUid" lay-verify="required" placeholder="系统用户id" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">头像</label>
+         <div class="layui-input-inline">
+             <input type="text" name="avatar" lay-verify="required" placeholder="头像" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">登录用户名</label>
+         <div class="layui-input-inline">
+             <input type="text" name="userName" lay-verify="required" placeholder="登录用户名" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">昵称</label>
+         <div class="layui-input-inline">
+             <input type="text" name="nickName" lay-verify="required" placeholder="昵称" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">登录密码</label>
+         <div class="layui-input-inline">
+             <input type="text" name="password" lay-verify="required" placeholder="登录密码" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">手机号</label>
+         <div class="layui-input-inline">
+             <input type="text" name="telephone" lay-verify="required" placeholder="手机号" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">邮箱</label>
+         <div class="layui-input-inline">
+             <input type="text" name="email" lay-verify="required" placeholder="邮箱" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">签名</label>
+         <div class="layui-input-inline">
+             <input type="text" name="sign" lay-verify="required" placeholder="签名" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">是否在线</label>
+         <div class="layui-input-inline">
+             <input type="text" name="isOnline" lay-verify="required" placeholder="是否在线" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">上次登录ip</label>
+         <div class="layui-input-inline">
+             <input type="text" name="lastLoginIp" lay-verify="required" placeholder="上次登录ip" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+     <div class="layui-form-item">
+         <label class="layui-form-label">用户状态: 启用 停用</label>
+         <div class="layui-input-inline">
+             <input type="text" name="status" lay-verify="required" placeholder="用户状态: 启用 停用" autocomplete="off"
+                    class="layui-input">
+         </div>
+     </div>
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAYF-csUser-form-add-submit" id="LAYF-csUser-form-add-submit"
+               value="确认">
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    var Swear = {
+        serverUrl : '${serverUrl}',
+        ctxPath : '${admin}',
+        static : '${static}'
+    }
+</script>
+<script src="${static}/modules/admin/cs/csUser/csUser-add.js"></script>
+
+</body>
+</html>

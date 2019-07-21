@@ -1,8 +1,7 @@
 package cn.swallowff.modules.demo.io.tio.usecase;
 
-import cn.swallowff.modules.demo.io.tio.usecase.common.PacketUtil;
 import cn.swallowff.modules.demo.io.tio.usecase.common.HelloPacket;
-import org.tio.common.starter.annotation.TioServerMsgHandler;
+import cn.swallowff.modules.demo.io.tio.usecase.common.PacketUtil;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.Tio;
@@ -18,7 +17,7 @@ import java.nio.ByteBuffer;
  *
  * @author yangjian
  */
-@TioServerMsgHandler
+//@TioServerMsgHandler
 public class BootServerMsgHandler implements ServerAioHandler {
 
     /**

@@ -1,12 +1,12 @@
 package cn.swallowff.modules.core.logmgr.factory;
 
-import cn.swallowff.modules.core.system.entity.LoginLog;
-import cn.swallowff.modules.core.system.entity.OperationLog;
+import cn.swallowff.modules.core.modules.system.entity.LoginLog;
+import cn.swallowff.modules.core.modules.system.entity.OperationLog;
 import cn.swallowff.modules.core.logmgr.LogManager;
 import cn.swallowff.modules.core.logmgr.LogSucceed;
 import cn.swallowff.modules.core.logmgr.LogType;
-import cn.swallowff.modules.core.system.service.LoginLogService;
-import cn.swallowff.modules.core.system.service.OperationLogService;
+import cn.swallowff.modules.core.modules.system.service.LoginLogService;
+import cn.swallowff.modules.core.modules.system.service.OperationLogService;
 import cn.swallowff.modules.core.util.CommonUtil;
 import cn.swallowff.modules.core.util.SpringContextHolder;
 import org.slf4j.Logger;

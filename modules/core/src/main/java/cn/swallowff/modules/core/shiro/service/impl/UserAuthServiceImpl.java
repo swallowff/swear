@@ -2,9 +2,9 @@ package cn.swallowff.modules.core.shiro.service.impl;
 
 import cn.swallowff.modules.core.shiro.ShiroUser;
 import cn.swallowff.modules.core.shiro.service.UserAuthService;
-import cn.swallowff.modules.core.system.entity.User;
-import cn.swallowff.modules.core.system.service.RoleAuthRelationService;
-import cn.swallowff.modules.core.system.service.UserService;
+import cn.swallowff.modules.core.modules.system.entity.User;
+import cn.swallowff.modules.core.modules.system.service.RoleAuthRelationService;
+import cn.swallowff.modules.core.modules.system.service.UserService;
 import cn.swallowff.modules.core.util.SpringContextHolder;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
