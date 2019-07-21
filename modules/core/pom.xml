@@ -213,6 +213,22 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/webapps</directory>
+                <!--<includes>-->
+                    <!--&lt;!&ndash;包含文件夹以及子文件夹下所有资源&ndash;&gt;-->
+                    <!--<include>**/*.*</include>-->
+                <!--</includes>-->
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--<includes>-->
+                    <!--&lt;!&ndash;包含文件夹以及子文件夹下所有资源&ndash;&gt;-->
+                    <!--<include>**/*.*</include>-->
+                <!--</includes>-->
+            </resource>
+        </resources>
     </build>
 
 </project>

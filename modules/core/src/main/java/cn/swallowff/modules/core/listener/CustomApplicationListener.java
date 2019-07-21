@@ -23,7 +23,7 @@ public class CustomApplicationListener implements ApplicationListener<Applicatio
         ChatWsMsgHandler chatWsMsgHandler = ChatWsMsgHandler.me;
         chatWsMsgHandler.registerUserService(SpringContextHolder.getBean(ChatUserService.class));
         try {
-            ChatWebsocketServerStarter serverStarter = new ChatWebsocketServerStarter(9999,chatWsMsgHandler);
+            ChatWebsocketServerStarter serverStarter = new ChatWebsocketServerStarter(8999,chatWsMsgHandler);
             serverStarter.doStart();
         } catch (Exception e) {
             e.printStackTrace();
