@@ -7,19 +7,11 @@ import org.tio.websocket.server.handler.IWsMsgHandler;
 
 import java.io.IOException;
 
-/**
- * @author tanyaowu
- * 2017年6月28日 下午5:34:04
- */
 public class ChatWebsocketServerStarter {
 
 	private WsServerStarter wsServerStarter;
 	private ServerGroupContext serverGroupContext;
 
-	/**
-	 *
-	 * @author tanyaowu
-	 */
 	public ChatWebsocketServerStarter(int port, IWsMsgHandler wsMsgHandler) throws Exception {
 		init(port,wsMsgHandler);
 	}
@@ -53,10 +45,6 @@ public class ChatWebsocketServerStarter {
 //		}
 	}
 
-	/**
-	 * @author swallowff
-	 * @throws IOException
-	 */
 	public static void start() throws Exception {
 		ChatWebsocketServerStarter appStarter = new ChatWebsocketServerStarter(ServerConfig.SERVER_PORT, ChatWsMsgHandler.me);
 		appStarter.wsServerStarter.start();
@@ -65,10 +53,7 @@ public class ChatWebsocketServerStarter {
 	public void doStart() throws Exception{
 		wsServerStarter.start();
 	}
-
-	/**
-	 * @return the serverGroupContext
-	 */
+	
 	public ServerGroupContext getServerGroupContext() {
 		return serverGroupContext;
 	}
