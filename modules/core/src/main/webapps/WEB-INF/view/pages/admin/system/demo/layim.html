@@ -447,7 +447,7 @@
                 if (socket && socket.readyState === WebSocket.OPEN){
                     return layer.msg('已连接服务器',{icon: 5});
                 }
-                socket = new WebSocket('ws://localhost:8999?userid=${csuid}&subscription=orderPush');
+                socket = new WebSocket('ws://120.79.225.48:8999?userid=${csuid}&subscription=orderPush');
 
                 //监听open事件
                 socket.onopen = () => {

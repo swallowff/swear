@@ -51,8 +51,12 @@
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
+                @if(shiro.hasPermission("sys-user-delete")){
                 <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
+                @}
+                @if(shiro.hasPermission("sys-user-add")){
                 <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+                @}
                 <!--<button class="layui-btn layui-btn-warm layuiadmin-btn-list" data-type="role">分配角色</button>-->
             </div>
 
