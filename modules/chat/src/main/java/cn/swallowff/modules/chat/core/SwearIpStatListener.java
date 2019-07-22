@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.swallowff.modules.demo.io.tio.usecase.server;
+package cn.swallowff.modules.chat.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +11,16 @@ import org.tio.core.intf.Packet;
 import org.tio.core.stat.IpStat;
 import org.tio.core.stat.IpStatListener;
 
-public class ChatIpStatListener implements IpStatListener {
+public class SwearIpStatListener implements IpStatListener {
 	@SuppressWarnings("unused")
-	private static Logger log = LoggerFactory.getLogger(ChatIpStatListener.class);
+	private static Logger log = LoggerFactory.getLogger(SwearIpStatListener.class);
 
-	public static final ChatIpStatListener me = new ChatIpStatListener();
+	public static final SwearIpStatListener me = new SwearIpStatListener();
 
 	/**
 	 *
 	 */
-	private ChatIpStatListener() {
+	private SwearIpStatListener() {
 	}
 
 	@Override
