@@ -1,8 +1,8 @@
-package cn.swallowff.modules.chat.custom.provider;
+package cn.swallowff.modules.chat.custom.inf;
 
 import cn.swallowff.modules.chat.custom.User;
 
-public interface IUserService {
+public interface UserService {
 
     User getUser(String uid);
 

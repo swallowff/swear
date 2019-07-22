@@ -4,6 +4,7 @@ import cn.swallowff.modules.core.cmomon.entity.TreeEntity;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
+import cn.swallowff.modules.core.config.properties.SwearEnvProperties;
 import cn.swallowff.modules.core.modules.cs.entity.CsUser;
 import cn.swallowff.modules.core.modules.cs.service.CsUserService;
 import cn.swallowff.modules.core.modules.system.entity.Dept;
@@ -30,6 +31,8 @@ public class DemoController {
     private DeptService deptService;
     @Autowired
     private CsUserService csUserService;
+    @Autowired
+    private SwearEnvProperties swearEnvProperties;
 
     @RequestMapping("demo.html")
     public String demoHtml() {
@@ -44,6 +47,7 @@ public class DemoController {
         CsUser csUser = csUserService.findEntity(q);
         if (null != csUser){
             model.addAttribute("csuid",csUser.getId());
+            model.addAttribute("websocketUrl",swearEnvProperties.getWebsocketUrl());
         }
         return "/pages/admin/system/demo/layim";
     }

@@ -1,4 +1,4 @@
-package cn.swallowff.modules.chat.custom;
+package cn.swallowff.modules.chat.util;
 
 import org.tio.core.intf.Packet;
 
@@ -7,6 +7,7 @@ import org.tio.core.intf.Packet;
  * @description
  * @create 2019/7/22
  */
+@Deprecated
 public class CustomPacket extends Packet {
     private static final long serialVersionUID = -172060606924066412L;
     public static final int HEADER_LENGTH = 4;//消息头的长度

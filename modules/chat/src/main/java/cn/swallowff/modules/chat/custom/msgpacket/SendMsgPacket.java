@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public class SendMsgPacket implements Serializable {
     private String to;
-    private String type;
-    private Object content;
+    private String type;    //消息类型
+    private Object content; //消息内容
 
     public String getTo() {
         return to;

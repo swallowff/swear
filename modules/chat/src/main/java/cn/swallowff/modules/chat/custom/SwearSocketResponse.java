@@ -7,7 +7,7 @@ import cn.swallowff.common.json.JacksonUtil;
  * @description
  * @create 2019/7/22
  */
-public class CusSocketResponse {
+public class SwearSocketResponse {
     private static final int SUCCESS_CODE = 0;
     private static final String SUCCESS_TIPS = "SUCCESS";
     private static final int ERROR_CODE = -1;
@@ -17,29 +17,25 @@ public class CusSocketResponse {
     private String msg;
     private Object data;
 
-    public CusSocketResponse() {
+    public SwearSocketResponse() {
     }
 
-    public CusSocketResponse(Integer code, String msg) {
+    public SwearSocketResponse(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public static CusSocketResponse newSuccess(){
-        return new CusSocketResponse(SUCCESS_CODE,SUCCESS_TIPS);
+    public static SwearSocketResponse newSuccess(){
+        return new SwearSocketResponse(SUCCESS_CODE,SUCCESS_TIPS);
     }
 
-    public static CusSocketResponse newError(){
-        return new CusSocketResponse(ERROR_CODE,ERROR_TIPS);
+    public static SwearSocketResponse newError(){
+        return new SwearSocketResponse(ERROR_CODE,ERROR_TIPS);
     }
 
-    public CusSocketResponse putData(Object data){
+    public SwearSocketResponse putData(Object data){
         this.data = data;
         return this;
-    }
-
-    public String toJson(){
-        return JacksonUtil.toJson(this);
     }
 
     public Integer getCode() {
@@ -64,6 +60,10 @@ public class CusSocketResponse {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public String toJson(){
+        return JacksonUtil.toJson(this);
     }
 
     @Override

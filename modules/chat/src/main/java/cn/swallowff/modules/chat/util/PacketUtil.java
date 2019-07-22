@@ -1,6 +1,5 @@
 package cn.swallowff.modules.chat.util;
 
-import cn.swallowff.modules.chat.custom.CustomPacket;
 import org.tio.core.ChannelContext;
 import org.tio.core.GroupContext;
 import org.tio.core.exception.AioDecodeException;
@@ -13,6 +12,7 @@ import java.nio.ByteBuffer;
  * @description
  * @create 2019/7/18
  */
+@Deprecated
 public class PacketUtil {
 
     /**

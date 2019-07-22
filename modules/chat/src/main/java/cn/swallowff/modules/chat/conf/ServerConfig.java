@@ -13,7 +13,7 @@ public abstract class ServerConfig {
 	
 	public static final String CHARSET = "utf-8";
 
-	public static final String GROUP_ID = "group_a";
+	public static final String GROUP_ID = "chat-group";
 	/**
 	 * 监听的ip
 	 */

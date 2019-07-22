@@ -1,11 +1,15 @@
 package cn.swallowff.modules.core.listener;
 
+import cn.swallowff.modules.chat.core.SwearMsgHandler;
+import cn.swallowff.modules.chat.core.SwearSocketServerStarter;
 import cn.swallowff.modules.core.chat.ChatUserService;
+import cn.swallowff.modules.core.config.properties.SwearEnvProperties;
 import cn.swallowff.modules.core.util.SpringContextHolder;
-import cn.swallowff.modules.demo.io.tio.usecase.server.ChatWebsocketServerStarter;
-import cn.swallowff.modules.demo.io.tio.usecase.server.ChatWsMsgHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,15 +19,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CustomApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
+    @Autowired
+    private SwearEnvProperties swearEnvProperties;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         //do something when spring application started
         //TODO 启动nio聊天服务
-        ChatWsMsgHandler chatWsMsgHandler = ChatWsMsgHandler.me;
-        chatWsMsgHandler.registerUserService(SpringContextHolder.getBean(ChatUserService.class));
+        SwearMsgHandler swearMsgHandler = SwearMsgHandler.me;
+        swearMsgHandler.registerUserService(SpringContextHolder.getBean(ChatUserService.class));
         try {
-            ChatWebsocketServerStarter serverStarter = new ChatWebsocketServerStarter(8999,chatWsMsgHandler);
+            SwearSocketServerStarter serverStarter = new SwearSocketServerStarter(swearEnvProperties.getWebsocketPort(),swearMsgHandler);
             serverStarter.doStart();
         } catch (Exception e) {
             e.printStackTrace();

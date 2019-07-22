@@ -10,6 +10,8 @@ swear:
   path:
     admin: /a
     api: /api
+  websocket-url: ws://120.79.225.48:8999
+  websocket-port: 8999
 
 logging:
   config: classpath:logback.xml

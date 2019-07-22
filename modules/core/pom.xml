@@ -32,10 +32,15 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>cn.swallowff</groupId>
-            <artifactId>demo</artifactId>
+            <groupId>cn.swallowff.modules</groupId>
+            <artifactId>chat</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>cn.swallowff</groupId>-->
+            <!--<artifactId>demo</artifactId>-->
+            <!--<version>${project.parent.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>cn.swallowff</groupId>
             <artifactId>code</artifactId>

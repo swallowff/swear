@@ -1,10 +1,11 @@
 package cn.swallowff.modules.chat.core;
 
 import cn.swallowff.common.json.GsonHelper;
-import cn.swallowff.modules.chat.custom.provider.IUserService;
+import cn.swallowff.common.lang.StringUtils;
+import cn.swallowff.modules.chat.custom.inf.UserService;
 import cn.swallowff.modules.chat.conf.ServerConfig;
-import cn.swallowff.modules.chat.custom.CusSocketRequest;
-import cn.swallowff.modules.chat.custom.CusSocketResponse;
+import cn.swallowff.modules.chat.custom.SwearSocketRequest;
+import cn.swallowff.modules.chat.custom.SwearSocketResponse;
 import cn.swallowff.modules.chat.custom.User;
 import cn.swallowff.modules.chat.custom.msgpacket.RespMsgPacket;
 import org.slf4j.Logger;
@@ -27,13 +28,13 @@ import java.util.Objects;
 public class SwearMsgHandler implements IWsMsgHandler {
 	private static Logger log = LoggerFactory.getLogger(SwearMsgHandler.class);
 
-	private IUserService userService;   //由客户端实现
+	private UserService userService;   //由客户端实现
 
 	public static final SwearMsgHandler me = new SwearMsgHandler();
 
 	private SwearMsgHandler() {}
 
-	public void registerUserService(IUserService service){
+	public void registerUserService(UserService service){
 		this.userService = service;
 	}
 
@@ -41,29 +42,30 @@ public class SwearMsgHandler implements IWsMsgHandler {
 	 * 握手时走这个方法，业务可以在这里获取cookie，request参数等
 	 */
 	@Override
-	public HttpResponse handshake(HttpRequest request, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
-		String clientip = request.getClientIp();
-		String userid = request.getParam("userid");
-		
-		Tio.bindUser(channelContext, userid);
-		channelContext.setUserid(userid);
-		log.info("收到来自{}的握手包 \r\n{}", clientip, request.toString());
+	public HttpResponse handshake(HttpRequest httpRequest, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
+		String clientip = httpRequest.getClientIp();
+        String userid = httpRequest.getParam("userid");   //userid必传
+        if (StringUtils.isBlank(userid)){
+            channelContext.setClosed(true);
+        }else {
+            log.info("收到来自{}的握手包 \r\n{}", clientip, httpRequest.toString());
+        }
 		return httpResponse;
 	}
 
 	@Override
 	public void onAfterHandshaked(HttpRequest httpRequest, HttpResponse httpResponse, ChannelContext channelContext) throws Exception {
-		//绑定到群组，后面会有群发
+        String userid = httpRequest.getParam("userid");
+        Tio.bindUser(channelContext, userid);
+        channelContext.setUserid(userid);
+
+		//绑定到群组
 		Tio.bindGroup(channelContext,ServerConfig.GROUP_ID);
 		int count = Tio.getAllChannelContexts(channelContext.groupContext).getObj().size();
-//		String msg = "{name:'admin',message:'" + channelContext.userid + " 进来了，共【" + count + "】人在线" + "'}";
-		CusSocketResponse cusSocketResponse = CusSocketResponse.newSuccess();
-//		webSocketResp.putData(msg);
+		SwearSocketResponse cusSocketResponse = SwearSocketResponse.newSuccess();
 		//用tio-websocket，服务器发送到客户端的Packet都是WsResponse
-		WsResponse wsResponse = WsResponse.fromText(cusSocketResponse.toJson(), "UTF-8");
+		WsResponse wsResponse = WsResponse.fromText(cusSocketResponse.toJson(), ServerConfig.CHARSET);
 		Tio.send(channelContext,wsResponse);
-		//群发
-//		Tio.sendToGroup(channelContext.groupContext, Const.GROUP_ID, wsResponse);
 	}
 
 	/**
@@ -104,9 +106,10 @@ public class SwearMsgHandler implements IWsMsgHandler {
 
 		//非心跳消息,解析成约定的请求格式
 		WsResponse wsResponse = null;
-		CusSocketRequest socketRequest = GsonHelper.parseJson(text,CusSocketRequest.class);
+		SwearSocketRequest socketRequest = GsonHelper.parseJson(text,SwearSocketRequest.class);
 		if (null == socketRequest){
-			wsResponse = WsResponse.fromText(CusSocketResponse.newError().toJson(),ServerConfig.CHARSET);
+		    //不是指定的消息格式
+			wsResponse = WsResponse.fromText(SwearSocketResponse.newError().toJson(),ServerConfig.CHARSET);
 			return wsResponse;
 		}
 		//模拟响应数据
@@ -115,7 +118,7 @@ public class SwearMsgHandler implements IWsMsgHandler {
 		User sender = userService.getUser(channelContext.userid);
 
 		String content = (String) socketRequest.getBody().get("content");
-		CusSocketResponse webSocketResponse = CusSocketResponse.newSuccess();
+		SwearSocketResponse webSocketResponse = SwearSocketResponse.newSuccess();
 		RespMsgPacket respMsgPack = new RespMsgPacket(touser,"friend",content);
 		if (null != sender){
 			respMsgPack.setAvatar(sender.getAvatar());
