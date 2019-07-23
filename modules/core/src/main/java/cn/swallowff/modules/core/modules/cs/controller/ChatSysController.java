@@ -9,17 +9,18 @@ import cn.swallowff.modules.core.modules.cs.dto.ChatFriendGroupDto;
 import cn.swallowff.modules.core.modules.cs.entity.CsFriendGroup;
 import cn.swallowff.modules.core.modules.cs.entity.CsGroupTeamUser;
 import cn.swallowff.modules.core.modules.cs.entity.CsUser;
-import cn.swallowff.modules.core.modules.cs.service.CsFriendGroupService;
-import cn.swallowff.modules.core.modules.cs.service.CsFriendGroupUserService;
-import cn.swallowff.modules.core.modules.cs.service.CsGroupTeamUserService;
-import cn.swallowff.modules.core.modules.cs.service.CsUserService;
+import cn.swallowff.modules.core.modules.cs.entity.CsUserContactGroup;
+import cn.swallowff.modules.core.modules.cs.service.*;
 import cn.swallowff.modules.core.modules.cs.wrapper.CsUserToChatUserWrapper;
+import cn.swallowff.modules.core.modules.cs.wrapper.mappings.CsUserContactGroupMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author shenyu
@@ -33,64 +34,38 @@ public class ChatSysController {
     @Autowired
     private CsGroupTeamUserService groupTeamUserService;
     @Autowired
+    private CsUserContactService userContactService;
+    @Autowired
+    private CsUserContactGroupService userContactGroupService;
+    @Autowired
     private CsFriendGroupService friendGroupService;
     @Autowired
     private CsFriendGroupUserService friendGroupUserService;
 
-//    @RequestMapping(value = "init")
-//    @ResponseBody
-//    public Object pageInit(){
-//        ChatUserDto self = new ChatUserDto();
-//        self.setId("1");
-//        self.setStatus("online");
-//        self.setUsername("swallow");
-//        self.setSign("没有话要说");
-//        self.setAvatar("http://localhost:8080/swear/upload/img/2019-07-16/393f5b0effb141c6a2ed7c05e99496af.jpeg.png");
-//
-//        ChatGroupDto group = new ChatGroupDto();
-//        group.setId("g1");
-//        group.setGroupname("家人群");
-//        group.setAvatar("http://localhost:8080/swear/upload/img/2019-07-16/393f5b0effb141c6a2ed7c05e99496af.jpeg.png");
-//        List<ChatGroupDto> glist = new ArrayList<>();
-//        glist.add(group);
-//
-//        List<ChatUserDto> list = new ArrayList<>();
-//        list.add(self);
-//        ChatUserGroupDto userGroup = new ChatUserGroupDto();
-//        userGroup.setId("ug1");
-//        userGroup.setGroupname("高中同学们");
-//        userGroup.setList(list);
-//        List<ChatUserGroupDto> flist = new ArrayList<>();
-//        flist.add(userGroup);
-//
-//        ChatInitDto initDto = new ChatInitDto();
-//        initDto.setMine(self);
-//        initDto.setFriend(flist);
-//        initDto.setGroup(glist);
-//
-//        BaseResp baseResp = BaseResp.newSuccess();
-//        baseResp.setData(initDto);
-//        return baseResp;
-//    }
 
     @RequestMapping(value = "init")
     @ResponseBody
     public Object pageInit(String csuid){
-//        csuid = "1152886134112866304";
-
         //查询当前用户信息
         CsUser csUser = csUserService.selectById(csuid);
         CsUserToChatUserWrapper wrapper1 = new CsUserToChatUserWrapper(csUser);
         ChatUserDto self = wrapper1.wrap();
 
         //查询好友列表
-        List<ChatFriendGroupDto> fglist = friendGroupService.findFriendGroups(csuid);
-        for (ChatFriendGroupDto fgd : fglist){
-            List<CsUser> csUsers = friendGroupUserService.findGroupUserJoin(fgd.getId());
-            if (ListUtils.isNotEmpty(csUsers)){
-                CsUserToChatUserWrapper wrapper2 = new CsUserToChatUserWrapper(csUsers);
-                fgd.setList(wrapper2.wrapList());
-            }
+//        List<ChatFriendGroupDto> fglist = friendGroupService.findFriendGroups(csuid);
+//        for (ChatFriendGroupDto fgd : fglist){
+//            List<CsUser> csUsers = friendGroupUserService.findGroupUserJoin(fgd.getId());
+//            if (ListUtils.isNotEmpty(csUsers)){
+//                CsUserToChatUserWrapper wrapper2 = new CsUserToChatUserWrapper(csUsers);
+//                fgd.setList(wrapper2.wrapList());
+//            }
+//        }
+
+        List<CsUserContactGroup> cgList = userContactGroupService.findUserGroups(csuid);
+        List<ChatFriendGroupDto> fglist = cgList.stream().map(item ->
+                CsUserContactGroupMapping.MAPPING.toChatFriendGroupDto(item)).collect(Collectors.toList());
+        for (ChatFriendGroupDto chatFriendGroupDto : fglist){
+            chatFriendGroupDto.setList(userContactService.findGroupContacts(chatFriendGroupDto.getId()));
         }
 
         //查询群组列表

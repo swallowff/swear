@@ -127,7 +127,7 @@
                                 <dl class="layui-nav-child">
                                     @for(thirdMenu in subMenu.children){
                                     <dd data-name="second-level-menu-${thirdMenuLP.index}">
-                                        <a lay-href="${admin}${thirdMenu.url}">
+                                        <a lay-href="${ctx}${thirdMenu.url}">
                                             @if(isNotEmpty(thirdMenu.icon)){
                                             <i class="layui-icon ${thirdMenu.icon}"></i>
                                             @}
@@ -144,7 +144,7 @@
                             @}
                             @else{
                             <dd data-name="second-level-menu-${subMenuLP.index}">
-                                <a lay-href="${admin}${subMenu.url}">
+                                <a lay-href="${ctx}${subMenu.url}">
                                     @if(isNotEmpty(subMenu.icon)){
                                     <i class="layui-icon ${subMenu.icon}"></i>
                                     @}
