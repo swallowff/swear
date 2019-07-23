@@ -1,6 +1,3 @@
-/**
- * Copyright (c) 2013-Now http://jeesite.com All rights reserved.
- */
 package cn.swallowff.web;
 
 import org.springframework.boot.SpringApplication;
@@ -9,6 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * springBoot启动类
@@ -16,6 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(value = "cn.swallowff")
 @EnableCaching
+//@EnableSwagger2
 public class Application extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {

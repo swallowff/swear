@@ -37,9 +37,10 @@ import java.util.Map;
  * </pre>
  *
  * @author swallowff
- * @Date 2017/8/25 10:59
+ * @Date 2019/6/25
  */
 public class JwtTokenUtil {
+    public static final String BEARER = "Bearer ";
 
     /**
      * 获取用户名从token中

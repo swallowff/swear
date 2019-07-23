@@ -53,7 +53,7 @@ public class RestApiInteceptor extends HandlerInterceptorAdapter {
         }
         final String requestHeader = request.getHeader(JwtConstants.AUTH_HEADER);
         String authToken;
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+        if (requestHeader != null && requestHeader.startsWith(JwtConstants.BEARER)) {
             authToken = requestHeader.substring(7);
 
             //验证token是否过期,包含了验证jwt是否正确

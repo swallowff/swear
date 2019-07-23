@@ -15,7 +15,6 @@ import java.util.Properties;
 public class ComponentConfig {
     /**
      * 图片验证码
-     *
      * @return
      */
     @Bean

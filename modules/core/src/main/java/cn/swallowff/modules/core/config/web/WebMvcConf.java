@@ -48,7 +48,7 @@ public class WebMvcConf extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:" + coreProperties.getFileUploadPath());
         if (coreProperties.isSwaggerOpen()) {
-            registry.addResourceHandler("swagger-ui.html")
+            registry.addResourceHandler("/swagger-ui.html")
                     .addResourceLocations("classpath:/META-INF/resources/");
             registry.addResourceHandler("/webjars/**")
                     .addResourceLocations("classpath:/META-INF/resources/webjars/");

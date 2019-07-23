@@ -25,6 +25,8 @@ public interface JwtConstants {
 
     String AUTH_HEADER = "Authorization";
 
+    String BEARER = "Bearer ";
+
     String SECRET = "Swearuylsfdson";
 
     Long EXPIRATION = 604800L;
