@@ -14,20 +14,18 @@
      style="padding: 20px 30px 0 0;">
     <input type="hidden" name="id">
 
-     <div class="layui-form-item">
-         <label class="layui-form-label">群组id</label>
-         <div class="layui-input-inline">
-             <input type="text" name="gtId" lay-verify="required" placeholder="群组id" autocomplete="off"
-                    class="layui-input">
-         </div>
-     </div>
-     <div class="layui-form-item">
-         <label class="layui-form-label">组内用户id</label>
-         <div class="layui-input-inline">
-             <input type="text" name="csUid" lay-verify="required" placeholder="组内用户id" autocomplete="off"
-                    class="layui-input">
-         </div>
-     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">群组</label>
+        <div class="layui-input-inline">
+            <select id="group-team-select" data-placeholder="请选择用户" name="gtId" lay-search="" lay-filter="LAYF-group-team-select"></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户</label>
+        <div class="layui-input-inline">
+            <select id="uid-select" data-placeholder="请选择用户" name="csUid" lay-search="" lay-filter="LAYF-uid-select"></select>
+        </div>
+    </div>
 
     <div class="layui-form-item layui-hide">
         <input type="button" lay-submit lay-filter="LAYF-csGroupTeamUser-form-edit-submit" id="LAYF-csGroupTeamUser-form-edit-submit"

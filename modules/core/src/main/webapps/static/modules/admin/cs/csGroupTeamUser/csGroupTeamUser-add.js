@@ -10,6 +10,46 @@ layui.config({
     setter.serverUrl = Swear.serverUrl;
     setter.ctxPath = Swear.ctxPath;
 
+    $.ajax({
+        url: setter.ctxPath + '/cs/csGroupTeam/list.ajax',
+        data: {
+            page: -1      //不分页
+        },
+        method: 'GET',
+        success: function (res) {
+            // console.log(res)
+            if (res.code == setter.response.statusCode.ok) {
+                var listData = res.data;
+                var $select = $('#group-team-select');
+                $select.append('<option value="">请选择用户</option>');
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].gtName + '</option>')
+                }
+                form.render('select', 'LAYF-csGroupTeamUser-form-add'); //刷新select选择框
+            }
+        }
+    });
+
+    $.ajax({
+        url: setter.ctxPath + '/cs/csUser/list.ajax',
+        data: {
+            page: -1      //不分页
+        },
+        method: 'GET',
+        success: function (res) {
+            // console.log(res)
+            if (res.code == setter.response.statusCode.ok) {
+                var listData = res.data;
+                var $select = $('#uid-select');
+                $select.append('<option value="">请选择用户</option>');
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].nickName + '</option>')
+                }
+                form.render('select', 'LAYF-csGroupTeamUser-form-add'); //刷新select选择框
+            }
+        }
+    });
+
     //监听提交
     form.on('submit(LAYF-csGroupTeamUser-form-add-submit)', function (data) {
         var field = data.field; //获取提交的字段

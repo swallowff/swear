@@ -185,6 +185,8 @@ public class ShiroConfig {
         hashMap.put("/swagger-resources", "anon");
         hashMap.put("/v2/api-docs", "anon");
         hashMap.put("/webjars/springfox-swagger-ui/**", "anon");
+        //druid
+        hashMap.put("/druid/**","anon");
 
 //        hashMap.put("/global/**", "anon");
         hashMap.put("/a/kaptcha/**", "anon");

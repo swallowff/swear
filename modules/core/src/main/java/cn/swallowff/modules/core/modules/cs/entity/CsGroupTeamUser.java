@@ -11,7 +11,7 @@ import java.lang.String;
 public class CsGroupTeamUser extends BaseEntity implements Serializable {
 
      private String gtId;    //群组id
-     private String csUid;    //组内用户id
+     private String csUid;    //用户id
 
      public String getGtId(){
         return gtId;

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping(value = "${swear.path.admin}/cs/csFriendGroupUser")
+@Deprecated
 public class CsFriendGroupUserController extends BaseController {
 
     @Autowired

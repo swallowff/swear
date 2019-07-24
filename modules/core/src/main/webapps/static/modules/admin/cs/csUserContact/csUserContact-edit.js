@@ -10,12 +10,60 @@ layui.config({
     setter.serverUrl = Swear.serverUrl;
     setter.ctxPath = Swear.ctxPath;
 
-    form.val('LAYF-csUserContact-form-edit', {
-        id: Swear.formValue.id,
-        uid: Swear.formValue.uid,
-        groupId: Swear.formValue.groupId,
-        cuid: Swear.formValue.cuid,
+    renderVal();
+
+    //渲染群组下拉选择
+    $.ajax({
+        url: setter.ctxPath + '/cs/csUserContactGroup/list.ajax',
+        method: 'post',
+        data: {
+            page: -1
+        },
+        success: (res) => {
+            if (res.code === setter.response.statusCode.ok) {
+                let listData = res.data;
+                var $groupSelect = $('#contact-group-select');
+                $groupSelect.append('<option value="">请选择分组</option>');
+                for (var i in listData) {
+                    $groupSelect.append('<option value="' + listData[i].id + '">' + listData[i].groupName + '</option>')
+                }
+                form.val('LAYF-csUserContact-form-edit', {
+                    groupId: Swear.formValue.groupId
+                })
+                form.render('select', 'LAYF-csUserContact-form-edit'); //刷新select选择框
+            }else {
+                layer.msg("请求分组数据有误")
+            }
+        }
     })
+
+    //渲染用户下拉选择
+    $.ajax({
+        url: setter.ctxPath + '/cs/csUser/list.ajax',
+        data: {
+            page: -1      //不分页
+        },
+        method: 'GET',
+        success: function (res) {
+            // console.log(res)
+            if (res.code == setter.response.statusCode.ok) {
+                var listData = res.data;
+                var $select = $('#uid-select');
+                var $cuid = $('#cuid-select');
+                $select.append('<option value="">请选择用户</option>');
+                $cuid.append('<option value="">请选择联系人</option>');
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].nickName + '</option>')
+                    $cuid.append('<option value="' + listData[i].id + '">' + listData[i].nickName + '</option>')
+                }
+                form.val('LAYF-csUserContact-form-edit', {
+                    uid: Swear.formValue.uid,
+                    cuid: Swear.formValue.cuid,
+                })
+                form.render('select', 'LAYF-csUserContact-form-edit'); //刷新select选择框
+            }
+        }
+    });
 
     //监听提交
     form.on('submit(LAYF-csUserContact-form-edit-submit)', function (data) {
@@ -46,4 +94,44 @@ layui.config({
         });
 
     });
+
+    form.on('select(LAYF-uid-select)', function(data){
+        $.ajax({
+            url: Swear.ctxPath + '/cs/csUserContactGroup/list.ajax',
+            method: 'post',
+            data: {
+                uid: data.value
+            },
+            success: function (res) {
+                if (res.code === setter.response.statusCode.ok) {
+                    let listData = res.data;
+                    var $groupSelect = $('#contact-group-select');
+                    $groupSelect.empty()
+                    $groupSelect.append('<option value="">请选择分组</option>');
+                    for (var i in listData) {
+                        $groupSelect.append('<option value="' + listData[i].id + '">' + listData[i].groupName + '</option>')
+                    }
+                    form.render('select', 'LAYF-csUserContact-form-edit'); //刷新select选择框
+                }else {
+                    layer.msg("请求分组数据有误")
+                }
+
+            }
+        })
+        // console.log(data.elem); //得到select原始DOM对象
+        // console.log(data.value); //得到被选中的值
+        // console.log(data.othis); //得到美化后的DOM对象
+
+
+    });
+
+    function renderVal(){
+        form.val('LAYF-csUserContact-form-edit', {
+            id: Swear.formValue.id,
+            uid: Swear.formValue.uid,
+            groupId: Swear.formValue.groupId,
+            cuid: Swear.formValue.cuid,
+        })
+        form.render('select', 'LAYF-csUserContact-form-edit'); //刷新select选择框
+    }
 })

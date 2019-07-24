@@ -47,6 +47,9 @@ public class CsGroupTeamController extends BaseController {
     @RequestMapping(value = "list.ajax")
     @ResponseBody
     public Object ajaxList(CsGroupTeam csGroupTeam){
+        if (csGroupTeam.getPage() == -1){
+            return BaseResp.newSuccess().setData(csGroupTeamService.findList(csGroupTeam));
+        }
         PageResp<CsGroupTeam> pageResp = csGroupTeamService.findPage(csGroupTeam);
         LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
         return layPageResp;

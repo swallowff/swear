@@ -15,10 +15,9 @@
     <input type="hidden" name="id">
 
      <div class="layui-form-item">
-         <label class="layui-form-label">聊天系统用户id</label>
+         <label class="layui-form-label">用户</label>
          <div class="layui-input-inline">
-             <input type="text" name="uid" lay-verify="required" placeholder="聊天系统用户id" autocomplete="off"
-                    class="layui-input">
+             <select id="uid-select" data-placeholder="请选择用户" name="uid" lay-search="" lay-filter="LAYF-uid-select"></select>
          </div>
      </div>
      <div class="layui-form-item">

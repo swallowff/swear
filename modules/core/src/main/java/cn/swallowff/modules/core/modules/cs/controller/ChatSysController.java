@@ -47,15 +47,6 @@ public class ChatSysController {
         ChatUserDto self = wrapper1.wrap();
 
         //查询好友列表
-//        List<ChatFriendGroupDto> fglist = friendGroupService.findFriendGroups(csuid);
-//        for (ChatFriendGroupDto fgd : fglist){
-//            List<CsUser> csUsers = friendGroupUserService.findGroupUserJoin(fgd.getId());
-//            if (ListUtils.isNotEmpty(csUsers)){
-//                CsUserToChatUserWrapper wrapper2 = new CsUserToChatUserWrapper(csUsers);
-//                fgd.setList(wrapper2.wrapList());
-//            }
-//        }
-
         List<CsUserContactGroup> cgList = userContactGroupService.findUserGroups(csuid);
         List<ChatFriendGroupDto> fglist = cgList.stream().map(item ->
                 CsUserContactGroupMapping.MAPPING.toChatFriendGroupDto(item)).collect(Collectors.toList());
