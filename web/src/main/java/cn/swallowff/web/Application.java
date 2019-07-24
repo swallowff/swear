@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @ComponentScan(value = "cn.swallowff")
 @EnableCaching
-//@EnableSwagger2
+@EnableSwagger2
 public class Application extends SpringBootServletInitializer {
 	
 	public static void main(String[] args) {

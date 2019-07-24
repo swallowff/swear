@@ -12,7 +12,7 @@ layui.config({
 
     form.val('LAYF-csUserContactGroup-form-edit', {
         id: Swear.formValue.id,
-        csUid: Swear.formValue.csUid,
+        uid: Swear.formValue.uid,
         groupName: Swear.formValue.groupName,
     })
 

@@ -10,18 +10,18 @@ import java.lang.String;
  */
 public class CsUserContactGroup extends BaseEntity implements Serializable {
 
-     private String csUid;    //聊天系统用户id
+     private String uid;    //聊天系统用户id
      private String groupName;    //分组名称
 
-     public String getCsUid(){
-        return csUid;
-     }
+    public String getUid() {
+        return uid;
+    }
 
-     public void setCsUid(String csUid) {
-        this.csUid = csUid;
-     }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
-     public String getGroupName(){
+    public String getGroupName(){
         return groupName;
      }
 

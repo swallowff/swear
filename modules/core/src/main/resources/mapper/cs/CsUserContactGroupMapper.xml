@@ -4,7 +4,7 @@
 
     <sql id="baseColumns">
         a.id AS id,
-        a.cs_uid AS csUid,
+        a.uid AS uid,
         a.group_name AS groupName,
         a.create_time AS createTime,
         a.update_time AS updateTime,
@@ -27,8 +27,8 @@
         FROM cs_user_contact_group a
         <where>
             a.delflag = 0
-            <if test="csUid != null and csUid != ''">
-                AND a.cs_uid = #{csUid}
+            <if test="uid != null and uid != ''">
+                AND a.uid = #{uid}
             </if>
             <if test="groupName != null and groupName != ''">
                 AND a.group_name = #{groupName}
@@ -43,8 +43,8 @@
         FROM cs_user_contact_group a
         <where>
             a.delflag = 0
-            <if test="csUid != null and csUid != ''">
-                AND a.cs_uid = #{csUid}
+            <if test="uid != null and uid != ''">
+                AND a.uid = #{uid}
             </if>
             <if test="groupName != null and groupName != ''">
                 AND a.group_name = #{groupName}
@@ -63,14 +63,14 @@
     <insert id="insert">
         INSERT INTO cs_user_contact_group(
           id,
-          cs_uid,
+          uid,
           group_name,
           update_time,
           create_time,
           delflag
         ) VALUES (
           #{id},
-          #{csUid},
+          #{uid},
           #{groupName},
           #{updateTime},
           #{createTime},
@@ -80,7 +80,7 @@
 
     <update id="update">
         UPDATE cs_user_contact_group SET
-          cs_uid = #{csUid},
+          uid = #{uid},
           group_name = #{groupName},
           update_time = #{updateTime}
           <where>
@@ -92,8 +92,8 @@
     <update id="updateSelective">
         UPDATE cs_user_contact_group
         <set>
-            <if test="csUid != null and csUid != ''">
-                cs_uid = #{csUid},
+            <if test="uid != null and uid != ''">
+                uid = #{uid},
             </if>
             <if test="groupName != null and groupName != ''">
                 group_name = #{groupName},

@@ -22,8 +22,8 @@ layui.config({
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
             {
-                field: 'csUid',
-                title: '聊天系统用户id',
+                field: 'uid',
+                title: '用户',
                 sort: true
             },
             {

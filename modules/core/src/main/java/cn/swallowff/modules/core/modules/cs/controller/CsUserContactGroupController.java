@@ -47,6 +47,9 @@ public class CsUserContactGroupController extends BaseController {
     @RequestMapping(value = "list.ajax")
     @ResponseBody
     public Object ajaxList(CsUserContactGroup csUserContactGroup){
+        if (csUserContactGroup.getPage() == -1){
+            return BaseResp.newSuccess().setData(csUserContactGroupService.findList(csUserContactGroup));
+        }
         PageResp<CsUserContactGroup> pageResp = csUserContactGroupService.findPage(csUserContactGroup);
         LayPageResp layPageResp = new LayPageResp(pageResp.getDataList(),pageResp.getTotalRows());
         return layPageResp;

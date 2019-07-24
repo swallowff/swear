@@ -14,11 +14,12 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="LAYF-csUserContactList-list-search">
             <div class="layui-form-item">
                     <div class="layui-inline">
                         <div class="layui-input-inline">
-                            <input type="text" name="uid" placeholder="请输入用户uid" autocomplete="off" class="layui-input">
+                            <select id="csUser-select" data-placeholder="请选择用户" name="uid" lay-search=""></select>
+                            <!--<input type="text" name="uid" placeholder="请输入用户uid" autocomplete="off" class="layui-input">-->
                         </div>
                     </div>
                     <div class="layui-inline">

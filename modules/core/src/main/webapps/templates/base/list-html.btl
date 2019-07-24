@@ -14,7 +14,7 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="LAYF-${uncapClassName}-list-search">
             <div class="layui-form-item">
                 @for(field in item.fields){
                     <div class="layui-inline">
@@ -24,7 +24,7 @@
                     </div>
                 @}
                 <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-${uncapClassName}-list-search">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAYF-${uncapClassName}-list-search-submit">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                 </div>

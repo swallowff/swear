@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 public class CsUserContactGroupService extends CrudService<CsUserContactGroupDao, CsUserContactGroup> {
 
-    public List<CsUserContactGroup> findUserGroups(String csuid) {
+    public List<CsUserContactGroup> findUserGroups(String uid) {
         CsUserContactGroup q = new CsUserContactGroup();
-        q.setCsUid(csuid);
+        q.setUid(uid);
         return crudDao.findList(q);
     }
 }

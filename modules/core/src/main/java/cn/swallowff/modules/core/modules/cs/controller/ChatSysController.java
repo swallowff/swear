@@ -37,11 +37,6 @@ public class ChatSysController {
     private CsUserContactService userContactService;
     @Autowired
     private CsUserContactGroupService userContactGroupService;
-    @Autowired
-    private CsFriendGroupService friendGroupService;
-    @Autowired
-    private CsFriendGroupUserService friendGroupUserService;
-
 
     @RequestMapping(value = "init")
     @ResponseBody

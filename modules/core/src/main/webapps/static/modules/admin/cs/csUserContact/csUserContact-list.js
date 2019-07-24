@@ -23,17 +23,17 @@ layui.config({
             {type: 'numbers', title: '序号'},
             {
                 field: 'uid',
-                title: '用户uid',
+                title: '用户',
                 sort: true
             },
             {
                 field: 'groupId',
-                title: '联系人分组id',
+                title: '联系人分组',
                 sort: true
             },
             {
                 field: 'cuid',
-                title: '联系人uid',
+                title: '联系人',
                 sort: true
             },
             {
@@ -154,7 +154,7 @@ layui.config({
     window.editRow = function (id) {
         layer.open({
             type: 2
-            , title: '編輯字典'
+            , title: '編輯联系人'
             , content: setter.ctxPath + '/cs/csUserContact/edit.html?id=' + id
             , maxmin: true
             , area: ['550px', '550px']
@@ -165,6 +165,27 @@ layui.config({
             }
         });
     };
+
+    //渲染用户下拉选择
+    $.ajax({
+        url: setter.ctxPath + '/cs/csUser/list.ajax',
+        data: {
+            page: -1      //不分页
+        },
+        method: 'GET',
+        success: function (res) {
+            // console.log(res)
+            if (res.code == setter.response.statusCode.ok) {
+                var listData = res.data;
+                var $select = $('#csUser-select');
+                $select.append('<option value="">请选择用户</option>');
+                for (var i in listData) {
+                    $select.append('<option value="' + listData[i].id + '">' + listData[i].nickName + '</option>')
+                }
+                form.render('select', 'LAYF-csUserContactList-list-search'); //刷新select选择框
+            }
+        }
+    });
 
 
 });

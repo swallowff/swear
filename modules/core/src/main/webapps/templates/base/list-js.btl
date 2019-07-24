@@ -146,7 +146,7 @@ layui.config({
     window.editRow = function (id) {
         layer.open({
             type: 2
-            , title: '編輯字典'
+            , title: '編輯${title}'
             , content: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/edit.html?id=' + id
             , maxmin: true
             , area: ['550px', '550px']
