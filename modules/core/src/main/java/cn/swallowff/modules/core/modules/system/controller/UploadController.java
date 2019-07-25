@@ -38,7 +38,13 @@ public class UploadController {
     public BaseResp uploadImg(MultipartFile file, HttpServletRequest request) {
         BaseResp baseResp = BaseResp.newSuccess();
 
-        String imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
+        int serverPort = request.getServerPort();
+        String imgBaseUrl = "";
+        if (serverPort == 80){
+            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/img/";
+        }else {
+            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
+        }
         String realPath = coreProperties.getFileUploadPath() + "img"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();

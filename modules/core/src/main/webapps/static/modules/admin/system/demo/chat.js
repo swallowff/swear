@@ -190,7 +190,7 @@ layui.use('layim', function(){
             layim.add({
                 type: 'friend'
                 ,username: '麻花疼'
-                ,avatar: '//tva1.sinaimg.cn/crop.0.0.720.720.180/005JKVuPjw8ers4osyzhaj30k00k075e.jpg'
+                ,avatar: 'http://admin.helloccs.cn:80/swear/upload/img/2019-07-16/4fa70ffeb53942d9b614378e5c488b07.jpeg.png'
                 ,submit: function(group, remark, index){
                     layer.msg('好友申请已发送，请等待对方确认', {
                         icon: 1
