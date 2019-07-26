@@ -52,6 +52,19 @@ public class DemoController {
         return "/pages/admin/system/demo/layim";
     }
 
+    @RequestMapping("mobile.html")
+    public String mobileHtml(Model model) {
+        ShiroUser shiroUser = ShiroKit.getUser();
+        CsUser q = new CsUser();
+        q.setSysUid(shiroUser.getId());
+        CsUser csUser = csUserService.findEntity(q);
+        if (null != csUser){
+            model.addAttribute("csuid",csUser.getId());
+            model.addAttribute("websocketUrl",swearEnvProperties.getWebsocketUrl());
+        }
+        return "/pages/admin/system/demo/mobile";
+    }
+
     @RequestMapping(value = "treeTableList.ajax")
     @ResponseBody
     public Object treeTableList(Dept dept) {

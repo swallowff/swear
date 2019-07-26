@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>移动版</title>
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.mobile.css">
+    <link id="layuicss-skinlayim-mobilecss" rel="stylesheet" href="${static}/layuiadmin/layui/css/modules/layim/mobile/layim.css" media="all">
+</head>
+<body>
+
+<script>
+    var Swear = {
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}',
+        csuid: '${csuid}',
+        websocketUrl: '${websocketUrl}'
+    }
+</script>
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: Swear.static + '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index','mobile','jquery'], function(){
+        var mobile = layui.mobile
+            ,layim = mobile.layim
+            ,layer = mobile.layer
+            ,$ = layui.jquery
+            ,socket   //websocket
+            ,heartbeatInterval;  //心跳定时器;
+
+        var data = {}
+        initContact();
+        function initContact(){
+            $.ajax({
+                url: Swear.ctxPath + '/sys/chat/init',
+                data: {
+                    csuid: Swear.csuid
+                },
+                method: 'post',
+                success: function (res) {
+                    if (res.code === 0){
+                        data = res.data;
+                        layim.config({
+                            init: {
+                                //我的信息
+                                mine: data.mine
+                                //我的好友列表
+                                ,friend: data.friend
+                                ,group: data.group
+                            }
+                        })
+                    }else {
+                        layer.msg('获取联系人失败');
+                    }
+                }
+            })
+        }
+
+        console.log(data)
+
+        openConnection();
+
+        layim.config({
+            //上传图片接口
+            uploadImage: {
+                url: Swear.ctxPath + '/sys/imageGallery/upload' //（返回的数据格式见下文）
+                ,type: 'post' //默认post
+            }
+
+            //上传文件接口
+            ,uploadFile: {
+                url: '/upload/file' //（返回的数据格式见下文）
+                ,type: '' //默认post
+            }
+
+            ,init: {
+                // //我的信息
+                // mine: data.mine
+                // //我的好友列表
+                // ,friend: data.friend
+                // ,group: data.group
+            }
+
+            //扩展更多列表
+            ,moreList: [{
+                alias: 'find'
+                ,title: '发现'
+                ,iconUnicode: '&#xe628;' //图标字体的unicode，可不填
+                ,iconClass: '' //图标字体的class类名
+            },{
+                alias: 'share'
+                ,title: '分享与邀请'
+                ,iconUnicode: '&#xe641;' //图标字体的unicode，可不填
+                ,iconClass: '' //图标字体的class类名
+            }]
+
+            //,isNewFriend: false //是否开启“新的朋友”
+            ,isgroup: true //是否开启“群聊”
+            //,chatTitleColor: '#c00' //顶部Bar颜色
+            //,title: 'LayIM' //应用名，默认：我的IM
+        });
+
+        //创建一个会话
+        /*
+        layim.chat({
+          id: 111111
+          ,name: '许闲心'
+          ,type: 'kefu' //friend、group等字符，如果是group，则创建的是群聊
+          ,avatar: '//tp1.sinaimg.cn/1571889140/180/40030060651/1'
+        });
+        */
+
+        //监听点击“新的朋友”
+        layim.on('newFriend', function(){
+            layim.panel({
+                title: '新的朋友' //标题
+                ,tpl: '<div style="padding: 10px;">自定义模版，{{d.data.test}}</div>' //模版
+                ,data: { //数据
+                    test: '么么哒'
+                }
+            });
+        });
+
+        //查看聊天信息
+        layim.on('detail', function(data){
+            //console.log(data); //获取当前会话对象
+            layim.panel({
+                title: data.name + ' 聊天信息' //标题
+                ,tpl: '<div style="padding: 10px;">自定义模版，<a href="http://www.layui.com/doc/modules/layim_mobile.html#ondetail" target="_blank">参考文档</a></div>' //模版
+                ,data: { //数据
+                    test: '么么哒'
+                }
+            });
+        });
+
+        //监听点击更多列表
+        layim.on('moreList', function(obj){
+            switch(obj.alias){
+                case 'find':
+                    layer.msg('自定义发现动作');
+
+                    //模拟标记“发现新动态”为已读
+                    layim.showNew('More', false);
+                    layim.showNew('find', false);
+                    break;
+                case 'share':
+                    layim.panel({
+                        title: '邀请好友' //标题
+                        ,tpl: '<div style="padding: 10px;">自定义模版，{{d.data.test}}</div>' //模版
+                        ,data: { //数据
+                            test: '么么哒'
+                        }
+                    });
+                    break;
+            }
+        });
+
+        //监听发送消息
+        layim.on('sendMessage', function(data){
+
+            var To = data.to;
+            //console.log(data);
+            if (!socket && socket.readyState != WebSocket.OPEN) {
+                return layer.msg('还没有连接服务器哟');
+            }else {
+                let msgPacket = {
+                    requestType: 'message',
+                    body: {
+                        to: To.id,
+                        type: 'text',
+                        content: data.mine.content
+                    }
+                }
+                socket.send(JSON.stringify(msgPacket))
+            }
+
+        });
+
+
+        //监听查看更多记录
+        layim.on('chatlog', function(data, ul){
+            console.log(data);
+            layim.panel({
+                title: '与 '+ data.username +' 的聊天记录' //标题
+                ,tpl: '<div style="padding: 10px;">这里是模版，{{d.data.test}}</div>' //模版
+                ,data: { //数据
+                    test: 'Hello'
+                }
+            });
+        });
+
+
+        //模拟"更多"有新动态
+        layim.showNew('More', true);
+        layim.showNew('find', true);
+
+        function openConnection(){
+            if (socket && socket.readyState === WebSocket.OPEN){
+                return layer.msg('已连接服务器',{icon: 5});
+            }
+            socket = new WebSocket(Swear.websocketUrl+'?userid='+Swear.csuid);
+
+            //监听open事件
+            socket.onopen = () => {
+                if (socket.readyState === WebSocket.OPEN){
+                    layer.msg("连接服务器成功",{icon: 1})
+                    //定时器发送心跳
+                    heartbeatInterval = window.setInterval(function () {
+                        socket.send('Heartbeat')
+                    },1000*20)
+                }
+                // socket.binaryType = 'arraybuffer';   用于发送二进制数据  一般不使用
+            }
+
+            //监听messaeg事件
+            socket.onmessage = e => {
+                let data = e.data;
+                let resJson = JSON.parse(data);
+                // console.log(resJson)
+                if (resJson.data) {
+                    layim.getMessage(resJson.data);
+                }
+            }
+
+            //监听连接错误事件
+            socket.onerror = () => {
+                layer.msg('connect error',{
+                    icon: 5
+                })
+            }
+
+            //监听服务器主动关闭事件
+            socket.onclose = e => {
+                if (heartbeatInterval) {
+                    window.clearInterval(heartbeatInterval)
+                }
+                let clean = e.wasClean;
+                let code = e.code;
+                let reason = e.reason;
+            }
+        }
+
+        function closeConnection(){
+            if (heartbeatInterval) {
+                window.clearInterval(heartbeatInterval)
+            }
+            if (socket){
+                if (socket.readyState === WebSocket.OPEN){
+                    socket.close()
+                    layer.msg('成功断开连接',{icon:1})
+                }else {
+                    layer.msg('未连接服务器')
+                }
+            }else {
+                layer.msg('未连接服务器')
+            }
+        }
+    });
+</script>
+</body>
+</html>
