@@ -431,6 +431,53 @@ layui.config({
         }
     });
 
+    //多图片上传
+    upload.render({
+        elem: '#test2'
+        ,url: '/uploadFiles/uploadImg'
+        ,field:"layuiFile"
+        ,multiple: true
+        ,before: function(obj){
+            //预读本地文件示例，不支持ie8
+            obj.preview(function(index, file, result){
+                $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img" style="width: 230px;height: 230px;">')
+            });
+        }
+        ,done: function(res){
+            //上传完毕
+        }
+    });
+
+    //上传视频
+    var uploadInst=upload.render({
+        elem: '#video'
+        ,url: Swear.ctxPath + '/upload/video'
+        ,field:"video"
+        ,data:{"dir":"media"}
+        ,accept: 'video' //视频
+        // ,before:function (obj) {
+        //     $('#demo9').css('display','block').attr('src', "http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO"); //链接（base64）http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO
+        // }
+        ,done: function(res){
+            if(res.code == 0){
+                $("#videourl").val(res.data.url);
+                $("#demo9").attr("src",res.data.url);
+                layer.msg("上传成功",{icon: 1});
+            }else {
+                layer.msg(res.message,5);
+            }
+        }
+        ,error:function () {
+            //演示失败状态，并实现重传
+            var demoText = $('#demoText');
+            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+            demoText.find('.demo-reload').on('click', function () {
+                uploadInst.upload();
+            });
+        }
+    })
+
+
     // eleTree
     var eleTreeData = [{
         id: 1,
@@ -507,6 +554,20 @@ layui.config({
     dtree.on("node('role-select')", function (obj) {
         layer.msg(JSON.stringify(obj.param));
     });
+
+    window.openVideo = function() {
+        var videoUrl = document.getElementById("videourl").value;
+        var index = layer.open({
+            type: 2,
+            content: videoUrl,
+            area: ['600px', '450px'],
+            offset:'t',
+            maxmin: true,
+            end: function () {
+
+            }
+        });
+    }
 
 
 });

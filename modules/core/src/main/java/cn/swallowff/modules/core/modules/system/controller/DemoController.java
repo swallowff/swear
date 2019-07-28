@@ -52,6 +52,11 @@ public class DemoController {
         return "/pages/admin/system/demo/layim";
     }
 
+    @RequestMapping("video.html")
+    public String videoHtml(Model model) {
+        return "/pages/admin/system/demo/video";
+    }
+
     @RequestMapping("mobile.html")
     public String mobileHtml(Model model) {
         ShiroUser shiroUser = ShiroKit.getUser();

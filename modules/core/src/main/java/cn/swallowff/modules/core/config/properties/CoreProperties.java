@@ -109,4 +109,5 @@ public class CoreProperties {
     public void setStaticPath(String staticPath) {
         this.staticPath = staticPath;
     }
+
 }

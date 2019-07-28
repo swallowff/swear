@@ -24,13 +24,16 @@ public class CustomApplicationListener implements ApplicationListener<Applicatio
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         //do something when spring application started
         //TODO 启动nio聊天服务
-        SwearMsgHandler swearMsgHandler = SwearMsgHandler.me;
-        swearMsgHandler.registerUserService(SpringContextHolder.getBean(ChatUserService.class));
-        try {
-            SwearSocketServerStarter serverStarter = new SwearSocketServerStarter(swearEnvProperties.getWebsocketPort(),swearMsgHandler);
-            serverStarter.doStart();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (swearEnvProperties.isWebsocketOpen()){
+            SwearMsgHandler swearMsgHandler = SwearMsgHandler.me;
+            swearMsgHandler.registerUserService(SpringContextHolder.getBean(ChatUserService.class));
+            try {
+                SwearSocketServerStarter serverStarter = new SwearSocketServerStarter(swearEnvProperties.getWebsocketPort(),swearMsgHandler);
+                serverStarter.doStart();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
 
     }

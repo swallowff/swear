@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class SwearEnvProperties {
     private String websocketUrl;
     private Integer websocketPort;
+    private boolean websocketOpen;
+    private String ffmpegBin;
 
     public String getWebsocketUrl() {
         return websocketUrl;
@@ -27,5 +29,21 @@ public class SwearEnvProperties {
 
     public void setWebsocketPort(Integer websocketPort) {
         this.websocketPort = websocketPort;
+    }
+
+    public boolean isWebsocketOpen() {
+        return websocketOpen;
+    }
+
+    public void setWebsocketOpen(boolean websocketOpen) {
+        this.websocketOpen = websocketOpen;
+    }
+
+    public String getFfmpegBin() {
+        return ffmpegBin;
+    }
+
+    public void setFfmpegBin(String ffmpegBin) {
+        this.ffmpegBin = ffmpegBin;
     }
 }

@@ -89,7 +89,7 @@ layui.use('layim', function(){
         // if(To.type === 'friend'){
         //     layim.setChatStatus('<span style="color:#FF5722;">对方正在输入。。。</span>');
         // }
-        if (!socket && socket.readyState != WebSocket.OPEN) {
+        if (!socket || socket.readyState != WebSocket.OPEN) {
             return layer.msg('还没有连接服务器哟');
         }else {
             let msgPacket = {
@@ -364,6 +364,8 @@ layui.use('layim', function(){
             closeConnection()
         }
     };
+
+    openConnection();
 
     window.openConnection = function(){
         if (socket && socket.readyState === WebSocket.OPEN){

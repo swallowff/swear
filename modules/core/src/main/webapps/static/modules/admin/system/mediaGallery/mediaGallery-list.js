@@ -8,9 +8,9 @@ layui.config({
     setter.ctxPath = Swear.ctxPath;
 
     table.render({
-        id: "${uncapClassName}Table",
+        id: "mediaGalleryTable",
         elem: '#LAYF-list-table',
-        url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/list.ajax',
+        url: setter.ctxPath + '/sys/mediaGallery/list.ajax',
         cellMinWidth: 20
         , skin: 'line ' //表格风格 line （行边框风格）row （列边框风格）nob （无边框风格）
         , even: true    //隔行换色
@@ -21,13 +21,46 @@ layui.config({
         , cols: [[
             {type: 'checkbox'},
             {type: 'numbers', title: '序号'},
-            @for(field in item.fields){
             {
-                field: '${field.fieldName}',
-                title: '${field.remarks}',
+                field: 'mediaType',
+                title: '媒体类型',
                 sort: true
             },
-            @}
+            {
+                field: 'originName',
+                title: '原始名称',
+                sort: true
+            },
+            {
+                field: 'name',
+                title: '存储名称',
+                sort: true
+            },
+            {
+                field: 'localPath',
+                title: '本地路径',
+                sort: false
+            },
+            {
+                field: 'url',
+                title: '资源地址',
+                sort: false
+            },
+            {
+                field: 'cover',
+                title: '视频封面图',
+                sort: false
+            },
+            {
+                field: 'mediaFormat',
+                title: '格式',
+                sort: true
+            },
+            {
+                field: 'size',
+                title: '大小',
+                sort: true
+            },
             {
                 field: 'createTime',
                 title: '创建时间',
@@ -43,23 +76,20 @@ layui.config({
     });
 
     //监听搜索
-    form.on('submit(LAYF-${uncapClassName}-list-search-submit)', function (data) {
+    form.on('submit(LAYF-mediaGallery-list-search-submit)', function (data) {
         var field = data.field;
-        table.reload('${uncapClassName}Table', {
+        table.reload('mediaGalleryTable', {
             where: field
         });
     });
 
     var $ = layui.$, active = {
         batchdel: function () {
-            var checkStatus = table.checkStatus('${uncapClassName}Table')
+            var checkStatus = table.checkStatus('mediaGalleryTable')
                 , checkData = checkStatus.data; //得到选中的数据
             console.log(checkData)
             if (checkData.length === 0) {
-                return layer.msg('请选择数据',{
-                    icon: 5,
-                    time: 1800
-                });
+                return layer.msg('请选择数据',{icon: 5, time: 1800});
             }
 
             var idAry = new Array();
@@ -71,14 +101,14 @@ layui.config({
 
                 //执行 Ajax 后重载
                 admin.req({
-                    url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/batchDel',
+                    url: setter.ctxPath + '/sys/mediaGallery/batchDel',
                     method: 'POST',
                     traditional: true,   //指定参数序列化时，不做深度序列化
                     data: {
                         ids: idAry
                     },
                     success: function (res) {
-                        table.reload('${uncapClassName}Table');
+                        table.reload('mediaGalleryTable');
                         layer.msg('已删除',{
                             icon: 1,
                             time: 1800
@@ -92,13 +122,13 @@ layui.config({
         add: function () {
             layer.open({
                 type: 2
-                , title: '添加${title}'
-                , content: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/add.html'
+                , title: '添加媒体库'
+                , content: setter.ctxPath + '/sys/mediaGallery/add.html'
                 , maxmin: true
-                , area: ['550px', '550px']
+                , area: ['800px', '550px']
                 , btn: ['确定', '取消']
                 , yes: function (index, layero) {
-                    var submit = layero.find('iframe').contents().find("#LAYF-${uncapClassName}-form-add-submit");
+                    var submit = layero.find('iframe').contents().find("#LAYF-mediaGallery-form-add-submit");
                     submit.click();
                 }
             });
@@ -119,7 +149,7 @@ layui.config({
 
     window.deleteRow = function (id) {
         $.ajax({
-            url: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/delete',
+            url: setter.ctxPath + '/sys/mediaGallery/delete',
             method: 'POST',
             contentType: 'application/x-www-form-urlencoded',
             data: {
@@ -132,7 +162,7 @@ layui.config({
                         time: 1800
                     });
 
-                    layui.table.reload('${uncapClassName}Table');
+                    layui.table.reload('mediaGalleryTable');
                 } else {
                     layer.msg(res.msg,{
                         icon: 5,
@@ -146,13 +176,13 @@ layui.config({
     window.editRow = function (id) {
         layer.open({
             type: 2
-            , title: '編輯${title}'
-            , content: setter.ctxPath + '/${tablePrefix}/${uncapClassName}/edit.html?id=' + id
+            , title: '編輯媒体库'
+            , content: setter.ctxPath + '/sys/mediaGallery/edit.html?id=' + id
             , maxmin: true
-            , area: ['550px', '550px']
+            , area: ['800px', '550px']
             , btn: ['确定', '取消']
             , yes: function (index, layero) {
-                var submit = layero.find('iframe').contents().find("#LAYF-${uncapClassName}-form-edit-submit");
+                var submit = layero.find('iframe').contents().find("#LAYF-mediaGallery-form-edit-submit");
                 submit.click();
             }
         });

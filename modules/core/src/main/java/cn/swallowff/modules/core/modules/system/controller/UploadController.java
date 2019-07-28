@@ -69,4 +69,39 @@ public class UploadController {
         return baseResp.putSuccess(respMap);
     }
 
+    @RequestMapping(value = "video")
+    @ResponseBody
+    public BaseResp uploadVideo(MultipartFile video, HttpServletRequest request) {
+        BaseResp baseResp = BaseResp.newSuccess();
+
+        int serverPort = request.getServerPort();
+        String baseUrl = "";
+        if (serverPort == 80){
+            baseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/video/";
+        }else {
+            baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/video/";//url访问路径
+        }
+        String realPath = coreProperties.getFileUploadPath() + "video"; //文件存储位置
+
+        String orgFileName = video.getOriginalFilename();
+        String suffix = orgFileName.substring(orgFileName.lastIndexOf("."), orgFileName.length());
+        String dateStr = DateUtils.formatDate(new Date(), "yyyy-MM-dd");
+        String fileDir = realPath + File.separator + dateStr + File.separator;
+        FileUtils.createDirectory(fileDir);
+        String fileName = String.valueOf(IdGenerate.uuid()) + suffix;
+        File imgFile = new File(fileDir + fileName);
+        try {
+            imgFile.createNewFile();
+            video.transferTo(imgFile.getAbsoluteFile());
+//            ImageUtils.thumbnails(imgFile, 720, 720, IMG_COMPRESS_FORMAT);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return baseResp.putError("文件保存失败");
+        }
+        String targetPath = baseUrl + dateStr + "/";
+        Map<String, Object> respMap = new HashMap<>(3);
+        respMap.put("url", targetPath + fileName);
+        return baseResp.putSuccess(respMap);
+    }
+
 }

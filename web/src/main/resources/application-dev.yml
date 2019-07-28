@@ -12,6 +12,9 @@ swear:
     api: /api
   websocket-url: ws://localhost:8999
   websocket-port: 8999
+  websocket-open: false
+  ffmpeg-bin: E:\\soft_install\\ffmpeg\\bin\\ffmpeg.exe
+
 
 logging:
   config: classpath:logback.xml
