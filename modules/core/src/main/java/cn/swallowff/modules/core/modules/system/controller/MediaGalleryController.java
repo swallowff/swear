@@ -123,13 +123,13 @@ public class MediaGalleryController extends BaseController {
     public BaseResp uploadVideo(MultipartFile file, HttpServletRequest request) {
         BaseResp baseResp = BaseResp.newSuccess();
 
-        int serverPort = request.getServerPort();
+//        int serverPort = request.getServerPort();
         String baseUrl = "";
-        if (serverPort == 80){
-            baseUrl = swearEnvProperties.getMediaServer() + request.getContextPath() + "/upload/media/video/";
-        }else {
-            baseUrl = swearEnvProperties.getMediaServer() + ":" + request.getServerPort() + request.getContextPath() + "/upload/media/video/";//url访问路径
-        }
+//        if (serverPort == 80){
+            baseUrl = swearEnvProperties.getMediaServer() + "/video/";
+//        }else {
+//            baseUrl = swearEnvProperties.getMediaServer() + ":" + request.getServerPort() + request.getContextPath() + "/upload/media/video/";//url访问路径
+//        }
         String realPath = coreProperties.getFileUploadPath() + "/media/video"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
