@@ -126,11 +126,11 @@ public class MediaGalleryController extends BaseController {
         int serverPort = request.getServerPort();
         String baseUrl = "";
         if (serverPort == 80){
-            baseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/video/";
+            baseUrl = swearEnvProperties.getMediaServer() + request.getContextPath() + "/upload/media/video/";
         }else {
-            baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/video/";//url访问路径
+            baseUrl = swearEnvProperties.getMediaServer() + ":" + request.getServerPort() + request.getContextPath() + "/upload/media/video/";//url访问路径
         }
-        String realPath = coreProperties.getFileUploadPath() + "video"; //文件存储位置
+        String realPath = coreProperties.getFileUploadPath() + "/media/video"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
         String suffix = orgFileName.substring(orgFileName.lastIndexOf("."), orgFileName.length());
@@ -180,11 +180,11 @@ public class MediaGalleryController extends BaseController {
         int serverPort = request.getServerPort();
         String baseUrl = "";
         if (serverPort == 80){
-            baseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/audio/";
+            baseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/media/audio/";
         }else {
             baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/audio/";//url访问路径
         }
-        String realPath = coreProperties.getFileUploadPath() + "audio"; //文件存储位置
+        String realPath = coreProperties.getFileUploadPath() + "/media/audio"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
         String suffix = orgFileName.substring(orgFileName.lastIndexOf("."), orgFileName.length());

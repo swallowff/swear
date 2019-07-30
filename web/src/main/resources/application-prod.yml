@@ -15,7 +15,7 @@ swear:
   websocket-port: 8999
   websocket-open: true
   ffmpeg-bin: /usr/bin/ffmpeg.sh
-
+  media-server: http://media.helloccs.cn
 
 logging:
   config: classpath:logback.xml

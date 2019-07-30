@@ -14,6 +14,7 @@ public class SwearEnvProperties {
     private Integer websocketPort;
     private boolean websocketOpen;
     private String ffmpegBin;
+    private String mediaServer;
 
     public String getWebsocketUrl() {
         return websocketUrl;
@@ -45,5 +46,13 @@ public class SwearEnvProperties {
 
     public void setFfmpegBin(String ffmpegBin) {
         this.ffmpegBin = ffmpegBin;
+    }
+
+    public String getMediaServer() {
+        return mediaServer;
+    }
+
+    public void setMediaServer(String mediaServer) {
+        this.mediaServer = mediaServer;
     }
 }
