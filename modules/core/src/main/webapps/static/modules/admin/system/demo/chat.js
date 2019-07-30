@@ -365,8 +365,6 @@ layui.use('layim', function(){
         }
     };
 
-    openConnection();
-
     window.openConnection = function(){
         if (socket && socket.readyState === WebSocket.OPEN){
             return layer.msg('已连接服务器',{icon: 5});
@@ -428,6 +426,8 @@ layui.use('layim', function(){
             layer.msg('未连接服务器')
         }
     }
+
+    openConnection();
 
     $('.site-demo-layim').on('click', function(){
         var type = $(this).data('type');
