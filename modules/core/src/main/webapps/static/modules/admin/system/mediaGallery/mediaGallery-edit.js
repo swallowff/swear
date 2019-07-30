@@ -54,16 +54,19 @@ layui.config({
     });
 
     //上传视频
-    var uploadInst = upload.render({
+    var uploadVideo = upload.render({
         elem: '#btn-video-upload'
         ,url: Swear.ctxPath + '/sys/mediaGallery/uploadVideo'
         ,field:"file"
-        ,data:{"dir":"media"}
+        ,data:{}
         ,accept: 'video' //视频
-        // ,before:function (obj) {
-        //     $('#demo9').css('display','block').attr('src', "http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO"); //链接（base64）http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO
-        // }
+        ,choose:function (obj) {
+            layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        }
         ,done: function(res){
+            layer.closeAll('loading'); //关闭加载层
             if(res.code == 0){
                 let data = res.data;
                 form.val('LAYF-mediaGallery-form-add',{
@@ -81,28 +84,9 @@ layui.config({
             }
         }
         ,error:function () {
-            //演示失败状态，并实现重传
-            var demoText = $('#demoText');
-            demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-            demoText.find('.demo-reload').on('click', function () {
-                uploadInst.upload();
-            });
+            layer.closeAll('loading'); //关闭加载层
         }
     })
-
-    window.openVideo = function() {
-        var videoUrl = document.getElementById("media-url").value;
-        var index = layer.open({
-            type: 2,
-            content: videoUrl,
-            area: ['600px', '450px'],
-            offset:'t',
-            maxmin: true,
-            end: function () {
-
-            }
-        });
-    }
 
     //上传音频
     var uploadAudio = upload.render({
@@ -111,13 +95,16 @@ layui.config({
         ,field:"file"
         ,data:{}
         ,accept: 'audio' //视频
-        // ,before:function (obj) {
-        //     $('#demo9').css('display','block').attr('src', "http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO"); //链接（base64）http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO
-        // }
+        ,choose: function (obj) {
+            layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        }
         ,done: function(res){
+            layer.closeAll('loading'); //关闭加载层
             if(res.code == 0){
                 let data = res.data;
-                form.val('LAYF-mediaGallery-form-add',{
+                form.val('LAYF-mediaGallery-form-edit',{
                     url: data.url,
                     mediaType: 1,
                     originName: data.originName,
@@ -132,15 +119,15 @@ layui.config({
             }
         }
         ,error:function () {
+            layer.closeAll('loading'); //关闭加载层
             layer.msg('服务器错误')
         }
     })
 
     window.openMedia = function() {
         var mediaType = $('#media-type').val();
-        console.log(mediaType)
-        var mediaUrl = document.getElementById("media-url").value;
-        if (mediaType == 1) {
+        var mediaUrl = $('#media-url').val();
+        if (mediaType == 1 && mediaUrl != '') {
             var index = layer.open({
                 type: 2,
                 content: mediaUrl,
@@ -151,7 +138,7 @@ layui.config({
 
                 }
             });
-        }else if (mediaType == 0) {
+        }else if (mediaType == 0 && mediaUrl != '') {
             var index = layer.open({
                 type: 2,
                 content: mediaUrl,

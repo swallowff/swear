@@ -14,7 +14,7 @@ swear:
   websocket-url: ws://120.79.225.48:8999
   websocket-port: 8999
   websocket-open: true
-  ffmpeg-bin: /usr/bin/ffmpeg.sh
+  ffmpeg-bin: /usr/local/ffmpeg/ffmpeg
   media-server: http://media.helloccs.cn
 
 logging:

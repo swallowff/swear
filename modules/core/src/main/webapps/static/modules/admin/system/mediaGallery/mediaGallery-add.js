@@ -47,10 +47,13 @@ layui.config({
         ,field:"file"
         ,data:{}
         ,accept: 'video' //视频
-        // ,before:function (obj) {
-        //     $('#demo9').css('display','block').attr('src', "http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO"); //链接（base64）http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO
-        // }
+        ,choose:function (obj) {
+            layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        }
         ,done: function(res){
+            layer.closeAll('loading'); //关闭加载层
             if(res.code == 0){
                 let data = res.data;
                 form.val('LAYF-mediaGallery-form-add',{
@@ -68,6 +71,7 @@ layui.config({
             }
         }
         ,error:function () {
+            layer.closeAll('loading'); //关闭加载层
             // //演示失败状态，并实现重传
             // var demoText = $('#demoText');
             // demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
@@ -87,7 +91,13 @@ layui.config({
         // ,before:function (obj) {
         //     $('#demo9').css('display','block').attr('src', "http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO"); //链接（base64）http://p6nngxvb7.bkt.clouddn.com/FsyjSltTtkVtzepa_w7zsnS_S7zO
         // }
+        ,choose: function (obj) {
+            layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        }
         ,done: function(res){
+            layer.closeAll('loading'); //关闭加载层
             if(res.code == 0){
                 let data = res.data;
                 form.val('LAYF-mediaGallery-form-add',{
@@ -105,6 +115,7 @@ layui.config({
             }
         }
         ,error:function () {
+            layer.closeAll('loading'); //关闭加载层
             layer.msg('服务器错误')
         }
     })
