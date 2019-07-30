@@ -395,7 +395,7 @@ layui.use('layim', function(){
 
         //监听连接错误事件
         socket.onerror = () => {
-            layer.msg('connect error',{
+            layer.msg('connect error ',{
                 icon: 5
             })
         }
