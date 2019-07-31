@@ -11,7 +11,7 @@ swear:
   path:
     admin: /a
     api: /api
-  websocket-url: wss://120.79.225.48:8999
+  websocket-url: wss://admin.helloccs.cn/websocket
   websocket-port: 8999
   websocket-open: true
   ffmpeg-bin: /usr/local/ffmpeg/ffmpeg
