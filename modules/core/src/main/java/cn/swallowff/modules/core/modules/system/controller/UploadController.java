@@ -7,6 +7,7 @@ import cn.swallowff.common.lang.DateUtils;
 import cn.swallowff.common.lang.StringUtils;
 import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.config.properties.CoreProperties;
+import cn.swallowff.modules.core.config.properties.SwearEnvProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,8 @@ public class UploadController {
 
     @Autowired
     private CoreProperties coreProperties;
+    @Autowired
+    private SwearEnvProperties swearEnvProperties;
 
     @RequestMapping(value = "img")
     @ResponseBody
@@ -76,11 +79,12 @@ public class UploadController {
 
         int serverPort = request.getServerPort();
         String baseUrl = "";
-        if (serverPort == 80){
-            baseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/video/";
-        }else {
-            baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/video/";//url访问路径
-        }
+//        if (serverPort == 80){
+//            baseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/video/";
+//        }else {
+//            baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/video/";//url访问路径
+//        }
+        baseUrl = swearEnvProperties.getServerUrl() + request.getContextPath() + "/upload/img/";
         String realPath = coreProperties.getFileUploadPath() + "video"; //文件存储位置
 
         String orgFileName = video.getOriginalFilename();
