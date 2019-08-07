@@ -128,7 +128,7 @@ public class ImageGalleryController extends BaseController {
 //        }else if (serverPort == 443){
 //            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
 //        }
-        imgBaseUrl = swearEnvProperties.getServerUrl() + request.getContextPath() + "/upload/img";
+        imgBaseUrl = swearEnvProperties.getServerUrl() + request.getContextPath() + "/upload/img/";
         String realPath = coreProperties.getFileUploadPath() + "img"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
