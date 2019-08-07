@@ -4,6 +4,7 @@ server:
     context-path: /swear
 
 swear:
+  server-url: http://localhost:8080
   muti-datasource:
     open: false
   spring-session-open: false

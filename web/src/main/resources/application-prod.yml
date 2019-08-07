@@ -4,6 +4,7 @@ server:
     context-path: /swear
 
 swear:
+  server-url: https://admin.helloccs.cn
   muti-datasource:
     open: false
   spring-session-open: false
@@ -15,7 +16,7 @@ swear:
   websocket-port: 8999
   websocket-open: true
   ffmpeg-bin: /usr/local/ffmpeg/ffmpeg
-  media-server: http://media.helloccs.cn
+  media-server: https://media.helloccs.cn
 
 logging:
   config: classpath:logback.xml

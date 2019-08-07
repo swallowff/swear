@@ -10,6 +10,7 @@ import cn.swallowff.modules.core.cmomon.resp.BaseResp;
 import cn.swallowff.modules.core.cmomon.resp.LayPageResp;
 import cn.swallowff.modules.core.cmomon.resp.PageResp;
 import cn.swallowff.modules.core.config.properties.CoreProperties;
+import cn.swallowff.modules.core.config.properties.SwearEnvProperties;
 import cn.swallowff.modules.core.modules.system.entity.ImageGallery;
 import cn.swallowff.modules.core.modules.system.service.ImageGalleryService;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,8 @@ public class ImageGalleryController extends BaseController {
     private ImageGalleryService imageGalleryService;
     @Autowired
     private CoreProperties coreProperties;
+    @Autowired
+    private SwearEnvProperties swearEnvProperties;
 
     @RequestMapping(value = "list.html")
     @Permission(value = "sys-imageGallery-list")
@@ -120,11 +123,12 @@ public class ImageGalleryController extends BaseController {
         BaseResp baseResp = BaseResp.newSuccess();
         int serverPort = request.getServerPort();
         String imgBaseUrl = "";
-        if (serverPort == 80){
-            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/img/";
-        }else {
-            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
-        }
+//        if (serverPort == 80){
+//            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + request.getContextPath() + "/upload/img/";
+//        }else if (serverPort == 443){
+//            imgBaseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/upload/img/";//url访问路径
+//        }
+        imgBaseUrl = swearEnvProperties.getServerUrl() + request.getContextPath() + "/upload/img";
         String realPath = coreProperties.getFileUploadPath() + "img"; //文件存储位置
 
         String orgFileName = file.getOriginalFilename();
