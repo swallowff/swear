@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
-
+    <groupId>cn.swallowff.modules</groupId>
     <artifactId>cms</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>

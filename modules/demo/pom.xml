@@ -9,7 +9,7 @@
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
     <packaging>jar</packaging>
-    <groupId>cn.swallowff</groupId>
+    <groupId>cn.swallowff.modules</groupId>
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo</name>

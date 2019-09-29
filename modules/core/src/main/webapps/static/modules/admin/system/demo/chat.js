@@ -370,6 +370,7 @@ layui.use('layim', function(){
             return layer.msg('已连接服务器',{icon: 5});
         }
         socket = new WebSocket(Swear.websocketUrl+'?userid='+Swear.csuid);
+        // socket = new WebSocket("wss://apps.98htcz.com/websocket?userid=1152886134112866304&subscription=orderPush")
 
         //监听open事件
         socket.onopen = () => {

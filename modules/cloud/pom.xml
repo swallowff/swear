@@ -9,7 +9,7 @@
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>com.swallowff</groupId>
+    <groupId>com.swallowff.modules</groupId>
     <artifactId>cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cloud</name>

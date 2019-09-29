@@ -13,7 +13,7 @@ swear:
     api: /api
   websocket-url: ws://localhost:8999
   websocket-port: 8999
-  websocket-open: false
+  websocket-open: true
   ffmpeg-bin: E:\\soft_install\\ffmpeg\\bin\\ffmpeg.exe
   media-server: http://media.helloccs.cn
 
@@ -27,7 +27,7 @@ spring:
       suffix: .html
     static-path-pattern: /static/**
   datasource-master:
-    url: jdbc:mysql://localhost:3306/dump_swear?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    url: jdbc:mysql://localhost:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
     db-name: dump_swear
     username: root
     password: yanni623..
@@ -35,7 +35,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   datasource-slave:
-    url: jdbc:mysql://localhost:3306/dump_swear?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    url: jdbc:mysql://localhost:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
     db-name: dump_swear
     username: root
     password: yanni623..
@@ -43,7 +43,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   datasource-default:
-    url: jdbc:mysql://localhost:3306/dump_swear?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    url: jdbc:mysql://localhost:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
     db-name: dump_swear
     username: root
     password: yanni623..
