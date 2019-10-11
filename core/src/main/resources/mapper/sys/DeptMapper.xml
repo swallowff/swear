@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.modules.system.dao.DeptDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.sort AS sort,
+        a.pid AS "parent.id",
+        a.pids AS pids,
+        a.simple_name AS simpleName,
+        a.full_name AS fullName,
+        a.tips AS tips,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="Dept">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dept a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </select>
+
+    <select id="findEntity" resultType="Dept">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dept a
+        <where>
+            a.delflag = 0
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
+            <if test="simpleName != null and simpleName != ''">
+                AND a.simple_name = #{simpleName}
+            </if>
+            <if test="fullName != null and fullName != ''">
+                AND a.full_name LIKE CONCAT('%',#{fullName},'%')
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="Dept">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_dept a
+        <where>
+            a.delflag = 0
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
+            <if test="simpleName != null and simpleName != ''">
+                AND a.simple_name = #{simpleName}
+            </if>
+            <if test="fullName != null and fullName != ''">
+                AND a.full_name LIKE CONCAT('%',#{fullName},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findChildren" resultType="Dept">
+        SELECT
+        a.id AS id,
+        a.full_name AS fullName
+        FROM sys_dept a
+        <where>
+            a.delflag = 0
+            AND a.pid = #{id}
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_dept(
+        id,
+        sort,
+        pid,
+        pids,
+        simple_name,
+        full_name,
+        tips,
+        update_time,
+        create_time,
+        delflag
+        ) VALUES (
+        #{id},
+        #{sort},
+        #{parent.id},
+        #{pids},
+        #{simpleName},
+        #{fullName},
+        #{tips},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_dept SET
+        sort = #{sort},
+        pid = #{parent.id},
+        pids = #{pids},
+        simple_name = #{simpleName},
+        full_name = #{fullName},
+        tips = #{tips},
+        update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_dept
+        <set>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                pid = #{pid},
+            </if>
+            <if test="pids != null and pids != ''">
+                pids = #{pids},
+            </if>
+            <if test="simpleName != null and simpleName != ''">
+                simple_name = #{simpleName},
+            </if>
+            <if test="fullName != null and fullName != ''">
+                full_name = #{fullName},
+            </if>
+            <if test="tips != null and tips != ''">
+                tips = #{tips},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_dept a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </update>
+
+    <update id="deleteTree">
+        UPDATE sys_dept a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{arg0}
+            OR a.pids LIKE CONCAT('%',#{arg0},'%')
+        </where>
+    </update>
+
+</mapper>
