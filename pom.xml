@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.4.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <modules>
+        <module>../common</module>
+        <module>../cms</module>
+        <module>../core</module>
+        <module>../cloud</module>
+        <module>../demo</module>
+        <module>../chat</module>
+        <module>../web</module>
+        <module>../code</module>
+    </modules>
+
+    <groupId>cn.swallowff</groupId>
+    <artifactId>parent</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>parent</name>
+    <description>Swear parent module</description>
+
+    <properties>
+
+        <!-- common version setting -->
+        <commons-io.version>2.6</commons-io.version>
+        <commons-fileupload.version>1.3.3</commons-fileupload.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-text.version>1.3</commons-text.version>
+        <ant.version>1.9.7</ant.version>
+        <fst.version>2.57</fst.version>
+        <json.version>20180130</json.version>
+        <jsoup.version>1.11.3</jsoup.version>
+        <commons-email.version>1.5</commons-email.version>
+        <activation.version>1.1.1</activation.version>
+        <UserAgentUtils.version>1.21</UserAgentUtils.version>
+        <!-- <metadata-extractor.version>2.11.0</metadata-extractor.version> -->
+        <thumbnailator.version>0.4.8</thumbnailator.version>
+        <twelvemonkeys.version>3.4.1</twelvemonkeys.version>
+        <blade-patchca.version>1.1.0</blade-patchca.version>
+        <jmimemagic.version>0.1.5</jmimemagic.version>
+        <zxing.version>3.3.2</zxing.version>
+        <poi.version>3.14</poi.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+
+        <!-- framework version setting -->
+        <mybatis.version>3.4.6</mybatis.version>
+        <mybatis-spring.version>1.3.2</mybatis-spring.version>
+        <jsqlparser.version>1.1</jsqlparser.version>
+        <druid.version>1.1.10</druid.version>
+        <shiro.version>1.4.0</shiro.version>
+        <j2cache.version>2.7.0-release</j2cache.version>
+        <beetl.version>2.9-SNAPSHOT</beetl.version>
+        <swagger.version>1.5.20</swagger.version>
+
+        <!--ehcache version setting-->
+        <ehcache.version>3.3.1</ehcache.version>
+        <ehcache.core.version>2.6.11</ehcache.core.version>
+
+        <!-- environment setting -->
+        <java.version>1.8</java.version>
+        <maven.test.skip>true</maven.test.skip>
+        <eclipse-plugin-download-sources>false</eclipse-plugin-download-sources>
+        <eclipse-plugin-download-javadocs>false</eclipse-plugin-download-javadocs>
+        <beetl.version>2.9.3</beetl.version>
+
+    </properties>
+
+    <dependencies>
+
+        <!-- WEB begin -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- WEB end -->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>    <!--默认关掉单元测试 -->
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+
+
+
+</project>
