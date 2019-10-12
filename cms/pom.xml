@@ -15,10 +15,6 @@
     <name>cms</name>
     <description>cms-module</description>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>cn.swallowff</groupId>
@@ -31,7 +27,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>

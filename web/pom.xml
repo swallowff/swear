@@ -19,7 +19,6 @@
         <finalName>web</finalName><!-- war包的名称 -->
         <start-class>cn.swallowff.web.Application</start-class>
         <java.version>1.8</java.version>
-
         <resource.delimiter>@</resource.delimiter>
     </properties>
 
@@ -49,7 +48,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!-- 指定该Main Class为全局的唯一入口 -->
-                    <mainClass>cn.swallowff.web.Application</mainClass>
+                    <mainClass>${start-class}</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

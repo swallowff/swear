@@ -101,12 +101,50 @@ public class HttpClientUtils {
 		return executeRequest(httpPost, charset);
 	}
 
+	public static String post(String url,Map<String,String> headers,Map<String,Object> dataMap,String charset){
+		HttpPost httpPost = new HttpPost(url);
+		try {
+			if (dataMap != null){
+				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+				for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
+					nvps.add(new BasicNameValuePair(entry.getKey(), entry.getValue().toString()));
+				}
+				UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(nvps, charset);
+				formEntity.setContentEncoding(charset);
+				// 设置header信息
+				if (headers != null && headers.size() > 0) {
+					for (Map.Entry<String, String> entry : headers.entrySet()) {
+						httpPost.addHeader(entry.getKey(), entry.getValue());
+					}
+				}
+				httpPost.setEntity(formEntity);
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return executeRequest(httpPost, charset);
+	}
+
 	/**
 	 * http的post请求，增加异步请求头参数，传递map格式参数
 	 */
 	public static String ajaxPost(String url, Map<String, Object> dataMap) {
 		return ajaxPost(url, dataMap, "UTF-8");
 	}
+
+	public static String ajaxPost(String url,String text){
+		return ajaxPost(url,text,"UTF-8");
+	}
+
+	public static String ajaxPost(String url, String text, String charset) {
+		HttpPost httpPost = new HttpPost(url);
+		httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
+		StringEntity stringEntity = new StringEntity(text, charset);// 解决中文乱码问题
+		stringEntity.setContentEncoding(charset);
+		httpPost.setEntity(stringEntity);
+		return executeRequest(httpPost, charset);
+	}
+
 
 	/**
 	 * http的post请求，增加异步请求头参数，传递map格式参数
@@ -143,14 +181,10 @@ public class HttpClientUtils {
 	public static String ajaxPostJson(String url, String jsonString, String charset) {
 		HttpPost httpPost = new HttpPost(url);
 		httpPost.setHeader("X-Requested-With", "XMLHttpRequest");
-//		try {
-			StringEntity stringEntity = new StringEntity(jsonString, charset);// 解决中文乱码问题
-			stringEntity.setContentEncoding(charset);
-			stringEntity.setContentType("application/json");
-			httpPost.setEntity(stringEntity);
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
+		StringEntity stringEntity = new StringEntity(jsonString, charset);// 解决中文乱码问题
+		stringEntity.setContentEncoding(charset);
+		stringEntity.setContentType("application/json");
+		httpPost.setEntity(stringEntity);
 		return executeRequest(httpPost, charset);
 	}
 

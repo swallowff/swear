@@ -5,7 +5,7 @@ package cn.swallowff.modules.cloud.weixin.pay.exception;
  * @description
  * @create 2019/5/30
  */
-public class WxPayException extends RuntimeException {
+public class WxPayException extends Exception {
     public WxPayException() {
         super();
     }

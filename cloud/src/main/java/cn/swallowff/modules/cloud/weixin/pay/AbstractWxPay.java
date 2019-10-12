@@ -2,14 +2,12 @@ package cn.swallowff.modules.cloud.weixin.pay;
 
 import cn.swallowff.common.mapper.BeanMapConvert;
 import cn.swallowff.common.mapper.XmlMapper;
+import cn.swallowff.common.utils.WxUtils;
+import cn.swallowff.common.web.http.HttpClientUtils;
 import cn.swallowff.modules.cloud.weixin.pay.request.WxPayBaseRequest;
 import cn.swallowff.modules.cloud.weixin.pay.response.WxPayBaseResponse;
-import cn.swallowff.modules.core.util.PooledHttpClientAdaptor;
-import cn.swallowff.modules.core.util.WxUtils;
 import org.slf4j.Logger;
 
-import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -19,12 +17,6 @@ import java.util.Map;
  */
 public abstract class AbstractWxPay implements IWxPay {
     protected Logger logger = getLogger();
-
-    @Resource(name = "defaultHttpClientPool")
-    private PooledHttpClientAdaptor httpClientPool;
-
-    @Resource(name = "wxSSLHttpClientPool")
-    private PooledHttpClientAdaptor sslHttpClientPool;
 
     /**
      * 发送普通HTTP/HTTPS请求
@@ -40,7 +32,7 @@ public abstract class AbstractWxPay implements IWxPay {
         String sign = WxUtils.getSign(reqMap, "");
         reqMap.put("sign", sign);
         String xmlReq = XmlMapper.toXml(reqMap, "xml");
-        String respStr = httpClientPool.doPost(url, null, xmlReq);
+        String respStr = HttpClientUtils.ajaxPostJson(url,xmlReq);
         return parseXmlResp(respStr, clazz);
     }
 
@@ -58,7 +50,7 @@ public abstract class AbstractWxPay implements IWxPay {
         String sign = WxUtils.getSign(reqMap, partnerKey);
         reqMap.put("sign", sign);
         String xmlReq = XmlMapper.toXml(reqMap, "xml");
-        String respStr = sslHttpClientPool.doPost(url, Collections.EMPTY_MAP, xmlReq);
+        String respStr = HttpClientUtils.ajaxPost(url, xmlReq);  //TODO 需使用微信安全支付证书
         return parseXmlResp(respStr, clazz);
     }
 
