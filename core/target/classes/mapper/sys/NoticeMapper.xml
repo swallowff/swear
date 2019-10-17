@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.modules.system.dao.NoticeDao">
+
+    <sql id="baseColumns">
+        a.tittle AS tittle,
+        a.type AS type,
+        a.content AS content,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version,
+        a.to_user AS toUser,
+        a.creator AS creator
+    </sql>
+
+    <select id="selectById" resultType="Notice">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </select>
+
+    <select id="findEntity" resultType="Notice">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice a
+        <where>
+            a.delflag = 0
+            <if test="type != null">
+                AND a.type = #{type}
+            </if>
+            <if test="tittle != null and tittle != ''">
+                AND a.tittle = #{tittle}
+            </if>
+            <if test="creator != null and creator != ''">
+                AND a.creator = #{creator}
+            </if>
+            <if test="toUser != null and toUser != ''">
+                AND a.to_user = #{toUser}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="Notice">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_notice a
+        <where>
+            a.delflag = 0
+            <if test="type != null">
+                AND a.type = #{type}
+            </if>
+            <if test="tittle != null and tittle != ''">
+                AND a.tittle = #{tittle}
+            </if>
+            <if test="creator != null and creator != ''">
+                AND a.creator = #{creator}
+            </if>
+            <if test="toUser != null and toUser != ''">
+                AND a.to_user = #{toUser}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_notice(
+        id,
+        tittle,
+        type,
+        content,
+        creator,
+        to_user,
+        create_time,
+        update_time,
+        version,
+        delflag
+        ) VALUES (
+        #{id},
+        #{tittle},
+        #{type},
+        #{content},
+        #{creator},
+        #{toUser},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_notice SET
+        tittle = #{tittle},
+        type = #{type},
+        content = #{content},
+        creator = #{creator},
+        to_user = #{toUser},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_notice
+        <set>
+            <if test="tittle != null and tittle != ''">
+                tittle = #{tittle},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="toUser != null and toUser != ''">
+                to_user = #{toUser},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_notice a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

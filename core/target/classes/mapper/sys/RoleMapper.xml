@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.modules.system.dao.RoleDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.sort AS sort,
+        a.name AS name,
+        a.code AS code,
+        a.pid AS "parent.id",
+        a.pids AS pids,
+        a.dept_id AS deptId,
+        a.tips AS tips,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="Role">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </select>
+
+    <select id="findEntity" resultType="Role">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role a
+        <where>
+            a.delflag = 0
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                AND a.code = #{code}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                AND a.dept_id = #{deptId}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="Role">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_role a
+        <where>
+            a.delflag = 0
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                AND a.pid = #{parent.id}
+            </if>
+            <if test="pids != null and pids != ''">
+                AND a.pids LIKE CONCAT('%',#{pids},'%')
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                AND a.code = #{code}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                AND a.dept_id = #{deptId}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findDtreeNodeListWithUid" resultType="cn.swallowff.modules.core.modules.system.dto.DtreeNode">
+        SELECT
+        a.id AS id,
+        a.pid AS parentId,
+        IF(r.id IS NOT NULL,1,0) AS checkArr,
+        a.name AS title
+        FROM sys_role a
+        LEFT JOIN sys_user_role_relation r ON r.user_id = #{userId} AND r.role_id = a.id AND r.delflag = 0
+        <where>
+            a.delflag = 0
+            <if test="role.pids != null and role.pids != ''">
+                AND a.pids LIKE CONCAT('%',#{role.pids},'%')
+            </if>
+        </where>
+        <choose>
+            <when test="role.orderBy != null and role.orderBy != ''">
+                ORDER BY ${role.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findChildren" resultType="Role">
+        SELECT
+        a.id AS id,
+        a.name AS name
+        FROM sys_role a
+        <where>
+            a.delflag = 0
+            AND a.pid = #{id}
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_role(
+        id,
+        sort,
+        name,
+        code,
+        pid,
+        pids,
+        dept_id,
+        tips,
+        update_time,
+        create_time,
+        delflag
+        ) VALUES (
+        #{id},
+        #{sort},
+        #{name},
+        #{code},
+        #{parent.id},
+        #{pids},
+        #{deptId},
+        #{tips},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
+        )
+    </insert>
+
+    <insert id="insertSelective">
+        INSERT INTO sys_user(
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="id != null and id != ''">
+                id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="code != null and code != ''">
+                code,
+            </if>
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                pid,
+            </if>
+            <if test="pids != null and pids != ''">
+                pids,
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id,
+            </if>
+            <if test="tips != null and tips != ''">
+                tips,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="delflag != null">
+                delflag,
+            </if>
+        </trim>
+        VALUES
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="id != null and id != ''">
+                #{id},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="name != null and name != ''">
+                #{name},
+            </if>
+            <if test="code != null and code != ''">
+                #{code},
+            </if>
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                #{parent.id},
+            </if>
+            <if test="pids != null and pids != ''">
+                #{pids},
+            </if>
+            <if test="deptId != null and deptId != ''">
+                #{deptId},
+            </if>
+            <if test="tips != null and tips != ''">
+                #{tips},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="delflag != null">
+                #{delflag},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE sys_role SET
+        sort = #{sort},
+        name = #{name},
+        code = #{code},
+        pid = #{parent.id},
+        pids = #{pids},
+        dept_id = #{deptId},
+        tips = #{tips},
+        update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_role
+        <set>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="parent != null and parent.id != null and parent.id != ''">
+                pid = #{parent.id},
+            </if>
+            <if test="pids != null and pids != ''">
+                pids = #{pids},
+            </if>
+            <if test="deptId != null and deptId != ''">
+                dept_id = #{deptId},
+            </if>
+            <if test="tips != null and tips != ''">
+                tips = #{tips},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_role a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

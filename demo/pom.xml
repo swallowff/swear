@@ -21,8 +21,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.swallowff</groupId>
-            <artifactId>common</artifactId>
+            <groupId>cn.swallowff.common</groupId>
+            <artifactId>common-framework</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <!--<dependency>-->

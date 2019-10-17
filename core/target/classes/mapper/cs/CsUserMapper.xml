@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.modules.core.modules.cs.dao.CsUserDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.sys_uid AS sysUid,
+        a.avatar AS avatar,
+        a.user_name AS userName,
+        a.nick_name AS nickName,
+        a.password AS password,
+        a.telephone AS telephone,
+        a.email AS email,
+        a.sign AS sign,
+        a.is_online AS isOnline,
+        a.last_login_ip AS lastLoginIp,
+        a.status AS status,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="cn.swallowff.modules.core.modules.cs.entity.CsUser">
+      SELECT
+      <include refid="baseColumns"/>
+      FROM cs_user a
+      <where>
+          a.delflag = 0
+          AND a.id = #{id}
+      </where>
+    </select>
+
+    <select id="findEntity" resultType="cn.swallowff.modules.core.modules.cs.entity.CsUser">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM cs_user a
+        <where>
+            a.delflag = 0
+            <if test="sysUid != null and sysUid != ''">
+                AND a.sys_uid = #{sysUid}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                AND a.avatar = #{avatar}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND a.user_name = #{userName}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                AND a.nick_name = #{nickName}
+            </if>
+            <if test="password != null and password != ''">
+                AND a.password = #{password}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                AND a.telephone = #{telephone}
+            </if>
+            <if test="email != null and email != ''">
+                AND a.email = #{email}
+            </if>
+            <if test="sign != null and sign != ''">
+                AND a.sign = #{sign}
+            </if>
+            <if test="isOnline != null">
+                AND a.is_online = #{isOnline}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                AND a.last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="status != null">
+                AND a.status = #{status}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="cn.swallowff.modules.core.modules.cs.entity.CsUser">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM cs_user a
+        <where>
+            a.delflag = 0
+            <if test="sysUid != null and sysUid != ''">
+                AND a.sys_uid = #{sysUid}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                AND a.avatar = #{avatar}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND a.user_name = #{userName}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                AND a.nick_name = #{nickName}
+            </if>
+            <if test="password != null and password != ''">
+                AND a.password = #{password}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                AND a.telephone = #{telephone}
+            </if>
+            <if test="email != null and email != ''">
+                AND a.email = #{email}
+            </if>
+            <if test="sign != null and sign != ''">
+                AND a.sign = #{sign}
+            </if>
+            <if test="isOnline != null">
+                AND a.is_online = #{isOnline}
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                AND a.last_login_ip = #{lastLoginIp}
+            </if>
+            <if test="status != null">
+                AND a.status = #{status}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cs_user(
+          id,
+          sys_uid,
+          avatar,
+          user_name,
+          nick_name,
+          password,
+          telephone,
+          email,
+          sign,
+          is_online,
+          last_login_ip,
+          status,
+          update_time,
+          create_time,
+          delflag
+        ) VALUES (
+          #{id},
+          #{sysUid},
+          #{avatar},
+          #{userName},
+          #{nickName},
+          #{password},
+          #{telephone},
+          #{email},
+          #{sign},
+          #{isOnline},
+          #{lastLoginIp},
+          #{status},
+          #{updateTime},
+          #{createTime},
+          #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cs_user SET
+          sys_uid = #{sysUid},
+          avatar = #{avatar},
+          user_name = #{userName},
+          nick_name = #{nickName},
+          password = #{password},
+          telephone = #{telephone},
+          email = #{email},
+          sign = #{sign},
+          is_online = #{isOnline},
+          last_login_ip = #{lastLoginIp},
+          status = #{status},
+          update_time = #{updateTime}
+          <where>
+              delflag = 0
+              AND id = #{id}
+          </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE cs_user
+        <set>
+            <if test="sysUid != null and sysUid != ''">
+                sys_uid = #{sysUid},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="telephone != null and telephone != ''">
+                telephone = #{telephone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="sign != null and sign != ''">
+                sign = #{sign},
+            </if>
+            <if test="isOnline != null">
+                is_online = #{isOnline},
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp != ''">
+                last_login_ip = #{lastLoginIp},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE cs_user a
+        SET a.delflag = 1
+        <where>
+          a.delflag = 0
+          AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

@@ -28,7 +28,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.swallowff</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>common-utils</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

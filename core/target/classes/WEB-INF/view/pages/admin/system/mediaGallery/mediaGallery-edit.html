@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>媒体库编辑 iframe 框</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+<div class="layui-form" lay-filter="LAYF-mediaGallery-form-edit" id="LAYF-mediaGallery-form-edit"
+     style="padding: 20px 30px 0 0;">
+    <input type="hidden" name="id">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">媒体类型</label>
+        <div class="layui-input-inline">
+            <#dictSelector id="media-type" name="mediaType" label="" code="media_type" placeholder="请选择媒体类型"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">原始名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="originName" placeholder="原始名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">存储名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="存储名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">本地路径</label>
+        <div class="layui-input-inline">
+            <input type="text" name="localPath" placeholder="本地路径" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">资源地址</label>
+        <div class="layui-input-inline">
+            <input id="media-url" type="text" name="url" lay-verify="required" placeholder="资源地址" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline layui-btn-container" style="width: auto;">
+            <button type="button" class="layui-btn layui-btn-primary" id="btn-video-upload">
+                <i class="layui-icon">&#xe67c;</i>上传视频
+            </button>
+            <button type="button" class="layui-btn layui-btn-primary" id="btn-audio-upload">
+                <i class="layui-icon">&#xe67c;</i>上传音频
+            </button>
+            <button class="layui-btn layui-btn-primary" onclick="openMedia()">预览</button>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">视频封面图</label>
+        <div class="layui-input-inline">
+            <input type="text" name="cover" placeholder="视频封面图" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">格式</label>
+        <div class="layui-input-inline">
+            <input type="text" name="mediaFormat" placeholder="格式" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">大小</label>
+        <div class="layui-input-inline">
+            <input type="text" name="size" placeholder="大小" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAYF-mediaGallery-form-edit-submit" id="LAYF-mediaGallery-form-edit-submit"
+               value="确认">
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    var Swear = {
+        serverUrl : '${serverUrl}',
+        ctxPath : '${admin}',
+        static : '${static}',
+
+        formValue: {
+            id: '${mediaGallery.id}',
+            mediaType: '${mediaGallery.mediaType}',
+            originName: '${mediaGallery.originName}',
+            name: '${mediaGallery.name}',
+            localPath: '${mediaGallery.localPath}',
+            url: '${mediaGallery.url}',
+            cover: '${mediaGallery.cover}',
+            mediaFormat: '${mediaGallery.mediaFormat}',
+            size: '${mediaGallery.size}',
+        }
+    }
+</script>
+<script src="${static}/modules/admin/system/mediaGallery/mediaGallery-edit.js"></script>
+<script>
+
+</script>
+</body>
+</html>
