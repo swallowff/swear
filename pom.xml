@@ -10,7 +10,7 @@
     </parent>
 
     <modules>
-        <module>common</module>
+        <module>common-utils</module>
         <module>common-framework</module>
         <module>cms</module>
         <module>core</module>
