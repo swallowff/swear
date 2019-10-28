@@ -443,7 +443,7 @@
 	}
 	
 	/*
-	* the 64 bit des core arithmetic
+	* the 64 bit des admin arithmetic
 	*/
 	
 	function enc(dataByte,keyByte){  

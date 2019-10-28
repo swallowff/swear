@@ -509,7 +509,7 @@ public class DesUtils {
 		}
 
 		/*
-		 * the 64 bit des core arithmetic
+		 * the 64 bit des admin arithmetic
 		 */
 
 		public int[] enc(int[] dataByte, int[] keyByte) {

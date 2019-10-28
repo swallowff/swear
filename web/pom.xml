@@ -28,6 +28,7 @@
             <artifactId>core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -64,26 +65,26 @@
 
     </build>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <!--profiles.active是自定义的字段（名字随便起），自定义字段可以有多个-->
-                <profiles.active>dev</profiles.active>
-                <!--默认使用dev环境-->
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <!--profiles.active是自定义的字段（名字随便起），自定义字段可以有多个-->
-                <profiles.active>prod</profiles.active>
-            </properties>
-        </profile>
-    </profiles>
+<!--    <profiles>-->
+<!--        <profile>-->
+<!--            <id>dev</id>-->
+<!--            <properties>-->
+<!--                &lt;!&ndash;profiles.active是自定义的字段（名字随便起），自定义字段可以有多个&ndash;&gt;-->
+<!--                <profiles.active>dev</profiles.active>-->
+<!--                &lt;!&ndash;默认使用dev环境&ndash;&gt;-->
+<!--            </properties>-->
+<!--            <activation>-->
+<!--                <activeByDefault>true</activeByDefault>-->
+<!--            </activation>-->
+<!--        </profile>-->
+<!--        <profile>-->
+<!--            <id>prod</id>-->
+<!--            <properties>-->
+<!--                &lt;!&ndash;profiles.active是自定义的字段（名字随便起），自定义字段可以有多个&ndash;&gt;-->
+<!--                <profiles.active>prod</profiles.active>-->
+<!--            </properties>-->
+<!--        </profile>-->
+<!--    </profiles>-->
 
 
 </project>

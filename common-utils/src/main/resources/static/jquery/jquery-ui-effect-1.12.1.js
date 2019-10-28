@@ -1440,7 +1440,7 @@ $.fn.extend( {
 			if ( $.uiBackCompat !== false && !defaultMode ) {
 				if ( elem.is( ":hidden" ) ? mode === "hide" : mode === "show" ) {
 
-					// Call the core method to track "olddisplay" properly
+					// Call the admin method to track "olddisplay" properly
 					elem[ mode ]();
 					done();
 				} else {
@@ -1449,7 +1449,7 @@ $.fn.extend( {
 			} else {
 				if ( args.mode === "none" ) {
 
-					// Call the core method to track "olddisplay" properly
+					// Call the admin method to track "olddisplay" properly
 					elem[ mode ]();
 					done();
 				} else {

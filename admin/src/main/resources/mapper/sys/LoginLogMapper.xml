@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.admin.modules.system.dao.LoginLogDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.log_name AS logName,
+        a.user_id AS userId,
+        a.succeed AS succeed,
+        a.message AS message,
+        a.ip AS ip,
+        a.birthday AS birthday,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="LoginLog">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_login_log a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </select>
+
+    <select id="findEntity" resultType="LoginLog">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_login_log a
+        <where>
+            a.delflag = 0
+            <if test="logName != null and logName != ''">
+                AND a.log_name = #{logName}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="succeed != null">
+                AND a.succeed = #{succeed}
+            </if>
+            <if test="ip != null and ip != ''">
+                AND a.ip = #{ip}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="LoginLog">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_login_log a
+        <where>
+            a.delflag = 0
+            <if test="logName != null and logName != ''">
+                AND a.log_name = #{logName}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="succeed != null">
+                AND a.succeed = #{succeed}
+            </if>
+            <if test="ip != null and ip != ''">
+                AND a.ip = #{ip}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_login_log(
+        id,
+        log_name,
+        user_id,
+        succeed,
+        message,
+        ip,
+        create_time,
+        update_time,
+        version,
+        delflag
+        ) VALUES (
+        #{id},
+        #{logName},
+        #{userId},
+        #{succeed},
+        #{message},
+        #{ip},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delfalg}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_login_log SET
+        log_name = #{logName},
+        user_id = #{userId},
+        succeed = #{succeed},
+        message = #{message},
+        ip = #{ip},
+        create_time = #{createTime},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_login_log
+        <set>
+            <if test="logName != null and logName != ''">
+                log_name = #{logName}
+            </if>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="succeed != null">
+                succeed = #{succeed},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_login_log a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

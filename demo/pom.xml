@@ -25,17 +25,6 @@
             <artifactId>common-framework</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter</artifactId>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.t-io</groupId>-->
-            <!--<artifactId>tio-core-spring-boot-starter</artifactId>-->
-            <!--&lt;!&ndash;此版本号跟着tio主版本号一致即可&ndash;&gt;-->
-            <!--<version>3.3.5.v20190712-RELEASE</version>-->
-        <!--</dependency>-->
 
         <!--tio-->
         <dependency>
@@ -44,11 +33,11 @@
             <version>3.3.5.v20190712-RELEASE</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-test</artifactId>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

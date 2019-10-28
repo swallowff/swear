@@ -19,7 +19,7 @@ public class GeneratorConfig {
      * @example cn.swallowff.web.cms
      */
     private String javaRoot = "/src/main/java";     //默认 /src/main/java
-    private String javaRelaPath = "/cn/swallowff/modules/core/modules/system";
+    private String javaRelaPath = "/cn/swallowff/modules/admin/modules/system";
     /**
      * Mapper.xml文件包路径  相对于src/main/resources
      * @example mapper.cms

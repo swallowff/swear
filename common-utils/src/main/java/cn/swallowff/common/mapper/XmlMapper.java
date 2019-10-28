@@ -304,7 +304,7 @@ public class XmlMapper extends com.fasterxml.jackson.dataformat.xml.XmlMapper{
 //	public static void main(String[] args) throws Exception {
 //		
 //		File file = new File(FileUtils.getProjectPath() 
-//				+ "/../modules/core/src/main/resources/spring/spring-context-core.xml");
+//				+ "/../modules/admin/src/main/resources/spring/spring-context-admin.xml");
 //		String xml = FileUtils.readFileToString(file, Charset.defaultCharset());
 //		
 //		System.out.println(xmlToMap(xml, true));

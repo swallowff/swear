@@ -424,7 +424,7 @@ jQuery.swap = function( elem, options, callback, args ) {
 };
 
 
-// Ensure that $.ajax gets the new parseJSON defined in core.js
+// Ensure that $.ajax gets the new parseJSON defined in admin.js
 jQuery.ajaxSetup({
 	converters: {
 		"text json": jQuery.parseJSON

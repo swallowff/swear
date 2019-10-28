@@ -1,6 +1,6 @@
 
 /*
- * JQuery zTree core 3.5.12
+ * JQuery zTree admin 3.5.12
  * http://zTree.me/
  *
  * Copyright (c) 2010 Hunter.z
@@ -13,7 +13,7 @@
  */
 (function($){
 	var settings = {}, roots = {}, caches = {},
-	//default consts of core
+	//default consts of admin
 	_consts = {
 		className: {
 			BUTTON: "button",
@@ -53,7 +53,7 @@
 			CURSELECTED: "curSelectedNode"
 		}
 	},
-	//default setting of core
+	//default setting of admin
 	_setting = {
 		treeId: "",
 		treeObj: null,
@@ -121,7 +121,7 @@
 			onRemove:null
 		}
 	},
-	//default root of core
+	//default root of admin
 	//zTree use root to save full data
 	_initRoot = function (setting) {
 		var r = data.getRoot(setting);
@@ -137,7 +137,7 @@
 		r.zId = 0;
 		r._ver = (new Date()).getTime();
 	},
-	//default cache of core
+	//default cache of admin
 	_initCache = function(setting) {
 		var c = data.getCache(setting);
 		if (!c) {
@@ -147,7 +147,7 @@
 		c.nodes = [];
 		c.doms = [];
 	},
-	//default bindEvent of core
+	//default bindEvent of admin
 	_bindEvent = function(setting) {
 		var o = setting.treeObj,
 		c = consts.event;
@@ -185,7 +185,7 @@
 		.unbind(c.ASYNC_SUCCESS)
 		.unbind(c.ASYNC_ERROR);
 	},	
-	//default event proxy of core
+	//default event proxy of admin
 	_eventProxy = function(event) {
 		var target = event.target,
 		setting = data.getSetting(event.data.treeId),
@@ -267,7 +267,7 @@
 		};
 		return proxyResult
 	},
-	//default init node of core
+	//default init node of admin
 	_initNode = function(setting, level, n, parentNode, isFirstNode, isLastNode, openFlag) {
 		if (!n) return;
 		var r = data.getRoot(setting),
@@ -3731,7 +3731,7 @@
 	data.addBeforeA(_beforeA);
 	data.addZTreeTools(_zTreeTools);
 
-//	Override method in core
+//	Override method in admin
 	var _dInitNode = data.initNode;
 	data.tmpHideParent = -1;
 	data.initNode = function(setting, level, node, parentNode, isFirstNode, isLastNode, openFlag) {

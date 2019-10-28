@@ -1,6 +1,6 @@
 package cn.swallowff.common.framework.base;
 
-public enum ResponseState implements AbstractState {
+public enum ResponseState implements IStateCode {
     /**
      * 通用状态
      */

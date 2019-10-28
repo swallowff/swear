@@ -18,7 +18,7 @@ public class GeneratorImplTest {
     public void genEntity() throws Exception{
         GeneratorConfig generatorConfig = new GeneratorConfig();
         generatorConfig.setTableName("test_gen");
-//        generatorConfig.setJavaLocation("cn.swallowff.modules.core.modules.system");
+//        generatorConfig.setJavaLocation("cn.swallowff.modules.admin.modules.system");
 //        generatorConfig.setMapperLocation("mapper.system");
 //        generatorConfig.setHtmlLocation("WEB-INF.pages.admin.system");
 //        generatorConfig.setJsLocation("static.module.admin.system");

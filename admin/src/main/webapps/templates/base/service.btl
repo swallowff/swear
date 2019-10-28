@@ -1,0 +1,15 @@
+package ${basePackage}.service;
+
+import CrudService;
+import ${basePackage}.dao.${className}Dao;
+import ${basePackage}.entity.${className};
+import org.springframework.stereotype.Service;
+
+/**
+ * \@author ${author}
+ * \@create ${date}
+ */
+\@Service
+public class ${className}Service extends CrudService<${className}Dao, ${className}> {
+
+}

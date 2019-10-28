@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.admin.modules.system.dao.UserRoleRelationDao">
+
+    <sql id="baseColumns">
+        a.user_id AS userId,
+        a.role_id AS roleId,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version,
+        r.code AS roleCode
+    </sql>
+
+    <sql id="sys_role_join">
+        LEFT JOIN sys_role r ON r.delflag = 0 AND r.id = a.role_id
+    </sql>
+
+    <select id="selectById" resultType="UserRoleRelation">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user_role_relation a
+        <include refid="sys_role_join"/>
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </select>
+
+    <select id="findEntity" resultType="UserRoleRelation">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user_role_relation a
+        <include refid="sys_role_join"/>
+        <where>
+            a.delflag = 0
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                AND a.role_id = #{roleId}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="UserRoleRelation">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_user_role_relation a
+        <include refid="sys_role_join"/>
+        <where>
+            a.delflag = 0
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="roleId != null and roleId != ''">
+                AND a.role_id = #{roleId}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_user_role_relation(
+        id,
+        user_id,
+        role_id,
+        create_time,
+        update_time,
+        version,
+        delflag
+        ) VALUES (
+        #{id},
+        #{userId},
+        #{roleId},
+        #{createTime},
+        #{updateTime},
+        #{version},
+        #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user_role_relation SET
+        user_id = #{userId},
+        role_id = #{roleId},
+        update_time = #{updateTime},
+        version = #{version}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_user_role_relation
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="roleId != null and roleId != ''">
+                role_id = #{roleId},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_user_role_relation a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </update>
+
+    <delete id="delByUserId">
+        DELETE FROM sys_user_role_relation
+        <where>
+            delflag = 0
+            AND user_id = #{arg0}
+        </where>
+    </delete>
+
+</mapper>

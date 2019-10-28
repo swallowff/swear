@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.admin.modules.system.dao.MediaGalleryDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.media_type AS mediaType,
+        a.origin_name AS originName,
+        a.name AS name,
+        a.local_path AS localPath,
+        a.url AS url,
+        a.cover AS cover,
+        a.media_format AS mediaFormat,
+        a.size AS size,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="cn.swallowff.admin.modules.system.entity.MediaGallery">
+      SELECT
+      <include refid="baseColumns"/>
+      FROM sys_media_gallery a
+      <where>
+          a.delflag = 0
+          AND a.id = #{id}
+      </where>
+    </select>
+
+    <select id="findEntity" resultType="cn.swallowff.admin.modules.system.entity.MediaGallery">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_media_gallery a
+        <where>
+            a.delflag = 0
+            <if test="mediaType != null">
+                AND a.media_type = #{mediaType}
+            </if>
+            <if test="originName != null and originName != ''">
+                AND a.origin_name = #{originName}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="url != null and url != ''">
+                AND a.url = #{url}
+            </if>
+            <if test="cover != null and cover != ''">
+                AND a.cover = #{cover}
+            </if>
+            <if test="mediaFormat != null and mediaFormat != ''">
+                AND a.media_format = #{mediaFormat}
+            </if>
+            <if test="size != null">
+                AND a.size = #{size}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="cn.swallowff.admin.modules.system.entity.MediaGallery">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_media_gallery a
+        <where>
+            a.delflag = 0
+            <if test="mediaType != null">
+                AND a.media_type = #{mediaType}
+            </if>
+            <if test="originName != null and originName != ''">
+                AND a.origin_name = #{originName}
+            </if>
+            <if test="name != null and name != ''">
+                AND a.name = #{name}
+            </if>
+            <if test="url != null and url != ''">
+                AND a.url = #{url}
+            </if>
+            <if test="cover != null and cover != ''">
+                AND a.cover = #{cover}
+            </if>
+            <if test="mediaFormat != null and mediaFormat != ''">
+                AND a.media_format = #{mediaFormat}
+            </if>
+            <if test="size != null">
+                AND a.size = #{size}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_media_gallery(
+          id,
+          media_type,
+          origin_name,
+          name,
+          local_path,
+          url,
+          cover,
+          media_format,
+          size,
+          update_time,
+          create_time,
+          delflag
+        ) VALUES (
+          #{id},
+          #{mediaType},
+          #{originName},
+          #{name},
+          #{localPath},
+          #{url},
+          #{cover},
+          #{mediaFormat},
+          #{size},
+          #{updateTime},
+          #{createTime},
+          #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_media_gallery SET
+          media_type = #{mediaType},
+          origin_name = #{originName},
+          name = #{name},
+          local_path = #{localPath},
+          url = #{url},
+          cover = #{cover},
+          media_format = #{mediaFormat},
+          size = #{size},
+          update_time = #{updateTime}
+          <where>
+              delflag = 0
+              AND id = #{id}
+          </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_media_gallery
+        <set>
+            <if test="mediaType != null">
+                media_type = #{mediaType},
+            </if>
+            <if test="originName != null and originName != ''">
+                origin_name = #{originName},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="localPath != null and localPath != ''">
+                local_path = #{localPath},
+            </if>
+            <if test="cover != null and cover != ''">
+                cover = #{cover},
+            </if>
+            <if test="mediaFormat != null and mediaFormat != ''">
+                media_format = #{mediaFormat},
+            </if>
+            <if test="size != null">
+                size = #{size},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_media_gallery a
+        SET a.delflag = 1
+        <where>
+          a.delflag = 0
+          AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

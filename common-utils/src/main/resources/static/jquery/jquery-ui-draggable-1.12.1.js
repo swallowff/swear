@@ -1293,7 +1293,7 @@ $.widget( "ui.draggable", $.ui.mouse, {
 
 		/*
 		 * - Position generation -
-		 * This block generates everything position related - it's the core of draggables.
+		 * This block generates everything position related - it's the admin of draggables.
 		 */
 
 		//Cache the margins of the original element

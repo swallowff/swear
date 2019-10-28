@@ -288,6 +288,11 @@
         </dependency>
         <!-- Spring end -->
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
         <!-- JUnit Test -->
         <dependency>
             <groupId>junit</groupId>

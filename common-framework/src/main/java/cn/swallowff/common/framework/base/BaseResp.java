@@ -22,7 +22,7 @@ public class BaseResp implements Serializable {
         this.msg = stateEnum.getMsg();
     }
 
-    public BaseResp putState(AbstractState respState) {
+    public BaseResp putState(IStateCode respState) {
         this.code = respState.getCode();
         this.msg = respState.getMsg();
         return this;

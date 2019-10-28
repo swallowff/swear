@@ -5,17 +5,6 @@ server:
 
 swear:
   server-url: http://localhost:8080
-  muti-datasource:
-    open: false
-  spring-session-open: false
-  path:
-    admin: /a
-    api: /api
-  websocket-url: ws://localhost:8999
-  websocket-port: 8999
-  websocket-open: true
-  ffmpeg-bin: E:\\soft_install\\ffmpeg\\bin\\ffmpeg.exe
-  media-server: http://media.helloccs.cn
 
 logging:
   config: classpath:logback.xml
@@ -51,7 +40,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 mybatis:
-  type-aliases-package: cn.swallowff.modules.core.modules.system.entity
+  type-aliases-package: cn.swallowff.modules.admin.modules.system.entity
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
