@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath>
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/${org.mapstruct.version}/mapstruct-processor-${org.mapstruct.version}.jar" />
+        </processorPath>
+        <module name="cloud" />
+        <module name="admin" />
+        <module name="chat (1)" />
+        <module name="demo" />
+        <module name="chat" />
+        <module name="code" />
+        <module name="cms" />
+        <module name="demo (1) (cn.swallowff)" />
+        <module name="common" />
+        <module name="core" />
+        <module name="cloud (1) (com.swallowff)" />
+        <module name="common-utils" />
+        <module name="common-framework" />
+        <module name="web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="admin" target="1.8" />
+      <module name="chat" target="1.8" />
+      <module name="chat (1)" target="1.8" />
+      <module name="cloud" target="1.8" />
+      <module name="cloud (1) (com.swallowff)" target="1.8" />
+      <module name="cms" target="1.8" />
+      <module name="code" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="common-framework" target="1.8" />
+      <module name="common-utils" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="demo" target="1.8" />
+      <module name="demo (1) (cn.swallowff)" target="1.8" />
+      <module name="nio-springboot" target="1.8" />
+      <module name="parent" target="1.8" />
+      <module name="parent (1)" target="1.8" />
+      <module name="sys" target="1.8" />
+      <module name="web" target="1.8" />
+      <module name="websocket" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin" options="-parameters" />
+      <module name="chat" options="-parameters" />
+      <module name="chat (1)" options="-parameters" />
+      <module name="cloud" options="-parameters" />
+      <module name="cloud (1) (com.swallowff)" options="-parameters" />
+      <module name="cms" options="-parameters" />
+      <module name="code" options="-parameters" />
+      <module name="common" options="-parameters" />
+      <module name="common-framework" options="-parameters" />
+      <module name="common-utils" options="-parameters" />
+      <module name="core" options="-parameters" />
+      <module name="demo" options="-parameters" />
+      <module name="demo (1) (cn.swallowff)" options="-parameters" />
+      <module name="web" options="-parameters" />
+    </option>
+  </component>
+</project>
