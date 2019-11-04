@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2019-11-04T20:19:09+0800",
+    date = "2019-11-04T20:23:46+0800",
     comments = "version: 1.2.0.Final, compiler: javac, environment: Java 1.8.0_74 (Oracle Corporation)"
 )
 public class CsUserContactGroupMappingImpl implements CsUserContactGroupMapping {

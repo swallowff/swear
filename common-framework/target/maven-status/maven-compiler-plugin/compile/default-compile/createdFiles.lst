@@ -1,8 +1,0 @@
-cn\swallowff\common\framework\base\ResponseState.class
-cn\swallowff\common\framework\base\TreeEntity.class
-cn\swallowff\common\framework\base\BaseResp.class
-cn\swallowff\common\framework\base\BaseWrapper.class
-cn\swallowff\common\framework\base\IStateCode.class
-cn\swallowff\common\framework\base\PageResp.class
-cn\swallowff\common\framework\base\BaseEntity.class
-cn\swallowff\common\framework\base\CrudDao.class
