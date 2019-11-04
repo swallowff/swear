@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.swallowff.admin.modules.system.dao.ImageGalleryDao">
+
+    <sql id="baseColumns">
+        a.id AS id,
+        a.origin_name AS originName,
+        a.img_name AS imgName,
+        a.img_url AS imgUrl,
+        a.thumbnail AS thumbnail,
+        a.img_format AS imgFormat,
+        a.size AS size,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        a.version AS version
+    </sql>
+
+    <select id="selectById" resultType="ImageGallery">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_image_gallery a
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </select>
+
+    <select id="findEntity" resultType="ImageGallery">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_image_gallery a
+        <where>
+            a.delflag = 0
+            <if test="originName != null and originName != ''">
+                AND a.origin_name = #{originName}
+            </if>
+            <if test="imgName != null and imgName != ''">
+                AND a.img_name = #{imgName}
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                AND a.img_url = #{imgUrl}
+            </if>
+            <if test="thumbnail != null and thumbnail != ''">
+                AND a.thumbnail = #{thumbnail}
+            </if>
+            <if test="imgFormat != null and imgFormat != ''">
+                AND a.img_format = #{imgFormat}
+            </if>
+            <if test="size != null">
+                AND a.size = #{size}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <select id="findList" resultType="ImageGallery">
+        SELECT
+        <include refid="baseColumns"/>
+        FROM sys_image_gallery a
+        <where>
+            a.delflag = 0
+            <if test="originName != null and originName != ''">
+                AND a.origin_name LIKE CONCAT('%',#{originName},'%')
+            </if>
+            <if test="imgName != null and imgName != ''">
+                AND a.img_name LIKE CONCAT('%',#{imgName},'%')
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                AND a.img_url = #{imgUrl}
+            </if>
+            <if test="thumbnail != null and thumbnail != ''">
+                AND a.thumbnail = #{thumbnail}
+            </if>
+            <if test="imgFormat != null and imgFormat != ''">
+                AND a.img_format = #{imgFormat}
+            </if>
+            <if test="size != null">
+                AND a.size = #{size}
+            </if>
+        </where>
+        <choose>
+            <when test="orderBy != null and orderBy != ''">
+                ORDER BY ${orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_image_gallery(
+        id,
+        origin_name,
+        img_name,
+        img_url,
+        thumbnail,
+        img_format,
+        size,
+        update_time,
+        create_time,
+        delflag
+        ) VALUES (
+        #{id},
+        #{originName},
+        #{imgName},
+        #{imgUrl},
+        #{thumbnail},
+        #{imgFormat},
+        #{size},
+        #{updateTime},
+        #{createTime},
+        #{delflag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_image_gallery SET
+        origin_name = #{originName},
+        img_name = #{imgName},
+        img_url = #{imgUrl},
+        thumbnail = #{thumbnail},
+        img_format = #{imgFormat},
+        size = #{size},
+        update_time = #{updateTime}
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="updateSelective">
+        UPDATE sys_image_gallery
+        <set>
+            <if test="originName != null and originName != ''">
+                origin_name = #{originName},
+            </if>
+            <if test="imgName != null and imgName != ''">
+                img_name = #{imgName},
+            </if>
+            <if test="imgUrl != null and imgUrl != ''">
+                img_url = #{imgUrl},
+            </if>
+            <if test="thumbnail != null and thumbnail != ''">
+                thumbnail = #{thumbnail},
+            </if>
+            <if test="imgFormat != null and imgFormat != ''">
+                img_format = #{imgFormat},
+            </if>
+            <if test="size != null">
+                size = #{size},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        <where>
+            delflag = 0
+            AND id = #{id}
+        </where>
+    </update>
+
+    <update id="delete">
+        UPDATE sys_image_gallery a
+        SET a.delflag = 1
+        <where>
+            a.delflag = 0
+            AND a.id = #{id}
+        </where>
+    </update>
+
+</mapper>

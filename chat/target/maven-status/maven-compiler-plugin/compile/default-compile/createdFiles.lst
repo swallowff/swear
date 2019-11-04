@@ -1,0 +1,14 @@
+cn\swallowff\modules\chat\conf\ServerConfig.class
+cn\swallowff\modules\chat\util\PacketUtil.class
+cn\swallowff\modules\chat\custom\User.class
+cn\swallowff\modules\chat\conf\ServerConfig$IpStatDuration.class
+cn\swallowff\modules\chat\custom\msgpacket\SendMsgPacket.class
+cn\swallowff\modules\chat\core\SwearSocketServerStarter.class
+cn\swallowff\modules\chat\util\CustomPacket.class
+cn\swallowff\modules\chat\core\SwearMsgHandler.class
+cn\swallowff\modules\chat\custom\SwearSocketRequest.class
+cn\swallowff\modules\chat\core\SwearServerAioListener.class
+cn\swallowff\modules\chat\core\SwearIpStatListener.class
+cn\swallowff\modules\chat\custom\msgpacket\RespMsgPacket.class
+cn\swallowff\modules\chat\custom\SwearSocketResponse.class
+cn\swallowff\modules\chat\custom\inf\UserService.class

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>角色添加 iframe 框</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="${static}/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="LAYF-role-form-add" id="LAYF-role-form-add" style="padding: 20px 30px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="name" lay-verify="required" placeholder="请输入角色名称" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色码</label>
+        <div class="layui-input-inline">
+            <input type="text" name="code" lay-verify="required" placeholder="请输入角色码" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级角色</label>
+        <div class="layui-input-inline">
+            <select id="prole-select" data-placeholder="请选择父级角色" name="pid" lay-search=""></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">部门</label>
+        <div class="layui-input-inline">
+            <select id="dept-select" data-placeholder="请选择部门" name="deptId" lay-search=""></select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline">
+            <input type="text" name="sort" lay-verify="number" placeholder="请输入排序号" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline">
+                <textarea name="tips" style="width: 400px; height: 150px;" autocomplete="off"
+                          class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item layui-hide">
+        <input type="button" lay-submit lay-filter="LAYF-role-form-add-submit" id="LAYF-role-form-add-submit"
+               value="确认">
+    </div>
+</div>
+
+<script src="${static}/layuiadmin/layui/layui.js"></script>
+<script>
+    var Swear = {
+        serverUrl: '${serverUrl}',
+        ctxPath: '${admin}',
+        static: '${static}'
+    }
+</script>
+<script src="${static}/modules/admin/system/role/role-add.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /swear
+
+swear:
+  server-url: https://admin.helloccs.cn
+  muti-datasource:
+    open: false
+  spring-session-open: false
+  swagger-open: true
+  path:
+    admin: /a
+    api: /api
+  websocket-url: wss://admin.helloccs.cn/websocket
+  websocket-port: 8999
+  websocket-open: true
+  ffmpeg-bin: /usr/local/ffmpeg/ffmpeg
+  media-server: https://media.helloccs.cn
+
+logging:
+  config: classpath:logback.xml
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/view
+      suffix: .html
+    static-path-pattern: /static/**
+  datasource-master:
+    url: jdbc:mysql://120.79.225.48:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    db-name: swallow_master
+    username: root
+    password: yanni623..
+    filters: wall,mergeStat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  datasource-slave:
+    url: jdbc:mysql://120.79.225.48:3306/swallow_slave?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    db-name: swallow_slave
+    username: root
+    password: yanni623..
+    filters: wall,mergeStat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  datasource-default:
+    url: jdbc:mysql://120.79.225.48:3306/swallow_master?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=CTT
+    db-name: swallow_master
+    username: root
+    password: yanni623..
+    filters: wall,mergeStat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  type-aliases-package: cn.swallowff.modules.admin.modules.system.entity
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+pagehelper:
+  helperDialect: mysql
+  reasonable: false
+  supportMethodsArguments: true
+  params: count=countSql
