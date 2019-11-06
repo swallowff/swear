@@ -4,7 +4,7 @@ import cn.swallowff.code.FileType;
 import cn.swallowff.code.config.GeneratorConfig;
 import cn.swallowff.code.entity.GeneratorFile;
 import cn.swallowff.code.util.PathUtils;
-import cn.swallowff.common.lang.StringUtils;
+import cn.swallowff.code.util.StringUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class FilePathFactory {
         String uncapClassName = StringUtils.uncap(className);
         StringBuilder sb = new StringBuilder();
         sb.append(PathUtils.PROJECT_ROOT);
-        if (StringUtils.isNotBlank(config.getModuleLocation())){
+        if (null != config.getModuleLocation() && !"".equals(config.getModuleLocation())){
             sb.append(PathUtils.packageToPath(config.getModuleLocation()));
         }
         switch (fileType){
@@ -67,7 +67,7 @@ public class FilePathFactory {
             case DAO:
             case SERVICE:
             case CONTROLLER:
-                if (StringUtils.isNotBlank(config.getJavaRoot())){
+                if (null != config.getJavaRoot() && !"".equals(config.getJavaRoot())){
                     sb.append(config.getJavaRoot());
                 }else {
                     sb.append(PathUtils.SRC_JAVA);
@@ -78,7 +78,7 @@ public class FilePathFactory {
                     .append(fileType.getSuffix());
                 break;
             case MAPPER:
-                if (StringUtils.isNotBlank(config.getMapperRoot())){
+                if (null != config.getMapperRoot() && !"".equals(config.getMapperRoot())){
                     sb.append(config.getMapperRoot());
                 }else {
                     sb.append(PathUtils.SRC_RESOURCES);
@@ -126,51 +126,51 @@ public class FilePathFactory {
         String uncapClassName = StringUtils.uncap(className);
         StringBuilder sb = new StringBuilder();
         sb.append(PathUtils.PROJECT_ROOT);
-        if (StringUtils.isNotBlank(config.getModuleLocation())){
-            sb.append(config.getModuleLocation());
+        if (null != config.getModuleLocation() && !"".equals(config.getModuleLocation())){
+            sb.append(pathResolve(config.getModuleLocation()));
         }
         switch (generatorFile.getFileType()){
             case JAVA:
-                if (StringUtils.isNotBlank(config.getJavaRoot())){
-                    sb.append(config.getJavaRoot());
+                if (null != config.getJavaRoot() && !"".equals(config.getJavaRoot())){
+                    sb.append(pathResolve(config.getJavaRoot()));
                 }else {
                     sb.append(PathUtils.SRC_JAVA);
                 }
-                sb.append(config.getJavaRelaPath())
+                sb.append(pathResolve(config.getJavaRelaPath()))
                     .append(File.separator).append(generatorFile.getModuleName()).append(File.separator)
                     .append(className).append(generatorFile.getNameSuffix())
                     .append(generatorFile.getFileSuffix());
                 break;
             case MAPPER:
-                if (StringUtils.isNotBlank(config.getMapperRoot())){
-                    sb.append(config.getMapperRoot());
+                if (null != config.getMapperRoot() && !"".equals(config.getMapperRoot())){
+                    sb.append(pathResolve(config.getMapperRoot()));
                 }else {
                     sb.append(PathUtils.SRC_RESOURCES);
                 }
-                sb.append(config.getMapperRelaPath())
+                sb.append(pathResolve(config.getMapperRelaPath()))
                     .append(File.separator)
                     .append(className).append(generatorFile.getNameSuffix())
                     .append(generatorFile.getFileSuffix());
                 break;
             case PAGE:
-                if (StringUtils.isNotBlank(config.getHtmlRoot())){
-                    sb.append(config.getHtmlRoot());
+                if (null != config.getHtmlRoot() && !"".equals(config.getHtmlRoot())){
+                    sb.append(pathResolve(config.getHtmlRoot()));
                 }else {
                     sb.append(PathUtils.SRC_WEBAPPS);
                 }
-                sb.append(config.getHtmlRelaPath())
+                sb.append(pathResolve(config.getHtmlRelaPath()))
                     .append(File.separator).append(uncapClassName).append(File.separator)
                     .append(uncapClassName)
                     .append(generatorFile.getNameSuffix())
                     .append(generatorFile.getFileSuffix());
                 break;
             case JAVASCRIPT:
-                if (StringUtils.isNotBlank(config.getJsRoot())){
-                    sb.append(config.getJsRoot());
+                if (null != config.getJsRoot() && !"".equals(config.getJsRoot())){
+                    sb.append(pathResolve(config.getJsRoot()));
                 }else {
                     sb.append(PathUtils.SRC_WEBAPPS);
                 }
-                sb.append(config.getJsRelaPath())
+                sb.append(pathResolve(config.getJsRelaPath()))
                     .append(File.separator).append(uncapClassName).append(File.separator)
                     .append(uncapClassName)
                     .append(generatorFile.getNameSuffix())
@@ -178,6 +178,16 @@ public class FilePathFactory {
                 break;
         }
         return sb.toString();
+    }
+
+    private String pathResolve(String path){
+        if (!path.startsWith("/")){
+            path = "/".concat(path);
+        }
+        if (!"/".equals(File.separator)){
+            path = path.replace("/",File.separator);
+        }
+        return path;
     }
 
 

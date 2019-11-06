@@ -10,12 +10,10 @@ import cn.swallowff.code.resolver.ImportClassResolver;
 import cn.swallowff.code.resolver.MetaDataResolver;
 import cn.swallowff.code.resolver.TableColumnResolver;
 import cn.swallowff.code.util.PathUtils;
-import cn.swallowff.common.lang.DateUtils;
-import cn.swallowff.common.lang.StringUtils;
-import javafx.util.Builder;
-import org.apache.commons.collections.CollectionUtils;
+import cn.swallowff.code.util.StringUtils;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,13 +43,14 @@ public class TemplateDataFactory {
         GeneratorConfig config = metaDataResolver.getConfig();
         TemplateData templateData = new TemplateData();
         templateData.setAuthor("swallowff");
-        templateData.setDate(DateUtils.formatDate(new Date(),"yyyy/MM/dd"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        templateData.setDate(dateFormat.format(new Date()));
         templateData.setTableName(config.getTableName());
         templateData.setBasePackage(PathUtils.pathToPackage(config.getJavaRelaPath()));
         String tablePrefix = config.getTablePrefix();
         String className;
         String customClassName = config.getCustomEntityName();
-        if (StringUtils.isNotBlank(customClassName)){
+        if (customClassName != null && !"".equals(customClassName)){
             className = StringUtils.cap(customClassName);
             if (null == tablePrefix){
 

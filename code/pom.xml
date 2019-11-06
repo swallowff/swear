@@ -20,10 +20,29 @@
     </properties>
 
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>cn.swallowff.common</groupId>-->
+<!--            <artifactId>common-utils</artifactId>-->
+<!--            <version>${project.parent.version}</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <dependency>
-            <groupId>cn.swallowff.common</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
         <dependency>
@@ -56,8 +75,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

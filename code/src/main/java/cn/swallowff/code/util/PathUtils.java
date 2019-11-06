@@ -1,7 +1,5 @@
 package cn.swallowff.code.util;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.File;
 
 /**
@@ -16,7 +14,7 @@ public class PathUtils {
     public static final String SRC_WEBAPPS = File.separator + "src" + File.separator + "main" + File.separator + "webapps";
 
     public static String packageToPath(String var1){
-        if (StringUtils.isBlank(var1)){
+        if (var1 == null || "".equals(var1)){
             return "";
         }
         String[] a = var1.split("\\.");
@@ -30,7 +28,7 @@ public class PathUtils {
     }
 
     public static String packageToRelativePath(String var1){
-        if (StringUtils.isBlank(var1)){
+        if (var1 == null || "".equals(var1)){
             return "";
         }
         String[] a = var1.split("\\.");
@@ -45,7 +43,7 @@ public class PathUtils {
 
 
     public static String pathToPackage(String path) {
-        if (StringUtils.isBlank(path)){
+        if (path == null || "".equals(path)){
             return "";
         }
         path = path.replaceAll("//|/|\\\\\\\\|\\\\","\\.");

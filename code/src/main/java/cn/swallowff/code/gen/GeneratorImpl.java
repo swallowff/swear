@@ -9,18 +9,13 @@ import cn.swallowff.code.exception.InvalidConfigException;
 import cn.swallowff.code.factory.FilePathFactory;
 import cn.swallowff.code.factory.TemplateDataFactory;
 import cn.swallowff.code.resolver.MetaDataResolver;
-import cn.swallowff.code.util.BeetlUtil;
-import cn.swallowff.code.util.PathUtils;
-import cn.swallowff.code.util.StreamUtil;
-import cn.swallowff.common.io.FileUtils;
-import cn.swallowff.common.mapper.BeanMapConvert;
-import org.apache.commons.collections.CollectionUtils;
+import cn.swallowff.code.util.*;
 import org.beetl.core.Template;
 import org.beetl.core.exception.BeetlException;
+import org.springframework.util.CollectionUtils;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -50,12 +45,11 @@ public class GeneratorImpl implements IGenerator {
     protected void checkConfig() throws InvalidConfigException {
         File file = new File(PathUtils.PROJECT_ROOT + File.separator + generatorConfig.getModuleLocation());
         if (!file.isDirectory()){
-            throw new InvalidConfigException("module location must be a path where exist in your project path , make sure it is a effective directory ");
+            throw new InvalidConfigException("module location must be a path where exist in your project path , make sure "+file.getAbsolutePath()+" is an effective directory ");
         }
         if (CollectionUtils.isEmpty(generatorConfig.getGenFileSets())){
             throw new InvalidConfigException("gen files can not be not empty");
         }
-
     }
 
     @Override

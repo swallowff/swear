@@ -3,8 +3,8 @@ package cn.swallowff.code.resolver;
 import cn.swallowff.code.config.GeneratorConfig;
 import cn.swallowff.code.entity.TableColumn;
 import cn.swallowff.code.exception.GenerationException;
-import cn.swallowff.common.lang.StringUtils;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -51,7 +51,7 @@ public class MetaDataResolver {
             //获取字段类型
             tableColumn.setColumnType(resultSet.getString("TYPE_NAME"));
             //转换字段名称，如 sys_name 变成 sysName
-            tableColumn.setColumnCamelCase(StringUtils.camelCase(columnName));
+            tableColumn.setColumnCamelCase(cn.swallowff.code.util.StringUtils.camelCase(columnName));
             //字段在数据库的注释
             tableColumn.setColumnComment(resultSet.getString("REMARKS"));
             columnList.add(tableColumn);

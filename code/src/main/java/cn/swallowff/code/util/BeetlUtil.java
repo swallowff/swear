@@ -1,11 +1,9 @@
 package cn.swallowff.code.util;
 
-import cn.swallowff.common.lang.StringUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.ClasspathResourceLoader;
-import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 
 import java.io.IOException;
 
